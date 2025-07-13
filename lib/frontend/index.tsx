@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import '../index.css'; // This will be our Tailwind CSS entry point
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Layout from './components/Layout';
 import FileTree from './components/FileTree';
 import Content from './components/Content';
+
+const theme = createTheme();
 
 const App = () => {
   const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
@@ -49,6 +51,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );

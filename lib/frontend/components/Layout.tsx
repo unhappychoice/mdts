@@ -1,32 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { AppBar, Toolbar, Typography, Box, IconButton } from '@mui/material';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 type LayoutProps = {
   children: React.ReactNode;
 };
 
 const Layout = ({ children }: LayoutProps) => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark', !darkMode);
-  };
+  // Dark mode state and toggle function can be managed here or via a context API
+  const darkMode = false; // Placeholder for dark mode state
+  const toggleDarkMode = () => {}; // Placeholder for dark mode toggle
 
   return (
-    <div className={`min-h-screen flex flex-col ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
-      <header className="bg-blue-600 text-white p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">mdts</h1>
-        <button
-          onClick={toggleDarkMode}
-          className="px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-        >
-          {darkMode ? 'Light Mode' : 'Dark Mode'}
-        </button>
-      </header>
-      <main className="flex-1 flex">
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            mdts
+          </Typography>
+          <IconButton sx={{ ml: 1 }} onClick={toggleDarkMode} color="inherit">
+            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Box component="main" sx={{ flexGrow: 1, display: 'flex' }}>
         {children}
-      </main>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

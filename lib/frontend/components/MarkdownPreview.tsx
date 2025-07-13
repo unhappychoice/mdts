@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -8,9 +9,9 @@ interface MarkdownPreviewProps {
 
 const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
   return (
-    <div className="prose dark:prose-invert max-w-none">
+    <Box>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-    </div>
+    </Box>
   );
 };
 
