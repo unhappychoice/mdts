@@ -35,6 +35,9 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Build frontend
+        run: npm run build:frontend
+
       - name: Publish to npm
         run: |
           git config user.name "Yuji Ueki"
