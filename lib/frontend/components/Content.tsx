@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { fetchContent } from '../api';
 import MarkdownPreview from './MarkdownPreview';
+import { Box, Typography, CircularProgress, Tabs, Tab, useTheme } from '@mui/material';
 
 interface ContentProps {
   selectedFilePath: string | null;
+  contentMode?: 'fixed' | 'full';
 }
 
-const Content: React.FC<ContentProps> = ({ selectedFilePath }) => {
+const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed' }) => {
   const [content, setContent] = useState<string>("");
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const getContent = async () => {
       if (selectedFilePath) {
+        setLoading(true);
         const fileContent = await fetchContent(selectedFilePath);
         setContent(fileContent);
+        setLoading(false);
       } else {
         setContent("Please select a file from the tree.");
       }
@@ -25,30 +30,39 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath }) => {
   const displayFileName = selectedFilePath ? selectedFilePath.split('/').pop() : "No file selected";
 
   return (
-    <div className="flex-1 p-4">
-      <h2 className="text-xl font-bold mb-4">
+    <Box
+      sx={{
+        flexGrow: 1,
+        p: 4,
+        pt: 8,
+        bgcolor: 'background.paper',
+        ...(contentMode === 'fixed' && {
+          maxWidth: '800px',
+          margin: '0 auto',
+        }),
+      }}
+    >
+      <Typography variant="h5" gutterBottom mb={4}>
         {displayFileName}
-      </h2>
-      <div className="flex justify-end mb-4">
-        <button
-          onClick={() => setViewMode('preview')}
-          className={`px-4 py-2 rounded-l-md ${viewMode === 'preview' ? 'bg-blue-600 text-white' : 'bg-gray-300 dark:bg-gray-700'}`}
-        >
-          Preview
-        </button>
-        <button
-          onClick={() => setViewMode('raw')}
-          className={`px-4 py-2 rounded-r-md ${viewMode === 'raw' ? 'bg-blue-600 text-white' : 'bg-gray-300 dark:bg-gray-700'}`}
-        >
-          Raw
-        </button>
-      </div>
-      {viewMode === 'preview' ? (
+      </Typography>
+      <Box sx={{ paddingLeft: '24px', marginLeft: '-32px', marginRight: '-32px', borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={viewMode} onChange={(event, newValue) => setViewMode(newValue)} aria-label="view mode tabs">
+          <Tab value="preview" label="Preview" />
+          <Tab value="raw" label="Raw" />
+        </Tabs>
+      </Box>
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+          <CircularProgress />
+        </Box>
+      ) : viewMode === 'preview' ? (
         <MarkdownPreview content={content} />
       ) : (
-        <pre className="whitespace-pre-wrap p-4 bg-gray-100 dark:bg-gray-800 rounded-md">{content}</pre>
+        <Box component="pre" sx={{ whiteSpace: 'pre-wrap', p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
+          {content}
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, useTheme } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -7,10 +8,12 @@ interface MarkdownPreviewProps {
 }
 
 const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
+  const theme = useTheme();
+
   return (
-    <div className="prose dark:prose-invert max-w-none">
+    <Box className={["markdown-body", theme.palette.mode === 'dark' ? 'dark' : 'light'].join(' ')}>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-    </div>
+    </Box>
   );
 };
 

@@ -1,0 +1,106 @@
+.markdown-body {
+    h1 {
+        margin: 48px 0 24px;
+        padding-bottom: 16px;
+        font-weight: 500;
+        font-size: 26px;
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+    }
+
+    h2 {
+        margin: 48px 0 24px;
+        padding-bottom: 10px;
+        font-weight: 500;
+        font-size: 22px;
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+    }
+
+    h3 {
+        margin: 48px 0 24px;
+        padding-bottom: 10px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    h4 {
+        margin: 48px 0 24px;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    h5 {
+        margin: 48px 0 24px;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    p, ul, ol {
+        margin: 24px 0 24px;
+        line-height: 1.8;
+
+        li {
+            ul, ol {
+                margin: 8px 0 0;
+            }
+        }
+    }
+
+    ul, ol {
+        padding-left: 20px;
+    }
+
+    li {
+        margin: 0 0 8px;
+    }
+
+    hr {
+        color: rgba(0, 0, 0, .12);
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    pre {
+        padding: 16px;
+        overflow: auto;
+        background-color: #f4f5f7;
+    }
+
+    blockquote {
+        padding: 5px 16px;
+        font-size: 14px;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    a {
+        color: #1976d2;
+        transition: color 0.1s ease-in-out;
+
+        &:hover {
+            opacity: 0.8;
+            text-decoration: none;
+        }
+    }
+}
+
+.markdown-body.dark {
+    h1 {
+        border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    h2 {
+        border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    pre {
+        background-color: #20252c;
+    }
+
+    hr {
+        color: rgba(255, 255, 255, .12);
+    }
+}
