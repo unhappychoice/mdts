@@ -38,12 +38,13 @@ npx mdts docs -p 3000
 ### Advanced Usage Examples
 Here are some practical scenarios where `mdts` can be useful:
 
--   **Browsing a collection of Markdown notes/documents:**
-    If you have a repository where you collect Markdown files exported from various sources (e.g., Notion, Evernote, Confluence), `mdts` can help you browse them easily.
+-   **AI-powered documentation workflow:**
+    Leverage AI tools to generate or refine your documentation. As the AI produces content, use `mdts` to instantly preview the generated Markdown files locally. This allows for a rapid feedback loop, enabling you to review, edit, and iterate on AI-generated documentation in real-time within your browser, ensuring accuracy and adherence to your project's style before committing changes.
     ```bash
-    npx mdts ~/my-markdown-collection
+    # Assuming your AI-generated docs are in a 'docs-ai' directory
+    npx mdts docs-ai
     ```
-    This will serve all Markdown files in `~/my-markdown-collection` and its subdirectories, allowing you to navigate through them in your browser.
+    This setup provides a seamless way to integrate AI into your documentation pipeline, making the process of creating and maintaining comprehensive project documentation more efficient.
 
 -   **Exploring a new project's documentation:**
     When joining a new project, you often need to quickly understand its structure and documentation. Running `mdts` at the project root can give you an immediate overview of all Markdown-based documentation (e.g., `README.md`, `CONTRIBUTING.md`, `docs/`).
@@ -53,6 +54,13 @@ Here are some practical scenarios where `mdts` can be useful:
     npx mdts .
     ```
     This provides a convenient way to browse all project-related Markdown files without opening them individually in a text editor.
+
+-   **Browsing a collection of Markdown notes/documents:**
+    If you have a repository where you collect Markdown files exported from various sources (e.g., Notion, Evernote, Confluence), `mdts` can help you browse them easily.
+    ```bash
+    npx mdts ~/my-markdown-collection
+    ```
+    This will serve all Markdown files in `~/my-markdown-collection` and its subdirectories, allowing you to navigate through them in your browser.
 
 -   **Reviewing `README` files of installed `node_modules`:**
     Sometimes you might want to quickly check the `README.md` of a library installed in your `node_modules` directory to understand its usage or features.
