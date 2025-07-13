@@ -15,9 +15,13 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -33,7 +37,10 @@ jobs:
 
       - name: Publish to npm
         run: |
+          git config user.name "Yuji Ueki"
+          git config user.email "unhappychoice@gmail.com"
           npm version ${{ github.event.inputs.version_type }}
+          git push          
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
