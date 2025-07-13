@@ -1,4 +1,4 @@
-import { serve } from './server';
+import { serve } from './server.js';
 import open from 'open';
 import { Command } from 'commander';
 
