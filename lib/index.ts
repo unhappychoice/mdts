@@ -1,5 +1,3 @@
-import { serve } from './server';
+import { cli } from './cli';
 
-const port = 8521;
-
-serve('docs', port);
+cli();
