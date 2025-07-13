@@ -1,3 +1,9 @@
+export interface OutlineItem {
+  level: number;
+  content: string;
+  id: string;
+}
+
 export const fetchFileTree = async () => {
   try {
     const response = await fetch('http://localhost:8521/filetree');
@@ -23,5 +29,19 @@ export const fetchContent = async (path: string) => {
   } catch (error) {
     console.error(`Error fetching content for ${path}:`, error);
     return "";
+  }
+};
+
+export const fetchOutline = async (filePath: string): Promise<OutlineItem[]> => {
+  try {
+    const response = await fetch(`http://localhost:8521/outline?filePath=${encodeURIComponent(filePath)}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error fetching outline for ${filePath}:`, error);
+    return [];
   }
 };

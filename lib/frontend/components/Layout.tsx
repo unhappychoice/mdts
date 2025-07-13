@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Box, IconButton, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Box, IconButton, ToggleButton, ToggleButtonGroup, Toolbar } from '@mui/material';
+import React, { useCallback, useState } from 'react';
 import Content from './Content';
 import FileTree from './FileTree';
+import Outline from './Outline';
 
 type LayoutProps = {
   children: React.ReactNode;
   onFileSelect: (path: string) => void;
   darkMode: boolean;
   toggleDarkMode: () => void;
+  selectedFilePath: string | null;
 };
 
 type ContentMode = 'fixed' | 'full';
 
-const Layout = ({ children, onFileSelect, darkMode, toggleDarkMode }: LayoutProps) => {
+const Layout = ({ children, onFileSelect, darkMode, toggleDarkMode, selectedFilePath }: LayoutProps) => {
   const [contentMode, setContentMode] = useState<ContentMode>('fixed');
   const [fileTreeOpen, setFileTreeOpen] = useState(true); // ファイルツリーの開閉状態
+  const [outlineOpen, setOutlineOpen] = useState(true); // アウトラインの開閉状態
+  const [scrollToId, setScrollToId] = useState<string | null>(null);
 
   const handleContentModeChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -32,19 +35,18 @@ const Layout = ({ children, onFileSelect, darkMode, toggleDarkMode }: LayoutProp
     setFileTreeOpen(!fileTreeOpen);
   };
 
+  const toggleOutline = () => {
+    setOutlineOpen(!outlineOpen);
+  };
+
+  const handleOutlineItemClick = useCallback((id: string) => {
+    setScrollToId(id);
+  }, []);
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <AppBar position="static" elevation={0} sx={(theme) => ({ bgcolor: theme.palette.background.paper, color: theme.palette.text.primary, borderBottom: `1px solid ${theme.palette.divider}` })}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleFileTree}
-            edge="start"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
           <Box sx={{ flexGrow: 1 }}>
             <a href="/">
               <img src="/logo.svg" alt="mdts logo" style={{ height: '56px', marginLeft: '-36px' }} />
@@ -68,16 +70,18 @@ const Layout = ({ children, onFileSelect, darkMode, toggleDarkMode }: LayoutProp
           <IconButton sx={{ ml: 1 }} onClick={toggleDarkMode} color="inherit">
             {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
+          
         </Toolbar>
       </AppBar>
-      <Box component="main" sx={(theme) => ({ flexGrow: 1, display: 'flex' })}>
-        <FileTree onFileSelect={onFileSelect} isOpen={fileTreeOpen}/>
+      <Box component="main" sx={(theme) => ({ flexGrow: 1, display: 'flex', overflowY: 'auto'})}>
+        <FileTree onFileSelect={onFileSelect} isOpen={fileTreeOpen} onToggle={toggleFileTree} />
         {React.Children.map(children, child => {
           if (React.isValidElement(child) && child.type === Content) {
-            return React.cloneElement(child, { contentMode });
+            return React.cloneElement(child, { contentMode, scrollToId });
           }
           return child;
         })}
+        {selectedFilePath && <Outline filePath={selectedFilePath} onItemClick={handleOutlineItemClick} isOpen={outlineOpen} onToggle={toggleOutline} />}
       </Box>
     </Box>
   );

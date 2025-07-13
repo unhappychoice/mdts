@@ -3,12 +3,21 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import MarkdownIt from 'markdown-it';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 type FileTreeItem = string | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
+
+interface OutlineItem {
+  level: number;
+  content: string;
+  id: string;
+}
+
+const md = new MarkdownIt();
 
 export const serve = (directory: string, port: number) => {
   const app = express();
@@ -20,6 +29,21 @@ export const serve = (directory: string, port: number) => {
     res.json(getFileTree(directory, '')); // Pass empty string as initial relative path
   });
 
+  app.get('/outline', (req, res) => {
+    const filePath = req.query.filePath as string;
+    if (!filePath) {
+      return res.status(400).send('filePath query parameter is required.');
+    }
+    try {
+      const absolutePath = path.join(directory, filePath);
+      const outline = getMarkdownOutline(absolutePath);
+      res.json(outline);
+    } catch (error) {
+      console.error(`Error getting outline for ${filePath}:`, error);
+      res.status(500).send('Error getting outline.');
+    }
+  });
+
   app.use('/content', express.static(directory));
 
   // Catch-all route to serve index.html for any other requests
@@ -28,7 +52,7 @@ export const serve = (directory: string, port: number) => {
   });
 
   app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+    console.log(`🚀 Server listening at http://localhost:${port}`);
   });
 }
 
@@ -59,4 +83,33 @@ const getFileTree = (baseDirectory: string, currentRelativePath: string): FileTr
     }
   }
   return tree;
+};
+
+const slugify = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s-]/gu, '') // Remove non-alphanumeric, non-space, non-hyphen characters. \p{L} for unicode letters, \p{N} for unicode numbers. 'u' flag for unicode.
+    .replace(/\s+/g, '-') // Replace spaces with single hyphen
+    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+    .replace(/^-+|-+$/g, ''); // Trim leading/trailing hyphens
+};
+
+const getMarkdownOutline = (filePath: string): OutlineItem[] => {
+  const fileContent = fs.readFileSync(filePath, 'utf-8');
+  const tokens = md.parse(fileContent, {});
+  const outline: OutlineItem[] = [];
+
+  for (const token of tokens) {
+    if (token.type === 'heading_open') {
+      const level = parseInt(token.tag.substring(1));
+      const nextToken = tokens[tokens.indexOf(token) + 1];
+      if (nextToken && nextToken.type === 'inline') {
+        const content = nextToken.content;
+        const id = slugify(content);
+        outline.push({ level, content, id });
+      }
+    }
+  }
+
+  return outline;
 };

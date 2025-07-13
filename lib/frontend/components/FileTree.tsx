@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { fetchFileTree } from '../api';
-import { Box, Typography, Collapse } from '@mui/material';
-import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
-import { TreeItem } from '@mui/x-tree-view';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import FolderIcon from '@mui/icons-material/Folder';
 import DescriptionIcon from '@mui/icons-material/Description';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FolderIcon from '@mui/icons-material/Folder';
+import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
+import { TreeItem } from '@mui/x-tree-view';
+import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
+import React, { useEffect, useState } from 'react';
+import { fetchFileTree } from '../api';
 
 interface FileTreeItem {
   [key: string]: FileTreeItem[] | string;
@@ -55,34 +56,59 @@ const renderTreeItems = (tree: FileTreeItem[] | string[], onFileSelect: (path: s
 interface FileTreeComponentProps {
   onFileSelect: (path: string) => void;
   isOpen: boolean;
+  onToggle: () => void;
 }
 
-const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen }) => {
+const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
   const [fileTree, setFileTree] = useState<FileTreeItem[] | string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const getFileTree = async () => {
+      setLoading(true);
       const tree = await fetchFileTree();
       setFileTree(tree);
+      setLoading(false);
     };
     getFileTree();
   }, []);
 
   return (
-    <Collapse in={isOpen} timeout="auto" orientation="horizontal" sx={{ minWidth: '300px' }}>
-      <Box sx={{ bgcolor: 'background.paper', p: 2, borderRight: '1px solid', borderColor: 'divider', height: '100%', minWidth: '300px' }}>
-        <Typography variant="h6" gutterBottom>
-          File Tree
-        </Typography>
-        <SimpleTreeView
-          defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-          sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
-        >
-          {renderTreeItems(fileTree, onFileSelect)}
-        </SimpleTreeView>
+    <Box sx={{
+      width: isOpen ? '300px' : '66px',
+      bgcolor: 'background.paper',
+      p: isOpen ? 2 : 0.5,
+      borderRight: '1px solid',
+      borderColor: 'divider',
+      minHeight: '100%',
+      flexShrink: 0,
+    }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '34px', marginTop: isOpen ? '0' : '16px', marginBottom: 2 }}>
+        {isOpen && (
+          <Typography variant="h6" gutterBottom sx={{ marginLeft: 1, marginBottom: 0 }}>
+            File Tree
+          </Typography>
+        )}
+        <IconButton onClick={onToggle} size="small" sx={{ marginBottom: 0, marginLeft: isOpen ? '0' : '12px' }}>
+          {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </IconButton>
       </Box>
-    </Collapse>
+      {isOpen && (
+        loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <SimpleTreeView
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ChevronRightIcon />}
+            sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+          >
+            {renderTreeItems(fileTree, onFileSelect)}
+          </SimpleTreeView>
+        )
+      )}
+    </Box>
   );
 };
 
