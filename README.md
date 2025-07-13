@@ -2,7 +2,7 @@
   <img src="docs/logo.svg" alt="mdts" width="400">
 </h1>
 
-`mdts` is a simple command-line tool that serves Markdown files from a specified directory and provides a web-based interface to browse and view them. It automatically opens the served content in your default web browser.
+`mdts` (MarkDown Tree Server) is a simple command-line tool that serves Markdown files from a specified local directory and provides a web-based interface to browse and view them. It automatically opens the served content in your default web browser.
 
 ## Features
 
