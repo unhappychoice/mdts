@@ -1,9 +1,12 @@
 {
   "name": "mdts",
   "version": "1.0.0",
-  "description": "",
+  "description": "A markdown preview server.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "mdts": "./bin/mdts"
+  },
   "files": [
     "dist"
   ],
@@ -18,8 +21,14 @@
     "type": "git",
     "url": "git+https://github.com/unhappychoice/mdts.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "markdown",
+    "preview",
+    "server",
+    "cli",
+    "live-reload"
+  ],
+  "author": "unhappychoice",
   "license": "MIT",
   "type": "commonjs",
   "bugs": {
