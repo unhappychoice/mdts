@@ -32,11 +32,31 @@ export const serve = (directory: string, port: number) => {
   });
 }
 
-const getFileTree = (baseDirectory: string, currentRelativePath: string): FileTree =>
-  fs.readdirSync(path.join(baseDirectory, currentRelativePath), { withFileTypes: true })
-    .map((entry) => {
-      const entryPath = path.join(currentRelativePath, entry.name);
-      return entry.isDirectory()
-        ? { [entry.name]: getFileTree(baseDirectory, entryPath) }
-        : entryPath; // Return full relative path for files
-    });
+const isDotFileOrDirectory = (entryName: string): boolean => {
+  return entryName.startsWith('.');
+};
+
+const isLibraryDirectory = (entryName: string): boolean => {
+  const libraryDirs = ['node_modules', 'vendor', 'bundle', 'venv', 'env', 'site-packages'];
+  return libraryDirs.includes(entryName);
+};
+
+const getFileTree = (baseDirectory: string, currentRelativePath: string): FileTree => {
+  const entries = fs.readdirSync(path.join(baseDirectory, currentRelativePath), { withFileTypes: true })
+    .filter(entry => !isDotFileOrDirectory(entry.name) && !isLibraryDirectory(entry.name));
+
+  const tree: FileTree = [];
+
+  for (const entry of entries) {
+    const entryPath = path.join(currentRelativePath, entry.name);
+    if (entry.isDirectory()) {
+      const subTree = getFileTree(baseDirectory, entryPath);
+      if (subTree.length > 0) { // Only include directory if it contains markdown files
+        tree.push({ [entry.name]: subTree });
+      }
+    } else if (entry.name.endsWith('.md') || entry.name.endsWith('.markdown')) {
+      tree.push(entryPath);
+    }
+  }
+  return tree;
+};
