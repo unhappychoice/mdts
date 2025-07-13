@@ -20,7 +20,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MID",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/unhappychoice/mdts/issues"
