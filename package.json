@@ -1,0 +1,30 @@
+{
+  "name": "mdts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unhappychoice/mdts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/unhappychoice/mdts/issues"
+  },
+  "homepage": "https://github.com/unhappychoice/mdts#readme",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
