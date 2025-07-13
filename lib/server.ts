@@ -13,8 +13,8 @@ type FileTree = FileTreeItem[];
 export const serve = (directory: string, port: number) => {
   const app = express();
 
-  app.use(express.static('public'));
-  app.use(express.static('dist/frontend'));
+  app.use(express.static(path.join(__dirname, '../public')));
+  app.use(express.static(path.join(__dirname, '../dist/frontend')));
 
   app.get('/filetree', (req, res) => {
     res.json(getFileTree(directory, '')); // Pass empty string as initial relative path
