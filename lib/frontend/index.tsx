@@ -1,20 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
+import React, { useEffect, useState, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import Layout from './components/Layout';
-import FileTree from './components/FileTree';
 import Content from './components/Content';
-
-const theme = createTheme();
+import Layout from './components/Layout';
 
 const App = () => {
+  const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
+  const [darkMode, setDarkMode] = useState(isDarkMode);
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: darkMode ? 'dark' : 'light',
+          primary: {
+            main: '#1976d2',
+            light: '#1976d2',
+            dark: '#1976d2',
+          },
+          background: {
+            default: darkMode ? '#161819' : '#f4f5f7',
+            paper: darkMode ? '#0f1214' : '#ffffff',
+          },
+        },
+      }),
+    [darkMode],
+  );
+
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
 
   useEffect(() => {
     // Function to get file path from URL
     const getFilePathFromUrl = () => {
       const path = window.location.pathname.substring(1); // Remove leading slash
-      return path === '' ? null : decodeURIComponent(path); // If path is empty, no file is selected
+      return path === '' ? null : decodeURIComponent(path);
     };
 
     // Set initial file path from URL
@@ -39,10 +61,12 @@ const App = () => {
   };
 
   return (
-    <Layout>
-      <FileTree onFileSelect={handleFileSelect} />
-      <Content selectedFilePath={selectedFilePath} />
-    </Layout>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Layout onFileSelect={handleFileSelect} darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+        <Content selectedFilePath={selectedFilePath} />
+      </Layout>
+    </ThemeProvider>
   );
 };
 
@@ -51,9 +75,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <App />
   </React.StrictMode>
 );

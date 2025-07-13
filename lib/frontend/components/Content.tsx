@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { fetchContent } from '../api';
 import MarkdownPreview from './MarkdownPreview';
-import { Box, Typography, Button, ButtonGroup, CircularProgress } from '@mui/material';
+import { Box, Typography, CircularProgress, Tabs, Tab, useTheme } from '@mui/material';
 
 interface ContentProps {
   selectedFilePath: string | null;
+  contentMode?: 'fixed' | 'full';
 }
 
-const Content: React.FC<ContentProps> = ({ selectedFilePath }) => {
+const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed' }) => {
   const [content, setContent] = useState<string>("");
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,25 +30,26 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath }) => {
   const displayFileName = selectedFilePath ? selectedFilePath.split('/').pop() : "No file selected";
 
   return (
-    <Box sx={{ flexGrow: 1, p: 3 }}>
-      <Typography variant="h5" gutterBottom>
+    <Box
+      sx={{
+        flexGrow: 1,
+        p: 4,
+        pt: 8,
+        bgcolor: 'background.paper',
+        ...(contentMode === 'fixed' && {
+          maxWidth: '800px',
+          margin: '0 auto',
+        }),
+      }}
+    >
+      <Typography variant="h5" gutterBottom mb={4}>
         {displayFileName}
       </Typography>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-        <ButtonGroup variant="outlined" aria-label="view mode buttons">
-          <Button
-            onClick={() => setViewMode('preview')}
-            variant={viewMode === 'preview' ? 'contained' : 'outlined'}
-          >
-            Preview
-          </Button>
-          <Button
-            onClick={() => setViewMode('raw')}
-            variant={viewMode === 'raw' ? 'contained' : 'outlined'}
-          >
-            Raw
-          </Button>
-        </ButtonGroup>
+      <Box sx={{ paddingLeft: '24px', marginLeft: '-32px', marginRight: '-32px', borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={viewMode} onChange={(event, newValue) => setViewMode(newValue)} aria-label="view mode tabs">
+          <Tab value="preview" label="Preview" />
+          <Tab value="raw" label="Raw" />
+        </Tabs>
       </Box>
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
