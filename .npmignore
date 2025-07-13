@@ -5,7 +5,6 @@ tmp/
 node_modules/
 src/
 lib/
-public/
 webpack.config.js
 tsconfig.json
 package-lock.json
