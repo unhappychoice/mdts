@@ -8,7 +8,8 @@
     "mdts": "./bin/mdts"
   },
   "files": [
-    "dist"
+    "dist",
+    "public"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
