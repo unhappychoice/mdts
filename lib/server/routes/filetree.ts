@@ -1,36 +1,9 @@
-import express from 'express';
+import { Router } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 type FileTreeItem = string | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
-
-export const serve = (directory: string, port: number) => {
-  const app = express();
-
-  app.use(express.static(path.join(__dirname, '../public')));
-  app.use(express.static(path.join(__dirname, '../dist/frontend')));
-
-  app.get('/filetree', (req, res) => {
-    res.json(getFileTree(directory, '')); // Pass empty string as initial relative path
-  });
-
-  app.use('/content', express.static(directory));
-
-  // Catch-all route to serve index.html for any other requests
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
-  });
-
-  app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
-  });
-}
 
 const isDotFileOrDirectory = (entryName: string): boolean => {
   return entryName.startsWith('.');
@@ -59,4 +32,14 @@ const getFileTree = (baseDirectory: string, currentRelativePath: string): FileTr
     }
   }
   return tree;
+};
+
+export const fileTreeRouter = (directory: string) => {
+  const router = Router();
+
+  router.get('/', (req, res) => {
+    res.json(getFileTree(directory, ''));
+  });
+
+  return router;
 };

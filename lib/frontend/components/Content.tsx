@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { Box, CircularProgress, Tab, Tabs, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { fetchContent } from '../api';
 import MarkdownPreview from './MarkdownPreview';
-import { Box, Typography, CircularProgress, Tabs, Tab, useTheme } from '@mui/material';
 
 interface ContentProps {
   selectedFilePath: string | null;
   contentMode?: 'fixed' | 'full';
+  scrollToId: string | null;
 }
 
-const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed' }) => {
+const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId }) => {
   const [content, setContent] = useState<string>("");
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,6 +27,15 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
     };
     getContent();
   }, [selectedFilePath]);
+
+  useEffect(() => {
+    if (scrollToId) {
+      const element = document.getElementById(scrollToId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, [scrollToId]);
 
   const displayFileName = selectedFilePath ? selectedFilePath.split('/').pop() : "No file selected";
 

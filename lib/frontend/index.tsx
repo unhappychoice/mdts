@@ -63,7 +63,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout onFileSelect={handleFileSelect} darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+      <Layout onFileSelect={handleFileSelect} darkMode={darkMode} toggleDarkMode={toggleDarkMode} selectedFilePath={selectedFilePath}>
         <Content selectedFilePath={selectedFilePath} />
       </Layout>
     </ThemeProvider>
