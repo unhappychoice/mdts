@@ -14,7 +14,6 @@ interface OutlineProps {
 const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onToggle }) => {
   const { outline, loading, error } = useOutline(filePath);
 
-  if (loading) return <p>Loading outline...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (

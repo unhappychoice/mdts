@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react';
 import { fetchData } from '../api';
 import { useWebSocket } from './useWebSocket';
 
+interface FileTreeItem {
+  [key: string]: FileTreeItem[] | string;
+}
+
 export const useFileTree = () => {
-  const [fileTree, setFileTree] = useState<any[]>([]);
+  const [fileTree, setFileTree] = useState<FileTreeItem[] | string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

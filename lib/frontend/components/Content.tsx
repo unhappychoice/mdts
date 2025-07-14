@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Tab, Tabs, Typography } from '@mui/material';
+import { Box, CircularProgress, Tab, Tabs, Typography, Breadcrumbs, Link } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useContent } from '../hooks/useContent';
 import MarkdownPreview from './MarkdownPreview';
@@ -7,9 +7,10 @@ interface ContentProps {
   selectedFilePath: string | null;
   contentMode?: 'fixed' | 'full';
   scrollToId: string | null;
+  onDirectorySelect?: (directoryPath: string) => void;
 }
 
-const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId }) => {
+const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId, onDirectorySelect }) => {
   const { content, loading, error } = useContent(selectedFilePath);
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
 
@@ -24,7 +25,10 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
 
   const displayFileName = selectedFilePath ? selectedFilePath.split('/').pop() : "No file selected";
 
-  if (loading) return <p>Loading content...</p>;
+  const pathSegments = selectedFilePath
+    ? selectedFilePath.split('/').filter(segment => segment !== '')
+    : [];
+
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -32,7 +36,6 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
       sx={{
         flexGrow: 1,
         p: 4,
-        pt: 8,
         bgcolor: 'background.paper',
         ...(contentMode === 'fixed' && {
           maxWidth: '800px',
@@ -40,7 +43,24 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
         }),
       }}
     >
-      <Typography variant="h5" gutterBottom mb={4}>
+      {selectedFilePath && (
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
+          {pathSegments.map((segment, index) => {
+            const isLast = index === pathSegments.length - 1;
+            const path = pathSegments.slice(0, index + 1).join('/');
+            return isLast ? (
+              <Typography key={path} color="text.primary">
+                {segment}
+              </Typography>
+            ) : (
+              <Link key={path} color="inherit" href="#" onClick={() => onDirectorySelect && onDirectorySelect(path)}>
+                {segment}
+              </Link>
+            );
+          })}
+        </Breadcrumbs>
+      )}
+      <Typography variant="h4" gutterBottom mb={4}>
         {displayFileName}
       </Typography>
       <Box sx={{ paddingLeft: '24px', marginLeft: '-32px', marginRight: '-32px', borderBottom: 1, borderColor: 'divider' }}>

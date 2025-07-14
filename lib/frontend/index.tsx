@@ -2,11 +2,14 @@ import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/mat
 import React, { useEffect, useState, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import Content from './components/Content';
+import DirectoryContent from './components/DirectoryContent';
 import Layout from './components/Layout';
+import { FileTreeProvider } from './contexts/FileTreeContext';
 
 const App = () => {
   const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
+  const [currentPath, setCurrentPath] = useState<string | null>(null);
+  const [isCurrentPathDirectory, setIsCurrentPathDirectory] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState(isDarkMode);
 
   const theme = useMemo(
@@ -33,18 +36,24 @@ const App = () => {
   };
 
   useEffect(() => {
-    // Function to get file path from URL
-    const getFilePathFromUrl = () => {
-      const path = window.location.pathname.substring(1); // Remove leading slash
-      return path === '' ? null : decodeURIComponent(path);
+    const getPathFromUrl = () => {
+      const path = window.location.pathname.substring(1);
+      if (path === '') return { path: null, isDirectory: false };
+
+      const fileExtensions = ['.md', '.txt', '.js', '.ts', '.tsx', '.json', '.css', '.html', '.xml', '.yml', '.yaml', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.pdf'];
+      const isFile = fileExtensions.some(ext => path.toLowerCase().endsWith(ext));
+
+      return { path: decodeURIComponent(path), isDirectory: !isFile };
     };
 
-    // Set initial file path from URL
-    setSelectedFilePath(getFilePathFromUrl());
+    const { path, isDirectory } = getPathFromUrl();
+    setCurrentPath(path);
+    setIsCurrentPathDirectory(isDirectory);
 
-    // Handle browser back/forward buttons
     const handlePopState = () => {
-      setSelectedFilePath(getFilePathFromUrl());
+      const { path: popPath, isDirectory: popIsDirectory } = getPathFromUrl();
+      setCurrentPath(popPath);
+      setIsCurrentPathDirectory(popIsDirectory);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -55,16 +64,26 @@ const App = () => {
   }, []);
 
   const handleFileSelect = (path: string) => {
-    setSelectedFilePath(path);
-    // Update browser history
+    setCurrentPath(path);
+    setIsCurrentPathDirectory(false);
+    window.history.pushState({ path: path }, '', `/${path}`);
+  };
+
+  const handleDirectorySelect = (path: string) => {
+    setCurrentPath(path);
+    setIsCurrentPathDirectory(true);
     window.history.pushState({ path: path }, '', `/${path}`);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <Layout onFileSelect={handleFileSelect} darkMode={darkMode} toggleDarkMode={toggleDarkMode} selectedFilePath={selectedFilePath}>
-          <Content selectedFilePath={selectedFilePath} />
+        <Layout onFileSelect={handleFileSelect} darkMode={darkMode} toggleDarkMode={toggleDarkMode} selectedFilePath={currentPath} isCurrentPathDirectory={isCurrentPathDirectory}>
+          {currentPath && isCurrentPathDirectory ? (
+            <DirectoryContent selectedDirectoryPath={currentPath} onFileSelect={handleFileSelect} onDirectorySelect={handleDirectorySelect} />
+          ) : (
+            <Content selectedFilePath={currentPath} onDirectorySelect={handleDirectorySelect} />
+          )}
         </Layout>
     </ThemeProvider>
   );
@@ -73,6 +92,8 @@ const App = () => {
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <App />
+    <FileTreeProvider>
+      <App />
+    </FileTreeProvider>
   </React.StrictMode>
 );

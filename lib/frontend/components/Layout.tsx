@@ -12,11 +12,12 @@ type LayoutProps = {
   darkMode: boolean;
   toggleDarkMode: () => void;
   selectedFilePath: string | null;
+  isCurrentPathDirectory: boolean;
 };
 
 type ContentMode = 'fixed' | 'full';
 
-const Layout = ({ children, onFileSelect, darkMode, toggleDarkMode, selectedFilePath }: LayoutProps) => {
+const Layout = ({ children, onFileSelect, darkMode, toggleDarkMode, selectedFilePath, isCurrentPathDirectory }: LayoutProps) => {
   const [contentMode, setContentMode] = useState<ContentMode>('fixed');
   const [fileTreeOpen, setFileTreeOpen] = useState(true); // ファイルツリーの開閉状態
   const [outlineOpen, setOutlineOpen] = useState(true); // アウトラインの開閉状態
@@ -81,7 +82,7 @@ const Layout = ({ children, onFileSelect, darkMode, toggleDarkMode, selectedFile
           }
           return child;
         })}
-        {selectedFilePath && <Outline filePath={selectedFilePath} onItemClick={handleOutlineItemClick} isOpen={outlineOpen} onToggle={toggleOutline} />}
+        <Outline filePath={isCurrentPathDirectory ? null : selectedFilePath} onItemClick={handleOutlineItemClick} isOpen={outlineOpen} onToggle={toggleOutline} />
       </Box>
     </Box>
   );
