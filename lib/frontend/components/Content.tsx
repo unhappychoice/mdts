@@ -1,17 +1,24 @@
-import { Box, CircularProgress, Tab, Tabs, Typography } from '@mui/material';
+import { ArticleOutlined } from '@mui/icons-material';
+import { Box, Breadcrumbs, CircularProgress, Link, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useContent } from '../hooks/useContent';
+import { useContent } from '../hooks/apis/useContent';
+import { useFileTreeContext } from '../contexts/FileTreeContext';
 import MarkdownPreview from './MarkdownPreview';
 
 interface ContentProps {
   selectedFilePath: string | null;
   contentMode?: 'fixed' | 'full';
   scrollToId: string | null;
+  onDirectorySelect?: (directoryPath: string) => void;
 }
 
-const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId }) => {
-  const { content, loading, error } = useContent(selectedFilePath);
+const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId, onDirectorySelect }) => {
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
+
+  const { content, loading: contentLoading, error } = useContent(selectedFilePath);
+  const { loading: fileTreeLoading } = useFileTreeContext();
+
+  const loading = contentLoading || fileTreeLoading;
 
   useEffect(() => {
     if (scrollToId) {
@@ -22,9 +29,14 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
     }
   }, [scrollToId]);
 
-  const displayFileName = selectedFilePath ? selectedFilePath.split('/').pop() : "No file selected";
+  const displayFileName = selectedFilePath
+    ? selectedFilePath.split('/').pop()
+    : loading ? '' : '🎉 Welcome to mdts!';
 
-  if (loading) return <p>Loading content...</p>;
+  const pathSegments = selectedFilePath
+    ? selectedFilePath.split('/').filter(segment => segment !== '')
+    : [];
+
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -32,7 +44,6 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
       sx={{
         flexGrow: 1,
         p: 4,
-        pt: 8,
         bgcolor: 'background.paper',
         ...(contentMode === 'fixed' && {
           maxWidth: '800px',
@@ -40,9 +51,29 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
         }),
       }}
     >
-      <Typography variant="h5" gutterBottom mb={4}>
-        {displayFileName}
-      </Typography>
+      {selectedFilePath && (
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
+          {pathSegments.map((segment, index) => {
+            const isLast = index === pathSegments.length - 1;
+            const path = pathSegments.slice(0, index + 1).join('/');
+            return isLast ? (
+              <Typography key={path} color="text.primary">
+                {segment}
+              </Typography>
+            ) : (
+              <Link key={path} color="inherit" href="#" onClick={() => onDirectorySelect && onDirectorySelect(path)}>
+                {segment}
+              </Link>
+            );
+          })}
+        </Breadcrumbs>
+      )}
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+        <ArticleOutlined sx={{ mr: 2 }} fontSize="large" />
+        <Typography variant="h4" gutterBottom sx={{ mb: 0 }}>
+          {displayFileName}
+        </Typography>
+      </Box>
       <Box sx={{ paddingLeft: '24px', marginLeft: '-32px', marginRight: '-32px', borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={viewMode} onChange={(event, newValue) => setViewMode(newValue)} aria-label="view mode tabs">
           <Tab value="preview" label="Preview" />

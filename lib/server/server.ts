@@ -1,11 +1,11 @@
+import chokidar from 'chokidar';
 import express from 'express';
-import path from 'path';
+import { promises as fs } from 'fs';
+import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { WebSocketServer } from 'ws';
 import { fileTreeRouter } from './routes/filetree.js';
 import { outlineRouter } from './routes/outline.js';
-import chokidar from 'chokidar';
-import { WebSocketServer } from 'ws';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,16 +13,36 @@ const __dirname = dirname(__filename);
 export const serve = (directory: string, port: number) => {
   const app = express();
 
+  // Mount library static files
   app.use(express.static(path.join(__dirname, '../../public')));
   app.use(express.static(path.join(__dirname, '../../dist/frontend')));
-  app.use(express.static(directory));
 
+  // Define API
   app.use('/api/filetree', fileTreeRouter(directory));
+
+  app.get('/api/markdown/mdts-welcome-markdown.md', (req, res) => {
+    res.setHeader('Content-Type', 'text/plain');
+    res.sendFile(path.join(__dirname, '../../public/welcome.md'));
+  });
+  app.use('/api/markdown', express.static(directory));
   app.use('/api/outline', outlineRouter(directory));
 
   // Catch-all route to serve index.html for any other requests
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public/index.html'));
+  app.get('*', async (req, res) => {
+    const filePath = path.join(directory, req.path);
+    let isDirectory = false;
+    try {
+      const stats = await fs.stat(filePath);
+      isDirectory = stats.isDirectory();
+    } catch (error) {
+      // File or directory does not exist, proceed as if it's a file
+    }
+
+    if (isDirectory || req.path.toLowerCase().endsWith('.md') || req.path.toLowerCase().endsWith('.markdown')) {
+      return res.sendFile(path.join(__dirname, '../../public/index.html'));
+    } else {
+      return res.sendFile(req.path, { root: directory });
+    }
   });
 
   const server = app.listen(port, () => {
@@ -39,15 +59,15 @@ export const serve = (directory: string, port: number) => {
     });
   });
 
-  watcher.on('add', (a) => {
-    console.log('🌲 File added, reloading tree...');
+  watcher.on('add', (filePath) => {
+    console.log(`🌲 File added: ${filePath}, reloading tree...`);
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });
   });
 
-  watcher.on('unlink', () => {
-    console.log('🌲 File removed, reloading tree...');
+  watcher.on('unlink', (filePath) => {
+    console.log('🌲 File removed: ${filePath}, reloading tree...');
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });

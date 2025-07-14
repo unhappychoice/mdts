@@ -1,35 +1,31 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { AppBar, Box, IconButton, ToggleButton, ToggleButtonGroup, Toolbar } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import CropFreeIcon from '@mui/icons-material/CropFree';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import { AppBar, Box, IconButton, ToggleButton, ToggleButtonGroup, Toolbar, useMediaQuery } from '@mui/material';
+import React, { useCallback, useState, useMemo } from 'react';
+
 import Content from './Content';
+import DirectoryContent from './DirectoryContent';
 import FileTree from './FileTree';
 import Outline from './Outline';
 
 type LayoutProps = {
-  children: React.ReactNode;
-  onFileSelect: (path: string) => void;
   darkMode: boolean;
   toggleDarkMode: () => void;
-  selectedFilePath: string | null;
+  currentPath: string | null;
+  isCurrentPathDirectory: boolean;
+  handleFileSelect: (path: string) => void;
+  handleDirectorySelect: (path: string) => void;
 };
 
 type ContentMode = 'fixed' | 'full';
 
-const Layout = ({ children, onFileSelect, darkMode, toggleDarkMode, selectedFilePath }: LayoutProps) => {
+const Layout = ({ darkMode, toggleDarkMode, currentPath, isCurrentPathDirectory, handleFileSelect, handleDirectorySelect }: LayoutProps) => {
   const [contentMode, setContentMode] = useState<ContentMode>('fixed');
   const [fileTreeOpen, setFileTreeOpen] = useState(true); // ファイルツリーの開閉状態
   const [outlineOpen, setOutlineOpen] = useState(true); // アウトラインの開閉状態
   const [scrollToId, setScrollToId] = useState<string | null>(null);
-
-  const handleContentModeChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newMode: ContentMode | null,
-  ) => {
-    if (newMode !== null) {
-      setContentMode(newMode);
-    }
-  };
 
   const toggleFileTree = () => {
     setFileTreeOpen(!fileTreeOpen);
@@ -48,40 +44,26 @@ const Layout = ({ children, onFileSelect, darkMode, toggleDarkMode, selectedFile
       <AppBar position="static" elevation={0} sx={(theme) => ({ bgcolor: theme.palette.background.paper, color: theme.palette.text.primary, borderBottom: `1px solid ${theme.palette.divider}` })}>
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <a href="/">
+            <IconButton onClick={() => handleFileSelect('')} color="inherit">
               <img src="/logo.svg" alt="mdts logo" style={{ height: '56px', marginLeft: '-36px' }} />
-            </a>
+            </IconButton>
           </Box>
-          <ToggleButtonGroup
-            value={contentMode}
-            exclusive
-            onChange={handleContentModeChange}
-            aria-label="content alignment"
-            size="small"
-            sx={{ mr: 2 }}
-          >
-            <ToggleButton value="fixed" aria-label="fixed width">
-              Fixed
-            </ToggleButton>
-            <ToggleButton value="full" aria-label="full width">
-              Full
-            </ToggleButton>
-          </ToggleButtonGroup>
+          <IconButton onClick={() => setContentMode(prevMode => prevMode === 'fixed' ? 'full' : 'fixed')} color="inherit" sx={{ mr: 2 }}>
+            {contentMode === 'fixed' ? <CropFreeIcon /> : <FullscreenIcon />}
+          </IconButton>
           <IconButton sx={{ ml: 1 }} onClick={toggleDarkMode} color="inherit">
             {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
-          
         </Toolbar>
       </AppBar>
       <Box component="main" sx={(theme) => ({ flexGrow: 1, display: 'flex', overflowY: 'auto'})}>
-        <FileTree onFileSelect={onFileSelect} isOpen={fileTreeOpen} onToggle={toggleFileTree} />
-        {React.Children.map(children, child => {
-          if (React.isValidElement(child) && child.type === Content) {
-            return React.cloneElement(child, { contentMode, scrollToId });
-          }
-          return child;
-        })}
-        {selectedFilePath && <Outline filePath={selectedFilePath} onItemClick={handleOutlineItemClick} isOpen={outlineOpen} onToggle={toggleOutline} />}
+        <FileTree onFileSelect={handleFileSelect} isOpen={fileTreeOpen} onToggle={toggleFileTree} selectedFilePath={currentPath} />
+        {currentPath && isCurrentPathDirectory ? (
+          <DirectoryContent selectedDirectoryPath={currentPath} onFileSelect={handleFileSelect} onDirectorySelect={handleDirectorySelect} contentMode={contentMode} />
+        ) : (
+          <Content selectedFilePath={currentPath} onDirectorySelect={handleDirectorySelect} contentMode={contentMode} scrollToId={scrollToId} />
+        )}
+        <Outline filePath={isCurrentPathDirectory ? null : currentPath} onItemClick={handleOutlineItemClick} isOpen={outlineOpen} onToggle={toggleOutline} />
       </Box>
     </Box>
   );

@@ -2,7 +2,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, CircularProgress, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
 import React from 'react';
-import { useOutline } from '../hooks/useOutline';
+import { useOutline } from '../hooks/apis/useOutline';
 
 interface OutlineProps {
   filePath: string;
@@ -14,7 +14,6 @@ interface OutlineProps {
 const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onToggle }) => {
   const { outline, loading, error } = useOutline(filePath);
 
-  if (loading) return <p>Loading outline...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (

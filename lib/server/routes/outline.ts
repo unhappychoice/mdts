@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import fs from 'fs';
-import path from 'path';
 import MarkdownIt from 'markdown-it';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const md = new MarkdownIt();
 
@@ -10,6 +11,9 @@ interface OutlineItem {
   content: string;
   id: string;
 }
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const slugify = (text: string): string => {
   return text
@@ -49,7 +53,9 @@ export const outlineRouter = (directory: string) => {
       return res.status(400).send('filePath query parameter is required.');
     }
     try {
-      const absolutePath = path.join(directory, filePath);
+      const absolutePath = filePath === 'mdts-welcome-markdown.md'
+        ? path.join(__dirname, '../../../public/welcome.md')
+        : path.join(directory, filePath);
       const outline = getMarkdownOutline(absolutePath);
       res.json(outline);
     } catch (error) {

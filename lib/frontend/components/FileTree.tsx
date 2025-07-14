@@ -1,13 +1,15 @@
+import { FolderOutlined } from '@mui/icons-material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FolderIcon from '@mui/icons-material/Folder';
+import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { TreeItem } from '@mui/x-tree-view';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import React from 'react';
-import { useFileTree } from '../hooks/useFileTree';
+import { useFileTree } from '../hooks/apis/useFileTree';
 
 interface FileTreeItem {
   [key: string]: FileTreeItem[] | string;
@@ -21,8 +23,12 @@ const renderTreeItems = (tree: FileTreeItem[] | string[], onFileSelect: (path: s
         <TreeItem
           key={item}
           itemId={item}
-          label={fileName}
-          icon={<DescriptionIcon />}
+          label={
+            <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+              {fileName}
+            </Typography>
+          }
+          icon={<DescriptionIcon fontSize="small" />}
           onClick={() => onFileSelect(item)}
         />
       );
@@ -36,8 +42,10 @@ const renderTreeItems = (tree: FileTreeItem[] | string[], onFileSelect: (path: s
           itemId={currentPath}
           label={
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <FolderIcon sx={{ mr: 1, fontSize: 'medium' }} color="primary" />
-              {key}
+              <FolderOutlined sx={{ mr: 1, fontSize: 'small' }} color="primary" />
+              <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+                {key}
+              </Typography>
             </Box>
           }
         >
@@ -52,10 +60,34 @@ interface FileTreeComponentProps {
   onFileSelect: (path: string) => void;
   isOpen: boolean;
   onToggle: () => void;
+  selectedFilePath: string | null;
 }
 
-const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
+const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle, selectedFilePath }) => {
   const { fileTree, loading, error } = useFileTree();
+  const [expanded, setExpanded] = React.useState<string[]>([]);
+
+  const handleExpandAll = () => {
+    const allItemIds: string[] = [];
+    const collectIds = (items: FileTreeItem[] | string[], parentPath: string = '') => {
+      items.forEach(item => {
+        if (typeof item !== 'string') {
+          const key = Object.keys(item)[0];
+          const currentPath = parentPath ? `${parentPath}/${key}` : key;
+          allItemIds.push(currentPath);
+          collectIds(item[key] as FileTreeItem[] | string[], currentPath);
+        }
+      });
+    };
+    if (fileTree) {
+      collectIds(fileTree);
+    }
+    setExpanded(allItemIds);
+  };
+
+  const handleCollapseAll = () => {
+    setExpanded([]);
+  };
 
   return (
     <Box sx={{
@@ -69,9 +101,17 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
     }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '34px', marginTop: isOpen ? '0' : '16px', marginBottom: 2 }}>
         {isOpen && (
-          <Typography variant="h6" gutterBottom sx={{ marginLeft: 1, marginBottom: 0 }}>
-            File Tree
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+            <Typography variant="h6" gutterBottom sx={{ flex: 1, marginLeft: 1, marginBottom: 0 }}>
+              File Tree
+            </Typography>
+            <IconButton onClick={handleExpandAll} size="small" aria-label="expand all">
+              <UnfoldMoreIcon />
+            </IconButton>
+            <IconButton onClick={handleCollapseAll} size="small" aria-label="collapse all">
+              <UnfoldLessIcon />
+            </IconButton>
+          </Box>
         )}
         <IconButton onClick={onToggle} size="small" sx={{ marginBottom: 0, marginLeft: isOpen ? '0' : '12px' }}>
           {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -88,6 +128,8 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
             <SimpleTreeView
               defaultCollapseIcon={<ExpandMoreIcon />}
               defaultExpandIcon={<ChevronRightIcon />}
+              expandedItems={expanded}
+              onExpandedItemsChange={(event, itemIds) => setExpanded(itemIds)}
               sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
             >
               {renderTreeItems(fileTree, onFileSelect)}
