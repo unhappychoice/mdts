@@ -11,7 +11,7 @@ export const useContent = (path: string) => {
 
   const getContent = async () => {
     try {
-      const data = await fetchData<string>(`/${path}`, 'text');
+      const data = await fetchData<string>(`/api/markdown/${path}`, 'text');
       setContent(data || '');
     } catch (err: any) {
       setError(err.message);
