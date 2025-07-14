@@ -8,6 +8,7 @@ import { TreeItem } from '@mui/x-tree-view';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import React, { useEffect, useState } from 'react';
 import { fetchFileTree } from '../api';
+import { useWebSocketContext } from '../contexts/WebSocketContext';
 
 interface FileTreeItem {
   [key: string]: FileTreeItem[] | string;
@@ -62,6 +63,7 @@ interface FileTreeComponentProps {
 const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
   const [fileTree, setFileTree] = useState<FileTreeItem[] | string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { refreshTree } = useWebSocketContext();
 
   useEffect(() => {
     const getFileTree = async () => {
@@ -71,7 +73,7 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
       setLoading(false);
     };
     getFileTree();
-  }, []);
+  }, [refreshTree]);
 
   return (
     <Box sx={{

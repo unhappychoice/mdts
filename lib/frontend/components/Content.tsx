@@ -2,6 +2,7 @@ import { Box, CircularProgress, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { fetchContent } from '../api';
 import MarkdownPreview from './MarkdownPreview';
+import { useWebSocketContext } from '../contexts/WebSocketContext';
 
 interface ContentProps {
   selectedFilePath: string | null;
@@ -13,10 +14,14 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
   const [content, setContent] = useState<string>("");
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
   const [loading, setLoading] = useState<boolean>(false);
+  const { refresh, changedFilePath } = useWebSocketContext();
 
   useEffect(() => {
     const getContent = async () => {
-      if (selectedFilePath) {
+      if (selectedFilePath && (refresh && selectedFilePath === changedFilePath)) {
+        const fileContent = await fetchContent(selectedFilePath);
+        setContent(fileContent);
+      } else if (selectedFilePath) {
         setLoading(true);
         const fileContent = await fetchContent(selectedFilePath);
         setContent(fileContent);
@@ -26,7 +31,7 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
       }
     };
     getContent();
-  }, [selectedFilePath]);
+  }, [selectedFilePath, refresh, changedFilePath]);
 
   useEffect(() => {
     if (scrollToId) {

@@ -3,6 +3,7 @@ import { Box, Typography, List, ListItem, ListItemText, CircularProgress, IconBu
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { OutlineItem, fetchOutline } from '../api';
+import { useWebSocketContext } from '../contexts/WebSocketContext';
 
 interface OutlineProps {
   filePath: string;
@@ -14,6 +15,7 @@ interface OutlineProps {
 const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onToggle }) => {
   const [outline, setOutline] = useState<OutlineItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { refresh } = useWebSocketContext();
 
   useEffect(() => {
     const getOutline = async () => {
@@ -28,7 +30,7 @@ const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onTogg
       }
     };
     getOutline();
-  }, [filePath]);
+  }, [filePath, refresh]);
 
   return (
     <Box sx={{
