@@ -1,4 +1,5 @@
-import { Box, CircularProgress, Tab, Tabs, Typography, Breadcrumbs, Link } from '@mui/material';
+import { ArticleOutlined } from '@mui/icons-material';
+import { Box, Breadcrumbs, CircularProgress, Link, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useContent } from '../hooks/apis/useContent';
 import MarkdownPreview from './MarkdownPreview';
@@ -60,9 +61,12 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
           })}
         </Breadcrumbs>
       )}
-      <Typography variant="h4" gutterBottom mb={4}>
-        {displayFileName}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+        <ArticleOutlined sx={{ mr: 2 }} fontSize="large" />
+        <Typography variant="h4" gutterBottom sx={{ mb: 0 }}>
+          {displayFileName}
+        </Typography>
+      </Box>
       <Box sx={{ paddingLeft: '24px', marginLeft: '-32px', marginRight: '-32px', borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={viewMode} onChange={(event, newValue) => setViewMode(newValue)} aria-label="view mode tabs">
           <Tab value="preview" label="Preview" />

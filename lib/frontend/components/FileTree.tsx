@@ -1,11 +1,11 @@
+import { FolderOutlined } from '@mui/icons-material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
-import FolderIcon from '@mui/icons-material/Folder';
-import { Box, CircularProgress, IconButton, Typography, Button } from '@mui/material';
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { TreeItem } from '@mui/x-tree-view';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import React from 'react';
@@ -23,8 +23,12 @@ const renderTreeItems = (tree: FileTreeItem[] | string[], onFileSelect: (path: s
         <TreeItem
           key={item}
           itemId={item}
-          label={fileName}
-          icon={<DescriptionIcon />}
+          label={
+            <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+              {fileName}
+            </Typography>
+          }
+          icon={<DescriptionIcon fontSize="small" />}
           onClick={() => onFileSelect(item)}
         />
       );
@@ -38,8 +42,10 @@ const renderTreeItems = (tree: FileTreeItem[] | string[], onFileSelect: (path: s
           itemId={currentPath}
           label={
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <FolderIcon sx={{ mr: 1, fontSize: 'medium' }} color="primary" />
-              {key}
+              <FolderOutlined sx={{ mr: 1, fontSize: 'small' }} color="primary" />
+              <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+                {key}
+              </Typography>
             </Box>
           }
         >

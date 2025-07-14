@@ -1,5 +1,7 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import CropFreeIcon from '@mui/icons-material/CropFree';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { AppBar, Box, IconButton, ToggleButton, ToggleButtonGroup, Toolbar, useMediaQuery } from '@mui/material';
 import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import Content from './Content';
@@ -93,21 +95,9 @@ const Layout = ({ darkMode, toggleDarkMode }: LayoutProps) => {
               <img src="/logo.svg" alt="mdts logo" style={{ height: '56px', marginLeft: '-36px' }} />
             </a>
           </Box>
-          <ToggleButtonGroup
-            value={contentMode}
-            exclusive
-            onChange={handleContentModeChange}
-            aria-label="content alignment"
-            size="small"
-            sx={{ mr: 2 }}
-          >
-            <ToggleButton value="fixed" aria-label="fixed width">
-              Fixed
-            </ToggleButton>
-            <ToggleButton value="full" aria-label="full width">
-              Full
-            </ToggleButton>
-          </ToggleButtonGroup>
+          <IconButton onClick={() => setContentMode(prevMode => prevMode === 'fixed' ? 'full' : 'fixed')} color="inherit" sx={{ mr: 2 }}>
+            {contentMode === 'fixed' ? <CropFreeIcon /> : <FullscreenIcon />}
+          </IconButton>
           <IconButton sx={{ ml: 1 }} onClick={toggleDarkMode} color="inherit">
             {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>

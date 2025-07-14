@@ -12,7 +12,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content }) => {
   const theme = useTheme();
 
   return (
-    <Box className={["markdown-body", theme.palette.mode === 'dark' ? 'dark' : 'light'].join(' ')}>
+    <Box className={["markdown-body", theme.palette.mode === 'dark' ? 'dark' : 'light'].join(' ')} sx={{ fontSize: '0.9rem' }}>
       <ReactMarkdown remarkPlugins={[remarkGfm, remarkSlug]}>{content}</ReactMarkdown>
     </Box>
   );

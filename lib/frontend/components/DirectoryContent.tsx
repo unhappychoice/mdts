@@ -1,5 +1,4 @@
-import FolderIcon from '@mui/icons-material/Folder';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import { ArticleOutlined, FolderOutlined } from '@mui/icons-material';
 import {
   Box,
   Breadcrumbs,
@@ -133,9 +132,12 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ selectedDirectoryPa
           })}
         </Breadcrumbs>
       )}
-      <Typography variant="h4" gutterBottom mb={8}>
-        Directory: {selectedDirectoryPath}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 8 }}>
+        <FolderOutlined sx={{ mr: 2 }} color="primary" fontSize="large"/>
+        <Typography variant="h4" gutterBottom sx={{ mb: 0 }}>
+          {selectedDirectoryPath}
+        </Typography>
+      </Box>
       <Divider sx={{ paddingLeft: '24px', marginLeft: '-32px', marginRight: '-32px', borderBottom: 1, borderColor: 'divider' }} />
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
@@ -144,7 +146,7 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ selectedDirectoryPa
       )}
       <Box mt={4}>
         {fileTree && (
-          <List>
+          <List sx={{ mr: -2, ml: -2 }}>
             {fileTree.map((item) => {
               let name: string;
               let itemPath: string;
@@ -165,8 +167,8 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ selectedDirectoryPa
 
               return (
                 <ListItem button key={itemPath} onClick={() => handleItemClick(itemPath, isDirectory)}>
-                  <ListItemIcon>
-                    {isDirectory ? <FolderIcon color="primary" /> : <InsertDriveFileIcon />}
+                  <ListItemIcon sx={{ minWidth: "38px" }}>
+                    {isDirectory ? <FolderOutlined color="primary" /> : <ArticleOutlined />}
                   </ListItemIcon>
                   <ListItemText primary={name} />
                 </ListItem>
