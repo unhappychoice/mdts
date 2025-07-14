@@ -2,6 +2,7 @@ import { ArticleOutlined } from '@mui/icons-material';
 import { Box, Breadcrumbs, CircularProgress, Link, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useContent } from '../hooks/apis/useContent';
+import { useFileTreeContext } from '../contexts/FileTreeContext';
 import MarkdownPreview from './MarkdownPreview';
 
 interface ContentProps {
@@ -12,8 +13,12 @@ interface ContentProps {
 }
 
 const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId, onDirectorySelect }) => {
-  const { content, loading, error } = useContent(selectedFilePath);
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
+
+  const { content, loading: contentLoading, error } = useContent(selectedFilePath);
+  const { loading: fileTreeLoading } = useFileTreeContext();
+
+  const loading = contentLoading || fileTreeLoading;
 
   useEffect(() => {
     if (scrollToId) {
@@ -24,7 +29,9 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
     }
   }, [scrollToId]);
 
-  const displayFileName = selectedFilePath ? selectedFilePath.split('/').pop() : "No file selected";
+  const displayFileName = selectedFilePath
+    ? selectedFilePath.split('/').pop()
+    : loading ? '' : '🎉 Welcome to mdts!';
 
   const pathSegments = selectedFilePath
     ? selectedFilePath.split('/').filter(segment => segment !== '')

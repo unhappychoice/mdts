@@ -3,7 +3,8 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import CropFreeIcon from '@mui/icons-material/CropFree';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { AppBar, Box, IconButton, ToggleButton, ToggleButtonGroup, Toolbar, useMediaQuery } from '@mui/material';
-import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
+
 import Content from './Content';
 import DirectoryContent from './DirectoryContent';
 import FileTree from './FileTree';
@@ -12,67 +13,19 @@ import Outline from './Outline';
 type LayoutProps = {
   darkMode: boolean;
   toggleDarkMode: () => void;
+  currentPath: string | null;
+  isCurrentPathDirectory: boolean;
+  handleFileSelect: (path: string) => void;
+  handleDirectorySelect: (path: string) => void;
 };
 
 type ContentMode = 'fixed' | 'full';
 
-const Layout = ({ darkMode, toggleDarkMode }: LayoutProps) => {
+const Layout = ({ darkMode, toggleDarkMode, currentPath, isCurrentPathDirectory, handleFileSelect, handleDirectorySelect }: LayoutProps) => {
   const [contentMode, setContentMode] = useState<ContentMode>('fixed');
   const [fileTreeOpen, setFileTreeOpen] = useState(true); // ファイルツリーの開閉状態
   const [outlineOpen, setOutlineOpen] = useState(true); // アウトラインの開閉状態
   const [scrollToId, setScrollToId] = useState<string | null>(null);
-
-  const [currentPath, setCurrentPath] = useState<string | null>(null);
-  const [isCurrentPathDirectory, setIsCurrentPathDirectory] = useState<boolean>(false);
-
-  useEffect(() => {
-    const getPathFromUrl = () => {
-      const path = window.location.pathname.substring(1);
-      if (path === '') return { path: null, isDirectory: false };
-
-      const fileExtensions = ['.md', '.txt', '.js', '.ts', '.tsx', '.json', '.css', '.html', '.xml', '.yml', '.yaml', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.pdf'];
-      const isFile = fileExtensions.some(ext => path.toLowerCase().endsWith(ext));
-
-      return { path: decodeURIComponent(path), isDirectory: !isFile };
-    };
-
-    const { path, isDirectory } = getPathFromUrl();
-    setCurrentPath(path);
-    setIsCurrentPathDirectory(isDirectory);
-
-    const handlePopState = () => {
-      const { path: popPath, isDirectory: popIsDirectory } = getPathFromUrl();
-      setCurrentPath(popPath);
-      setIsCurrentPathDirectory(popIsDirectory);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, []);
-
-  const handleFileSelect = (path: string) => {
-    setCurrentPath(path);
-    setIsCurrentPathDirectory(false);
-    window.history.pushState({ path: path }, '', `/${path}`);
-  };
-
-  const handleDirectorySelect = (path: string) => {
-    setCurrentPath(path);
-    setIsCurrentPathDirectory(true);
-    window.history.pushState({ path: path }, '', `/${path}`);
-  };
-
-  const handleContentModeChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newMode: ContentMode | null,
-  ) => {
-    if (newMode !== null) {
-      setContentMode(newMode);
-    }
-  };
 
   const toggleFileTree = () => {
     setFileTreeOpen(!fileTreeOpen);
@@ -91,9 +44,9 @@ const Layout = ({ darkMode, toggleDarkMode }: LayoutProps) => {
       <AppBar position="static" elevation={0} sx={(theme) => ({ bgcolor: theme.palette.background.paper, color: theme.palette.text.primary, borderBottom: `1px solid ${theme.palette.divider}` })}>
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <a href="/">
+            <IconButton onClick={() => handleFileSelect('')} color="inherit">
               <img src="/logo.svg" alt="mdts logo" style={{ height: '56px', marginLeft: '-36px' }} />
-            </a>
+            </IconButton>
           </Box>
           <IconButton onClick={() => setContentMode(prevMode => prevMode === 'fixed' ? 'full' : 'fixed')} color="inherit" sx={{ mr: 2 }}>
             {contentMode === 'fixed' ? <CropFreeIcon /> : <FullscreenIcon />}
@@ -101,11 +54,10 @@ const Layout = ({ darkMode, toggleDarkMode }: LayoutProps) => {
           <IconButton sx={{ ml: 1 }} onClick={toggleDarkMode} color="inherit">
             {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
-          
         </Toolbar>
       </AppBar>
       <Box component="main" sx={(theme) => ({ flexGrow: 1, display: 'flex', overflowY: 'auto'})}>
-        <FileTree onFileSelect={handleFileSelect} isOpen={fileTreeOpen} onToggle={toggleFileTree} />
+        <FileTree onFileSelect={handleFileSelect} isOpen={fileTreeOpen} onToggle={toggleFileTree} selectedFilePath={currentPath} />
         {currentPath && isCurrentPathDirectory ? (
           <DirectoryContent selectedDirectoryPath={currentPath} onFileSelect={handleFileSelect} onDirectorySelect={handleDirectorySelect} contentMode={contentMode} />
         ) : (

@@ -17,7 +17,10 @@ export const useOutline = (path: string) => {
 
   const getOutline = async () => {
     try {
-      const data = await fetchData<OutlineItem[]>(`/api/outline?filePath=${encodeURIComponent(path)}`, 'json');
+      const url = path
+        ? `/api/outline?filePath=${encodeURIComponent(path)}`
+        : '/api/outline?filePath=mdts-welcome-markdown.md';
+      const data = await fetchData<OutlineItem[]>(url, 'json');
       setOutline(data || []);
     } catch (err: any) {
       setError(err.message);
@@ -27,11 +30,7 @@ export const useOutline = (path: string) => {
   };
 
   useEffect(() => {
-    if (!path) {
-      setOutline([]);
-      setLoading(false);
-      return;
-    }
+    if (path !== decodeURIComponent(window.location.pathname.substring(1))) return;
 
     setLoading(true);
     getOutline();

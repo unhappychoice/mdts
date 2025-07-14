@@ -30,10 +30,10 @@ export const useFileTree = () => {
   }, []);
 
   useEffect(() => {
-    if (event && event.type === 'reload-tree') {
+    if (event?.type === 'reload-tree') {
       getFileTree();
     }
   }, [event]);
 
-  return { fileTree, loading, error };
+  return { fileTree, loading, error  };
 };

@@ -60,9 +60,10 @@ interface FileTreeComponentProps {
   onFileSelect: (path: string) => void;
   isOpen: boolean;
   onToggle: () => void;
+  selectedFilePath: string | null;
 }
 
-const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
+const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle, selectedFilePath }) => {
   const { fileTree, loading, error } = useFileTree();
   const [expanded, setExpanded] = React.useState<string[]>([]);
 

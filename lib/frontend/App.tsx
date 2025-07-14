@@ -1,10 +1,57 @@
 import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Layout from './components/Layout';
+import { useFileTree } from './hooks/apis/useFileTree';
 
 const App = () => {
   const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [darkMode, setDarkMode] = useState(isDarkMode);
+
+  const [currentPath, setCurrentPath] = useState<string | null>(null);
+  const [isCurrentPathDirectory, setIsCurrentPathDirectory] = useState<boolean>(false);
+
+  const { loading } = useFileTree();
+
+  useEffect(() => {
+    const getPathFromUrl = () => {
+      const path = window.location.pathname.substring(1);
+      if (path === '') return { path: null, isDirectory: false };
+
+      const fileExtensions = ['.md', '.markdown'];
+      const isFile = fileExtensions.some(ext => path.toLowerCase().endsWith(ext));
+
+      return { path: decodeURIComponent(path), isDirectory: !isFile };
+    };
+
+    const { path, isDirectory } = getPathFromUrl();
+
+    setCurrentPath(path);
+    setIsCurrentPathDirectory(isDirectory);
+
+    const handlePopState = () => {
+      const { path: popPath, isDirectory: popIsDirectory } = getPathFromUrl();
+      setCurrentPath(popPath);
+      setIsCurrentPathDirectory(popIsDirectory);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [currentPath]);
+
+  const handleFileSelect = (path: string) => {
+    setCurrentPath(path);
+    setIsCurrentPathDirectory(false);
+    window.history.pushState({ path: path }, '', `/${path}`);
+  };
+
+  const handleDirectorySelect = (path: string) => {
+    setCurrentPath(path);
+    setIsCurrentPathDirectory(true);
+    window.history.pushState({ path: path }, '', `/${path}`);
+  };
 
   const theme = useMemo(
     () =>
@@ -32,7 +79,14 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        <Layout
+          darkMode={darkMode}
+          toggleDarkMode={toggleDarkMode}
+          currentPath={currentPath}
+          isCurrentPathDirectory={isCurrentPathDirectory}
+          handleFileSelect={handleFileSelect}
+          handleDirectorySelect={handleDirectorySelect}
+        />
     </ThemeProvider>
   );
 };

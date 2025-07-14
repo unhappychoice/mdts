@@ -11,7 +11,9 @@ export const useContent = (path: string) => {
 
   const getContent = async () => {
     try {
-      const data = await fetchData<string>(`/api/markdown/${path}`, 'text');
+      const url = path ? `/api/markdown/${path}` : '/api/markdown/mdts-welcome-markdown.md';
+      const data = await fetchData<string>(url, 'text');
+
       setContent(data || '');
     } catch (err: any) {
       setError(err.message);
@@ -21,11 +23,7 @@ export const useContent = (path: string) => {
   };
 
   useEffect(() => {
-    if (!path) {
-      setContent('');
-      setLoading(false);
-      return;
-    }
+    if (path !== decodeURIComponent(window.location.pathname.substring(1))) return;
 
     setLoading(true);
     getContent();

@@ -1,6 +1,8 @@
 import { serve } from './server/server.js';
 import open from 'open';
 import { Command } from 'commander';
+import { existsSync } from 'fs';
+import path from 'path';
 
 const DEFAULT_PORT = 8521;
 const DEFAULT_DIRECTORY = '.';
@@ -14,7 +16,9 @@ export const cli = () => {
     .action((directory, options) => {
       const port = parseInt(options.port, 10);
       serve(directory, port);
-      open(`http://localhost:${port}`);
+      const readmePath = path.join(directory, 'README.md');
+      const initialPath = existsSync(readmePath) ? '/README.md' : '';
+      open(`http://localhost:${port}${initialPath}`);
     });
 
   program.parse(process.argv);

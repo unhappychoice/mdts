@@ -1,9 +1,9 @@
 import chokidar from 'chokidar';
 import express from 'express';
+import { promises as fs } from 'fs';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { WebSocketServer } from 'ws';
-import { promises as fs } from 'fs';
 import { fileTreeRouter } from './routes/filetree.js';
 import { outlineRouter } from './routes/outline.js';
 
@@ -13,11 +13,18 @@ const __dirname = dirname(__filename);
 export const serve = (directory: string, port: number) => {
   const app = express();
 
+  // Mount library static files
   app.use(express.static(path.join(__dirname, '../../public')));
   app.use(express.static(path.join(__dirname, '../../dist/frontend')));
 
-  app.use('/api/markdown', express.static(directory));
+  // Define API
   app.use('/api/filetree', fileTreeRouter(directory));
+
+  app.get('/api/markdown/mdts-welcome-markdown.md', (req, res) => {
+    res.setHeader('Content-Type', 'text/plain');
+    res.sendFile(path.join(__dirname, '../../public/welcome.md'));
+  });
+  app.use('/api/markdown', express.static(directory));
   app.use('/api/outline', outlineRouter(directory));
 
   // Catch-all route to serve index.html for any other requests
