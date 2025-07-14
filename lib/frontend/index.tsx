@@ -3,14 +3,11 @@ import React, { useEffect, useState, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import Content from './components/Content';
 import Layout from './components/Layout';
-import { useWebSocket } from './hooks/useWebSocket';
-import { WebSocketProvider } from './contexts/WebSocketContext';
 
 const App = () => {
   const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(isDarkMode);
-  const { refresh, refreshTree, changedFilePath } = useWebSocket();
 
   const theme = useMemo(
     () =>
@@ -66,18 +63,14 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <WebSocketProvider refresh={refresh} refreshTree={refreshTree} changedFilePath={changedFilePath}>
         <Layout onFileSelect={handleFileSelect} darkMode={darkMode} toggleDarkMode={toggleDarkMode} selectedFilePath={selectedFilePath}>
           <Content selectedFilePath={selectedFilePath} />
         </Layout>
-      </WebSocketProvider>
     </ThemeProvider>
   );
 };
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <App />

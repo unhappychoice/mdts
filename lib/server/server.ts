@@ -35,7 +35,7 @@ export const serve = (directory: string, port: number) => {
   watcher.on('change', (filePath) => {
     console.log(`🔃 File changed: ${filePath}, reloading...`);
     wss.clients.forEach((client) => {
-      client.send(JSON.stringify({ type: 'reload', filePath }));
+      client.send(JSON.stringify({ type: 'reload-content' }));
     });
   });
 

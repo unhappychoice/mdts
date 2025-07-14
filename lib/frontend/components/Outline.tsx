@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, List, ListItem, ListItemText, CircularProgress, IconButton } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { OutlineItem, fetchOutline } from '../api';
-import { useWebSocketContext } from '../contexts/WebSocketContext';
+import { Box, CircularProgress, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
+import React from 'react';
+import { useOutline } from '../hooks/useOutline';
 
 interface OutlineProps {
   filePath: string;
@@ -13,24 +12,10 @@ interface OutlineProps {
 }
 
 const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onToggle }) => {
-  const [outline, setOutline] = useState<OutlineItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const { refresh } = useWebSocketContext();
+  const { outline, loading, error } = useOutline(filePath);
 
-  useEffect(() => {
-    const getOutline = async () => {
-      if (filePath) {
-        setLoading(true);
-        const data = await fetchOutline(filePath);
-        setOutline(data);
-        setLoading(false);
-      } else {
-        setOutline([]);
-        setLoading(false);
-      }
-    };
-    getOutline();
-  }, [filePath, refresh]);
+  if (loading) return <p>Loading outline...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <Box sx={{

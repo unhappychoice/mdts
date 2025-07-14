@@ -1,25 +1,20 @@
 import { useEffect, useState } from 'react';
 
+type Event = { type: 'reload-content' } | { type: 'reload-tree' };
+
 export const useWebSocket = () => {
-  const [refresh, setRefresh] = useState(false);
-  const [refreshTree, setRefreshTree] = useState(false);
-  const [changedFilePath, setChangedFilePath] = useState<string | null>(null);
+  const [event, setEvent] = useState<Event | null>(null);
 
   useEffect(() => {
     const ws = new WebSocket((window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host);
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      if (message.type === 'reload') {
-        setChangedFilePath(message.filePath);
-        setRefresh((prev) => !prev);
-      } else if (message.type === 'reload-tree') {
-        setRefreshTree((prev) => !prev);
-      }
-    };
+      setEvent(message)
+      setTimeout(() => setEvent(null), 100)};
     return () => {
       ws.close();
     };
   }, []);
 
-  return { refresh, refreshTree, changedFilePath };
+  return event;
 };
