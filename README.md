@@ -8,7 +8,7 @@
 
 - **File Tree Navigation**: Provides a hierarchical view of your Markdown files for easy browsing.
 - **Markdown Rendering**: Renders Markdown files in a clean, readable format.
-- [WIP] **Live Reload**: 
+- **Live Reload**: Automatically reloads the page in the browser when Markdown files are changed on disk. 
 
 ![screenshot](docs/screenshot.png)
 
