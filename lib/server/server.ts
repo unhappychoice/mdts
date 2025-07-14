@@ -50,23 +50,52 @@ export const serve = (directory: string, port: number) => {
   });
 
   const wss = new WebSocketServer({ server });
-  const watcher = chokidar.watch(directory, { ignored: /node_modules/, ignoreInitial: true });
 
-  watcher.on('change', (filePath) => {
+  const isMarkdownOrSimpleAsset = (filePath: string) => {
+    const ext = filePath.toLowerCase().split('.').pop();
+    return (
+      ext &&
+      (ext === 'md' ||
+        ext === 'markdown' ||
+        ext === 'png' ||
+        ext === 'jpg' ||
+        ext === 'jpeg' ||
+        ext === 'gif' ||
+        ext === 'svg'
+    );
+  };
+
+  let watcher;
+  try {
+    watcher = chokidar.watch(directory, {
+      ignored: (filePath: string) => {
+        if (filePath.includes('node_modules')) {
+          return true;
+        }
+        return !isMarkdownOrSimpleAsset(filePath);
+      },
+      ignoreInitial: true,
+    });
+  } catch (error) {
+    console.error('🚫 Error watching directory:', error);
+    console.error('Livereload will be disabled');
+  }
+
+  watcher?.on('change', (filePath) => {
     console.log(`🔃 File changed: ${filePath}, reloading...`);
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-content' }));
     });
   });
 
-  watcher.on('add', (filePath) => {
+  watcher?.on('add', (filePath) => {
     console.log(`🌲 File added: ${filePath}, reloading tree...`);
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });
   });
 
-  watcher.on('unlink', (filePath) => {
+  watcher?.on('unlink', (filePath) => {
     console.log('🌲 File removed: ${filePath}, reloading tree...');
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
