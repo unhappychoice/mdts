@@ -63,16 +63,14 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout onFileSelect={handleFileSelect} darkMode={darkMode} toggleDarkMode={toggleDarkMode} selectedFilePath={selectedFilePath}>
-        <Content selectedFilePath={selectedFilePath} />
-      </Layout>
+        <Layout onFileSelect={handleFileSelect} darkMode={darkMode} toggleDarkMode={toggleDarkMode} selectedFilePath={selectedFilePath}>
+          <Content selectedFilePath={selectedFilePath} />
+        </Layout>
     </ThemeProvider>
   );
 };
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <App />

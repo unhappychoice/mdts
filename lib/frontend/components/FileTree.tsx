@@ -6,16 +6,11 @@ import FolderIcon from '@mui/icons-material/Folder';
 import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { TreeItem } from '@mui/x-tree-view';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
-import React, { useEffect, useState } from 'react';
-import { fetchFileTree } from '../api';
+import React from 'react';
+import { useFileTree } from '../hooks/useFileTree';
 
 interface FileTreeItem {
   [key: string]: FileTreeItem[] | string;
-}
-
-interface FileTreeProps {
-  tree: FileTreeItem[] | string[];
-  onFileSelect: (path: string) => void;
 }
 
 const renderTreeItems = (tree: FileTreeItem[] | string[], onFileSelect: (path: string) => void, parentPath: string = '') => {
@@ -60,18 +55,7 @@ interface FileTreeComponentProps {
 }
 
 const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
-  const [fileTree, setFileTree] = useState<FileTreeItem[] | string[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const getFileTree = async () => {
-      setLoading(true);
-      const tree = await fetchFileTree();
-      setFileTree(tree);
-      setLoading(false);
-    };
-    getFileTree();
-  }, []);
+  const { fileTree, loading, error } = useFileTree();
 
   return (
     <Box sx={{
@@ -94,19 +78,21 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
         </IconButton>
       </Box>
       {isOpen && (
-        loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <SimpleTreeView
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpandIcon={<ChevronRightIcon />}
-            sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
-          >
-            {renderTreeItems(fileTree, onFileSelect)}
-          </SimpleTreeView>
-        )
+          loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+              <CircularProgress />
+            </Box>
+          ) : error ? (
+            <Typography color="error">Error: {error}</Typography>
+          ) : (
+            <SimpleTreeView
+              defaultCollapseIcon={<ExpandMoreIcon />}
+              defaultExpandIcon={<ChevronRightIcon />}
+              sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+            >
+              {renderTreeItems(fileTree, onFileSelect)}
+            </SimpleTreeView>
+          )
       )}
     </Box>
   );

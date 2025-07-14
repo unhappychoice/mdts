@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { fetchContent } from '../api';
+import { useContent } from '../hooks/useContent';
 import MarkdownPreview from './MarkdownPreview';
 
 interface ContentProps {
@@ -10,23 +10,8 @@ interface ContentProps {
 }
 
 const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId }) => {
-  const [content, setContent] = useState<string>("");
+  const { content, loading, error } = useContent(selectedFilePath);
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    const getContent = async () => {
-      if (selectedFilePath) {
-        setLoading(true);
-        const fileContent = await fetchContent(selectedFilePath);
-        setContent(fileContent);
-        setLoading(false);
-      } else {
-        setContent("Please select a file from the tree.");
-      }
-    };
-    getContent();
-  }, [selectedFilePath]);
 
   useEffect(() => {
     if (scrollToId) {
@@ -38,6 +23,9 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
   }, [scrollToId]);
 
   const displayFileName = selectedFilePath ? selectedFilePath.split('/').pop() : "No file selected";
+
+  if (loading) return <p>Loading content...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <Box
