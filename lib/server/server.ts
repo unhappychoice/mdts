@@ -61,7 +61,7 @@ export const serve = (directory: string, port: number) => {
         ext === 'jpg' ||
         ext === 'jpeg' ||
         ext === 'gif' ||
-        ext === 'svg'
+        ext === 'svg')
     );
   };
 
