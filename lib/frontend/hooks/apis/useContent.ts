@@ -23,8 +23,6 @@ export const useContent = (path: string) => {
   };
 
   useEffect(() => {
-    if (path !== decodeURIComponent(window.location.pathname.substring(1))) return;
-
     setLoading(true);
     getContent();
   }, [path]);
