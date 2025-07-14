@@ -15,7 +15,7 @@ export const serve = (directory: string, port: number) => {
 
   app.use(express.static(path.join(__dirname, '../../public')));
   app.use(express.static(path.join(__dirname, '../../dist/frontend')));
-  app.use('/content', express.static(directory));
+  app.use(express.static(directory));
 
   app.use('/api/filetree', fileTreeRouter(directory));
   app.use('/api/outline', outlineRouter(directory));

@@ -21,7 +21,7 @@ export const useContent = (path: string) => {
     const getContent = async () => {
       try {
         if (!event) setLoading(true);
-        const data = await fetchData<string>(`/content/${path}`, 'text');
+        const data = await fetchData<string>(`/${path}`, 'text');
         setContent(data || '');
       } catch (err: any) {
         setError(err.message);
