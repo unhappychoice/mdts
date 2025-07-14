@@ -19,6 +19,7 @@ interface DirectoryContentProps {
   selectedDirectoryPath: string;
   onFileSelect: (filePath: string) => void;
   onDirectorySelect: (directoryPath: string) => void;
+  contentMode?: 'fixed' | 'full';
 }
 
 interface FileTreeItem {
@@ -84,7 +85,7 @@ const filterFileTree = (tree: FileTreeItem[] | string[], targetPath: string): Fi
   return [];
 };
 
-const DirectoryContent: React.FC<DirectoryContentProps> = ({ selectedDirectoryPath, onFileSelect, onDirectorySelect }) => {
+const DirectoryContent: React.FC<DirectoryContentProps> = ({ selectedDirectoryPath, onFileSelect, onDirectorySelect, contentMode = 'fixed' }) => {
   const { fileTree: fullFileTree, loading, error } = useFileTreeContext();
   const fileTree = filterFileTree(fullFileTree, selectedDirectoryPath);
 
@@ -109,8 +110,10 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ selectedDirectoryPa
         flexGrow: 1,
         p: 4,
         bgcolor: 'background.paper',
-        maxWidth: '800px',
-        margin: '0 auto',
+        ...(contentMode === 'fixed' && {
+          maxWidth: '800px',
+          margin: '0 auto',
+        }),
       }}
     >
       {selectedDirectoryPath && (
