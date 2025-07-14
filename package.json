@@ -50,19 +50,18 @@
     "@types/react-dom": "^19.1.6",
     "@types/ws": "^8.18.1",
     "babel-loader": "^10.0.0",
-    "chokidar": "^4.0.3",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
     "style-loader": "^4.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "webpack": "^5.100.1",
-    "webpack-cli": "^6.0.1",
-    "ws": "^8.18.3"
+    "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "@mui/icons-material": "^7.2.0",
     "@mui/x-tree-view": "^8.8.0",
+    "chokidar": "^4.0.3",
     "commander": "^14.0.0",
     "express": "^4.19.2",
     "markdown-it": "^14.1.0",
@@ -73,6 +72,7 @@
     "remark-gfm": "^4.0.1",
     "remark-slug": "^7.0.1",
     "rehype-raw": "^7.0.0",
-    "react-syntax-highlighter": "^15.6.1"
+    "react-syntax-highlighter": "^15.6.1",
+    "ws": "^8.18.3"
   }
 }
