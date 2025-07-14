@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Tab, Tabs, Typography, Breadcrumbs, Link } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useContent } from '../hooks/useContent';
+import { useContent } from '../hooks/apis/useContent';
 import MarkdownPreview from './MarkdownPreview';
 
 interface ContentProps {

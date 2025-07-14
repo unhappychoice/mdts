@@ -2,7 +2,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, CircularProgress, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
 import React from 'react';
-import { useOutline } from '../hooks/useOutline';
+import { useOutline } from '../hooks/apis/useOutline';
 
 interface OutlineProps {
   filePath: string;

@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { useFileTree } from '../hooks/useFileTree';
+import { useFileTree } from '../hooks/apis/useFileTree';
 
 interface FileTreeItem {
   [key: string]: FileTreeItem[] | string;

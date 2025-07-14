@@ -139,37 +139,39 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ selectedDirectoryPa
           <CircularProgress />
         </Box>
       )}
-      {fileTree && (
-        <List>
-          {fileTree.map((item) => {
-            let name: string;
-            let itemPath: string;
-            let isDirectory: boolean;
+      <Box mt={4}>
+        {fileTree && (
+          <List>
+            {fileTree.map((item) => {
+              let name: string;
+              let itemPath: string;
+              let isDirectory: boolean;
 
-            if (typeof item === 'string') {
-              // It's a file
-              name = item;
-              itemPath = selectedDirectoryPath === '' ? item : `${selectedDirectoryPath}/${item}`;
-              isDirectory = false;
-            } else {
-              // It's a directory object { [key: string]: FileTreeItem[] | string; }
-              const key = Object.keys(item)[0];
-              name = key;
-              itemPath = selectedDirectoryPath === '' ? key : `${selectedDirectoryPath}/${key}`;
-              isDirectory = true;
-            }
+              if (typeof item === 'string') {
+                // It's a file
+                name = item;
+                itemPath = selectedDirectoryPath === '' ? item : `${selectedDirectoryPath}/${item}`;
+                isDirectory = false;
+              } else {
+                // It's a directory object { [key: string]: FileTreeItem[] | string; }
+                const key = Object.keys(item)[0];
+                name = key;
+                itemPath = selectedDirectoryPath === '' ? key : `${selectedDirectoryPath}/${key}`;
+                isDirectory = true;
+              }
 
-            return (
-              <ListItem button key={itemPath} onClick={() => handleItemClick(itemPath, isDirectory)}>
-                <ListItemIcon>
-                  {isDirectory ? <FolderIcon color="primary" /> : <InsertDriveFileIcon />}
-                </ListItemIcon>
-                <ListItemText primary={name} />
-              </ListItem>
-            );
-          })}
-        </List>
-      )}
+              return (
+                <ListItem button key={itemPath} onClick={() => handleItemClick(itemPath, isDirectory)}>
+                  <ListItemIcon>
+                    {isDirectory ? <FolderIcon color="primary" /> : <InsertDriveFileIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={name} />
+                </ListItem>
+              );
+            })}
+          </List>
+        )}
+      </Box>
     </Box>
   );
 };

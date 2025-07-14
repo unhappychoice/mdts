@@ -9,7 +9,7 @@ import { Box, CircularProgress, IconButton, Typography, Button } from '@mui/mate
 import { TreeItem } from '@mui/x-tree-view';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import React from 'react';
-import { useFileTree } from '../hooks/useFileTree';
+import { useFileTree } from '../hooks/apis/useFileTree';
 
 interface FileTreeItem {
   [key: string]: FileTreeItem[] | string;
