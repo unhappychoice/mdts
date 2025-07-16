@@ -14,15 +14,15 @@ export const serve = (directory: string, port: number) => {
   const app = express();
 
   // Mount library static files
-  app.use(express.static(path.join(__dirname, '../../public')));
-  app.use(express.static(path.join(__dirname, '../../dist/frontend')));
+  app.use(express.static(path.join(__dirname, './public')));
+  app.use(express.static(path.join(__dirname, '../frontend')));
 
   // Define API
   app.use('/api/filetree', fileTreeRouter(directory));
 
   app.get('/api/markdown/mdts-welcome-markdown.md', (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
-    res.sendFile(path.join(__dirname, '../../public/welcome.md'));
+    res.sendFile(path.join(__dirname, './public/welcome.md'));
   });
   app.use('/api/markdown', express.static(directory));
   app.use('/api/outline', outlineRouter(directory));
@@ -39,7 +39,7 @@ export const serve = (directory: string, port: number) => {
     }
 
     if (isDirectory || req.path.toLowerCase().endsWith('.md') || req.path.toLowerCase().endsWith('.markdown')) {
-      return res.sendFile(path.join(__dirname, '../../public/index.html'));
+      return res.sendFile(path.join(__dirname, '../frontend/index.html'));
     } else {
       return res.sendFile(req.path, { root: directory });
     }
