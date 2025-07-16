@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import fs from 'fs';
 import MarkdownIt from 'markdown-it';
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import path from 'path';
 
 const md = new MarkdownIt();
 
@@ -11,9 +10,6 @@ interface OutlineItem {
   content: string;
   id: string;
 }
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const slugify = (text: string): string => {
   return text

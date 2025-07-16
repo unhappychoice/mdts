@@ -1,31 +1,38 @@
 import chokidar from 'chokidar';
 import express from 'express';
 import { promises as fs } from 'fs';
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import path from 'path';
 import { WebSocketServer } from 'ws';
-import { fileTreeRouter } from './routes/filetree.js';
-import { outlineRouter } from './routes/outline.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { fileTreeRouter } from './routes/filetree';
+import { outlineRouter } from './routes/outline';
 
 export const serve = (directory: string, port: number) => {
+  const app = createApp(directory);
+  const server = app.listen(port, () => {
+    console.log(`🚀 Server listening at http://localhost:${port}`);
+  });
+
+  setupWatcher(directory, server);
+
+  return server;
+}
+
+export const createApp = (directory: string, currentLocation: string = __dirname) => {
   const app = express();
 
   // Mount library static files
-  app.use(express.static(path.join(__dirname, './public')));
-  app.use(express.static(path.join(__dirname, '../frontend')));
+  app.use(express.static(path.join(currentLocation, './public')));
+  app.use(express.static(path.join(currentLocation, '../frontend')));
 
   // Define API
   app.use('/api/filetree', fileTreeRouter(directory));
+  app.use('/api/outline', outlineRouter(directory));
 
   app.get('/api/markdown/mdts-welcome-markdown.md', (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
-    res.sendFile(path.join(__dirname, './public/welcome.md'));
+    res.sendFile(path.join(currentLocation, './public/welcome.md'));
   });
   app.use('/api/markdown', express.static(directory));
-  app.use('/api/outline', outlineRouter(directory));
 
   // Catch-all route to serve index.html for any other requests
   app.get('*', async (req, res) => {
@@ -39,16 +46,16 @@ export const serve = (directory: string, port: number) => {
     }
 
     if (isDirectory || req.path.toLowerCase().endsWith('.md') || req.path.toLowerCase().endsWith('.markdown')) {
-      return res.sendFile(path.join(__dirname, '../frontend/index.html'));
+      return res.sendFile(path.join(currentLocation, '../frontend/index.html'));
     } else {
       return res.sendFile(req.path, { root: directory });
     }
   });
 
-  const server = app.listen(port, () => {
-    console.log(`🚀 Server listening at http://localhost:${port}`);
-  });
+  return app;
+}
 
+const setupWatcher = (directory: string, server:  any) => {
   const wss = new WebSocketServer({ server });
 
   const isMarkdownOrSimpleAsset = (filePath: string) => {

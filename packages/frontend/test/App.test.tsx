@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import App from '../src/App';
 import { FileTreeProvider } from '../src/contexts/FileTreeContext';
 
@@ -13,12 +13,14 @@ jest.mock('../src/hooks/apis/useFileTree', () => ({
 }));
 
 describe('App', () => {
-  test('renders without crashing', () => {
-    render(
-      <FileTreeProvider>
-        <App />
-      </FileTreeProvider>
-    );
+  test('renders without crashing', async () => {
+    await act(async () => {
+      render(
+        <FileTreeProvider>
+          <App />
+        </FileTreeProvider>
+      );
+    });
     expect(screen.getByRole('main')).toBeInTheDocument();
   });
 });
