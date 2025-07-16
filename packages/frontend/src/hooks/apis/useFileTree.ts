@@ -3,10 +3,10 @@ import { fetchData } from '../../api';
 import { useWebSocket } from '../useWebSocket';
 
 interface FileTreeItem {
-  [key: string]: FileTreeItem[] | string;
+  [key: string]: (FileTreeItem | string)[];
 }
 
-export const useFileTree = (): { fileTree: FileTreeItem[] | string[], loading: boolean, error: string | null } => {
+export const useFileTree = (): { fileTree: (FileTreeItem | string)[], loading: boolean, error: string | null } => {
   const [fileTree, setFileTree] = useState<FileTreeItem[] | string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
