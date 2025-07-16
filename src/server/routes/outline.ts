@@ -40,7 +40,7 @@ const getMarkdownOutline = (filePath: string): OutlineItem[] => {
   return outline;
 };
 
-export const outlineRouter = (directory: string) => {
+export const outlineRouter = (directory: string): Router => {
   const router = Router();
 
   router.get('/', (req, res) => {

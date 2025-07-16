@@ -34,7 +34,7 @@ const getFileTree = (baseDirectory: string, currentRelativePath: string): FileTr
   return tree;
 };
 
-export const fileTreeRouter = (directory: string) => {
+export const fileTreeRouter = (directory: string): Router => {
   const router = Router();
 
   router.get('/', (req, res) => {
