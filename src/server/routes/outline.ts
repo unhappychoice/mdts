@@ -50,7 +50,7 @@ export const outlineRouter = (directory: string): Router => {
     }
     try {
       const absolutePath = filePath === 'mdts-welcome-markdown.md'
-        ? path.join(__dirname, '../../../public/welcome.md')
+        ? path.join(__dirname, '../public/welcome.md')
         : path.join(directory, filePath);
       const outline = getMarkdownOutline(absolutePath);
       res.json(outline);
