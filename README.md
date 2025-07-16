@@ -10,7 +10,7 @@
 - **Markdown Rendering**: Renders Markdown files in a clean, readable format.
 - **Live Reload**: Automatically reloads the page in the browser when Markdown files are changed on disk. 
 
-![screenshot](docs/screenshot.png)
+![screenshot](docs/screen_animation.gif)
 
 
 ## Usage
