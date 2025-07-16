@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Content renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-cf17b1"
+  >
+    <div
+      class="MuiBox-root css-1ol10sz"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-1oa9u9i-MuiSvgIcon-root"
+        data-testid="ArticleOutlinedIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
+        />
+        <path
+          d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+        />
+      </svg>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-129bu66-MuiTypography-root"
+      >
+        🎉 Welcome to mdts!
+      </h4>
+    </div>
+    <div
+      class="MuiBox-root css-i3qfz4"
+    >
+      <div
+        class="MuiTabs-root css-jhczcq-MuiTabs-root"
+      >
+        <div
+          class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
+          style="overflow: hidden; margin-bottom: 0px;"
+        >
+          <div
+            aria-label="view mode tabs"
+            class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
+            role="tablist"
+          >
+            <button
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-mobu7h-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              Preview
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Raw
+            </button>
+          </div>
+          <span
+            class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
+            style="left: 0px; width: 0px;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="markdown-body light MuiBox-root css-x7jyj4"
+    >
+      <div
+        data-testid="mock-react-markdown"
+      >
+        ## Test Content
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
