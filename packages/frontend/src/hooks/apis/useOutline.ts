@@ -8,7 +8,7 @@ export type OutlineItem = {
   level: number;
 };
 
-export const useOutline = (path: string) => {
+export const useOutline = (path: string): { outline: OutlineItem[], loading: boolean, error: string | null } => {
   const [outline, setOutline] = useState<OutlineItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,8 +22,8 @@ export const useOutline = (path: string) => {
         : '/api/outline?filePath=mdts-welcome-markdown.md';
       const data = await fetchData<OutlineItem[]>(url, 'json');
       setOutline(data || []);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }

@@ -6,7 +6,7 @@ interface FileTreeItem {
   [key: string]: FileTreeItem[] | string;
 }
 
-export const useFileTree = () => {
+export const useFileTree = (): { fileTree: FileTreeItem[] | string[], loading: boolean, error: string | null } => {
   const [fileTree, setFileTree] = useState<FileTreeItem[] | string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -15,10 +15,10 @@ export const useFileTree = () => {
 
   const getFileTree = async () => {
     try {
-      const data = await fetchData<any[]>('/api/filetree', 'json');
+      const data = await fetchData<FileTreeItem[]>('/api/filetree', 'json');
       setFileTree(data || []);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }

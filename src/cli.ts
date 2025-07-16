@@ -7,9 +7,9 @@ const DEFAULT_PORT = 8521;
 const DEFAULT_DIRECTORY = '.';
 
 export class CLI {
-  run() {
+  run(): Promise<void> {
     return this.requireOpen()
-      .then(open => {
+      .then((open) => {
         const program = new Command();
 
         program
@@ -27,7 +27,7 @@ export class CLI {
       });
   }
 
-  requireOpen() {
-    return import('open').then(module => module.default);
+  requireOpen(): Promise<(file: string) => void> {
+    return import('open').then((module) => module.default);
   }
 }

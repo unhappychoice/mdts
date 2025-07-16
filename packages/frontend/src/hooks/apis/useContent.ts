@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchData } from '../../api';
 import { useWebSocket } from '../useWebSocket';
 
-export const useContent = (path: string) => {
+export const useContent = (path: string): { content: string, loading: boolean, error: string | null } => {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -15,8 +15,8 @@ export const useContent = (path: string) => {
       const data = await fetchData<string>(url, 'text');
 
       setContent(data || '');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }

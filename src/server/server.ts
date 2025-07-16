@@ -3,10 +3,11 @@ import express from 'express';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { WebSocketServer } from 'ws';
+import * as http from 'http';
 import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
 
-export const serve = (directory: string, port: number) => {
+export const serve = (directory: string, port: number): import('http').Server => {
   const app = createApp(directory);
   const server = app.listen(port, () => {
     console.log(`🚀 Server listening at http://localhost:${port}`);
@@ -15,9 +16,12 @@ export const serve = (directory: string, port: number) => {
   setupWatcher(directory, server);
 
   return server;
-}
+};
 
-export const createApp = (directory: string, currentLocation: string = __dirname) => {
+export const createApp = (
+  directory: string,
+  currentLocation: string = __dirname,
+): express.Express => {
   const app = express();
 
   // Mount library static files
@@ -41,11 +45,15 @@ export const createApp = (directory: string, currentLocation: string = __dirname
     try {
       const stats = await fs.stat(filePath);
       isDirectory = stats.isDirectory();
-    } catch (error) {
+    } catch {
       // File or directory does not exist, proceed as if it's a file
     }
 
-    if (isDirectory || req.path.toLowerCase().endsWith('.md') || req.path.toLowerCase().endsWith('.markdown')) {
+    if (
+      isDirectory ||
+      req.path.toLowerCase().endsWith('.md') ||
+      req.path.toLowerCase().endsWith('.markdown')
+    ) {
       return res.sendFile(path.join(currentLocation, '../frontend/index.html'));
     } else {
       return res.sendFile(req.path, { root: directory });
@@ -53,9 +61,9 @@ export const createApp = (directory: string, currentLocation: string = __dirname
   });
 
   return app;
-}
+};
 
-const setupWatcher = (directory: string, server:  any) => {
+const setupWatcher = (directory: string, server: http.Server) => {
   const wss = new WebSocketServer({ server });
 
   const isMarkdownOrSimpleAsset = (filePath: string) => {
@@ -75,16 +83,16 @@ const setupWatcher = (directory: string, server:  any) => {
   let watcher;
   try {
     watcher = chokidar.watch(directory, {
-      ignored: (filePath: string) => {
-        if (filePath.includes('node_modules')) {
+      ignored: (watchedFilePath: string) => {
+        if (watchedFilePath.includes('node_modules')) {
           return true;
         }
-        return !isMarkdownOrSimpleAsset(filePath);
+        return !isMarkdownOrSimpleAsset(watchedFilePath);
       },
       ignoreInitial: true,
     });
-  } catch (error) {
-    console.error('🚫 Error watching directory:', error);
+  } catch (e) {
+    console.error('🚫 Error watching directory:', e);
     console.error('Livereload will be disabled');
   }
 
@@ -103,9 +111,9 @@ const setupWatcher = (directory: string, server:  any) => {
   });
 
   watcher?.on('unlink', (filePath) => {
-    console.log('🌲 File removed: ${filePath}, reloading tree...');
+    console.log(`🌲 File removed: ${filePath}, reloading tree...`);
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });
   });
-}
+};
