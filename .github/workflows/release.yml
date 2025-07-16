@@ -47,6 +47,7 @@ jobs:
           git config user.name "Yuji Ueki"
           git config user.email "unhappychoice@gmail.com"
           npm version ${{ github.event.inputs.version_type }}
+          git push
           git push --tags
           npm publish
         env:
