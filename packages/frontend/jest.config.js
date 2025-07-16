@@ -11,9 +11,9 @@ const config = {
   ],
   moduleNameMapper: {
     '\.(css|less)$': 'identity-obj-proxy',
-    'react-syntax-highlighter': '<rootDir>/src/__mocks__/react-syntax-highlighter.tsx',
+    'react-syntax-highlighter': '<rootDir>/test/__mocks__/react-syntax-highlighter.tsx',
   },
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/setupTests.ts'],
 };
 
 module.exports = config;

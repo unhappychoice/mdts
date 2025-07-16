@@ -6,7 +6,8 @@
   "main": "src/index.tsx",
   "types": "src/index.tsx",
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

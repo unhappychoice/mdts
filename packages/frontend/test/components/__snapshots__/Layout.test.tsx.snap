@@ -1,0 +1,269 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Layout renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-zf0iqh"
+  >
+    <header
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-10054e1-MuiPaper-root-MuiAppBar-root"
+      style="--Paper-shadow: none;"
+    >
+      <div
+        class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-1ygil4i-MuiToolbar-root"
+      >
+        <div
+          class="MuiBox-root css-1xvvp3o"
+        >
+          <button
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-h7cjts-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <img
+              alt="mdts logo"
+              src="/logo.svg"
+              style="height: 56px; margin-left: -36px;"
+            />
+          </button>
+        </div>
+        <button
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-v8k5r1-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="CropFreeIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2m2 10H3v4c0 1.1.9 2 2 2h4v-2H5zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2zm0-16h-4v2h4v4h2V5c0-1.1-.9-2-2-2"
+            />
+          </svg>
+        </button>
+        <button
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-mcxdug-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="Brightness4Icon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zM12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6c3.31 0 6 2.69 6 6s-2.69 6-6 6"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+    <main
+      class="MuiBox-root css-1ctmjs9"
+    >
+      <div
+        class="MuiBox-root css-pl1hb3"
+      >
+        <div
+          class="MuiBox-root css-1v5tldx"
+        >
+          <div
+            class="MuiBox-root css-1g3qtqm"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-1b6r7r0-MuiTypography-root"
+            >
+              File Tree
+            </h6>
+            <button
+              aria-label="expand all"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="UnfoldMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15z"
+                />
+              </svg>
+            </button>
+            <button
+              aria-label="collapse all"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="UnfoldLessIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7.41 18.59 8.83 20 12 16.83 15.17 20l1.41-1.41L12 14zm9.18-13.18L15.17 4 12 7.17 8.83 4 7.41 5.41 12 10z"
+                />
+              </svg>
+            </button>
+          </div>
+          <button
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nyqon6-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="ChevronLeftIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+              />
+            </svg>
+          </button>
+        </div>
+        <ul
+          aria-multiselectable="false"
+          class="MuiSimpleTreeView-root css-281oti-MuiSimpleTreeView-root"
+          defaultcollapseicon="[object Object]"
+          defaultexpandicon="[object Object]"
+          id="mui-tree-view-1"
+          role="tree"
+          style="--TreeView-itemChildrenIndentation: 12px;"
+        />
+      </div>
+      <div
+        class="MuiBox-root css-cf17b1"
+      >
+        <div
+          class="MuiBox-root css-1ol10sz"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-1oa9u9i-MuiSvgIcon-root"
+            data-testid="ArticleOutlinedIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
+            />
+            <path
+              d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+            />
+          </svg>
+          <h4
+            class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-129bu66-MuiTypography-root"
+          >
+            🎉 Welcome to mdts!
+          </h4>
+        </div>
+        <div
+          class="MuiBox-root css-i3qfz4"
+        >
+          <div
+            class="MuiTabs-root css-jhczcq-MuiTabs-root"
+          >
+            <div
+              class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
+              style="overflow: hidden; margin-bottom: 0px;"
+            >
+              <div
+                aria-label="view mode tabs"
+                class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
+                role="tablist"
+              >
+                <button
+                  aria-selected="true"
+                  class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-mobu7h-MuiButtonBase-root-MuiTab-root"
+                  role="tab"
+                  tabindex="0"
+                  type="button"
+                >
+                  Preview
+                </button>
+                <button
+                  aria-selected="false"
+                  class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
+                  role="tab"
+                  tabindex="-1"
+                  type="button"
+                >
+                  Raw
+                </button>
+              </div>
+              <span
+                class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
+                style="left: 0px; width: 0px;"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="markdown-body light MuiBox-root css-x7jyj4"
+        >
+          <div
+            data-testid="mock-react-markdown"
+          >
+            # Mock Markdown Content
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiBox-root css-1kkx8h9"
+      >
+        <div
+          class="MuiBox-root css-1nqjmij"
+        >
+          <button
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nyqon6-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="ChevronRightIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+              />
+            </svg>
+          </button>
+          <h6
+            class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-onjnbs-MuiTypography-root"
+          >
+            Outline
+          </h6>
+        </div>
+        <ul
+          class="MuiList-root MuiList-padding MuiList-dense css-b7dj7n-MuiList-root"
+        >
+          <li
+            class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1s7t0kb-MuiListItem-root"
+          >
+            <div
+              class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
+            />
+          </li>
+        </ul>
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;
