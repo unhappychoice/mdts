@@ -1,24 +1,55 @@
+import { act, render, screen } from '@testing-library/react';
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { thunk } from 'redux-thunk';
 import App from '../src/App';
-import { FileTreeProvider } from '../src/contexts/FileTreeContext';
+
+const mockStore = configureStore([thunk]);
 
 // Mock the useFileTree hook
-jest.mock('../src/hooks/apis/useFileTree', () => ({
-  useFileTree: () => ({
-    fileTree: [],
-    loading: false,
-    error: null,
-  }),
+jest.mock('../src/api', () => ({
+  fetchData: jest.fn(() => Promise.resolve([])),
 }));
 
+
 describe('App', () => {
+  let store;
+
+  beforeEach(() => {
+    store = mockStore({
+      appSetting: {
+        darkMode: false,
+        contentMode: 'fixed',
+        fileTreeOpen: true,
+        outlineOpen: true,
+      },
+      fileTree: {
+        fileTree: [],
+        filteredFileTree: [],
+        loading: false,
+        error: null,
+        searchQuery: '',
+      },
+      content: {
+        content: '',
+        loading: false,
+        error: null,
+      },
+      outline: {
+        outline: [],
+        loading: false,
+        error: null,
+      },
+    });
+  });
+
   test('renders without crashing', async () => {
     await act(async () => {
       render(
-        <FileTreeProvider>
+        <Provider store={store}>
           <App />
-        </FileTreeProvider>
+        </Provider>
       );
     });
     expect(screen.getByRole('main')).toBeInTheDocument();

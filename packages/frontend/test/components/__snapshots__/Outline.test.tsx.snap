@@ -3,29 +3,45 @@
 exports[`Outline renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-hy1e6e"
+    class="MuiBox-root css-1kkx8h9"
   >
     <div
-      class="MuiBox-root css-1lsng3a"
+      class="MuiBox-root css-1nqjmij"
     >
       <button
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-130mf42-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nyqon6-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
         <svg
           aria-hidden="true"
           class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-          data-testid="ChevronLeftIcon"
+          data-testid="ChevronRightIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
           <path
-            d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+            d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
           />
         </svg>
       </button>
+      <h6
+        class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-onjnbs-MuiTypography-root"
+      >
+        Outline
+      </h6>
     </div>
+    <ul
+      class="MuiList-root MuiList-padding MuiList-dense css-b7dj7n-MuiList-root"
+    >
+      <li
+        class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1h8xkwt-MuiListItem-root"
+      >
+        <div
+          class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
+        />
+      </li>
+    </ul>
   </div>
 </DocumentFragment>
 `;

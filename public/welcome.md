@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./logo.svg" alt="mdts" width="400">
+  <img src="/logo.svg" alt="mdts" width="400">
 </h1>
 
 mdts (Markdown Tree Server) is a simple and efficient tool for serving and viewing markdown files with an interactive file tree and outline. It's designed to help you navigate and read your markdown-based documentation or notes with ease.

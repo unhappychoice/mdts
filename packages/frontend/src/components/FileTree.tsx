@@ -1,15 +1,16 @@
 import { ArticleOutlined, Clear as ClearIcon, FolderOutlined } from '@mui/icons-material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import DescriptionIcon from '@mui/icons-material/Description';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
-import { Box, CircularProgress, IconButton, InputBase, InputAdornment, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, InputAdornment, InputBase, Typography } from '@mui/material';
 import { TreeItem } from '@mui/x-tree-view';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
-import React, { useEffect, useMemo } from 'react';
-import { useFileTree } from '../hooks/apis/useFileTree';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchFileTree, setExpandedNodes, setSearchQuery, toggleNode, expandAllNodes } from '../store/slices/fileTreeSlice';
+import { AppDispatch, RootState } from '../store/store';
 
 interface FileTreeItem {
   [key: string]: (FileTreeItem | string)[];
@@ -23,36 +24,23 @@ interface FileTreeComponentProps {
 }
 
 const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
-  const { fileTree, loading, error } = useFileTree();
-  const [expanded, setExpanded] = React.useState<string[]>([]);
-  const [searchQuery, setSearchQuery] = React.useState<string>('');
+  const dispatch = useDispatch<AppDispatch>();
+  const { fileTree, filteredFileTree, loading, error, searchQuery, expandedNodes } = useSelector((state: RootState) => state.fileTree);
 
-  const filteredTree = useMemo(() => filterTree(fileTree, searchQuery), [fileTree, searchQuery]);
+  useEffect(() => {
+    dispatch(fetchFileTree());
+  }, [dispatch]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
+    dispatch(setSearchQuery(event.target.value));
   };
 
-  const handleExpandAll = () => {
-    const allItemIds: string[] = [];
-    const collectIds = (items: (FileTreeItem | string)[], parentPath: string = '') => {
-      items.forEach(item => {
-        if (typeof item !== 'string') {
-          const key = Object.keys(item)[0];
-          const currentPath = parentPath ? `${parentPath}/${key}` : key;
-          allItemIds.push(currentPath);
-          collectIds(item[key] as FileTreeItem[] | string[], currentPath);
-        }
-      });
-    };
-    if (fileTree) {
-      collectIds(fileTree);
-    }
-    setExpanded(allItemIds);
+  const handleExpandAllClick = () => {
+    dispatch(expandAllNodes(fileTree));
   };
 
   const handleCollapseAll = () => {
-    setExpanded([]);
+    dispatch(setExpandedNodes([]));
   };
 
   useEffect(() => {
@@ -75,15 +63,15 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
         });
       };
 
-      if (filteredTree) {
-        collectExpandedPaths(filteredTree);
+      if (filteredFileTree) {
+        collectExpandedPaths(filteredFileTree);
       }
       
-      setExpanded(newExpanded);
+      dispatch(setExpandedNodes(newExpanded));
     } else {
-      setExpanded([]);
+      dispatch(setExpandedNodes([]));
     }
-  }, [searchQuery, filteredTree]);
+  }, [searchQuery, filteredFileTree, dispatch]);
 
   return (
     <Box sx={{
@@ -101,7 +89,7 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
             <Typography variant="h6" gutterBottom sx={{ flex: 1, marginLeft: 1, marginBottom: 0 }}>
               File Tree
             </Typography>
-            <IconButton onClick={handleExpandAll} size="small" aria-label="expand all">
+            <IconButton onClick={handleExpandAllClick} size="small" aria-label="expand all">
               <UnfoldMoreIcon />
             </IconButton>
             <IconButton onClick={handleCollapseAll} size="small" aria-label="collapse all">
@@ -133,7 +121,7 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
             searchQuery && (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => dispatch(setSearchQuery(''))}
                   edge="end"
                   size="small"
                   aria-label="clear search"
@@ -156,11 +144,11 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
             <SimpleTreeView
               defaultCollapseIcon={<ExpandMoreIcon />}
               defaultExpandIcon={<ChevronRightIcon />}
-              expandedItems={expanded}
-              onExpandedItemsChange={(event, itemIds) => setExpanded(itemIds)}
+              expandedItems={expandedNodes}
+              onExpandedItemsChange={(event, itemIds) => dispatch(setExpandedNodes(itemIds))}
               sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
             >
-              {renderTreeItems(filteredTree, onFileSelect)}
+              {renderTreeItems(filteredFileTree, onFileSelect, expandedNodes, dispatch)}
             </SimpleTreeView>
           )
       )}
@@ -173,6 +161,8 @@ export default FileTree;
 const renderTreeItems = (
   tree: (FileTreeItem | string)[],
   onFileSelect: (path: string) => void,
+  expandedNodes: string[],
+  dispatch: AppDispatch,
   parentPath: string = ''
 ) => {
   return tree.map((item) => {
@@ -209,35 +199,10 @@ const renderTreeItems = (
               </Typography>
             </Box>
           }
-        >
-          {Array.isArray(value) && value.length > 0 && renderTreeItems(value, onFileSelect, currentPath)}
+          >
+          {Array.isArray(value) && value.length > 0 && renderTreeItems(value, onFileSelect, expandedNodes, dispatch, currentPath)}
         </TreeItem>
       );
     }
   });
-};
-
-const filterTree = (tree: (FileTreeItem | string)[], searchQuery: string): (FileTreeItem | string)[] => {
-  if (!searchQuery) return tree; // If no search query, return the original tree
-
-  return tree
-    .reduce((acc: (FileTreeItem | string)[], item) => {
-      if (typeof item === 'string') {
-        const fileName = item.split('/').pop() || '';
-        return fileName.toLowerCase().includes(searchQuery.toLowerCase())
-          ? [...acc, item]
-          : acc;
-      } else {
-        const key = Object.keys(item)[0];
-        const value = item[key];
-
-        const children = Array.isArray(value)
-          ? filterTree(value, searchQuery)
-          : [];
-
-        return children.length > 0
-          ? [...acc, { [key]: children } as FileTreeItem ]
-          :acc;
-      }
-    }, []);
 };

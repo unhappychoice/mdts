@@ -135,6 +135,21 @@ exports[`Layout renders correctly 1`] = `
             </svg>
           </button>
         </div>
+        <div
+          class="MuiBox-root css-1qm1lh"
+        >
+          <div
+            class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"
+          >
+            <input
+              aria-label="search files"
+              class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
+              placeholder="Search files..."
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
         <ul
           aria-multiselectable="false"
           class="MuiSimpleTreeView-root css-281oti-MuiSimpleTreeView-root"
@@ -217,9 +232,7 @@ exports[`Layout renders correctly 1`] = `
         >
           <div
             data-testid="mock-react-markdown"
-          >
-            # Mock Markdown Content
-          </div>
+          />
         </div>
       </div>
       <div
@@ -253,15 +266,7 @@ exports[`Layout renders correctly 1`] = `
         </div>
         <ul
           class="MuiList-root MuiList-padding MuiList-dense css-b7dj7n-MuiList-root"
-        >
-          <li
-            class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1s7t0kb-MuiListItem-root"
-          >
-            <div
-              class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
-            />
-          </li>
-        </ul>
+        />
       </div>
     </main>
   </div>
