@@ -6,6 +6,7 @@ import { useWebSocket } from './hooks/useWebSocket';
 import { AppDispatch } from './store/store';
 import { fetchContent } from './store/slices/contentSlice';
 import { fetchFileTree } from './store/slices/fileTreeSlice';
+import { fetchOutline } from './store/slices/outlineSlice';
 
 const App = () => {
   const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -20,6 +21,7 @@ const App = () => {
   useEffect(() => {
     if (event?.type === 'reload-content') {
       dispatch(fetchContent(currentPath));
+      dispatch(fetchOutline(currentPath));
     } else if (event?.type === 'reload-tree') {
       dispatch(fetchFileTree());
     }

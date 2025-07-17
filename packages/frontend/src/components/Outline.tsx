@@ -1,8 +1,10 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, CircularProgress, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
-import React from 'react';
-import { useOutline } from '../hooks/apis/useOutline';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store/store';
+import { fetchOutline } from '../store/slices/outlineSlice';
 
 interface OutlineProps {
   filePath: string;
@@ -12,7 +14,12 @@ interface OutlineProps {
 }
 
 const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onToggle }) => {
-  const { outline, loading, error } = useOutline(filePath);
+  const dispatch = useDispatch<AppDispatch>();
+  const { outline, loading, error } = useSelector((state: RootState) => state.outline);
+
+  useEffect(() => {
+    dispatch(fetchOutline(filePath));
+  }, [dispatch, filePath]);
 
   if (error) return <p>Error: {error}</p>;
 
