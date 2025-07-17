@@ -1,8 +1,10 @@
 import { ArticleOutlined } from '@mui/icons-material';
 import { Box, Breadcrumbs, CircularProgress, Link, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useContent } from '../hooks/apis/useContent';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFileTreeContext } from '../contexts/FileTreeContext';
+import { AppDispatch, RootState } from '../store/store';
+import { fetchContent } from '../store/slices/contentSlice';
 import MarkdownPreview from './MarkdownPreview';
 
 interface ContentProps {
@@ -14,11 +16,15 @@ interface ContentProps {
 
 const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId, onDirectorySelect }) => {
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
-
-  const { content, loading: contentLoading, error } = useContent(selectedFilePath);
+  const dispatch = useDispatch<AppDispatch>();
+  const { content, loading: contentLoading, error } = useSelector((state: RootState) => state.content);
   const { loading: fileTreeLoading } = useFileTreeContext();
 
   const loading = contentLoading || fileTreeLoading;
+
+  useEffect(() => {
+    dispatch(fetchContent(selectedFilePath));
+  }, [dispatch, selectedFilePath]);
 
   useEffect(() => {
     if (scrollToId) {

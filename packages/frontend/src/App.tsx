@@ -1,7 +1,11 @@
 import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Layout from './components/Layout';
 import { useFileTree } from './hooks/apis/useFileTree';
+import { useWebSocket } from './hooks/useWebSocket';
+import { AppDispatch } from './store/store';
+import { fetchContent } from './store/slices/contentSlice';
 
 const App = () => {
   const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -10,7 +14,14 @@ const App = () => {
   const [currentPath, setCurrentPath] = useState<string | null>(null);
   const [isCurrentPathDirectory, setIsCurrentPathDirectory] = useState<boolean>(false);
 
-  const { loading } = useFileTree();
+  const dispatch = useDispatch<AppDispatch>();
+  const event = useWebSocket();
+
+  useEffect(() => {
+    if (event && event.type === 'reload-content') {
+      dispatch(fetchContent(currentPath));
+    }
+  }, [event, dispatch, currentPath]);
 
   useEffect(() => {
     const getPathFromUrl = () => {
