@@ -5,6 +5,11 @@ import configureStore from 'redux-mock-store';
 import FileTree from '../../src/components/FileTree';
 import { fetchFileTree, setSearchQuery } from '../../src/store/slices/fileTreeSlice';
 
+jest.mock('../../src/store/slices/fileTreeSlice', () => ({
+  ...jest.requireActual('../../src/store/slices/fileTreeSlice'),
+  fetchFileTree: jest.fn(() => ({ type: 'fileTree/fetchFileTree/pending' })), // Mock the thunk action
+}));
+
 const mockStore = configureStore([]);
 
 describe('FileTree', () => {
