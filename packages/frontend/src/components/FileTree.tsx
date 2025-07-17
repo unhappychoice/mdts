@@ -9,7 +9,9 @@ import { Box, CircularProgress, IconButton, InputBase, InputAdornment, Typograph
 import { TreeItem } from '@mui/x-tree-view';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import React, { useEffect, useMemo } from 'react';
-import { useFileTree } from '../hooks/apis/useFileTree';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store/store';
+import { fetchFileTree } from '../store/slices/fileTreeSlice';
 
 interface FileTreeItem {
   [key: string]: (FileTreeItem | string)[];
@@ -23,9 +25,14 @@ interface FileTreeComponentProps {
 }
 
 const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
-  const { fileTree, loading, error } = useFileTree();
+  const dispatch = useDispatch<AppDispatch>();
+  const { fileTree, loading, error } = useSelector((state: RootState) => state.fileTree);
   const [expanded, setExpanded] = React.useState<string[]>([]);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
+
+  useEffect(() => {
+    dispatch(fetchFileTree());
+  }, [dispatch]);
 
   const filteredTree = useMemo(() => filterTree(fileTree, searchQuery), [fileTree, searchQuery]);
 

@@ -2,7 +2,6 @@ import { ArticleOutlined } from '@mui/icons-material';
 import { Box, Breadcrumbs, CircularProgress, Link, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFileTreeContext } from '../contexts/FileTreeContext';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchContent } from '../store/slices/contentSlice';
 import MarkdownPreview from './MarkdownPreview';
@@ -18,7 +17,7 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
   const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
   const dispatch = useDispatch<AppDispatch>();
   const { content, loading: contentLoading, error } = useSelector((state: RootState) => state.content);
-  const { loading: fileTreeLoading } = useFileTreeContext();
+  const { loading: fileTreeLoading } = useSelector((state: RootState) => state.fileTree);
 
   const loading = contentLoading || fileTreeLoading;
 

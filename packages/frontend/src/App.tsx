@@ -2,10 +2,10 @@ import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/mat
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Layout from './components/Layout';
-import { useFileTree } from './hooks/apis/useFileTree';
 import { useWebSocket } from './hooks/useWebSocket';
 import { AppDispatch } from './store/store';
 import { fetchContent } from './store/slices/contentSlice';
+import { fetchFileTree } from './store/slices/fileTreeSlice';
 
 const App = () => {
   const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -18,8 +18,10 @@ const App = () => {
   const event = useWebSocket();
 
   useEffect(() => {
-    if (event && event.type === 'reload-content') {
+    if (event?.type === 'reload-content') {
       dispatch(fetchContent(currentPath));
+    } else if (event?.type === 'reload-tree') {
+      dispatch(fetchFileTree());
     }
   }, [event, dispatch, currentPath]);
 

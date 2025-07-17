@@ -12,7 +12,8 @@ import {
   Typography
 } from '@mui/material';
 import React from 'react';
-import { useFileTreeContext } from '../contexts/FileTreeContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 interface DirectoryContentProps {
   selectedDirectoryPath: string;
@@ -85,7 +86,7 @@ const filterFileTree = (tree: FileTreeItem[] | string[], targetPath: string): Fi
 };
 
 const DirectoryContent: React.FC<DirectoryContentProps> = ({ selectedDirectoryPath, onFileSelect, onDirectorySelect, contentMode = 'fixed' }) => {
-  const { fileTree: fullFileTree, loading, error } = useFileTreeContext();
+  const { fileTree: fullFileTree, loading, error } = useSelector((state: RootState) => state.fileTree);
   const fileTree = filterFileTree(fullFileTree, selectedDirectoryPath);
 
 
