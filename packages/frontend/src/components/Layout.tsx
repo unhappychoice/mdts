@@ -5,7 +5,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { AppBar, Box, IconButton, ToggleButton, ToggleButtonGroup, Toolbar, useMediaQuery } from '@mui/material';
 import React, { useCallback, useState, useMemo } from 'react';
 
-import Content from './Content';
+import MarkdownContent from './MarkdownContent';
 import DirectoryContent from './DirectoryContent';
 import FileTree from './FileTree';
 import Outline from './Outline';
@@ -61,7 +61,7 @@ const Layout = ({ darkMode, toggleDarkMode, currentPath, isCurrentPathDirectory,
         {currentPath && isCurrentPathDirectory ? (
           <DirectoryContent selectedDirectoryPath={currentPath} onFileSelect={handleFileSelect} onDirectorySelect={handleDirectorySelect} contentMode={contentMode} />
         ) : (
-          <Content selectedFilePath={currentPath} onDirectorySelect={handleDirectorySelect} contentMode={contentMode} scrollToId={scrollToId} />
+          <MarkdownContent selectedFilePath={currentPath} onDirectorySelect={handleDirectorySelect} contentMode={contentMode} scrollToId={scrollToId} />
         )}
         <Outline filePath={isCurrentPathDirectory ? null : currentPath} onItemClick={handleOutlineItemClick} isOpen={outlineOpen} onToggle={toggleOutline} />
       </Box>

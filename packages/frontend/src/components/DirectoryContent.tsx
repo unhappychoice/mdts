@@ -14,6 +14,7 @@ import {
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { selectFilteredFileTree } from '../store/slices/fileTreeSlice';
 
 interface DirectoryContentProps {
   selectedDirectoryPath: string;
@@ -22,73 +23,9 @@ interface DirectoryContentProps {
   contentMode?: 'fixed' | 'full';
 }
 
-interface FileTreeItem {
-  [key: string]: FileTreeItem[] | string;
-}
-
-const filterFileTree = (tree: FileTreeItem[] | string[], targetPath: string): FileTreeItem[] | string[] => {
-  if (targetPath === '') {
-    const result: FileTreeItem[] | string[] = [];
-    tree.forEach(item => {
-      if (typeof item === 'string') {
-        result.push(item.split('/').pop() || item);
-      } else {
-        const key = Object.keys(item)[0];
-        const newObject: FileTreeItem = {};
-        newObject[key.split('/').pop() || key] = item[key];
-        result.push(newObject);
-      }
-    });
-    return result;
-  }
-
-  const findChildren = (currentTree: FileTreeItem[] | string[], pathSegments: string[], currentSegmentIndex: number): FileTreeItem[] | string[] | null => {
-    if (currentSegmentIndex === pathSegments.length) {
-      return currentTree;
-    }
-
-    const segment = pathSegments[currentSegmentIndex];
-
-    for (const item of currentTree) {
-      if (typeof item !== 'string') {
-        const key = Object.keys(item)[0];
-        const itemSegments = key.split('/');
-        if (itemSegments[itemSegments.length - 1] === segment) {
-          const children = item[key];
-          if (Array.isArray(children)) {
-            return findChildren(children, pathSegments, currentSegmentIndex + 1);
-          }
-        }
-      }
-    }
-    return null;
-  };
-
-  const pathSegments = targetPath.split('/').filter(s => s !== '');
-  const children = findChildren(tree, pathSegments, 0);
-
-  if (children) {
-    const result: FileTreeItem[] | string[] = [];
-    children.forEach(item => {
-      if (typeof item === 'string') {
-        result.push(item.split('/').pop() || item);
-      } else {
-        const key = Object.keys(item)[0];
-        const newObject: FileTreeItem = {};
-        newObject[key.split('/').pop() || key] = item[key];
-        result.push(newObject);
-      }
-    });
-    return result;
-  }
-
-  return [];
-};
-
 const DirectoryContent: React.FC<DirectoryContentProps> = ({ selectedDirectoryPath, onFileSelect, onDirectorySelect, contentMode = 'fixed' }) => {
   const { fileTree: fullFileTree, loading, error } = useSelector((state: RootState) => state.fileTree);
-  const fileTree = filterFileTree(fullFileTree, selectedDirectoryPath);
-
+  const fileTree = selectFilteredFileTree(fullFileTree, selectedDirectoryPath);
 
   const pathSegments = selectedDirectoryPath
     ? selectedDirectoryPath.split('/').filter(segment => segment !== '')

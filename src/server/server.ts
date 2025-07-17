@@ -103,7 +103,7 @@ const setupWatcher = (directory: string, server: http.Server, port: number) => {
           if (fs.statSync(watchedFilePath).isDirectory()) {
             return false; // Don't ignore directories
           }
-        } catch (e) {
+        } catch {
           // On error (e.g., file not found), let chokidar handle it
           return false;
         }
