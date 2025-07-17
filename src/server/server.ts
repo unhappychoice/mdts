@@ -1,6 +1,6 @@
-import chokidar from 'chokidar';
+import chokidar, { FSWatcher } from 'chokidar';
 import express from 'express';
-import { promises as fs } from 'fs';
+import * as fs from 'fs';
 import path from 'path';
 import { WebSocketServer } from 'ws';
 import * as http from 'http';
@@ -13,7 +13,7 @@ export const serve = (directory: string, port: number): import('http').Server =>
     console.log(`🚀 Server listening at http://localhost:${port}`);
   });
 
-  setupWatcher(directory, server);
+  setupWatcher(directory, server, port);
 
   return server;
 };
@@ -43,7 +43,7 @@ export const createApp = (
     const filePath = path.join(directory, req.path);
     let isDirectory = false;
     try {
-      const stats = await fs.stat(filePath);
+      const stats = fs.statSync(filePath);
       isDirectory = stats.isDirectory();
     } catch {
       // File or directory does not exist, proceed as if it's a file
@@ -63,29 +63,49 @@ export const createApp = (
   return app;
 };
 
-const setupWatcher = (directory: string, server: http.Server) => {
+const setupWatcher = (directory: string, server: http.Server, port: number) => {
   const wss = new WebSocketServer({ server });
+
+  wss.on('listening', () => {
+    console.log(`🚀 WebSocket server listening at ws://localhost:${port}`);
+  });
+
+  wss.on('connection', () => {
+    console.log('🤝 Livereload Client connected');
+
+    wss.on('close', () => {
+      console.log('👋 Livereload Client closed');
+    });
+
+    wss.on('wsClientError', (e) => {
+      console.error('🚫 Error on WebSocket server:', e);
+    });
+
+    wss.on('error', (e) => {
+      console.error('🚫 Error on WebSocket server:', e);
+    });
+  });
 
   const isMarkdownOrSimpleAsset = (filePath: string) => {
     const ext = filePath.toLowerCase().split('.').pop();
-    return (
-      ext &&
-      (ext === 'md' ||
-        ext === 'markdown' ||
-        ext === 'png' ||
-        ext === 'jpg' ||
-        ext === 'jpeg' ||
-        ext === 'gif' ||
-        ext === 'svg')
-    );
+    return ext && (ext === 'md' || ext === 'markdown');
   };
 
-  let watcher;
+  let watcher: FSWatcher | null = null;
+
   try {
     watcher = chokidar.watch(directory, {
       ignored: (watchedFilePath: string) => {
         if (watchedFilePath.includes('node_modules')) {
           return true;
+        }
+        try {
+          if (fs.statSync(watchedFilePath).isDirectory()) {
+            return false; // Don't ignore directories
+          }
+        } catch (e) {
+          // On error (e.g., file not found), let chokidar handle it
+          return false;
         }
         return !isMarkdownOrSimpleAsset(watchedFilePath);
       },
@@ -117,3 +137,4 @@ const setupWatcher = (directory: string, server: http.Server) => {
     });
   });
 };
+
