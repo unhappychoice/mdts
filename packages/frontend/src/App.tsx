@@ -1,21 +1,20 @@
-import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Layout from './components/Layout';
 import { useWebSocket } from './hooks/useWebSocket';
-import { AppDispatch } from './store/store';
+import { AppDispatch, RootState } from './store/store';
 import { fetchContent } from './store/slices/contentSlice';
 import { fetchFileTree } from './store/slices/fileTreeSlice';
 import { fetchOutline } from './store/slices/outlineSlice';
 
 const App = () => {
-  const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [darkMode, setDarkMode] = useState(isDarkMode);
+  const dispatch = useDispatch<AppDispatch>();
+  const { darkMode } = useSelector((state: RootState) => state.appSetting);
 
   const [currentPath, setCurrentPath] = useState<string | null>(null);
   const [isCurrentPathDirectory, setIsCurrentPathDirectory] = useState<boolean>(false);
 
-  const dispatch = useDispatch<AppDispatch>();
   const event = useWebSocket();
 
   useEffect(() => {
@@ -87,16 +86,10 @@ const App = () => {
     [darkMode],
   );
 
-  const toggleDarkMode = () => {
-    setDarkMode((prevMode) => !prevMode);
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
         <Layout
-          darkMode={darkMode}
-          toggleDarkMode={toggleDarkMode}
           currentPath={currentPath}
           isCurrentPathDirectory={isCurrentPathDirectory}
           handleFileSelect={handleFileSelect}
