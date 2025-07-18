@@ -30,6 +30,10 @@ const App = () => {
   }, [event, dispatch, currentPath]);
 
   useEffect(() => {
+    dispatch(fetchFileTree());
+  }, [dispatch]);
+
+  useEffect(() => {
     const getPathFromUrl = () => {
       const path = location.pathname.substring(1);
       if (path === '') return { path: null, isDirectory: false };

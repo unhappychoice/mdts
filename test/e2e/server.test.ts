@@ -16,13 +16,14 @@ describe('Server E2E Tests', () => {
   it('GET /api/filetree should return the file tree', async () => {
     const res = await request(app).get('/api/filetree');
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual(
-      expect.arrayContaining([
+    expect(res.body).toEqual({
+      fileTree: expect.arrayContaining([
         'test.md',
         'another.md',
         { 'nested': ['nested/nested.md'] }
-      ])
-    );
+      ]),
+      mountedDirectoryPath: path.join(__dirname, '../fixtures/mountDirectory/content'),
+    });
   });
 
   it('GET /api/markdown/mdts-welcome-markdown.md should return the welcome markdown', async () => {

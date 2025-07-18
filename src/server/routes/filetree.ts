@@ -38,7 +38,7 @@ export const fileTreeRouter = (directory: string): Router => {
   const router = Router();
 
   router.get('/', (req, res) => {
-    res.json(getFileTree(directory, ''));
+    res.json({ fileTree: getFileTree(directory, ''), mountedDirectoryPath: directory });
   });
 
   return router;

@@ -68,8 +68,6 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
       }
       
       dispatch(setExpandedNodes(newExpanded));
-    } else {
-      dispatch(setExpandedNodes([]));
     }
   }, [searchQuery, filteredFileTree, dispatch]);
 
@@ -159,12 +157,15 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
 export default FileTree;
 
 const renderTreeItems = (
-  tree: (FileTreeItem | string)[],
+  tree: (FileTreeItem | string)[] | null,
   onFileSelect: (path: string) => void,
   expandedNodes: string[],
   dispatch: AppDispatch,
   parentPath: string = ''
 ) => {
+  if (!tree) {
+    return null;
+  }
   return tree.map((item) => {
     if (typeof item === 'string') {
       const fileName = item.split('/').pop();

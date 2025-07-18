@@ -44,10 +44,13 @@ describe('filetree.ts', () => {
 
       const response = await request(app).get('/api/filetree');
       expect(response.statusCode).toBe(200);
-      expect(response.body).toEqual([
-        { 'dir1': ['dir1/subfile1.md'] },
-        'file1.md',
-      ]);
+      expect(response.body).toEqual({
+        fileTree: [
+          { 'dir1': ['dir1/subfile1.md'] },
+          'file1.md',
+        ],
+        mountedDirectoryPath: mockDirectory,
+      });
     });
 
     it('should return an empty array if no markdown files are found', async () => {
@@ -58,7 +61,10 @@ describe('filetree.ts', () => {
 
       const response = await request(app).get('/api/filetree');
       expect(response.statusCode).toBe(200);
-      expect(response.body).toEqual([]);
+      expect(response.body).toEqual({
+        fileTree: [],
+        mountedDirectoryPath: mockDirectory,
+      });
     });
   });
 });

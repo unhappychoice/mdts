@@ -1,4 +1,5 @@
 import { CLI } from '../../src/cli';
+import path from 'path';
 
 // Mock fs first, before any other imports that might use it
 let mockExistsSyncResult = false;
@@ -47,7 +48,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith('.', 8521);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       })
   });
@@ -58,7 +59,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith('.', 8521);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521');
       });
   });
@@ -69,7 +70,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith('.', 9000);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 9000);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });
@@ -80,7 +81,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith('./my-dir', 8521);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 8521);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -91,7 +92,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith('./my-dir', 9000);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 9000);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });
