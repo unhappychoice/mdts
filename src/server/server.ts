@@ -36,6 +36,15 @@ export const createApp = (
     res.setHeader('Content-Type', 'text/plain');
     res.sendFile(path.join(currentLocation, './public/welcome.md'));
   });
+
+  app.use('/api/markdown', (req, res, next) => {
+    const filePath = path.join(directory, req.path);
+    if (!fs.existsSync(filePath)) {
+      console.error(`🚫 File not found: ${filePath}`);
+      return res.status(404).send('File not found');
+    }
+    next();
+  });
   app.use('/api/markdown', express.static(directory));
 
   // Catch-all route to serve index.html for any other requests
@@ -56,7 +65,17 @@ export const createApp = (
     ) {
       return res.sendFile(path.join(currentLocation, '../frontend/index.html'));
     } else {
-      return res.sendFile(req.path, { root: directory });
+      return res.sendFile(req.path, { root: directory }, (err) => {
+        if (err) {
+          if ('code' in err && err.code === 'ENOENT') {
+            console.error(`🚫 File not found: ${path.join(directory, req.path)}`);
+            res.status(404).send('File not found');
+          } else {
+            console.error(`🚫 Error serving file ${path.join(directory, req.path)}:`, err);
+            res.status(500).send('Internal Server Error');
+          }
+        }
+      });
     }
   });
 

@@ -20,6 +20,7 @@ export class CLI {
             serve(directory, port);
             const readmePath = path.join(directory, 'README.md');
             const initialPath = existsSync(readmePath) ? '/README.md' : '';
+            console.log(`🌐 Opening browser at http://localhost:${port}${initialPath}...`);
             open(`http://localhost:${port}${initialPath}`);
           });
 

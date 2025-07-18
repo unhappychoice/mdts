@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchContent } from '../store/slices/contentSlice';
 import MarkdownPreview from './MarkdownPreview';
+import ErrorDisplay from './ErrorDisplay';
 
 interface ContentProps {
   selectedFilePath: string | null;
@@ -42,7 +43,9 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
     ? selectedFilePath.split('/').filter(segment => segment !== '')
     : [];
 
-  if (error) return <p>Error: {error}</p>;
+  if (error) {
+    return <ErrorDisplay error={error} />;
+  }
 
   return (
     <Box

@@ -21,6 +21,9 @@ const slugify = (text: string): string => {
 };
 
 const getMarkdownOutline = (filePath: string): OutlineItem[] => {
+  if (!fs.existsSync(filePath)) {
+    return [];
+  }
   const fileContent = fs.readFileSync(filePath, 'utf-8');
   const tokens = md.parse(fileContent, {});
   const outline: OutlineItem[] = [];
