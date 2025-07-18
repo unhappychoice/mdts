@@ -54,22 +54,71 @@
     }
 
     hr {
-        color: rgba(0, 0, 0, .12);
+        margin: 48px 0;
+        border: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
     }
 
     img {
         max-width: 100%;
     }
 
+    table {
+        display: block;
+        margin: 48px 0;
+        width: max-content;
+        overflow: auto;
+        border-spacing: 0;
+        border-collapse: collapse;
+
+        thead {
+            text-align: left;
+        }
+
+        tr {
+            border-top: 1px solid rgba(0, 0, 0, .12);
+        }
+
+        td, th {
+            padding: 6px 12px;
+            border: 1px solid rgba(0, 0, 0, .12);
+        }
+    }
+
     pre {
         padding: 16px;
         overflow: auto;
         background-color: #f4f5f7;
+
+        code {
+            padding: 0;
+            font-size: 100%;
+            word-break: normal;
+            white-space: pre;
+            background: transparent;
+            border: 0;
+        }
+    }
+
+    code {
+        display: inline-block;
+        padding: .1em .6em;
+        margin: 0;
+        font-size: 80%;
+        background-color: #f4f5f7;
+        border-radius: 2px;
     }
 
     blockquote {
+        margin: 24px 0;
         padding: 5px 16px;
         font-size: 14px;
+        color: rgba(0, 0, 0, .24);
+        border-left: 4px solid rgba(0, 0, 0, .12);
+
+        blockquote {
+            margin: 12px 0;
+        }
 
         p {
             margin: 0;
@@ -89,18 +138,37 @@
 
 .markdown-body.dark {
     h1 {
-        border-bottom: 1px solid rgba(255, 255, 255, .12);
+        border-color: rgba(255, 255, 255, .12);
     }
 
     h2 {
-        border-bottom: 1px solid rgba(255, 255, 255, .12);
+        border-color: rgba(255, 255, 255, .12);
+    }
+
+    table {
+        tr {
+            border-color: rgba(255, 255, 255, .12);
+        }
+
+        td, th {
+            border-color: rgba(255, 255, 255, .12);
+        }
     }
 
     pre {
         background-color: #20252c;
     }
 
+    code {
+        background-color: #20252c;
+    }
+
+    blockquote {
+        color: rgba(255, 255, 255, .24);
+        border-color: rgba(255, 255, 255, .12);
+    }
+
     hr {
-        color: rgba(255, 255, 255, .12);
+        border-color: rgba(255, 255, 255, .12);
     }
 }
