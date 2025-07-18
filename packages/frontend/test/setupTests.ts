@@ -29,6 +29,12 @@ global.fetch = jest.fn((url) => {
   return Promise.reject(new Error(`Unhandled fetch for ${url}`));
 });
 
+// Polyfill TextEncoder and TextDecoder
+import { TextEncoder, TextDecoder } from 'util';
+global.TextEncoder = TextEncoder;
+// @ts-ignore
+global.TextDecoder = TextDecoder;
+
 // Suppress act warnings and specific React warnings
 const originalError = console.error;
 console.error = (...args) => {

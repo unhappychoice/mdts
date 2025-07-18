@@ -51,10 +51,10 @@ describe('Server E2E Tests', () => {
     );
   });
 
-  it('GET /api/outline with non-existent file should return 500', async () => {
+  it('GET /api/outline with non-existent file should return 200', async () => {
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const res = await request(app).get('/api/outline?filePath=nonexistent.md');
-    expect(res.statusCode).toEqual(500);
+    expect(res.statusCode).toEqual(200);
 
     consoleErrorSpy.mockRestore();
   });

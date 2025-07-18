@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import fs from 'fs';
+import * as fs from 'fs';
 import MarkdownIt from 'markdown-it';
 import path from 'path';
 

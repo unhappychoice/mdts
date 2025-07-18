@@ -3,6 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import { BrowserRouter } from 'react-router-dom';
 import App from '../src/App';
 
 const mockStore = configureStore([thunk]);
@@ -48,7 +49,9 @@ describe('App', () => {
     await act(async () => {
       render(
         <Provider store={store}>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </Provider>
       );
     });
