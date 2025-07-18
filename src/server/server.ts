@@ -38,7 +38,21 @@ export const createApp = (
   });
 
   app.use('/api/markdown', (req, res, next) => {
-    const filePath = path.join(directory, req.path);
+    // Decode the URI component to handle encoded characters in the path
+    const decodedPath = decodeURIComponent(req.path);
+    // Normalize the path to resolve '..' and '.' segments
+    const normalizedPath = path.normalize(decodedPath);
+
+    // Construct the full file path
+    const filePath = path.join(directory, normalizedPath);
+
+    // Security check: Ensure the resolved path is within the designated directory
+    // This prevents path traversal attacks (e.g., accessing files outside 'directory')
+    if (!filePath.startsWith(directory)) {
+      console.error(`🚫 Attempted path traversal: ${filePath}`);
+      return res.status(403).send('Forbidden');
+    }
+
     if (!fs.existsSync(filePath)) {
       console.error(`🚫 File not found: ${filePath}`);
       return res.status(404).send('File not found');
