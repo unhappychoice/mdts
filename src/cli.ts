@@ -17,8 +17,9 @@ export class CLI {
           .argument('[directory]', 'Directory to serve', DEFAULT_DIRECTORY)
           .action((directory, options) => {
             const port = parseInt(options.port, 10);
-            serve(directory, port);
-            const readmePath = path.join(directory, 'README.md');
+            const absoluteDirectory = path.resolve(process.cwd(), directory);
+            serve(absoluteDirectory, port);
+            const readmePath = path.join(absoluteDirectory, 'README.md');
             const initialPath = existsSync(readmePath) ? '/README.md' : '';
             console.log(`🌐 Opening browser at http://localhost:${port}${initialPath}...`);
             open(`http://localhost:${port}${initialPath}`);

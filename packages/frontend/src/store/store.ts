@@ -13,7 +13,7 @@ const loadState = () => {
     }
     return { appSetting: JSON.parse(serializedState) };
   } catch (err) {
-    console.error("Could not load state from localStorage", err);
+    console.error('Could not load state from localStorage', err);
     return undefined;
   }
 };

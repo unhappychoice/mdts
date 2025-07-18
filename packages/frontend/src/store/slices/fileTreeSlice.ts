@@ -10,7 +10,8 @@ interface FileTreeState {
   fileTree: (FileTreeItem | string)[];
   filteredFileTree: (FileTreeItem | string)[];
   searchQuery: string;
-  expandedNodes: string[]; // Add this line
+  expandedNodes: string[];
+  mountedDirectoryPath: string;
   loading: boolean;
   error: string | null;
 }
@@ -19,9 +20,42 @@ const initialState: FileTreeState = {
   fileTree: [],
   filteredFileTree: [],
   searchQuery: '',
-  expandedNodes: [], // Initialize as empty array
+  expandedNodes: [],
+  mountedDirectoryPath: '',
   loading: true,
   error: null,
+};
+
+const LOCAL_STORAGE_KEY_PREFIX = 'mdts_expanded_nodes_';
+const LOCAL_STORAGE_RECENT_PATHS_KEY = 'mdts_recent_paths';
+const MAX_RECENT_PATHS = 10;
+
+const saveExpandedNodes = (path: string, nodes: string[]) => {
+  try {
+    localStorage.setItem(`${LOCAL_STORAGE_KEY_PREFIX}${path}`, JSON.stringify(nodes));
+    let recentPaths: string[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_RECENT_PATHS_KEY) || '[]');
+    recentPaths = recentPaths.filter(p => p !== path);
+    recentPaths.unshift(path);
+    if (recentPaths.length > MAX_RECENT_PATHS) {
+      const oldPath = recentPaths.pop();
+      if (oldPath) {
+        localStorage.removeItem(`${LOCAL_STORAGE_KEY_PREFIX}${oldPath}`);
+      }
+    }
+    localStorage.setItem(LOCAL_STORAGE_RECENT_PATHS_KEY, JSON.stringify(recentPaths));
+  } catch (e) {
+    console.error('Failed to save expanded nodes to local storage', e);
+  }
+};
+
+const loadExpandedNodes = (path: string): string[] => {
+  try {
+    const storedNodes = localStorage.getItem(`${LOCAL_STORAGE_KEY_PREFIX}${path}`);
+    return storedNodes ? JSON.parse(storedNodes) : [];
+  } catch (e) {
+    console.error('Failed to load expanded nodes from local storage', e);
+    return [];
+  }
 };
 
 const filterTree = (tree: (FileTreeItem | string)[], searchQuery: string): (FileTreeItem | string)[] => {
@@ -52,8 +86,8 @@ const filterTree = (tree: (FileTreeItem | string)[], searchQuery: string): (File
 export const fetchFileTree = createAsyncThunk(
   'fileTree/fetchFileTree',
   async () => {
-    const data = await fetchData<FileTreeItem[]>('/api/filetree', 'json');
-    return data || [];
+    const data = await fetchData<{ fileTree: FileTreeItem[], mountedDirectoryPath: string }>('/api/filetree', 'json');
+    return { fileTree: data?.fileTree || [], mountedDirectoryPath: data?.mountedDirectoryPath };
   }
 );
 
@@ -72,9 +106,11 @@ const fileTreeSlice = createSlice({
       } else {
         state.expandedNodes.push(path);
       }
+      saveExpandedNodes(state.mountedDirectoryPath, state.expandedNodes);
     },
     setExpandedNodes: (state, action: { payload: string[] }) => {
       state.expandedNodes = action.payload;
+      saveExpandedNodes(state.mountedDirectoryPath, state.expandedNodes);
     },
     expandAllNodes: (state, action: { payload: (FileTreeItem | string)[] | null }) => {
       const allItemIds: string[] = [];
@@ -92,6 +128,10 @@ const fileTreeSlice = createSlice({
         collectIds(action.payload);
       }
       state.expandedNodes = allItemIds;
+      saveExpandedNodes(state.mountedDirectoryPath, state.expandedNodes);
+    },
+    setMountedDirectoryPath: (state, action: { payload: string }) => {
+      state.mountedDirectoryPath = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -102,8 +142,10 @@ const fileTreeSlice = createSlice({
       })
       .addCase(fetchFileTree.fulfilled, (state, action) => {
         state.loading = false;
-        state.fileTree = action.payload;
-        state.filteredFileTree = filterTree(action.payload, state.searchQuery);
+        state.fileTree = action.payload.fileTree;
+        state.mountedDirectoryPath = action.payload.mountedDirectoryPath;
+        state.filteredFileTree = filterTree(action.payload.fileTree, state.searchQuery);
+        state.expandedNodes = loadExpandedNodes(action.payload.mountedDirectoryPath);
       })
       .addCase(fetchFileTree.rejected, (state, action) => {
         state.loading = false;
@@ -178,6 +220,12 @@ export const selectFilteredFileTree = (
   return [];
 };
 
-export const { setSearchQuery, toggleNode, setExpandedNodes, expandAllNodes } = fileTreeSlice.actions;
+export const {
+  setSearchQuery,
+  toggleNode,
+  setExpandedNodes,
+  expandAllNodes,
+  setMountedDirectoryPath,
+} = fileTreeSlice.actions;
 
 export default fileTreeSlice.reducer;
