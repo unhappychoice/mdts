@@ -1,6 +1,7 @@
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import { useWebSocket } from './hooks/useWebSocket';
 import { AppDispatch, RootState } from './store/store';
@@ -11,6 +12,8 @@ import { fetchOutline } from './store/slices/outlineSlice';
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { darkMode } = useSelector((state: RootState) => state.appSetting);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [currentPath, setCurrentPath] = useState<string | null>(null);
   const [isCurrentPathDirectory, setIsCurrentPathDirectory] = useState<boolean>(false);
@@ -28,7 +31,7 @@ const App = () => {
 
   useEffect(() => {
     const getPathFromUrl = () => {
-      const path = window.location.pathname.substring(1);
+      const path = location.pathname.substring(1);
       if (path === '') return { path: null, isDirectory: false };
 
       const fileExtensions = ['.md', '.markdown'];
@@ -41,31 +44,7 @@ const App = () => {
 
     setCurrentPath(path);
     setIsCurrentPathDirectory(isDirectory);
-
-    const handlePopState = () => {
-      const { path: popPath, isDirectory: popIsDirectory } = getPathFromUrl();
-      setCurrentPath(popPath);
-      setIsCurrentPathDirectory(popIsDirectory);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [currentPath]);
-
-  const handleFileSelect = (path: string) => {
-    setCurrentPath(path);
-    setIsCurrentPathDirectory(false);
-    window.history.pushState({ path: path }, '', `/${path}`);
-  };
-
-  const handleDirectorySelect = (path: string) => {
-    setCurrentPath(path);
-    setIsCurrentPathDirectory(true);
-    window.history.pushState({ path: path }, '', `/${path}`);
-  };
+  }, [location]);
 
   const theme = useMemo(
     () =>
@@ -92,8 +71,6 @@ const App = () => {
         <Layout
           currentPath={currentPath}
           isCurrentPathDirectory={isCurrentPathDirectory}
-          handleFileSelect={handleFileSelect}
-          handleDirectorySelect={handleDirectorySelect}
         />
     </ThemeProvider>
   );

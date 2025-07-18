@@ -5,6 +5,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { RootState } from '../store/store';
 import { toggleDarkMode, toggleContentMode, toggleFileTree, toggleOutline } from '../store/slices/appSettingSlice';
 
@@ -16,18 +17,25 @@ import Outline from './Outline';
 type LayoutProps = {
   currentPath: string | null;
   isCurrentPathDirectory: boolean;
-  handleFileSelect: (path: string) => void;
-  handleDirectorySelect: (path: string) => void;
 };
 
-const Layout = ({ currentPath, isCurrentPathDirectory, handleFileSelect, handleDirectorySelect }: LayoutProps) => {
+const Layout = ({ currentPath, isCurrentPathDirectory }: LayoutProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { darkMode, contentMode, fileTreeOpen, outlineOpen } = useSelector((state: RootState) => state.appSetting);
   const [scrollToId, setScrollToId] = useState<string | null>(null);
 
   const handleOutlineItemClick = useCallback((id: string) => {
     setScrollToId(id);
   }, []);
+
+  const handleFileSelect = (path: string) => {
+    navigate(`/${path}`);
+  };
+
+  const handleDirectorySelect = (path: string) => {
+    navigate(`/${path}`);
+  };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>

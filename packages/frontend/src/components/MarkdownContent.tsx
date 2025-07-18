@@ -90,7 +90,7 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
           <CircularProgress />
         </Box>
       ) : viewMode === 'preview' ? (
-        <MarkdownPreview content={content} />
+        <MarkdownPreview content={content} selectedFilePath={selectedFilePath} />
       ) : (
         <Box component="pre" sx={{ whiteSpace: 'pre-wrap', p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
           {content}
