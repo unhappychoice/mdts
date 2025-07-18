@@ -11,6 +11,6 @@ export const fetchData = async <T>(url: string, responseType: 'json' | 'text'): 
     }
   } catch (error) {
     console.error(`Error fetching from ${url}:`, error);
-    return null;
+    throw error;
   }
 };

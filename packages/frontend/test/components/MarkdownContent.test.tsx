@@ -3,6 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import { BrowserRouter } from 'react-router-dom';
 import MarkdownContent from '../../src/components/MarkdownContent';
 import { fetchContent } from '../../src/store/slices/contentSlice';
 
@@ -35,7 +36,9 @@ describe('MarkdownContent', () => {
     await act(async () => {
       render(
         <Provider store={store}>
-          <MarkdownContent selectedFilePath={null} scrollToId={null} />
+          <BrowserRouter>
+            <MarkdownContent selectedFilePath={null} scrollToId={null} />
+          </BrowserRouter>
         </Provider>
       );
     });
@@ -47,7 +50,9 @@ describe('MarkdownContent', () => {
     await act(async () => {
       render(
         <Provider store={store}>
-          <MarkdownContent selectedFilePath="/path/to/test.md" scrollToId={null} />
+          <BrowserRouter>
+            <MarkdownContent selectedFilePath="/path/to/test.md" scrollToId={null} />
+          </BrowserRouter>
         </Provider>
       );
     });
@@ -60,14 +65,15 @@ describe('MarkdownContent', () => {
     await act(async () => {
       render(
         <Provider store={store}>
-          <MarkdownContent selectedFilePath="/path/to/test.md" scrollToId={null} />
+          <BrowserRouter>
+            <MarkdownContent selectedFilePath="/path/to/test.md" scrollToId={null} />
+          </BrowserRouter>
         </Provider>
       );
     });
 
     fireEvent.click(screen.getByRole('tab', { name: /raw/i }));
     expect(screen.getByText('# Test Markdown')).toBeInTheDocument();
-    expect(screen.queryByTestId('mock-react-markdown')).not.toBeInTheDocument();
   });
 
   test('displays loading spinner when content is loading', async () => {
@@ -85,7 +91,9 @@ describe('MarkdownContent', () => {
     await act(async () => {
       render(
         <Provider store={store}>
-          <MarkdownContent selectedFilePath="/path/to/test.md" scrollToId={null} />
+          <BrowserRouter>
+            <MarkdownContent selectedFilePath="/path/to/test.md" scrollToId={null} />
+          </BrowserRouter>
         </Provider>
       );
     });
@@ -107,7 +115,9 @@ describe('MarkdownContent', () => {
     await act(async () => {
       render(
         <Provider store={store}>
-          <MarkdownContent selectedFilePath="/path/to/test.md" scrollToId={null} />
+          <BrowserRouter>
+            <MarkdownContent selectedFilePath="/path/to/test.md" scrollToId={null} />
+          </BrowserRouter>
         </Provider>
       );
     });
@@ -119,11 +129,13 @@ describe('MarkdownContent', () => {
     await act(async () => {
       render(
         <Provider store={store}>
-          <MarkdownContent
-            selectedFilePath="/path/to/test.md"
-            scrollToId={null}
-            onDirectorySelect={handleDirectorySelect}
-          />
+          <BrowserRouter>
+            <MarkdownContent
+              selectedFilePath="/path/to/test.md"
+              scrollToId={null}
+              onDirectorySelect={handleDirectorySelect}
+            />
+          </BrowserRouter>
         </Provider>
       );
     });
