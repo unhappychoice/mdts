@@ -15,6 +15,8 @@ module.exports = {
       },
       setupFilesAfterEnv: ['<rootDir>/test/setupTests.ts'],
       testEnvironment: 'jsdom',
+      collectCoverage: true,
+      collectCoverageFrom: ['<rootDir>/src/**/*.ts', '<rootDir>/src/**/*.tsx'],
     },
     '<rootDir>/jest-lint.config.js',
   ]
