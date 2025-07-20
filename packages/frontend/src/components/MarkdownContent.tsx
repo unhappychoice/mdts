@@ -1,11 +1,25 @@
 import { ArticleOutlined } from '@mui/icons-material';
-import { Box, Breadcrumbs, CircularProgress, Link, Tab, Tabs, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Breadcrumbs,
+  Chip,
+  CircularProgress,
+  Link,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
+import matter from 'gray-matter';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchContent } from '../store/slices/contentSlice';
-import MarkdownPreview from './MarkdownPreview';
 import ErrorDisplay from './ErrorDisplay';
+import MarkdownPreview from './MarkdownPreview';
 
 interface ContentProps {
   selectedFilePath: string | null;
@@ -15,12 +29,27 @@ interface ContentProps {
 }
 
 const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId, onDirectorySelect }) => {
-  const [viewMode, setViewMode] = useState<'preview' | 'raw'>('preview');
+  const [viewMode, setViewMode] = useState<'preview' | 'frontmatter' | 'raw'>('preview');
+
   const dispatch = useDispatch<AppDispatch>();
   const { content, loading: contentLoading, error } = useSelector((state: RootState) => state.content);
   const { loading: fileTreeLoading } = useSelector((state: RootState) => state.fileTree);
 
   const loading = contentLoading || fileTreeLoading;
+
+  const { data: frontmatter, content: markdownContent } = useMemo(() => {
+    if (!content) {
+      return { data: {}, content: '' };
+    }
+    try {
+      const { data, content: mdContent } = matter(content);
+      return { data, content: mdContent };
+    } catch (e) {
+      console.error(e);
+      // If parsing fails, treat the whole content as markdown
+      return { data: {}, content: content };
+    }
+  }, [content]);
 
   useEffect(() => {
     dispatch(fetchContent(selectedFilePath));
@@ -35,17 +64,21 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
     }
   }, [scrollToId]);
 
-  const displayFileName = selectedFilePath
-    ? selectedFilePath.split('/').pop()
-    : loading ? '' : '🎉 Welcome to mdts!';
+  const displayFileName = frontmatter.title
+    ? String(frontmatter.title)
+    : selectedFilePath
+      ? selectedFilePath.split('/').pop()
+      : loading
+        ? ''
+        : '🎉 Welcome to mdts!';
 
-  const pathSegments = selectedFilePath
-    ? selectedFilePath.split('/').filter(segment => segment !== '')
-    : [];
+  const pathSegments = selectedFilePath ? selectedFilePath.split('/').filter(segment => segment !== '') : [];
 
   if (error) {
     return <ErrorDisplay error={error} />;
   }
+
+  const hasFrontmatter = Object.keys(frontmatter).length > 0;
 
   return (
     <Box
@@ -82,9 +115,34 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
           {displayFileName}
         </Typography>
       </Box>
-      <Box sx={{ paddingLeft: '24px', marginLeft: '-32px', marginRight: '-32px', borderBottom: 1, borderColor: 'divider' }}>
+      {frontmatter.tags && Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0 && (
+        <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+          {frontmatter.tags.map((tag) => (
+            <Chip key={tag} label={tag} size="small" />
+          ))}
+        </Box>
+      )}
+      {frontmatter.categories && Array.isArray(frontmatter.categories) && frontmatter.categories.length > 0 && (
+        <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+          {frontmatter.categories.map((category) => (
+            <Chip key={category} label={category} size="small" />
+          ))}
+        </Box>
+      )}
+      <Box
+        sx={{
+          paddingLeft: '24px',
+          marginLeft: '-32px',
+          marginRight: '-32px',
+          borderBottom: 1,
+          borderColor: 'divider',
+        }}
+      >
         <Tabs value={viewMode} onChange={(event, newValue) => setViewMode(newValue)} aria-label="view mode tabs">
           <Tab value="preview" label="Preview" />
+          {hasFrontmatter &&
+            <Tab value="frontmatter" label="Frontmatter" />
+          }
           <Tab value="raw" label="Raw" />
         </Tabs>
       </Box>
@@ -93,7 +151,17 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
           <CircularProgress />
         </Box>
       ) : viewMode === 'preview' ? (
-        <MarkdownPreview content={content} selectedFilePath={selectedFilePath} />
+        <MarkdownPreview content={markdownContent} selectedFilePath={selectedFilePath} />
+      ) : viewMode === 'frontmatter' ? (
+        <Box sx={{ my: 4 }}>
+          <List sx={{ p: 0 }}>
+            {Object.entries(frontmatter).map(([key, value]) => (
+              <ListItem key={key} sx={{ px: 0, py: 1  }}>
+                <ListItemText primary={key} secondary={String(value)} />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
       ) : (
         <Box component="pre" sx={{ whiteSpace: 'pre-wrap', p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
           {content}

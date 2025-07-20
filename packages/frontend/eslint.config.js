@@ -1,13 +1,13 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
-import hooksPlugin from "eslint-plugin-react-hooks";
-import jestPlugin from "eslint-plugin-jest";
-import importPlugin from "eslint-plugin-import";
-import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
+const globals = require("globals");
+const pluginJs = require("@eslint/js");
+const tseslint = require("typescript-eslint");
+const pluginReactConfig = require("eslint-plugin-react/configs/recommended.js");
+const hooksPlugin = require("eslint-plugin-react-hooks");
+const jestPlugin = require("eslint-plugin-jest");
+const importPlugin = require("eslint-plugin-import");
+const jsxA11yPlugin = require("eslint-plugin-jsx-a11y");
 
-export default tseslint.config(
+module.exports = tseslint.config(
   {
     files: ["src/**/*.{js,mjs,cjs,ts,tsx}"],
     extends: [
