@@ -28,6 +28,11 @@ jobs:
 
     - name: Run tests
       run: npm test
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
   test-frontend:
     runs-on: ubuntu-latest
 
@@ -47,3 +52,9 @@ jobs:
       - name: Run tests
         working-directory: ./packages/frontend
         run: npm test
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: frontend
