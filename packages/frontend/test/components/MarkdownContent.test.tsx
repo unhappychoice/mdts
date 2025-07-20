@@ -144,4 +144,39 @@ describe('MarkdownContent', () => {
     fireEvent.click(link);
     expect(handleDirectorySelect).toHaveBeenCalledWith("path");
   });
+
+  test('parses and displays frontmatter', async () => {
+    const contentWithFrontmatter = '---\ntitle: Test Title\nauthor: Test Author\n---\n# Markdown Content';
+    store = mockStore({
+      content: {
+        content: contentWithFrontmatter,
+        loading: false,
+        error: null,
+      },
+      fileTree: {
+        loading: false,
+      },
+    });
+
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <BrowserRouter>
+            <MarkdownContent selectedFilePath="/path/to/test.md" scrollToId={null} />
+          </BrowserRouter>
+        </Provider>
+      );
+    });
+
+    fireEvent.click(screen.getByText('Frontmatter'));
+
+    expect(screen.getByText('title')).toBeInTheDocument();
+    expect(screen.getAllByText('Test Title').length).toBeGreaterThan(0);
+    expect(screen.getByText('author')).toBeInTheDocument();
+    expect(screen.getAllByText('Test Author').length).toBeGreaterThan(0);
+
+    fireEvent.click(screen.getByText('Preview'));
+
+    expect(screen.getByText('# Markdown Content')).toBeInTheDocument();
+  });
 });
