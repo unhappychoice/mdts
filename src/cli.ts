@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import { existsSync } from 'fs';
 import path from 'path';
 import { serve } from './server/server';
+import { logger } from './utils/logger';
 
 const DEFAULT_PORT = 8521;
 const DEFAULT_DIRECTORY = '.';
@@ -21,7 +22,7 @@ export class CLI {
             serve(absoluteDirectory, port);
             const readmePath = path.join(absoluteDirectory, 'README.md');
             const initialPath = existsSync(readmePath) ? '/README.md' : '';
-            console.log(`🌐 Opening browser at http://localhost:${port}${initialPath}...`);
+            logger.log(`🌐 Opening browser at http://localhost:${port}${initialPath}...`);
             open(`http://localhost:${port}${initialPath}`);
           });
 

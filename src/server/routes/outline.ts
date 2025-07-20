@@ -2,6 +2,7 @@ import { Router } from 'express';
 import * as fs from 'fs';
 import MarkdownIt from 'markdown-it';
 import path from 'path';
+import { logger } from '../../utils/logger';
 
 const md = new MarkdownIt();
 
@@ -58,7 +59,7 @@ export const outlineRouter = (directory: string): Router => {
       const outline = getMarkdownOutline(absolutePath);
       res.json(outline);
     } catch (error) {
-      console.error(`Error getting outline for ${filePath}:`, error);
+      logger.error(`Error getting outline for ${filePath}:`, error);
       res.status(500).send('Error getting outline.');
     }
   });

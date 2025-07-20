@@ -6,11 +6,12 @@ import { WebSocketServer } from 'ws';
 import * as http from 'http';
 import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
+import { logger } from '../utils/logger';
 
 export const serve = (directory: string, port: number): import('http').Server => {
   const app = createApp(directory);
   const server = app.listen(port, () => {
-    console.log(`🚀 Server listening at http://localhost:${port}`);
+    logger.log(`🚀 Server listening at http://localhost:${port}`);
   });
 
   setupWatcher(directory, server, port);
@@ -49,12 +50,12 @@ export const createApp = (
     // Security check: Ensure the resolved path is within the designated directory
     // This prevents path traversal attacks (e.g., accessing files outside 'directory')
     if (!filePath.startsWith(directory)) {
-      console.error(`🚫 Attempted path traversal: ${filePath}`);
+      logger.error(`🚫 Attempted path traversal: ${filePath}`);
       return res.status(403).send('Forbidden');
     }
 
     if (!fs.existsSync(filePath)) {
-      console.error(`🚫 File not found: ${filePath}`);
+      logger.error(`🚫 File not found: ${filePath}`);
       return res.status(404).send('File not found');
     }
     next();
@@ -82,10 +83,10 @@ export const createApp = (
       return res.sendFile(req.path, { root: directory }, (err) => {
         if (err) {
           if ('code' in err && err.code === 'ENOENT') {
-            console.error(`🚫 File not found: ${path.join(directory, req.path)}`);
+            logger.error(`🚫 File not found: ${path.join(directory, req.path)}`);
             res.status(404).send('File not found');
           } else {
-            console.error(`🚫 Error serving file ${path.join(directory, req.path)}:`, err);
+            logger.error(`🚫 Error serving file ${path.join(directory, req.path)}:`, err);
             res.status(500).send('Internal Server Error');
           }
         }
@@ -100,22 +101,22 @@ const setupWatcher = (directory: string, server: http.Server, port: number) => {
   const wss = new WebSocketServer({ server });
 
   wss.on('listening', () => {
-    console.log(`🚀 WebSocket server listening at ws://localhost:${port}`);
+    logger.log(`🚀 WebSocket server listening at ws://localhost:${port}`);
   });
 
   wss.on('connection', () => {
-    console.log('🤝 Livereload Client connected');
+    logger.log('🤝 Livereload Client connected');
 
     wss.on('close', () => {
-      console.log('👋 Livereload Client closed');
+      logger.log('👋 Livereload Client closed');
     });
 
     wss.on('wsClientError', (e) => {
-      console.error('🚫 Error on WebSocket server:', e);
+      logger.error('🚫 Error on WebSocket server:', e);
     });
 
     wss.on('error', (e) => {
-      console.error('🚫 Error on WebSocket server:', e);
+      logger.error('🚫 Error on WebSocket server:', e);
     });
   });
 
@@ -145,26 +146,26 @@ const setupWatcher = (directory: string, server: http.Server, port: number) => {
       ignoreInitial: true,
     });
   } catch (e) {
-    console.error('🚫 Error watching directory:', e);
-    console.error('Livereload will be disabled');
+    logger.error('🚫 Error watching directory:', e);
+    logger.error('Livereload will be disabled');
   }
 
   watcher?.on('change', (filePath) => {
-    console.log(`🔃 File changed: ${filePath}, reloading...`);
+    logger.log(`🔃 File changed: ${filePath}, reloading...`);
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-content' }));
     });
   });
 
   watcher?.on('add', (filePath) => {
-    console.log(`🌲 File added: ${filePath}, reloading tree...`);
+    logger.log(`🌲 File added: ${filePath}, reloading tree...`);
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });
   });
 
   watcher?.on('unlink', (filePath) => {
-    console.log(`🌲 File removed: ${filePath}, reloading tree...`);
+    logger.log(`🌲 File removed: ${filePath}, reloading tree...`);
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });
