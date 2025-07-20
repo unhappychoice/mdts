@@ -47,7 +47,12 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content, selectedFile
             return <a href={resolvedHref} onClick={(e) => { e.preventDefault(); navigate(resolvedHref); }}>{children}</a>;
           },
           code({ node, inline, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || '');            if (match && match[1] === 'mermaid') {              return <Mermaid chart={String(children).replace(/\n$/, '')} />;            }            return !inline && match ? (
+            const match = /language-(\w+)/.exec(className || '');
+            if (match && match[1] === 'mermaid') {
+              return <Mermaid chart={String(children).replace(/\n$/, '')} />;
+            }
+
+            return !inline && match ? (
               <SyntaxHighlighter
                 style={theme.palette.mode === 'dark' ? nightOwl : prism}
                 className={'syntax-highlighter'}
