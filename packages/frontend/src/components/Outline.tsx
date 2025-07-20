@@ -51,7 +51,7 @@ const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onTogg
         ) : (
           <List dense>
             {outline.map((item, index) => (
-              <ListItem button key={item.id} sx={{ pl: item.level * 2 }} onClick={() => onItemClick(item.id)}>
+              <ListItem button key={`${item.id}-${index}`} sx={{ pl: item.level * 2 }} onClick={() => onItemClick(item.id)}>
               <ListItemText
                 primary={item.content}
                 sx={{

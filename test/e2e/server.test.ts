@@ -77,11 +77,29 @@ describe('Server E2E Tests', () => {
     expect(res.text).toContain('<title>mdts - Markdown file viewer</title>');
   });
 
-  it('GET /nonexistent-file should return 404 for non-existent files in the served directory', async () => {
-    const res = await request(app).get('/nonexistent-file');
-    // The server tries to serve the file from the directory, if not found, it falls through to index.html
-    // This test might need adjustment based on the exact desired behavior for non-existent files.
-    // Currently, it serves index.html for any path that doesn't match a static file or a markdown file.
-    expect(res.statusCode).toEqual(404);
+  it('should return 404 for non-existent files', async () => {
+      const res = await request(app).get('/api/markdown/nonexistent-file');
+      expect(res.statusCode).toEqual(404);
+      expect(res.text).toEqual('File not found');
+    });
+
+    it('should return welcome markdown', async () => {
+      const res = await request(app).get('/api/markdown/mdts-welcome-markdown.md');
+      expect(res.statusCode).toEqual(200);
+      expect(res.text).toContain('# Welcome to mdts');
+    });
+
+    it('should prevent path traversal', async () => {
+      const res = await request(app).get('/api/markdown/../package.json');
+      expect(res.statusCode).toEqual(404);
+      expect(res.text).toEqual('File not found');
+    });
+
+  describe('serving non-markdown files', () => {
+    it('should return 404 for non-existent non-markdown files', async () => {
+      const res = await request(app).get('/nonexistent-image.png');
+      expect(res.statusCode).toEqual(404);
+      expect(res.text).toEqual('File not found');
+    });
   });
 });

@@ -1,20 +1,34 @@
-import { spawn } from 'child_process';
 import axios from 'axios';
+import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
+import os from 'os';
 
 const cliPath = path.resolve(__dirname, '../../bin/mdts');
 const testDirectory = path.resolve(__dirname, '../fixtures/mountDirectory');
 const port = 8522;
 
-// Mock the 'open' module to prevent actual browser opening
-jest.mock('open', () => jest.fn(() => Promise.resolve()));
-
 describe('CLI e2e tests', () => {
   let cliProcess: any;
+  let tempDir: string;
+  let originalPath: string | undefined;
 
   beforeAll((done) => {
-    cliProcess = spawn('node', [cliPath, '-p', String(port), testDirectory]);
+    // Create a temporary directory for our dummy 'open' executable
+    tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'mdts-test-'));
+
+    // Create a dummy 'open' executable that does nothing
+    const dummyOpenPath = path.join(tempDir, 'open');
+    fs.writeFileSync(dummyOpenPath, '#!/bin/bash\nexit 0');
+    fs.chmodSync(dummyOpenPath, '755'); // Make it executable
+
+    // Store original PATH and prepend our temp directory to it
+    originalPath = process.env.PATH;
+    process.env.PATH = `${tempDir}${path.delimiter}${process.env.PATH}`;
+
+    cliProcess = spawn('node', [cliPath, '-p', String(port), testDirectory], {
+      env: { ...process.env, PATH: process.env.PATH }, // Pass the modified PATH to the child process
+    });
 
     cliProcess.stdout.on('data', (data: Buffer) => {
       const output = data.toString();
@@ -36,6 +50,13 @@ describe('CLI e2e tests', () => {
   afterAll(() => {
     if (cliProcess) {
       cliProcess.kill();
+    }
+    // Clean up the temporary directory and restore original PATH
+    if (tempDir) {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+    if (originalPath !== undefined) {
+      process.env.PATH = originalPath;
     }
   });
 
