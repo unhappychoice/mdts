@@ -50,7 +50,7 @@ describe('outline.ts', () => {
     });
 
     it('should return outline for a valid markdown file', async () => {
-      const markdownContent = `# Test Heading`;
+      const markdownContent = '# Test Heading';
       const mockedFs = fs as jest.Mocked<typeof import('fs')>;
       mockedFs.readFileSync.mockReturnValueOnce(markdownContent);
       const response = await request(app).get('/api/outline?filePath=test.md');
@@ -62,7 +62,7 @@ describe('outline.ts', () => {
     });
 
     it('should handle mdts-welcome-markdown.md correctly', async () => {
-      const welcomeMarkdownContent = `# Welcome`;
+      const welcomeMarkdownContent = '# Welcome';
       const mockedFs = fs as jest.Mocked<typeof import('fs')>;
       mockedFs.readFileSync.mockReturnValueOnce(welcomeMarkdownContent);
       const response = await request(app).get('/api/outline?filePath=mdts-welcome-markdown.md');
@@ -71,7 +71,8 @@ describe('outline.ts', () => {
       expect(response.body).toEqual([
         { level: 1, content: 'Welcome', id: 'welcome' },
       ]);
-      expect(mockedFs.readFileSync).toHaveBeenCalledWith(expect.stringContaining(path.join('public', 'welcome.md')), 'utf-8');
+      const expectedPath = expect.stringContaining(path.join('public', 'welcome.md'));
+      expect(mockedFs.readFileSync).toHaveBeenCalledWith(expectedPath, 'utf-8');
     });
 
     it('should return 200 if file does not exist', async () => {

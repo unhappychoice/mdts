@@ -1,15 +1,15 @@
+import { type Express } from 'express';
 import request from 'supertest';
 import { createApp } from '../../src/server/server';
 import path from 'path';
-import { promises as fs } from 'fs';
 
 describe('Server E2E Tests', () => {
-  let app: any;
+  let app: Express;
 
   beforeAll(async () => {
     app = createApp(
       path.join(__dirname, '../fixtures/mountDirectory/content'),
-      path.join(__dirname, '../fixtures/mountDirectory/dist/server')
+      path.join(__dirname, '../fixtures/mountDirectory/dist/server'),
     );
   });
 
@@ -20,7 +20,7 @@ describe('Server E2E Tests', () => {
       fileTree: expect.arrayContaining([
         'test.md',
         'another.md',
-        { 'nested': ['nested/nested.md'] }
+        { nested: ['nested/nested.md'] },
       ]),
       mountedDirectoryPath: path.join(__dirname, '../fixtures/mountDirectory/content'),
     });
@@ -48,7 +48,7 @@ describe('Server E2E Tests', () => {
           content: 'Hello E2E',
           id: 'hello-e2e',
         }),
-      ])
+      ]),
     );
   });
 
@@ -78,22 +78,22 @@ describe('Server E2E Tests', () => {
   });
 
   it('should return 404 for non-existent files', async () => {
-      const res = await request(app).get('/api/markdown/nonexistent-file');
-      expect(res.statusCode).toEqual(404);
-      expect(res.text).toEqual('File not found');
-    });
+    const res = await request(app).get('/api/markdown/nonexistent-file');
+    expect(res.statusCode).toEqual(404);
+    expect(res.text).toEqual('File not found');
+  });
 
-    it('should return welcome markdown', async () => {
-      const res = await request(app).get('/api/markdown/mdts-welcome-markdown.md');
-      expect(res.statusCode).toEqual(200);
-      expect(res.text).toContain('# Welcome to mdts');
-    });
+  it('should return welcome markdown', async () => {
+    const res = await request(app).get('/api/markdown/mdts-welcome-markdown.md');
+    expect(res.statusCode).toEqual(200);
+    expect(res.text).toContain('# Welcome to mdts');
+  });
 
-    it('should prevent path traversal', async () => {
-      const res = await request(app).get('/api/markdown/../package.json');
-      expect(res.statusCode).toEqual(404);
-      expect(res.text).toEqual('File not found');
-    });
+  it('should prevent path traversal', async () => {
+    const res = await request(app).get('/api/markdown/../package.json');
+    expect(res.statusCode).toEqual(404);
+    expect(res.text).toEqual('File not found');
+  });
 
   describe('serving non-markdown files', () => {
     it('should return 404 for non-existent non-markdown files', async () => {

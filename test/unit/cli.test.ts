@@ -1,10 +1,11 @@
 import { CLI } from '../../src/cli';
 import path from 'path';
+import { serve } from '../../src/server/server';
 
 // Mock fs first, before any other imports that might use it
 let mockExistsSyncResult = false;
 jest.mock('fs', () => ({
-  existsSync: jest.fn((path: string) => mockExistsSyncResult),
+  existsSync: jest.fn(() => mockExistsSyncResult),
 }));
 
 // Helper to set the mock result for existsSync
@@ -23,13 +24,13 @@ jest.mock('../../src/server/server', () => ({
 describe('cli', () => {
   let cli: CLI;
   let originalArgv: string[];
-  let mockOpen = jest.fn();
+  const mockOpen = jest.fn();
   let mockServe: jest.Mock;
 
   beforeEach(() => {
     cli = new CLI();
     originalArgv = process.argv;
-    mockServe = require('../../src/server/server').serve as jest.Mock;
+    mockServe = serve as jest.Mock;
     // Reset the mock result for existsSync before each test
     setExistsSyncResult(false); // Default to false for safety
     jest.clearAllMocks();
@@ -42,7 +43,7 @@ describe('cli', () => {
     process.argv = originalArgv;
   });
 
-  test('should call open with default port and README.md if it exists', () => {
+  it('should call open with default port and README.md if it exists', () => {
     setExistsSyncResult(true);
     process.argv = ['node', 'cli.ts', '.'];
 
@@ -50,10 +51,10 @@ describe('cli', () => {
       .then(() => {
         expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
-      })
+      });
   });
 
-  test('should call open with default port and empty path if README.md does not exist', () => {
+  it('should call open with default port and empty path if README.md does not exist', () => {
     setExistsSyncResult(false);
     process.argv = ['node', 'cli.ts', '.'];
 
@@ -64,7 +65,7 @@ describe('cli', () => {
       });
   });
 
-  test('should call open with specified port', () => {
+  it('should call open with specified port', () => {
     setExistsSyncResult(true);
     process.argv = ['node', 'cli.ts', '-p', '9000', '.'];
 
@@ -75,7 +76,7 @@ describe('cli', () => {
       });
   });
 
-  test('should call open with specified directory', () => {
+  it('should call open with specified directory', () => {
     setExistsSyncResult(true);
     process.argv = ['node', 'cli.ts', './my-dir'];
 
@@ -86,7 +87,7 @@ describe('cli', () => {
       });
   });
 
-  test('should call open with specified directory and port', () => {
+  it('should call open with specified directory and port', () => {
     setExistsSyncResult(true);
     process.argv = ['node', 'cli.ts', '-p', '9000', './my-dir'];
 

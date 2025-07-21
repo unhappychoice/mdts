@@ -1,15 +1,19 @@
-import chokidar from 'chokidar';
+import { type Express, type NextFunction, type Request, type Response } from 'express';
 import * as fs from 'fs';
 import { createApp, serve } from '../../../src/server/server';
-import { logger } from '../../../src/utils/logger';
+import { setupWatcher } from '../../../src/server/watcher';
 
 jest.mock('express', () => {
   const mockUse = jest.fn();
   const mockGet = jest.fn();
+  const mockListen = jest.fn((port, callback) => {
+    callback();
+    return { close: jest.fn() };
+  });
   const mockExpress = jest.fn(() => ({
     use: mockUse,
     get: mockGet,
-    listen: jest.fn(), // Add listen here for the serve tests
+    listen: mockListen,
   }));
   mockExpress.static = jest.fn().mockReturnValue(jest.fn());
   mockExpress.Router = jest.fn(() => ({
@@ -18,9 +22,6 @@ jest.mock('express', () => {
   return mockExpress;
 });
 
-// Mock chokidar
-jest.mock('chokidar');
-
 // Mock fs.existsSync and fs.statSync
 jest.mock('fs', () => ({
   ...jest.requireActual('fs'),
@@ -28,37 +29,15 @@ jest.mock('fs', () => ({
   statSync: jest.fn(),
 }));
 
-// Mock WebSocketServer
-jest.mock('ws', () => ({
-  WebSocketServer: jest.fn(() => ({
-    on: jest.fn(),
-    clients: [],
-  })),
-}));
-
-// Mock logger
-jest.mock('../../../src/utils/logger', () => ({
-  logger: {
-    log: jest.fn(),
-    error: jest.fn(),
-  },
-}));
+// Mock setupWatcher
+jest.mock('../../../src/server/watcher');
 
 describe('server.ts unit tests', () => {
-  let app: any;
-  let mockChokidarWatcher: any;
+  let app: Express;
 
   beforeEach(() => {
     // Reset mocks before each test
     jest.clearAllMocks();
-
-    // Setup mock for chokidar.watch
-    mockChokidarWatcher = {
-      on: jest.fn().mockReturnThis(),
-      add: jest.fn().mockReturnThis(),
-      close: jest.fn(),
-    };
-    (chokidar.watch as jest.Mock).mockReturnValue(mockChokidarWatcher);
 
     // Setup mock for fs.existsSync and fs.statSync
     (fs.existsSync as jest.Mock).mockReturnValue(true);
@@ -86,8 +65,13 @@ describe('server.ts unit tests', () => {
 
     it('should serve welcome markdown', async () => {
       const mockSendFile = jest.fn();
-      app.get.mock.calls.find((call: any) => call[0] === '/api/markdown/mdts-welcome-markdown.md')[1]({},
-        { setHeader: jest.fn(), sendFile: mockSendFile }
+      const welcomeRouteHandler = (app.get as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) =>
+          call[0] === '/api/markdown/mdts-welcome-markdown.md',
+      )[1];
+      welcomeRouteHandler(
+        {} as Request,
+        { setHeader: jest.fn(), sendFile: mockSendFile } as unknown as Response,
       );
       expect(mockSendFile).toHaveBeenCalledWith(expect.stringContaining('public/welcome.md'));
     });
@@ -96,11 +80,13 @@ describe('server.ts unit tests', () => {
       const mockStatus = jest.fn().mockReturnThis();
       const mockSend = jest.fn();
       const mockNext = jest.fn();
-      const req = { path: '../package.json' };
-      const res = { status: mockStatus, send: mockSend };
+      const req = { path: '../package.json' } as Request;
+      const res = { status: mockStatus, send: mockSend } as unknown as Response;
 
-      // Find the middleware for /api/markdown
-      const markdownMiddleware = app.use.mock.calls.find((call: any) => call[0] === '/api/markdown' && call.length === 2)[1];
+      const markdownMiddleware = (app.use as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response, next: NextFunction) => void]) =>
+          call[0] === '/api/markdown' && call.length === 2,
+      )[1];
       await markdownMiddleware(req, res, mockNext);
 
       expect(mockStatus).toHaveBeenCalledWith(403);
@@ -113,10 +99,13 @@ describe('server.ts unit tests', () => {
       const mockStatus = jest.fn().mockReturnThis();
       const mockSend = jest.fn();
       const mockNext = jest.fn();
-      const req = { path: 'nonexistent.md' };
-      const res = { status: mockStatus, send: mockSend };
+      const req = { path: 'nonexistent.md' } as Request;
+      const res = { status: mockStatus, send: mockSend } as unknown as Response;
 
-      const markdownMiddleware = app.use.mock.calls.find((call: any) => call[0] === '/api/markdown' && call.length === 2)[1];
+      const markdownMiddleware = (app.use as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response, next: NextFunction) => void]) =>
+          call[0] === '/api/markdown' && call.length === 2,
+      )[1];
       await markdownMiddleware(req, res, mockNext);
 
       expect(mockStatus).toHaveBeenCalledWith(404);
@@ -129,10 +118,13 @@ describe('server.ts unit tests', () => {
       const mockStatus = jest.fn().mockReturnThis();
       const mockSend = jest.fn();
       const mockNext = jest.fn();
-      const req = { path: 'existing.md' };
-      const res = { status: mockStatus, send: mockSend };
+      const req = { path: 'existing.md' } as Request;
+      const res = { status: mockStatus, send: mockSend } as unknown as Response;
 
-      const markdownMiddleware = app.use.mock.calls.find((call: any) => call[0] === '/api/markdown' && call.length === 2)[1];
+      const markdownMiddleware = (app.use as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response, next: NextFunction) => void]) =>
+          call[0] === '/api/markdown' && call.length === 2,
+      )[1];
       await markdownMiddleware(req, res, mockNext);
 
       expect(mockStatus).not.toHaveBeenCalled();
@@ -142,10 +134,12 @@ describe('server.ts unit tests', () => {
 
     it('should serve index.html for markdown paths', async () => {
       const mockSendFile = jest.fn();
-      const req = { path: 'test.md' };
-      const res = { sendFile: mockSendFile };
+      const req = { path: 'test.md' } as Request;
+      const res = { sendFile: mockSendFile } as unknown as Response;
 
-      const catchAllRoute = app.get.mock.calls.find((call: any) => call[0] === '*')[1];
+      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+      )[1];
       await catchAllRoute(req, res);
 
       expect(mockSendFile).toHaveBeenCalledWith(expect.stringContaining('frontend/index.html'));
@@ -156,10 +150,12 @@ describe('server.ts unit tests', () => {
         isDirectory: jest.fn().mockReturnValue(true),
       });
       const mockSendFile = jest.fn();
-      const req = { path: '/some/directory' };
-      const res = { sendFile: mockSendFile };
+      const req = { path: '/some/directory' } as Request;
+      const res = { sendFile: mockSendFile } as unknown as Response;
 
-      const catchAllRoute = app.get.mock.calls.find((call: any) => call[0] === '*')[1];
+      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+      )[1];
       await catchAllRoute(req, res);
 
       expect(mockSendFile).toHaveBeenCalledWith(expect.stringContaining('frontend/index.html'));
@@ -172,13 +168,19 @@ describe('server.ts unit tests', () => {
       const mockSendFile = jest.fn((filePath, options, callback) => {
         callback(null); // Simulate success
       });
-      const req = { path: 'image.png' };
-      const res = { sendFile: mockSendFile };
+      const req = { path: 'image.png' } as Request;
+      const res = { sendFile: mockSendFile } as unknown as Response;
 
-      const catchAllRoute = app.get.mock.calls.find((call: any) => call[0] === '*')[1];
+      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+      )[1];
       await catchAllRoute(req, res);
 
-      expect(mockSendFile).toHaveBeenCalledWith('image.png', { root: '/mock/directory' }, expect.any(Function));
+      expect(mockSendFile).toHaveBeenCalledWith(
+        'image.png',
+        { root: '/mock/directory' },
+        expect.any(Function),
+      );
     });
 
     it('should handle error when serving non-markdown files', async () => {
@@ -190,10 +192,16 @@ describe('server.ts unit tests', () => {
       const mockSendFile = jest.fn((filePath, options, callback) => {
         callback({ code: 'ENOENT' }); // Simulate ENOENT error
       });
-      const req = { path: 'nonexistent.png' };
-      const res = { status: mockStatus, send: mockSend, sendFile: mockSendFile };
+      const req = { path: 'nonexistent.png' } as Request;
+      const res = {
+        status: mockStatus,
+        send: mockSend,
+        sendFile: mockSendFile,
+      } as unknown as Response;
 
-      const catchAllRoute = app.get.mock.calls.find((call: any) => call[0] === '*')[1];
+      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+      )[1];
       await catchAllRoute(req, res);
 
       expect(mockStatus).toHaveBeenCalledWith(404);
@@ -209,10 +217,16 @@ describe('server.ts unit tests', () => {
       const mockSendFile = jest.fn((filePath, options, callback) => {
         callback(new Error('Generic error')); // Simulate generic error
       });
-      const req = { path: 'error.png' };
-      const res = { status: mockStatus, send: mockSend, sendFile: mockSendFile };
+      const req = { path: 'error.png' } as Request;
+      const res = {
+        status: mockStatus,
+        send: mockSend,
+        sendFile: mockSendFile,
+      } as unknown as Response;
 
-      const catchAllRoute = app.get.mock.calls.find((call: any) => call[0] === '*')[1];
+      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+      )[1];
       await catchAllRoute(req, res);
 
       expect(mockStatus).toHaveBeenCalledWith(500);
@@ -222,18 +236,9 @@ describe('server.ts unit tests', () => {
 
   describe('serve', () => {
     it('should start a server and setup watcher', () => {
-      serve('/mock/directory', 3000);
-      expect(chokidar.watch).toHaveBeenCalledWith('/mock/directory', expect.any(Object));
-    });
-
-    it('should handle chokidar watch error', () => {
-      (chokidar.watch as jest.Mock).mockImplementation(() => {
-        throw new Error('Watch error');
-      });
-      serve('/mock/directory', 3000);
-
-      expect(logger.error).toHaveBeenCalledWith('🚫 Error watching directory:', expect.any(Error));
-      expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
+      const server = serve('/mock/directory', 3000);
+      expect(app.listen).toHaveBeenCalledWith(3000, expect.any(Function));
+      expect(setupWatcher).toHaveBeenCalledWith('/mock/directory', server, 3000);
     });
   });
 });
