@@ -12,6 +12,29 @@ interface OutlineItem {
   id: string;
 }
 
+export const outlineRouter = (directory: string): Router => {
+  const router = Router();
+
+  router.get('/', (req, res) => {
+    const filePath = req.query.filePath as string;
+    if (!filePath) {
+      return res.status(400).send('filePath query parameter is required.');
+    }
+    try {
+      const absolutePath = filePath === 'mdts-welcome-markdown.md'
+        ? path.join(__dirname, '../public/welcome.md')
+        : path.join(directory, filePath);
+      const outline = getMarkdownOutline(absolutePath);
+      res.json(outline);
+    } catch (error) {
+      logger.error(`Error getting outline for ${filePath}:`, error);
+      res.status(500).send('Error getting outline.');
+    }
+  });
+
+  return router;
+};
+
 const slugify = (text: string): string => {
   return text
     .toLowerCase()
@@ -42,27 +65,4 @@ const getMarkdownOutline = (filePath: string): OutlineItem[] => {
   }
 
   return outline;
-};
-
-export const outlineRouter = (directory: string): Router => {
-  const router = Router();
-
-  router.get('/', (req, res) => {
-    const filePath = req.query.filePath as string;
-    if (!filePath) {
-      return res.status(400).send('filePath query parameter is required.');
-    }
-    try {
-      const absolutePath = filePath === 'mdts-welcome-markdown.md'
-        ? path.join(__dirname, '../public/welcome.md')
-        : path.join(directory, filePath);
-      const outline = getMarkdownOutline(absolutePath);
-      res.json(outline);
-    } catch (error) {
-      logger.error(`Error getting outline for ${filePath}:`, error);
-      res.status(500).send('Error getting outline.');
-    }
-  });
-
-  return router;
 };
