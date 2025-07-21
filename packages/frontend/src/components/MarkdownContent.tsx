@@ -14,8 +14,9 @@ import {
   Typography,
 } from '@mui/material';
 import matter from 'gray-matter';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchContent } from '../store/slices/contentSlice';
 import ErrorDisplay from './ErrorDisplay';
@@ -29,7 +30,8 @@ interface ContentProps {
 }
 
 const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixed', scrollToId, onDirectorySelect }) => {
-  const [viewMode, setViewMode] = useState<'preview' | 'frontmatter' | 'raw'>('preview');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const viewMode = (searchParams.get('tab') as 'preview' | 'frontmatter' | 'raw') || 'preview';
 
   const dispatch = useDispatch<AppDispatch>();
   const { content, loading: contentLoading, error } = useSelector((state: RootState) => state.content);
@@ -138,7 +140,10 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
           borderColor: 'divider',
         }}
       >
-        <Tabs value={viewMode} onChange={(event, newValue) => setViewMode(newValue)} aria-label="view mode tabs">
+        <Tabs value={viewMode} onChange={(event, newValue) => {
+          searchParams.set('tab', newValue);
+          setSearchParams(searchParams);
+        }} aria-label="view mode tabs">
           <Tab value="preview" label="Preview" />
           {hasFrontmatter &&
             <Tab value="frontmatter" label="Frontmatter" />
