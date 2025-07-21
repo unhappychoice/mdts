@@ -168,9 +168,9 @@ const Content: React.FC<ContentProps> = ({ selectedFilePath, contentMode = 'fixe
           </List>
         </Box>
       ) : (
-        <Box component="pre" sx={{ whiteSpace: 'pre-wrap', p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
-          {content}
-        </Box>
+        <MarkdownPreview content={`\`\`\`\`\`markdown
+${content}
+\`\`\`\`\`\``} selectedFilePath={selectedFilePath} />
       )}
     </Box>
   );

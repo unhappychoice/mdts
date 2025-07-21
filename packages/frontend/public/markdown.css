@@ -88,11 +88,11 @@
     pre {
         padding: 16px;
         overflow: auto;
+        font-size: 0.85rem;
         background-color: #f4f5f7;
 
         code {
             padding: 0;
-            font-size: 100%;
             word-break: normal;
             white-space: pre;
             background: transparent;
