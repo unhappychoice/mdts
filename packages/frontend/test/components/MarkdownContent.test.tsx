@@ -1,11 +1,10 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
-import { BrowserRouter } from 'react-router-dom';
 import MarkdownContent from '../../src/components/MarkdownContent';
-import { fetchContent } from '../../src/store/slices/contentSlice';
 
 const mockStore = configureStore([thunk]);
 
@@ -73,7 +72,7 @@ describe('MarkdownContent', () => {
     });
 
     fireEvent.click(screen.getByRole('tab', { name: /raw/i }));
-    expect(screen.getByText('# Test Markdown')).toBeInTheDocument();
+    expect(screen.getByTestId('mock-react-markdown').textContent).toContain('# Test Markdown');
   });
 
   test('displays loading spinner when content is loading', async () => {
