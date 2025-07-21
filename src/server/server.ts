@@ -1,12 +1,10 @@
-import chokidar, { FSWatcher } from 'chokidar';
 import express from 'express';
 import * as fs from 'fs';
 import path from 'path';
-import { WebSocketServer } from 'ws';
-import * as http from 'http';
+import { logger } from '../utils/logger';
 import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
-import { logger } from '../utils/logger';
+import { setupWatcher } from './watcher';
 
 export const serve = (directory: string, port: number): import('http').Server => {
   const app = createApp(directory);
@@ -95,80 +93,5 @@ export const createApp = (
   });
 
   return app;
-};
-
-const setupWatcher = (directory: string, server: http.Server, port: number) => {
-  const wss = new WebSocketServer({ server });
-
-  wss.on('listening', () => {
-    logger.log(`🚀 WebSocket server listening at ws://localhost:${port}`);
-  });
-
-  wss.on('connection', () => {
-    logger.log('🤝 Livereload Client connected');
-
-    wss.on('close', () => {
-      logger.log('👋 Livereload Client closed');
-    });
-
-    wss.on('wsClientError', (e) => {
-      logger.error('🚫 Error on WebSocket server:', e);
-    });
-
-    wss.on('error', (e) => {
-      logger.error('🚫 Error on WebSocket server:', e);
-    });
-  });
-
-  const isMarkdownOrSimpleAsset = (filePath: string) => {
-    const ext = filePath.toLowerCase().split('.').pop();
-    return ext && (ext === 'md' || ext === 'markdown');
-  };
-
-  let watcher: FSWatcher | null = null;
-
-  try {
-    watcher = chokidar.watch(directory, {
-      ignored: (watchedFilePath: string) => {
-        if (watchedFilePath.includes('node_modules')) {
-          return true;
-        }
-        try {
-          if (fs.statSync(watchedFilePath).isDirectory()) {
-            return false; // Don't ignore directories
-          }
-        } catch {
-          // On error (e.g., file not found), let chokidar handle it
-          return false;
-        }
-        return !isMarkdownOrSimpleAsset(watchedFilePath);
-      },
-      ignoreInitial: true,
-    });
-  } catch (e) {
-    logger.error('🚫 Error watching directory:', e);
-    logger.error('Livereload will be disabled');
-  }
-
-  watcher?.on('change', (filePath) => {
-    logger.log(`🔃 File changed: ${filePath}, reloading...`);
-    wss.clients.forEach((client) => {
-      client.send(JSON.stringify({ type: 'reload-content' }));
-    });
-  });
-
-  watcher?.on('add', (filePath) => {
-    logger.log(`🌲 File added: ${filePath}, reloading tree...`);
-    wss.clients.forEach((client) => {
-      client.send(JSON.stringify({ type: 'reload-tree' }));
-    });
-  });
-
-  watcher?.on('unlink', (filePath) => {
-    logger.log(`🌲 File removed: ${filePath}, reloading tree...`);
-    wss.clients.forEach((client) => {
-      client.send(JSON.stringify({ type: 'reload-tree' }));
-    });
-  });
 };
 

@@ -5,6 +5,16 @@ import path from 'path';
 type FileTreeItem = string | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
 
+export const fileTreeRouter = (directory: string): Router => {
+  const router = Router();
+
+  router.get('/', (req, res) => {
+    res.json({ fileTree: getFileTree(directory, ''), mountedDirectoryPath: directory });
+  });
+
+  return router;
+};
+
 const isDotFileOrDirectory = (entryName: string): boolean => {
   return entryName.startsWith('.');
 };
@@ -32,14 +42,4 @@ const getFileTree = (baseDirectory: string, currentRelativePath: string): FileTr
     }
   }
   return tree;
-};
-
-export const fileTreeRouter = (directory: string): Router => {
-  const router = Router();
-
-  router.get('/', (req, res) => {
-    res.json({ fileTree: getFileTree(directory, ''), mountedDirectoryPath: directory });
-  });
-
-  return router;
 };

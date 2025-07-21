@@ -5,7 +5,7 @@ export default tseslint.config(
   pluginJs.configs.recommended,
   tseslint.configs.recommended,
   {
-    files: ["src/**/*.{js,mjs,cjs,ts}"],
+    files: ["src/**/*.{js,mjs,cjs,ts}", "test/**/*.{js,mjs,cjs,ts}"],
     rules: {
       indent: [
         'error',
@@ -26,7 +26,7 @@ export default tseslint.config(
       'max-len': [
         'error',
         {
-          code: 180, // TODO: should be 120
+          code: 120,
           ignoreComments: true
         }
       ],

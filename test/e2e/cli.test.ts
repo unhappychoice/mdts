@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { spawn } from 'child_process';
+import { ChildProcess, spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
@@ -9,7 +9,7 @@ const testDirectory = path.resolve(__dirname, '../fixtures/mountDirectory');
 const port = 8522;
 
 describe('CLI e2e tests', () => {
-  let cliProcess: any;
+  let cliProcess: ChildProcess;
   let tempDir: string;
   let originalPath: string | undefined;
 
@@ -30,14 +30,14 @@ describe('CLI e2e tests', () => {
       env: { ...process.env, PATH: process.env.PATH }, // Pass the modified PATH to the child process
     });
 
-    cliProcess.stdout.on('data', (data: Buffer) => {
+    cliProcess.stdout?.on('data', (data: Buffer) => {
       const output = data.toString();
       if (output.includes(`Server listening at http://localhost:${port}`)) {
         done();
       }
     });
 
-    cliProcess.stderr.on('data', (data: Buffer) => {
+    cliProcess.stderr?.on('data', (data: Buffer) => {
       console.error(`CLI stderr: ${data}`);
     });
 
@@ -72,3 +72,4 @@ describe('CLI e2e tests', () => {
     expect(response.data).toContain('## Another Markdown');
   });
 });
+
