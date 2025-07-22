@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FileTreeSearch renders correctly with a search query 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-1qm1lh"
+  >
+    <div
+      class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-adornedEnd css-pe16f2-MuiInputBase-root"
+    >
+      <input
+        aria-label="search files"
+        class="MuiInputBase-input MuiInputBase-inputAdornedEnd css-e77w8q-MuiInputBase-input"
+        placeholder="Search files..."
+        type="text"
+        value="test"
+      />
+      <div
+        class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-elo8k2-MuiInputAdornment-root"
+      >
+        <button
+          aria-label="clear search"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeSmall css-1eswsun-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-kqgmkm-MuiSvgIcon-root"
+            data-testid="ClearIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`FileTreeSearch renders correctly with empty search query 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-1qm1lh"
+  >
+    <div
+      class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"
+    >
+      <input
+        aria-label="search files"
+        class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
+        placeholder="Search files..."
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

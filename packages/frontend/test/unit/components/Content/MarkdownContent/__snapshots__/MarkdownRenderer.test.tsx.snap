@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`MarkdownRenderer renders markdown content correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="markdown-body light MuiBox-root css-x7jyj4"
+  >
+    <div
+      data-testid="mock-react-markdown-root"
+      rehypeplugins="() => {
+  return null;
+}"
+      remarkplugins="() => {
+  return null;
+},() => {
+  return null;
+}"
+    >
+      <h1
+        data-testid="mock-h1"
+        node="[object Object]"
+      >
+        Hello World
+      </h1>
+      
+
+      <p
+        data-testid="mock-p"
+        node="[object Object]"
+      >
+        This is a paragraph.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

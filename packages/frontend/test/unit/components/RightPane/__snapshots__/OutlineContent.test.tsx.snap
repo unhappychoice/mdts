@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`OutlineContent renders outline items correctly 1`] = `
+<DocumentFragment>
+  <ul
+    class="MuiList-root MuiList-padding MuiList-dense css-b7dj7n-MuiList-root"
+  >
+    <li
+      class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1s7t0kb-MuiListItem-root"
+    >
+      <div
+        class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-2wbpcv-MuiTypography-root"
+        >
+          Heading 1
+        </span>
+      </div>
+    </li>
+    <li
+      class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1bz6dlg-MuiListItem-root"
+    >
+      <div
+        class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-2wbpcv-MuiTypography-root"
+        >
+          Subheading 1
+        </span>
+      </div>
+    </li>
+    <li
+      class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1s7t0kb-MuiListItem-root"
+    >
+      <div
+        class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-2wbpcv-MuiTypography-root"
+        >
+          Heading 2
+        </span>
+      </div>
+    </li>
+  </ul>
+</DocumentFragment>
+`;
