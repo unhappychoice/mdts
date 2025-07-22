@@ -36,6 +36,14 @@ jobs:
         working-directory: ./packages/frontend
         run: npm ci
 
+      - name: Update version
+        run: |
+          git config user.name "Yuji Ueki"
+          git config user.email "unhappychoice@gmail.com"
+          npm version ${{ github.event.inputs.version_type }}
+          git push
+          git push --tags
+
       - name: Build project
         run: npm run build
 
@@ -44,11 +52,6 @@ jobs:
 
       - name: Publish to npm
         run: |
-          git config user.name "Yuji Ueki"
-          git config user.email "unhappychoice@gmail.com"
-          npm version ${{ github.event.inputs.version_type }}
-          git push
-          git push --tags
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
