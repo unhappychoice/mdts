@@ -6,7 +6,7 @@ interface MermaidProps {
   chart: string;
 }
 
-const Mermaid: React.FC<MermaidProps> = ({ chart }) => {
+const MermaidRenderer: React.FC<MermaidProps> = ({ chart }) => {
   const [svg, setSvg] = useState<string | null>(null);
   const theme = useTheme();
 
@@ -40,4 +40,4 @@ const Mermaid: React.FC<MermaidProps> = ({ chart }) => {
   return <div dangerouslySetInnerHTML={{ __html: svg }} />;
 };
 
-export default Mermaid;
+export default MermaidRenderer;

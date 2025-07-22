@@ -2,11 +2,11 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { ReportProblemOutlined } from '@mui/icons-material';
 
-interface ErrorDisplayProps {
+interface ErrorViewProps {
   error: string | null;
 }
 
-const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ error }) => {
+const ErrorView: React.FC<ErrorViewProps> = ({ error }) => {
   if (!error) {
     return null;
   }
@@ -33,4 +33,4 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ error }) => {
   );
 };
 
-export default ErrorDisplay;
+export default ErrorView;
