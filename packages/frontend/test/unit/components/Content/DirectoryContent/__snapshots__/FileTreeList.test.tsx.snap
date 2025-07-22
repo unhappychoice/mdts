@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FileTreeList renders correctly with files and folders 1`] = `
+<DocumentFragment>
+  <ul
+    class="MuiList-root MuiList-padding css-1tfyysn-MuiList-root"
+  >
+    <li
+      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-z2qibm-MuiListItem-root"
+    >
+      <div
+        class="MuiListItemIcon-root css-1sms2q2-MuiListItemIcon-root"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-1wtp6o0-MuiSvgIcon-root"
+          data-testid="FolderOutlinedIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m9.17 6 2 2H20v10H4V6zM10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8z"
+          />
+        </svg>
+      </div>
+      <div
+        class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1px98du-MuiTypography-root"
+        >
+          folder1
+        </span>
+      </div>
+    </li>
+    <li
+      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-z2qibm-MuiListItem-root"
+    >
+      <div
+        class="MuiListItemIcon-root css-1sms2q2-MuiListItemIcon-root"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+          data-testid="ArticleOutlinedIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
+          />
+          <path
+            d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+          />
+        </svg>
+      </div>
+      <div
+        class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1px98du-MuiTypography-root"
+        >
+          file2.txt
+        </span>
+      </div>
+    </li>
+  </ul>
+</DocumentFragment>
+`;

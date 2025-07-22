@@ -3,6 +3,7 @@ import contentReducer from './slices/contentSlice';
 import fileTreeReducer from './slices/fileTreeSlice';
 import outlineReducer from './slices/outlineSlice';
 import appSettingReducer from './slices/appSettingSlice';
+import historyReducer from './slices/historySlice';
 
 // Helper to load state from localStorage
 const loadState = () => {
@@ -24,6 +25,7 @@ export const store = configureStore({
     fileTree: fileTreeReducer,
     outline: outlineReducer,
     appSetting: appSettingReducer,
+    history: historyReducer,
   },
   preloadedState: loadState(),
 });

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Mermaid should initialize mermaid with correct theme based on light mode 1`] = `
+<DocumentFragment>
+  <div>
+    <svg
+      data-testid="mermaid-svg"
+    >
+      graph TD; A--&gt;B;
+    </svg>
+  </div>
+</DocumentFragment>
+`;

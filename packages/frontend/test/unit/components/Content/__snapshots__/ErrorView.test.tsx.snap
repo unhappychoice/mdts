@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ErrorView renders snapshot correctly with 404 error 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-1f23zer"
+  >
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-colorAction MuiSvgIcon-fontSizeMedium css-17g5et6-MuiSvgIcon-root"
+      data-testid="ReportProblemOutlinedIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 5.99 19.53 19H4.47zM12 2 1 21h22zm1 14h-2v2h2zm0-6h-2v4h2z"
+      />
+    </svg>
+    <h5
+      class="MuiTypography-root MuiTypography-h5 css-1sojvhz-MuiTypography-root"
+    >
+      Not Found
+    </h5>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ErrorView renders snapshot correctly with an error 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-1f23zer"
+  >
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-colorAction MuiSvgIcon-fontSizeMedium css-17g5et6-MuiSvgIcon-root"
+      data-testid="ReportProblemOutlinedIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 5.99 19.53 19H4.47zM12 2 1 21h22zm1 14h-2v2h2zm0-6h-2v4h2z"
+      />
+    </svg>
+    <h5
+      class="MuiTypography-root MuiTypography-h5 css-1sojvhz-MuiTypography-root"
+    >
+      Error: Test error message
+    </h5>
+  </div>
+</DocumentFragment>
+`;

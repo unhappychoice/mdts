@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-i3qfz4"
+  >
+    <div
+      class="MuiTabs-root css-jhczcq-MuiTabs-root"
+    >
+      <div
+        class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
+        style="overflow: hidden; margin-bottom: 0px;"
+      >
+        <div
+          aria-label="view mode tabs"
+          class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
+          role="tablist"
+        >
+          <button
+            aria-selected="true"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-mobu7h-MuiButtonBase-root-MuiTab-root"
+            role="tab"
+            tabindex="0"
+            type="button"
+          >
+            Preview
+          </button>
+          <button
+            aria-selected="false"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            Raw
+          </button>
+        </div>
+        <span
+          class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
+          style="left: 0px; width: 0px;"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

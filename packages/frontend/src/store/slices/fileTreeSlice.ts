@@ -1,8 +1,7 @@
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchData } from '../../api';
 
-interface FileTreeItem {
+export interface FileTreeItem {
   [key: string]: (FileTreeItem | string)[];
 }
 
