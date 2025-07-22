@@ -6,6 +6,9 @@ import { serve } from '../../src/server/server';
 let mockExistsSyncResult = false;
 jest.mock('fs', () => ({
   existsSync: jest.fn(() => mockExistsSyncResult),
+  readFileSync: jest.fn(() => JSON.stringify({
+    version: '0.0.0-test',
+  })),
 }));
 
 // Helper to set the mock result for existsSync
