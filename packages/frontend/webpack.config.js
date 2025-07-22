@@ -47,6 +47,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
+    new webpack.DefinePlugin({
+      'process.env.APP_VERSION': JSON.stringify(require('../../package.json').version),
+    }),
   ],
   devServer: {
     static: {
