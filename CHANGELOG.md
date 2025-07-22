@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.1 (2025-07-23)
+
+### Bug Fixes
+
+- Fix version string is not udpated ([`246111b`](https://github.com/unhappychoice/mdts/commit/246111b))
+
 ## 0.7.0 (2025-07-23)
 
 ### Features
