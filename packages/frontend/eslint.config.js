@@ -9,7 +9,7 @@ const jsxA11yPlugin = require("eslint-plugin-jsx-a11y");
 
 module.exports = tseslint.config(
   {
-    files: ["src/**/*.{js,mjs,cjs,ts,tsx}"],
+    files: ["src/**/*.{js,mjs,cjs,ts,tsx}", "test/**/*.{js,mjs,cjs,ts,tsx}"],
     extends: [
       pluginJs.configs.recommended,
       ...tseslint.configs.recommended,
@@ -37,7 +37,7 @@ module.exports = tseslint.config(
     },
     rules: {
       '@typescript-eslint/explicit-module-boundary-types': 'error',
-      '@typescript-eslint/no-var-requires': 'warn', // TODO: Make error
+      '@typescript-eslint/no-var-requires': 'warn',
       '@typescript-eslint/no-unused-vars': 'error',
       'indent': ['error', 2, {'SwitchCase': 1}],
       'linebreak-style': ['error', 'unix'],
