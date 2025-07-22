@@ -12,12 +12,13 @@
   ],
   "scripts": {
     "build": "tsc && cp -R public/. dist/server/public",
-    "build:frontend": "cd packages/frontend && npm run build && cp -R dist/. ../../dist/frontend",
+    "build:frontend": "cd packages/frontend && npm run build",
     "jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.js",
     "watch": "npm run jest -- --watch",
     "test": "npm run jest -- --selectProjects test",
     "lint": "npm run jest -- --selectProjects lint",
-    "start": "npm run build && npm run build:frontend && node dist/index.js"
+    "start": "npm run build && npm run build:frontend && node dist/index.js",
+    "dev": "npm run build && npm run build:frontend && tsc --watch --preserveWatchOutput & cd packages/frontend && npm run build -- --watch & node dist/index.js"
   },
   "repository": {
     "type": "git",
