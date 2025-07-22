@@ -15,11 +15,16 @@ jest.mock('fs', () => ({
 }));
 
 // Mock WebSocketServer
-const mockWss = {
-  on: jest.fn(),
-  clients: [] as WebSocket[],
+let mockWss: {
+  on: jest.Mock;
+  clients: Set<WebSocket>;
 };
 jest.mock('ws', () => ({
+  WebSocket: jest.fn(() => ({
+    on: jest.fn(),
+    send: jest.fn(),
+    close: jest.fn(),
+  })),
   WebSocketServer: jest.fn(() => mockWss),
 }));
 
@@ -33,25 +38,59 @@ jest.mock('../../../src/utils/logger', () => ({
 
 describe('watcher.ts unit tests', () => {
   let mockServer: http.Server;
-  let mockChokidarWatcher: FSWatcher;
+  let mockDirectoryWatcher: FSWatcher;
+  let mockContentWatcher: FSWatcher;
+  let mockClient: WebSocket;
+
+  let onClientMessage: (message: string) => void;
+  let onClientClose: () => void;
+  let onClientError: (error: Error) => void;
 
   beforeEach(() => {
     jest.clearAllMocks();
 
     mockServer = {} as http.Server;
 
-    mockChokidarWatcher = {
+    mockDirectoryWatcher = {
       on: jest.fn().mockReturnThis(),
       close: jest.fn(),
     } as unknown as FSWatcher;
-    (chokidar.watch as jest.Mock).mockReturnValue(mockChokidarWatcher);
+    (chokidar.watch as jest.Mock).mockReturnValue(mockDirectoryWatcher);
 
-    // Reset mockWss listeners for each test
-    mockWss.on.mockClear();
-    mockWss.clients = [];
+    mockContentWatcher = {
+      on: jest.fn().mockReturnThis(),
+      close: jest.fn(),
+    } as unknown as FSWatcher;
+
+    mockWss = {
+      on: jest.fn(),
+      clients: new Set<WebSocket>(),
+    };
+
+    mockClient = new WebSocket('');
+    mockWss.clients.add(mockClient);
+
+    (mockWss.on as jest.Mock).mockImplementation((event, callback) => {
+      if (event === 'listening') {
+        callback();
+      } else if (event === 'connection') {
+        callback(mockClient);
+      }
+    });
+
+    // Capture client's on message/close/error handlers
+    (mockClient.on as jest.Mock).mockImplementation((event, callback) => {
+      if (event === 'message') {
+        onClientMessage = callback;
+      } else if (event === 'close') {
+        onClientClose = callback;
+      } else if (event === 'error') {
+        onClientError = callback;
+      }
+    });
   });
 
-  it('should setup WebSocketServer and chokidar watcher', () => {
+  it('should setup WebSocketServer and directory watcher', () => {
     setupWatcher('/mock/directory', mockServer, 3000);
     expect(WebSocketServer).toHaveBeenCalledWith({ server: mockServer });
     expect(chokidar.watch).toHaveBeenCalledWith('/mock/directory', expect.any(Object));
@@ -67,83 +106,143 @@ describe('watcher.ts unit tests', () => {
     expect(logger.log).toHaveBeenCalledWith('🚀 WebSocket server listening at ws://localhost:3000');
   });
 
-  it('should handle new client connections', () => {
-    const client = { send: jest.fn() } as unknown as WebSocket;
-    mockWss.clients.push(client);
-    (mockWss.on as jest.Mock).mockImplementation((event, callback) => {
-      if (event === 'connection') {
-        callback();
-      }
+  describe('WebSocket client interactions', () => {
+    beforeEach(() => {
+      setupWatcher('/mock/directory', mockServer, 3000);
+      // Manually trigger connection to set up client handlers
+      (mockWss.on as jest.Mock).mock.calls.find(call => call[0] === 'connection')[1](mockClient);
     });
 
-    setupWatcher('/mock/directory', mockServer, 3000);
-
-    expect(logger.log).toHaveBeenCalledWith('🤝 Livereload Client connected');
-  });
-
-  it('should send reload-content message on file change', () => {
-    const client = { send: jest.fn() } as unknown as WebSocket;
-    mockWss.clients.push(client);
-    (mockChokidarWatcher.on as jest.Mock).mockImplementation(
-      (event: string, callback: (path: string) => void) => {
-        if (event === 'change') {
-          callback('file.md');
-        }
-        return mockChokidarWatcher;
-      },
-    );
-
-    setupWatcher('/mock/directory', mockServer, 3000);
-
-    expect(logger.log).toHaveBeenCalledWith('🔃 File changed: file.md, reloading...');
-    expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-content' }));
-  });
-
-  it('should send reload-tree message on file add', () => {
-    const client = { send: jest.fn() } as unknown as WebSocket;
-    mockWss.clients.push(client);
-    (mockChokidarWatcher.on as jest.Mock).mockImplementation(
-      (event: string, callback: (path: string) => void) => {
-        if (event === 'add') {
-          callback('new-file.md');
-        }
-        return mockChokidarWatcher;
-      },
-    );
-
-    setupWatcher('/mock/directory', mockServer, 3000);
-
-    expect(logger.log).toHaveBeenCalledWith('🌲 File added: new-file.md, reloading tree...');
-    expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
-  });
-
-  it('should send reload-tree message on file unlink', () => {
-    const client = { send: jest.fn() } as unknown as WebSocket;
-    mockWss.clients.push(client);
-    (mockChokidarWatcher.on as jest.Mock).mockImplementation(
-      (event: string, callback: (path: string) => void) => {
-        if (event === 'unlink') {
-          callback('deleted-file.md');
-        }
-        return mockChokidarWatcher;
-      },
-    );
-
-    setupWatcher('/mock/directory', mockServer, 3000);
-
-    expect(logger.log).toHaveBeenCalledWith('🌲 File removed: deleted-file.md, reloading tree...');
-    expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
-  });
-
-  it('should handle chokidar watch error', () => {
-    (chokidar.watch as jest.Mock).mockImplementation(() => {
-      throw new Error('Watch error');
+    it('should log when Livereload Client connected', () => {
+      expect(logger.log).toHaveBeenCalledWith('🤝 Livereload Client connected');
     });
 
-    setupWatcher('/mock/directory', mockServer, 3000);
+    it('should log when Livereload Client closed and close content watcher if no other clients', () => {
+      // Ensure content watcher is set up before closing
+      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
+      onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/initial.md' }));
 
-    expect(logger.error).toHaveBeenCalledWith('🚫 Error watching directory:', expect.any(Error));
-    expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
+      // Simulate the client being removed from the set on close
+      mockWss.clients.delete(mockClient);
+      expect(mockContentWatcher.close).not.toHaveBeenCalled(); // Should not be called initially
+      onClientClose();
+      expect(logger.log).toHaveBeenCalledWith('👋 Livereload Client closed');
+      expect(mockContentWatcher.close).toHaveBeenCalled();
+    });
+
+    it('should not close content watcher if other clients exist', () => {
+      // Ensure content watcher is set up before closing
+      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
+      onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/initial.md' }));
+
+      const anotherClient = new WebSocket('');
+      mockWss.clients.add(anotherClient);
+      onClientClose();
+      expect(mockContentWatcher.close).not.toHaveBeenCalled();
+    });
+
+    it('should log WebSocket client errors', () => {
+      const error = new Error('Client error');
+      onClientError(error);
+      expect(logger.error).toHaveBeenCalledWith('🚫 Error on WebSocket client:', error);
+    });
+
+    it('should handle watch-file message and setup content watcher', () => {
+      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher); // For content watcher
+      onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file.md' }));
+
+      expect(logger.log).toHaveBeenCalledWith('👀 Watching file: /mock/file.md');
+      expect(chokidar.watch).toHaveBeenCalledWith('/mock/file.md', { ignoreInitial: true });
+      expect(mockContentWatcher.on).toHaveBeenCalledWith('change', expect.any(Function));
+      expect(mockContentWatcher.on).toHaveBeenCalledWith('error', expect.any(Function));
+    });
+
+    it('should send reload-content message when watched file changes', () => {
+      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
+      onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file2.md' }));
+
+      expect(mockContentWatcher.on).toHaveBeenCalledWith('change', expect.any(Function));
+      expect(mockContentWatcher.on).toHaveBeenCalledWith('error', expect.any(Function));
+
+      const onChangeCallback = (mockContentWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'change')[1];
+      onChangeCallback('/mock/file.md');
+
+      expect(logger.log).toHaveBeenCalledWith('🔃 File changed: /mock/file.md, reloading content...');
+      expect(mockClient.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-content' }));
+    });
+
+    it('should close previous content watcher when new watch-file message received', () => {
+      const firstContentWatcher = { on: jest.fn(), close: jest.fn() } as unknown as FSWatcher;
+      const secondContentWatcher = { on: jest.fn(), close: jest.fn() } as unknown as FSWatcher;
+
+      (chokidar.watch as jest.Mock)
+        .mockReturnValueOnce(firstContentWatcher) // First call for content watcher
+        .mockReturnValueOnce(secondContentWatcher); // Second call for content watcher
+
+      onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file1.md' }));
+      expect(firstContentWatcher.close).not.toHaveBeenCalled();
+
+      onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file2.md' }));
+      expect(firstContentWatcher.close).toHaveBeenCalled();
+      expect(secondContentWatcher.close).not.toHaveBeenCalled();
+    });
+
+    it('should not call setupContentWatcher if watch-file message has invalid filePath type', () => {
+      // Clear previous calls to chokidar.watch to accurately test this scenario
+      (chokidar.watch as jest.Mock).mockClear();
+      onClientMessage(JSON.stringify({ type: 'watch-file', filePath: 123 })); // Invalid filePath
+      expect(chokidar.watch).not.toHaveBeenCalled();
+    });
+
+    it('should log error if content watcher encounters an error', () => {
+      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
+      onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file.md' }));
+
+      const onErrorCallback = (mockContentWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'error')[1];
+      const error = new Error('Content watch error');
+      onErrorCallback(error);
+
+      expect(logger.error).toHaveBeenCalledWith('🚫 Error watching content file /mock/file.md:', error);
+    });
+  });
+
+  describe('Directory watcher interactions', () => {
+    beforeEach(() => {
+      setupWatcher('/mock/directory', mockServer, 3000);
+    });
+
+    it('should send reload-tree message on file add', () => {
+      const client = { send: jest.fn() } as unknown as WebSocket;
+      mockWss.clients.add(client);
+
+      const onAddCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'add')[1];
+      onAddCallback('new-file.md');
+
+      expect(logger.log).toHaveBeenCalledWith('🌲 File added: new-file.md, reloading tree...');
+      expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
+    });
+
+    it('should send reload-tree message on file unlink', () => {
+      const client = { send: jest.fn() } as unknown as WebSocket;
+      mockWss.clients.add(client);
+
+      const onUnlinkCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'unlink')[1];
+      onUnlinkCallback('deleted-file.md');
+
+      expect(logger.log).toHaveBeenCalledWith('🌲 File removed: deleted-file.md, reloading tree...');
+      expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
+    });
+
+    it('should handle chokidar watch error for directory watcher', () => {
+      (chokidar.watch as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('Directory watch error');
+      });
+
+      setupWatcher('/mock/directory', mockServer, 3000);
+
+      expect(logger.error).toHaveBeenCalledWith('🚫 Error watching directory:', expect.any(Error));
+      expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
+    });
   });
 
   describe('chokidar ignored option', () => {
@@ -151,7 +250,7 @@ describe('watcher.ts unit tests', () => {
 
     beforeEach(() => {
       setupWatcher('/mock/directory', mockServer, 3000);
-      ignoredFn = (chokidar.watch as jest.Mock).mock.calls[0][1].ignored;
+      ignoredFn = (chokidar.watch as jest.Mock).mock.calls.find(call => call[0] === '/mock/directory')[1].ignored;
     });
 
     it('should ignore files in node_modules', () => {

@@ -37,7 +37,7 @@ jest.mock('react-markdown', () => {
 
   return {
     __esModule: true,
-    default: ({ children, components, ...props }: { children: string; components?: any }) => {
+    default: ({ children, components, remarkPlugins, rehypePlugins }: { children: string; components?: any; remarkPlugins?: any[]; rehypePlugins?: any[] }) => {
       const finalComponents = {
         ...components,
         
@@ -46,8 +46,8 @@ jest.mock('react-markdown', () => {
         p: MockP,
       };
       return (
-        <div data-testid="mock-react-markdown-root" {...props}>
-          <ActualReactMarkdown components={finalComponents}>
+        <div data-testid="mock-react-markdown-root">
+          <ActualReactMarkdown components={finalComponents} remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins}>
             {children}
           </ActualReactMarkdown>
         </div>

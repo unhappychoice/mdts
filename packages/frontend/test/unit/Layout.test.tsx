@@ -7,6 +7,15 @@ import { thunk } from 'redux-thunk';
 import Layout from '../../src/Layout';
 import { toggleFileTree, toggleOutline } from '../../src/store/slices/appSettingSlice';
 
+jest.mock('@mui/x-tree-view', () => ({
+  ...jest.requireActual('@mui/x-tree-view'),
+  SimpleTreeView: ({ children, defaultCollapseIcon, defaultExpandIcon, ...props }: any) => (
+    <div data-testid="mock-simple-tree-view" {...props}>
+      {children}
+    </div>
+  ),
+}));
+
 const mockStore = configureStore([thunk]);
 
 // Mock react-router-dom's useNavigate
