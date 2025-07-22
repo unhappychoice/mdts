@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.0 (not released yet)
+## 0.7.0 (2025-07-23)
 
 ### Features
 
