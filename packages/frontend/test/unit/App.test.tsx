@@ -6,6 +6,15 @@ import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import App from '../../src/App';
 
+jest.mock('@mui/x-tree-view', () => ({
+  ...jest.requireActual('@mui/x-tree-view'),
+  SimpleTreeView: ({ children, defaultCollapseIcon, defaultExpandIcon, ...props }: any) => (
+    <div data-testid="mock-simple-tree-view" {...props}>
+      {children}
+    </div>
+  ),
+}));
+
 const mockStore = configureStore([thunk]);
 
 // Mock the useFileTree hook

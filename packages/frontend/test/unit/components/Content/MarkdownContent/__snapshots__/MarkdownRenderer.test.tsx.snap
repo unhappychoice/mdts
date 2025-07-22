@@ -7,14 +7,6 @@ exports[`MarkdownRenderer renders markdown content correctly 1`] = `
   >
     <div
       data-testid="mock-react-markdown-root"
-      rehypeplugins="() => {
-  return null;
-}"
-      remarkplugins="() => {
-  return null;
-},() => {
-  return null;
-}"
     >
       <h1
         data-testid="mock-h1"

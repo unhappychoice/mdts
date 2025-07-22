@@ -45,6 +45,8 @@ describe('useWebSocket', () => {
     mockWebSocket.send.mockClear();
     mockWebSocket.close.mockClear();
     mockWebSocket.onmessage = jest.fn(); // Reset onmessage for each test
+    mockWebSocket.onopen = jest.fn(); // Reset onopen for each test
+    mockWebSocket.onerror = jest.fn(); // Reset onerror for each test
   });
 
   interface TestComponentProps {
@@ -64,6 +66,19 @@ describe('useWebSocket', () => {
     const { unmount } = render(<TestComponent currentPath="/test.md" />);
     unmount();
     expect(mockWebSocket.close).toHaveBeenCalledTimes(1);
+  });
+
+  test('should send watch-file message on WebSocket open if currentPath exists', () => {
+    const currentPath = '/test.md';
+    render(<TestComponent currentPath={currentPath} />);
+    mockWebSocket.onopen();
+    expect(mockWebSocket.send).toHaveBeenCalledWith(JSON.stringify({ type: 'watch-file', filePath: currentPath }));
+  });
+
+  test('should not send watch-file message on WebSocket open if currentPath is null', () => {
+    render(<TestComponent currentPath={null} />);
+    mockWebSocket.onopen();
+    expect(mockWebSocket.send).not.toHaveBeenCalled();
   });
 
   test('should dispatch fetchContent and fetchOutline on reload-content message', () => {
@@ -103,5 +118,23 @@ describe('useWebSocket', () => {
     mockWebSocket.onmessage(messageEvent);
 
     expect(dispatchMock).toHaveBeenCalledWith(fetchFileTree());
+  });
+
+  test('should log error on WebSocket error', () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    render(<TestComponent currentPath="/test.md" />);
+    const errorEvent = new Event('error');
+    mockWebSocket.onerror(errorEvent);
+    expect(consoleErrorSpy).toHaveBeenCalledWith('WebSocket error:', errorEvent);
+    consoleErrorSpy.mockRestore();
+  });
+
+  test('should send watch-file message when currentPath changes', () => {
+    const { rerender } = render(<TestComponent currentPath="/initial.md" />);
+    mockWebSocket.onopen(); // Simulate connection open
+    mockWebSocket.send.mockClear(); // Clear initial send
+
+    rerender(<TestComponent currentPath="/new.md" />);
+    expect(mockWebSocket.send).toHaveBeenCalledWith(JSON.stringify({ type: 'watch-file', filePath: '/new.md' }));
   });
 });
