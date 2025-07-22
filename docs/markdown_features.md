@@ -1,110 +1,118 @@
-# Supported Markdown Features
+# 📚 Supported Markdown Features
 
-This document outlines the Markdown features supported by mdts. mdts aims to provide a rich and versatile Markdown rendering experience, including standard Markdown syntax and several popular extensions.
+`mdts` provides a rich Markdown reading experience by supporting the full [CommonMark](https://commonmark.org/) specification along with many popular extensions like GitHub Flavored Markdown (GFM) and additional enhancements for modern documentation.
 
-## Standard Markdown
+---
 
-mdts fully supports the CommonMark specification, which includes:
+## ✅ CommonMark Features
 
-*   **Headings:** H1 to H6
-*   **Paragraphs:** Standard text blocks
-*   **Emphasis:** Bold (`**text**` or `__text__`) and Italic (`*text*` or `_text_`)
-*   **Blockquotes:** Using `> `
-*   **Lists:** Ordered (`1. `) and Unordered (`- ` or `* `)
-*   **Code Blocks:** Fenced code blocks (```language) and inline code (`code`)
-*   **Links:** Inline links (`[text](url)`) and reference links
-*   **Images:** Inline images (`![alt text](url)`)
-*   **Horizontal Rules:** Using `---`, `***`, or `___`
+All standard Markdown syntax is fully supported:
 
-## Extended Markdown Features
+- **Headings**: `# H1` through `###### H6`
+- **Paragraphs**: Regular text blocks
+- **Emphasis**:  
+  - Bold: `**text**` or `__text__`  
+  - Italic: `*text*` or `_text_`
+- **Blockquotes**: Using `> `
+- **Lists**:  
+  - Ordered: `1. Item`  
+  - Unordered: `- Item` or `* Item`
+- **Code**:  
+  - Inline: `` `code` ``  
+  - Block: <code>```lang</code>
+- **Links**: `[label](https://example.com)`
+- **Images**: `![alt text](image.png)`
+- **Horizontal Rules**: `---`, `***`, or `___`
 
-In addition to standard Markdown, mdts supports several extended features for enhanced document creation:
+---
 
-### Tables
+## 🚀 Extended Features
 
-Create well-formatted tables using Markdown syntax.
+### 📊 Tables
 
-```markdown
-| Header 1 | Header 2 | Header 3 |
-|----------|:--------:|---------:|
-| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
-| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
-```
-
-### Task Lists
-
-Create interactive task lists within your documents.
+Render structured data in table format.
 
 ```markdown
-- [x] Completed task
-- [ ] Pending task
+| Name     | Age | City      |
+|----------|:---:|----------:|
+| Alice    |  30 | Tokyo     |
+| Bob      |  25 | New York  |
 ```
 
-### Footnotes
+### ☑️ Task Lists
 
-Add footnotes to provide additional information without cluttering the main text.
+Perfect for checklists and todos.
+
+```markdown
+- [x] Write documentation
+- [ ] Implement feature
+```
+
+### 🔗 Footnotes
+
+Add footnotes for inline references.
 
 ```markdown
 Here is some text with a footnote[^1].
 
-[^1]: This is the footnote content.
+[^1]: This is the footnote text.
 ```
 
-### Frontmatter
+### 📄 Frontmatter
 
-Support for YAML frontmatter at the beginning of your Markdown files for metadata.
+Add YAML metadata at the top of your Markdown files.
+
+```yaml
+---
+title: "Sample Doc"
+author: "Jane Doe"
+tags: ["mdts", "docs"]
+---
+```
+
+### 🧱 Inline HTML
+
+Directly embed raw HTML when needed.
 
 ```markdown
----
-title: My Document
-author: John Doe
-date: 2023-07-23
----
-
-# Document Content
+This is <strong>bold</strong> using HTML.
 ```
 
-### Inline HTML
+### 🧠 Mermaid Diagrams
 
-You can embed raw HTML directly within your Markdown files.
-
-```markdown
-This is a paragraph with some <span>inline HTML</span>.
-```
-
-### Mermaid Diagrams
-
-Integrate Mermaid syntax to render diagrams and flowcharts directly within your Markdown.
+Visualize workflows and diagrams using Mermaid.js.
 
 ````markdown
 ```mermaid
 graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
+    A[Start] --> B[Process];
+    B --> C{Decision};
+    C -->|Yes| D[End];
+    C -->|No| A;
 ```
 ````
 
-### Syntax Highlighting
+### 🎨 Syntax Highlighting
 
-Code blocks automatically receive syntax highlighting for various programming languages. Specify the language after the opening fence.
-
-```javascript
-// Example JavaScript code
-function greet(name) {
-  console.log(`Hello, ${name}!`);
+Code blocks get automatic syntax highlighting when a language is specified.
+````markdown
+```rust
+fn main() {
+    println!("Hello, mdts!");
 }
-greet('World');
 ```
+````
 
-## GitHub Flavored Markdown (GFM)
+---
 
-mdts largely adheres to the GitHub Flavored Markdown (GFM) specification, which includes features like:
+## 💡 GitHub Flavored Markdown (GFM)
 
-*   **Autolinks:** URLs and email addresses are automatically converted to links.
-*   **Strikethrough:** Using `~~text~~`
-*   **Tables:** (as mentioned above)
-*   **Task Lists:** (as mentioned above)
+`mdts` supports most GFM extensions, including:
 
-We strive to keep our Markdown rendering up-to-date with widely adopted standards to ensure compatibility and a consistent viewing experience.
+* **Autolinks**: Bare URLs like `https://example.com` become clickable links
+* **Strikethrough**: `~~text~~` renders as ~~text~~
+* **Tables & Task Lists**: (as shown above)
+
+---
+
+We aim to maintain compatibility with widely adopted Markdown standards to ensure smooth reading, sharing, and collaboration across platforms.

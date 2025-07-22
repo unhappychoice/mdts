@@ -1,63 +1,68 @@
-# Frontend Features
-## 1. Application Layout & Structure
+# ✨ Key Features of `mdts`
 
-- **Overall Application Display:**
-  - The main application window, including header, left panel, and right panel.
-  - Responsiveness across different screen sizes.
+`mdts` offers a clean and intuitive interface for browsing and reading Markdown documents, with a focus on comfort, performance, and real-time preview.
 
-- **Header Bar:**
-  - Display of application title/logo.
-  - Any interactive elements within the header (e.g., theme toggles, view mode selectors).
+---
 
-- **Left Panel (File Navigation):**
-  - Display of the file and directory tree.
-  - Expand/collapse functionality for directories.
-  - Selection of files/directories to view content.
+## 🖥️ 1. Intuitive and Clean Layout
 
-- **Right Panel (Content Display):**
-  - Area where file content or directory listings are shown.
+The UI is divided into three panels—file tree, document view, and outline—making navigation effortless.
 
-## 2. Content Display & Interaction
+### 🧭 Header Bar
 
-- **Markdown Content Rendering:**
-  - Accurate display of Markdown syntax (headings, lists, bold/italic text, code blocks, tables, links, images).
-  - Handling of embedded HTML within Markdown.
-  - Correct rendering of Mermaid diagrams (if supported).
-  - Display of frontmatter information (if applicable).
+- **Logo & Title**: Click to return to the home page.
+- **Theme Toggle**: Switch between Light and Dark Mode. The app remembers your choice.
+- **Display Mode**: Toggle between fixed-width (centered) and full-width layouts.
+- **Links**: Access version info, GitHub repo, and changelog.
 
-- **Directory Listing Display:**
-  - List of files and subdirectories within a selected directory.
-  - Clickable entries to navigate into subdirectories or open files.
+### 🌲 File Tree (Left Panel)
 
-- **Breadcrumb Navigation:**
-  - Visual path indicating the current directory location.
-  - Clickable segments to navigate back to parent directories.
+- **Folder Navigation**: Browse and expand/collapse folders.
+- **File Search**: Filter by filename as you type.
+- **Quick Access**: Click any file to open instantly.
+- **Tree Controls**: Expand/collapse all folders with one click.
 
-- **Error Message Display:**
-  - Clear and informative messages when content cannot be loaded or an error occurs.
+### 📄 Document Viewer (Center Panel)
 
-## 3. User Experience & Settings
+- **Beautiful Markdown Rendering**: Supports headings, lists, code blocks, tables, images.
+- **Mermaid Diagrams**: Flowcharts and diagrams are rendered inline.
+- **Syntax Highlighting**: Code is easy to read.
+- **Frontmatter Panel**: Displays metadata like title, tags, and author (if present).
+- **Folder Listing**: Selecting a folder shows its contents.
+- **Breadcrumbs**: Shows current path and allows quick navigation up.
+- **Error Display**: Clear messages when loading fails.
 
-- **Theme Switching:**
-  - Ability to change the application's visual theme (e.g., light mode, dark mode).
-  - Consistency of theme application across all UI elements.
+### 🧱 Outline Panel (Right)
 
-- **View Mode Selection:**
-  - Options to change how content is displayed (e.g., preview mode, split view, source code view).
+- **Table of Contents**: All headings listed hierarchically.
+- **Quick Jumps**: Click to jump to a section in long documents.
 
-- **Real-time Content Updates:**
-  - Automatic refresh of content when the source file changes on disk.
+---
 
-## 4. Overall Application Behavior
+## ⚙️ 2. Interactive Viewing Modes
 
-- **Navigation Flow:**
-  - Smooth transitions and correct content loading when navigating between files and directories.
+- **Preview Mode**: Default view with full rendering.
+- **Metadata Mode**: View document frontmatter in detail.
+- **Raw Mode**: See the raw Markdown source.
+- **Live Reload**: Changes made in external editors appear instantly in the viewer.
 
-- **Performance:**
-  - Application responsiveness and loading times.
+---
 
-- **Error Handling:**
-  - Graceful handling of unexpected situations without crashing.
+## 🧩 3. Customizable Environment
 
-- **Initial Load:**
-  - Correct display of default content or welcome screen upon application startup.
+- **Light/Dark Theme**: Choose your preferred reading style.
+- **Layout Modes**: Switch between fixed and full-width content.
+- **Toggle Panels**: Hide file tree or outline panel for distraction-free reading.
+
+---
+
+## 🚀 4. Fast and Reliable
+
+- **Smooth Navigation**: Fast file switching and rendering.
+- **Lightweight & Fast**: Designed to be performant even with large files.
+- **Stable Behavior**: Handles edge cases gracefully.
+- **Quick Start**: Loads immediately with welcome screen or last opened content.
+
+---
+
+`mdts` enhances the Markdown reading experience with thoughtful design, real-time preview, and powerful productivity features.
