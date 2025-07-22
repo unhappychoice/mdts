@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 import { serve } from './server/server';
 import { logger } from './utils/logger';
@@ -13,7 +13,11 @@ export class CLI {
       .then((open) => {
         const program = new Command();
 
+        const packageJsonPath = path.join(__dirname, '..', 'package.json');
+        const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+
         program
+          .version(packageJson.version)
           .option('-p, --port <port>', 'Port to serve on', String(DEFAULT_PORT))
           .argument('[directory]', 'Directory to serve', DEFAULT_DIRECTORY)
           .action((directory, options) => {
