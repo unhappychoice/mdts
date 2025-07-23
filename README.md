@@ -1,11 +1,11 @@
 <h1 align="center">
-  <img src="docs/logo.svg" alt="mdts" width="400">
+  <img src="docs/images/logo.svg" alt="mdts" width="400">
 </h1>
 
 **A zero-config CLI tool to preview your local Markdown files in a browser.**  **`npx mdts` — and you're done.**
 
 <p align="center">
-  <img src="docs/screen_animation.gif" width="600" alt="mdts demo">
+  <img src="docs/images/screen_animation.gif" width="640" alt="mdts demo">
 </p>
 
 ## 🔧 Features
@@ -31,14 +31,6 @@ Your current directory becomes a browsable Markdown tree.
 - Quickly checking README or note folders  
 - Lightweight local Markdown wiki  
 
-## 🖼 Screenshot
-
-> Browsable file tree + rendered Markdown with live reload
-
-<p align="center">
-  <img src="docs/screenshot.png" width="800" alt="mdts screenshot">
-</p>
-
 ## 📦 Requirements
 
 - Node.js
@@ -55,3 +47,11 @@ npx mdts <directory> --port 3000
 | `<directory>`  | Specify root directory (default .)    | ./docs  |
 | `--port`       | Change the server port (default 8521) | 8000    |
 
+## 📚 Documentation
+
+- [Use Cases](docs/usecases.md)
+- [Markdown Features](docs/markdown_features.md)
+- [Frontend Features](docs/frontend_features.md)
+- [Screenshots](docs/screenshots.md)
+- [Comparison with other tools](docs/comparison.md)
+- [FAQ](docs/faq.md)
