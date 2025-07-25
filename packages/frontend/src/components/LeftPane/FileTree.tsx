@@ -1,15 +1,11 @@
 import { Box } from '@mui/material';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFileTree, setExpandedNodes, setSearchQuery, expandAllNodes } from '../../store/slices/fileTreeSlice';
+import { fetchFileTree, setExpandedNodes, setSearchQuery, expandAllNodes, FileTreeItem } from '../../store/slices/fileTreeSlice';
 import { AppDispatch, RootState } from '../../store/store';
 import FileTreeHeader from './FileTreeHeader';
 import FileTreeSearch from './FileTreeSearch';
 import FileTreeContent from './FileTreeContent';
-
-interface FileTreeItem {
-  [key: string]: (FileTreeItem | string)[];
-}
 
 interface FileTreeComponentProps {
   onFileSelect: (path: string) => void;
@@ -51,11 +47,11 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
 
     const newExpanded: string[] = [];
 
-    const collectExpandedPaths = (items: (FileTreeItem | string)[], parentPath: string = '') => {
+    const collectExpandedPaths = (items: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], parentPath: string = '') => {
       items.forEach(item => {
-        if (typeof item !== 'string') { // It's a folder
+        if (!('path' in item)) { // It's a folder
           const key = Object.keys(item)[0];
-          const value = item[key];
+          const value = (item as { [key: string]: (FileTreeItem | object)[] })[key];
           const currentPath = parentPath ? `${parentPath}/${key}` : key;
           if (!newExpanded.includes(currentPath)) {
             newExpanded.push(currentPath);

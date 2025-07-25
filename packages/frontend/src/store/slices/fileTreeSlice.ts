@@ -2,12 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchData } from '../../api';
 
 export interface FileTreeItem {
-  [key: string]: (FileTreeItem | string)[];
+  path: string;
+  status: string;
 }
 
 interface FileTreeState {
-  fileTree: (FileTreeItem | string)[];
-  filteredFileTree: (FileTreeItem | string)[];
+  fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
+  filteredFileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
   searchQuery: string;
   expandedNodes: string[];
   mountedDirectoryPath: string;
@@ -57,26 +58,27 @@ const loadExpandedNodes = (path: string): string[] => {
   }
 };
 
-const filterTree = (tree: (FileTreeItem | string)[], searchQuery: string): (FileTreeItem | string)[] => {
+const filterTree = (tree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], searchQuery: string): (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] => {
   if (!searchQuery) return tree;
 
   return tree
-    .reduce((acc: (FileTreeItem | string)[], item) => {
-      if (typeof item === 'string') {
-        const fileName = item.split('/').pop() || '';
+    .reduce((acc: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], item) => {
+      if ('path' in item) {
+        const fileItem = item as FileTreeItem;
+        const fileName = fileItem.path.split('/').pop() || '';
         return fileName.toLowerCase().includes(searchQuery.toLowerCase())
           ? [...acc, item]
           : acc;
       } else {
         const key = Object.keys(item)[0];
-        const value = item[key];
+        const value = (item as any)[key];
 
         const children = Array.isArray(value)
           ? filterTree(value, searchQuery)
           : [];
 
         return children.length > 0
-          ? [...acc, { [key]: children } as FileTreeItem ]
+          ? [...acc, { [key]: children } as { [key: string]: (FileTreeItem | object)[] }]
           :acc;
       }
     }, []);
@@ -85,7 +87,7 @@ const filterTree = (tree: (FileTreeItem | string)[], searchQuery: string): (File
 export const fetchFileTree = createAsyncThunk(
   'fileTree/fetchFileTree',
   async () => {
-    const data = await fetchData<{ fileTree: FileTreeItem[], mountedDirectoryPath: string }>('/api/filetree', 'json');
+    const data = await fetchData<{ fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], mountedDirectoryPath: string }>('/api/filetree', 'json');
     return { fileTree: data?.fileTree || [], mountedDirectoryPath: data?.mountedDirectoryPath };
   }
 );
@@ -111,15 +113,15 @@ const fileTreeSlice = createSlice({
       state.expandedNodes = action.payload;
       saveExpandedNodes(state.mountedDirectoryPath, state.expandedNodes);
     },
-    expandAllNodes: (state, action: { payload: (FileTreeItem | string)[] | null }) => {
+    expandAllNodes: (state, action: { payload: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] | null }) => {
       const allItemIds: string[] = [];
-      const collectIds = (items: (FileTreeItem | string)[], parentPath: string = '') => {
+      const collectIds = (items: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], parentPath: string = '') => {
         items.forEach(item => {
-          if (typeof item !== 'string') {
+          if (!('path' in item)) {
             const key = Object.keys(item)[0];
             const currentPath = parentPath ? `${parentPath}/${key}` : key;
             allItemIds.push(currentPath);
-            collectIds(item[key] as (FileTreeItem | string)[], currentPath);
+            collectIds((item as any)[key] as (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], currentPath);
           }
         });
       };
@@ -154,18 +156,18 @@ const fileTreeSlice = createSlice({
 });
 
 export const selectFilteredFileTree = (
-  fullFileTree: (FileTreeItem | string)[],
+  fullFileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[],
   targetPath: string
-): (FileTreeItem | string)[] => {
+): (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] => {
   if (targetPath === '') {
-    const result: FileTreeItem[] | string[] = [];
+    const result: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] = [];
     fullFileTree.forEach(item => {
-      if (typeof item === 'string') {
-        result.push(item.split('/').pop() || item);
+      if ('path' in item) {
+        result.push({ path: (item as FileTreeItem).path.split('/').pop() || (item as FileTreeItem).path, status: (item as FileTreeItem).status });
       } else {
         const key = Object.keys(item)[0];
-        const newObject: FileTreeItem = {};
-        newObject[key.split('/').pop() || key] = item[key];
+        const newObject: { [key: string]: (FileTreeItem | object)[] } = {};
+        newObject[key.split('/').pop() || key] = (item as any)[key];
         result.push(newObject);
       }
     });
@@ -173,10 +175,10 @@ export const selectFilteredFileTree = (
   }
 
   const findChildren = (
-    currentTree: (FileTreeItem | string)[],
+    currentTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[],
     pathSegments: string[],
     currentSegmentIndex: number
-  ): (FileTreeItem | string)[] | null => {
+  ): (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] | null => {
     if (currentSegmentIndex === pathSegments.length) {
       return currentTree;
     }
@@ -184,11 +186,11 @@ export const selectFilteredFileTree = (
     const segment = pathSegments[currentSegmentIndex];
 
     for (const item of currentTree) {
-      if (typeof item !== 'string') {
+      if (!('path' in item)) {
         const key = Object.keys(item)[0];
         const itemSegments = key.split('/');
         if (itemSegments[itemSegments.length - 1] === segment) {
-          const children = item[key];
+          const children = (item as any)[key];
           if (Array.isArray(children)) {
             return findChildren(children, pathSegments, currentSegmentIndex + 1);
           }
@@ -202,14 +204,14 @@ export const selectFilteredFileTree = (
   const children = findChildren(fullFileTree, pathSegments, 0);
 
   if (children) {
-    const result: FileTreeItem[] | string[] = [];
+    const result: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] = [];
     children.forEach(item => {
-      if (typeof item === 'string') {
-        result.push(item.split('/').pop() || item);
+      if ('path' in item) {
+        result.push({ path: (item as FileTreeItem).path.split('/').pop() || (item as FileTreeItem).path, status: (item as FileTreeItem).status });
       } else {
         const key = Object.keys(item)[0];
-        const newObject: FileTreeItem = {};
-        newObject[key.split('/').pop() || key] = item[key];
+        const newObject: { [key: string]: (FileTreeItem | object)[] } = {};
+        newObject[key.split('/').pop() || key] = (item as any)[key];
         result.push(newObject);
       }
     });

@@ -1,18 +1,19 @@
 import { ArticleOutlined, FolderOutlined } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
 import { TreeItem } from '@mui/x-tree-view';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import React from 'react';
 import { AppDispatch } from '../../store/store';
 
 interface FileTreeItem {
-  [key: string]: (FileTreeItem | string)[];
+  path: string;
+  status: string;
 }
 
 interface FileTreeContentProps {
-  filteredFileTree: (FileTreeItem | string)[] | null;
+  filteredFileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] | null;
   loading: boolean;
   error: string | null;
   expandedNodes: string[];
@@ -28,8 +29,28 @@ const FileTreeContent: React.FC<FileTreeContentProps> = ({
   onFileSelect,
   onExpandedItemsChange,
 }) => {
+  const theme = useTheme();
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'M':
+        return theme.palette.info.main;
+      case '?':
+      case 'A':
+        return theme.palette.success.main;
+      case 'D':
+        return theme.palette.error.main;
+      case 'R':
+        return theme.palette.warning.main;
+      case 'C':
+        return theme.palette.secondary.main;
+      default:
+        return theme.palette.text.primary;
+    }
+  };
+
   const renderTreeItems = (
-    tree: (FileTreeItem | string)[] | null,
+    tree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] | null,
     onFileSelect: (path: string) => void,
     parentPath: string = ''
   ) => {
@@ -37,26 +58,32 @@ const FileTreeContent: React.FC<FileTreeContentProps> = ({
       return null;
     }
     return tree.map((item) => {
-      if (typeof item === 'string') {
-        const fileName = item.split('/').pop();
+      if ('path' in item) {
+        const fileItem = item as FileTreeItem;
+        const fileName = fileItem.path.split('/').pop();
         return (
           <TreeItem
-            key={item}
-            itemId={item}
+            key={fileItem.path}
+            itemId={fileItem.path}
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <ArticleOutlined sx={{ mr: 1, fontSize: 'small' }} />
-                <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+                <Typography variant="body2" sx={{ fontSize: '0.875rem', color: getStatusColor(fileItem.status) }}>
                   {fileName}
                 </Typography>
+                {fileItem.status && fileItem.status !== ' ' && (
+                  <Typography variant="body2" sx={{ fontSize: '0.75rem', color: getStatusColor(fileItem.status), ml: 1, }}>
+                    {fileItem.status}
+                  </Typography>
+                )}
               </Box>
             }
-            onClick={() => onFileSelect(item)}
+            onClick={() => onFileSelect(fileItem.path)}
           />
         );
       } else {
         const key = Object.keys(item)[0];
-        const value = item[key];
+        const value = (item as any)[key];
         const currentPath = parentPath ? `${parentPath}/${key}` : key;
         return (
           <TreeItem
