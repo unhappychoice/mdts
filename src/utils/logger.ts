@@ -36,13 +36,13 @@ class Logger {
     return import('chalk').then((module) => module.default).then(chalk => {
       switch (tag) {
         case 'CLI':
-          return chalk.bgGreen.white;
+          return chalk.bgGreen.black;
         case 'Server':
-          return chalk.bgCyan.white;
+          return chalk.bgCyan.black;
         case 'Livereload':
-          return chalk.bgBlue.white;
+          return chalk.bgBlue.black;
         case 'Announcement':
-          return chalk.bgYellow.white;
+          return chalk.bgYellow.black;
         default:
           return chalk.bgWhite.black;
       }
