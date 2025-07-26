@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import fs from 'fs';
+import fs, { Dirent } from 'fs';
 import path from 'path';
-import simpleGit, { SimpleGit } from 'simple-git';
+import simpleGit, { SimpleGit, StatusResult, FileStatusResult } from 'simple-git';
 
 type FileTreeItem = { path: string, status: string, isDirectory?: boolean } | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
 
 export const fileTreeRouter = (directory: string): Router => {
   const router = Router();
-  const git: SimpleGit = simpleGit({ baseDir: directory })
+  const git: SimpleGit = simpleGit({ baseDir: directory });
 
   router.get('/', async (req, res) => {
     const gitStatus = await git.status();
@@ -28,9 +28,21 @@ const isLibraryDirectory = (entryName: string): boolean => {
   return libraryDirs.includes(entryName);
 };
 
-const getFileTree = async (baseDirectory: string, currentRelativePath: string, gitStatus: any): Promise<FileTree> => {
-  const entries = fs.readdirSync(path.join(baseDirectory, currentRelativePath), { withFileTypes: true })
-    .filter(entry => !isDotFileOrDirectory(entry.name) && !isLibraryDirectory(entry.name));
+const shouldIncludeEntry = (entry: Dirent): boolean => {
+  return !isDotFileOrDirectory(entry.name) && !isLibraryDirectory(entry.name);
+};
+
+const getFileTree = async (
+  baseDirectory: string,
+  currentRelativePath: string,
+  gitStatus: StatusResult
+): Promise<FileTree> => {
+  const fullPath = path.join(baseDirectory, currentRelativePath);
+  const entriesInDir = fs.readdirSync(
+    fullPath,
+    { withFileTypes: true }
+  );
+  const entries = entriesInDir.filter(shouldIncludeEntry);
 
   const tree: FileTree = [];
 
@@ -42,7 +54,7 @@ const getFileTree = async (baseDirectory: string, currentRelativePath: string, g
         tree.push({ [entry.name]: subTree });
       }
     } else if (entry.name.endsWith('.md') || entry.name.endsWith('.markdown')) {
-      const fileStatus = gitStatus.files.find((f: any) => f.path === entryPath);
+      const fileStatus = gitStatus.files.find((f: FileStatusResult) => f.path === entryPath);
       let status = ' ';
       if (fileStatus) {
         status = fileStatus.index !== ' ' ? fileStatus.index : fileStatus.working_dir;

@@ -32,8 +32,13 @@ const MAX_RECENT_PATHS = 10;
 
 const saveExpandedNodes = (path: string, nodes: string[]) => {
   try {
-    localStorage.setItem(`${LOCAL_STORAGE_KEY_PREFIX}${path}`, JSON.stringify(nodes));
-    let recentPaths: string[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_RECENT_PATHS_KEY) || '[]');
+    localStorage.setItem(
+      `${LOCAL_STORAGE_KEY_PREFIX}${path}`,
+      JSON.stringify(nodes)
+    );
+    let recentPaths: string[] = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_RECENT_PATHS_KEY) || '[]'
+    );
     recentPaths = recentPaths.filter(p => p !== path);
     recentPaths.unshift(path);
     if (recentPaths.length > MAX_RECENT_PATHS) {
@@ -42,7 +47,10 @@ const saveExpandedNodes = (path: string, nodes: string[]) => {
         localStorage.removeItem(`${LOCAL_STORAGE_KEY_PREFIX}${oldPath}`);
       }
     }
-    localStorage.setItem(LOCAL_STORAGE_RECENT_PATHS_KEY, JSON.stringify(recentPaths));
+    localStorage.setItem(
+      LOCAL_STORAGE_RECENT_PATHS_KEY,
+      JSON.stringify(recentPaths)
+    );
   } catch (e) {
     console.error('Failed to save expanded nodes to local storage', e);
   }
@@ -58,7 +66,10 @@ const loadExpandedNodes = (path: string): string[] => {
   }
 };
 
-const filterTree = (tree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], searchQuery: string): (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] => {
+const filterTree = (
+  tree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[],
+  searchQuery: string
+): (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] => {
   if (!searchQuery) return tree;
 
   return tree
@@ -71,7 +82,7 @@ const filterTree = (tree: (FileTreeItem | { [key: string]: (FileTreeItem | objec
           : acc;
       } else {
         const key = Object.keys(item)[0];
-        const value = (item as any)[key];
+        const value = item[key];
 
         const children = Array.isArray(value)
           ? filterTree(value, searchQuery)
@@ -79,7 +90,7 @@ const filterTree = (tree: (FileTreeItem | { [key: string]: (FileTreeItem | objec
 
         return children.length > 0
           ? [...acc, { [key]: children } as { [key: string]: (FileTreeItem | object)[] }]
-          :acc;
+          : acc;
       }
     }, []);
 };
@@ -87,7 +98,10 @@ const filterTree = (tree: (FileTreeItem | { [key: string]: (FileTreeItem | objec
 export const fetchFileTree = createAsyncThunk(
   'fileTree/fetchFileTree',
   async () => {
-    const data = await fetchData<{ fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], mountedDirectoryPath: string }>('/api/filetree', 'json');
+    const data = await fetchData<{
+      fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
+      mountedDirectoryPath: string;
+        }>('/api/filetree', 'json');
     return { fileTree: data?.fileTree || [], mountedDirectoryPath: data?.mountedDirectoryPath };
   }
 );
@@ -113,7 +127,9 @@ const fileTreeSlice = createSlice({
       state.expandedNodes = action.payload;
       saveExpandedNodes(state.mountedDirectoryPath, state.expandedNodes);
     },
-    expandAllNodes: (state, action: { payload: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] | null }) => {
+    expandAllNodes: (
+      state, action: { payload: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] | null }
+    ) => {
       const allItemIds: string[] = [];
       const collectIds = (items: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], parentPath: string = '') => {
         items.forEach(item => {
@@ -121,7 +137,7 @@ const fileTreeSlice = createSlice({
             const key = Object.keys(item)[0];
             const currentPath = parentPath ? `${parentPath}/${key}` : key;
             allItemIds.push(currentPath);
-            collectIds((item as any)[key] as (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], currentPath);
+            collectIds(item[key] as (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[], currentPath);
           }
         });
       };
@@ -163,11 +179,14 @@ export const selectFilteredFileTree = (
     const result: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[] = [];
     fullFileTree.forEach(item => {
       if ('path' in item) {
-        result.push({ path: (item as FileTreeItem).path.split('/').pop() || (item as FileTreeItem).path, status: (item as FileTreeItem).status });
+        result.push({
+          path: (item as FileTreeItem).path.split('/').pop() || (item as FileTreeItem).path,
+          status: (item as FileTreeItem).status,
+        });
       } else {
         const key = Object.keys(item)[0];
         const newObject: { [key: string]: (FileTreeItem | object)[] } = {};
-        newObject[key.split('/').pop() || key] = (item as any)[key];
+        newObject[key.split('/').pop() || key] = item[key];
         result.push(newObject);
       }
     });
@@ -190,7 +209,7 @@ export const selectFilteredFileTree = (
         const key = Object.keys(item)[0];
         const itemSegments = key.split('/');
         if (itemSegments[itemSegments.length - 1] === segment) {
-          const children = (item as any)[key];
+          const children = item[key];
           if (Array.isArray(children)) {
             return findChildren(children, pathSegments, currentSegmentIndex + 1);
           }
@@ -211,7 +230,7 @@ export const selectFilteredFileTree = (
       } else {
         const key = Object.keys(item)[0];
         const newObject: { [key: string]: (FileTreeItem | object)[] } = {};
-        newObject[key.split('/').pop() || key] = (item as any)[key];
+        newObject[key.split('/').pop() || key] = item[key];
         result.push(newObject);
       }
     });
