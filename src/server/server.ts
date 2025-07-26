@@ -6,11 +6,11 @@ import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
 import { setupWatcher } from './watcher';
 
-export const serve = (directory: string, port: number): import('http').Server => {
+export const serve = (directory: string, port: number, host: string): import('http').Server => {
   const app = createApp(directory);
-  const server = app.listen(port, () => {
+  const server = app.listen(port, host, () => {
     logger.log('Server', `📁 Mounted directory: ${directory}`);
-    logger.log('Server', `🚀 Server listening at http://localhost:${port}`);
+    logger.log('Server', `🚀 Server listening at http://${host}:${port}`);
   });
 
   setupWatcher(directory, server, port);
