@@ -9,7 +9,8 @@ import { setupWatcher } from './watcher';
 export const serve = (directory: string, port: number): import('http').Server => {
   const app = createApp(directory);
   const server = app.listen(port, () => {
-    logger.log(`🚀 Server listening at http://localhost:${port}`);
+    logger.log('Server', `📁 Mounted directory: ${directory}`);
+    logger.log('Server', `🚀 Server listening at http://localhost:${port}`);
   });
 
   setupWatcher(directory, server, port);

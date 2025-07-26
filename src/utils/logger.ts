@@ -1,10 +1,43 @@
+type LogTag = 'CLI' | 'Server' | 'Livereload' | 'Announcement';
+
 class Logger {
-  log(message: string, ...args: unknown[]): void {
-    console.log(message, ...args);
+  log(tag: LogTag, message: string, ...args: unknown[]): void {
+    this.getTagColor(tag)
+      .then(chalk => {
+        const paddedTag = tag.padEnd(12, ' '); // Pad to 12 characters
+        const tagColored = chalk(` ${paddedTag} `);
+
+        const formattedMessage = message.replace(/(https?:\/\/\S+)/g, (url) => {
+          // Apply OSC 8 for clickable link and chalk for styling
+          const styledUrl = chalk.reset.blue.underline(url);
+          return `\x1b]8;;${url}\x1b\\${styledUrl}\x1b]8;;\x1b\\`;
+        });
+
+        console.log(`${tagColored} ${formattedMessage}`, ...args);
+      });
   }
 
   error(message: string, ...args: unknown[]): void {
-    console.error(message, ...args);
+    import('chalk')
+      .then((module) => module.default)
+      .then(chalk => { console.error(chalk.bgRed.white(' Error '), message, ...args); });
+  }
+
+  private getTagColor(tag: LogTag) {
+    return import('chalk').then((module) => module.default).then(chalk => {
+      switch (tag) {
+        case 'CLI':
+          return chalk.bgGreen.white;
+        case 'Server':
+          return chalk.bgCyan.white;
+        case 'Livereload':
+          return chalk.bgBlue.white;
+        case 'Announcement':
+          return chalk.bgYellow.white;
+        default:
+          return chalk.bgWhite.black;
+      }
+    });
   }
 }
 
