@@ -1,25 +1,23 @@
 # Changelog
 
+## 0.8.1 (2025-07-26)
+
+### Bug Fixes
+
+- ### Bug Fixes
+
+- Fix log color ([`5743174`](https://github.com/unhappychoice/mdts/commit/5743174))
+
 ## 0.8.0 (2025-07-26)
 
 ### Features
 
-- Add --host option ([`9889148`](https://github.com/unhappychoice/mdts/commit/9889148))
 - Show file git status ([`5f8033c`](https://github.com/unhappychoice/mdts/commit/5f8033c))
-
-### Bug Fixes
-
-- Update tests to reflect host argument in serve function ([`ee45252`](https://github.com/unhappychoice/mdts/commit/ee45252))
-- Fix test ([`e8a6c39`](https://github.com/unhappychoice/mdts/commit/e8a6c39))
-
-### Refactoring
-
-- Use simple-git ([`2c016a7`](https://github.com/unhappychoice/mdts/commit/2c016a7))
+- Add --host option ([`9889148`](https://github.com/unhappychoice/mdts/commit/9889148))
+- Add --silent option to CLI ([`084d5bf`](https://github.com/unhappychoice/mdts/commit/084d5bf))
 
 ### Others
 
-- Update specs ([`3552805`](https://github.com/unhappychoice/mdts/commit/3552805))
-- Add silient option to CLI ([`084d5bf`](https://github.com/unhappychoice/mdts/commit/084d5bf))
 - Improve log readability with chalk ([`23977c1`](https://github.com/unhappychoice/mdts/commit/23977c1))
 - Fix lint ([`cb40088`](https://github.com/unhappychoice/mdts/commit/cb40088))
 - Improve documents ([`a085ba1`](https://github.com/unhappychoice/mdts/commit/a085ba1))
