@@ -11,7 +11,8 @@ export const fileTreeRouter = (directory: string): Router => {
   const git: SimpleGit = simpleGit({ baseDir: directory });
 
   router.get('/', async (req, res) => {
-    const gitStatus = await git.status();
+    const isRepo = await git.checkIsRepo();
+    const gitStatus = isRepo ? await git.status() : null;
     const fileTree = await getFileTree(directory, '', gitStatus);
     res.json({ fileTree, mountedDirectoryPath: directory });
   });
@@ -35,7 +36,7 @@ const shouldIncludeEntry = (entry: Dirent): boolean => {
 const getFileTree = async (
   baseDirectory: string,
   currentRelativePath: string,
-  gitStatus: StatusResult
+  gitStatus: StatusResult | null
 ): Promise<FileTree> => {
   const fullPath = path.join(baseDirectory, currentRelativePath);
   const entriesInDir = fs.readdirSync(
@@ -54,13 +55,16 @@ const getFileTree = async (
         tree.push({ [entry.name]: subTree });
       }
     } else if (entry.name.endsWith('.md') || entry.name.endsWith('.markdown')) {
-      const fileStatus = gitStatus.files.find((f: FileStatusResult) => f.path === entryPath);
       let status = ' ';
-      if (fileStatus) {
-        status = fileStatus.index !== ' ' ? fileStatus.index : fileStatus.working_dir;
+      if (gitStatus) {
+        const fileStatus = gitStatus.files.find((f: FileStatusResult) => f.path === entryPath);
+        if (fileStatus) {
+          status = fileStatus.index !== ' ' ? fileStatus.index : fileStatus.working_dir;
+        }
       }
       tree.push({ path: entryPath, status });
     }
   }
   return tree;
 };
+
