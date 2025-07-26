@@ -1,10 +1,14 @@
 # Changelog
 
-## 0.8.1 (2025-07-26)
+## 0.8.2 (2025-07-26)
 
 ### Bug Fixes
 
-- ### Bug Fixes
+- Handle non-Git directories in filetree route ([`ace45a2`](https://github.com/unhappychoice/mdts/commit/ace45a2))
+
+## 0.8.1 (2025-07-26)
+
+### Bug Fixes
 
 - Fix log color ([`5743174`](https://github.com/unhappychoice/mdts/commit/5743174))
 
