@@ -10,7 +10,9 @@ const mockStore = configureStore([thunk]);
 
 jest.mock('../../../../src/store/slices/fileTreeSlice', () => ({
   ...jest.requireActual('../../../../src/store/slices/fileTreeSlice'),
-  fetchFileTree: jest.fn(() => ({ type: 'fileTree/fetchFileTree/pending' })),
+  fetchFileTree: Object.assign(jest.fn(() => ({ type: 'fileTree/fetchFileTree/pending' })), {
+    fulfilled: jest.fn((payload) => ({ type: 'fileTree/fetchFileTree/fulfilled', payload })),
+  }),
   expandAllNodes: jest.fn((payload) => ({ type: 'fileTree/expandAllNodes', payload })),
   setExpandedNodes: jest.fn((payload) => ({ type: 'fileTree/setExpandedNodes', payload })),
   setFilteredFileTree: jest.fn((payload) => ({ type: 'fileTree/setFilteredFileTree', payload }))
@@ -21,12 +23,12 @@ describe('FileTree', () => {
   const initialState = {
     fileTree: {
       fileTree: [
-        { 'folder1': ['file1.md', 'file2.txt'] },
-        'file3.js',
+        { path: 'file3.js', status: ' ' },
+        { 'folder1': [{ path: 'folder1/file1.md', status: ' ' }, { path: 'folder1/file2.txt', status: ' ' }] },
       ],
       filteredFileTree: [
-        { 'folder1': ['file1.md', 'file2.txt'] },
-        'file3.js',
+        { path: 'file3.js', status: ' ' },
+        { 'folder1': [{ path: 'folder1/file1.md', status: ' ' }, { path: 'folder1/file2.txt', status: ' ' }] },
       ],
       loading: false,
       error: null,
@@ -77,7 +79,7 @@ describe('FileTree', () => {
       fileTree: {
         ...initialState.fileTree,
         searchQuery: 'file',
-        filteredFileTree: ['/folder1/file1.md'],
+        filteredFileTree: [{ path: '/folder1/file1.md', status: ' ' }],
       },
     });
     jest.spyOn(store, 'dispatch');
@@ -121,7 +123,7 @@ describe('FileTree', () => {
   });
 
   test('updates expandedNodes when search query changes and filteredFileTree is not empty', async () => {
-    const updatedFileTree = [{ 'folder1': ['file1.md'] }];
+    const updatedFileTree = [{ 'folder1': [{ path: 'folder1/file1.md', status: ' ' }] }];
     let currentStore = mockStore(initialState);
     const { rerender } = render(
       <Provider store={currentStore}>
@@ -160,7 +162,7 @@ describe('FileTree', () => {
       fileTree: {
         ...initialState.fileTree,
         searchQuery: '',
-        filteredFileTree: [{ 'folder1': ['file1.md'] }],
+        filteredFileTree: [{ 'folder1': [{ path: 'file1.md', status: ' ' }] }],
       },
     };
     store = mockStore(updatedState);

@@ -46,8 +46,8 @@ describe('filetree.ts', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         fileTree: [
-          { 'dir1': ['dir1/subfile1.md'] },
-          'file1.md',
+          { 'dir1': [{ path: 'dir1/subfile1.md', status: ' ' }] },
+          { path: 'file1.md', status: ' ' },
         ],
         mountedDirectoryPath: mockDirectory,
       });

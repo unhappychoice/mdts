@@ -35,8 +35,14 @@ describe('App', () => {
         outlineOpen: true,
       },
       fileTree: {
-        fileTree: [],
-        filteredFileTree: [],
+        fileTree: [
+          { path: 'test.md', status: ' ' },
+          { 'folder': [{ path: 'folder/subfile.md', status: 'M' }] }
+        ],
+        filteredFileTree: [
+          { path: 'test.md', status: ' ' },
+          { 'folder': [{ path: 'folder/subfile.md', status: 'M' }] }
+        ],
         loading: false,
         error: null,
         searchQuery: '',
