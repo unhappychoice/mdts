@@ -6,7 +6,7 @@ import { FileTreeItem } from '../../../store/slices/fileTreeSlice';
 import { RootState } from '../../../store/store';
 
 export interface FileTreeListProps {
-  fileTree: (FileTreeItem | string)[];
+  fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
   handleItemClick: (itemPath: string, isDirectory: boolean) => void;
 }
 
@@ -16,8 +16,8 @@ export const FileTreeList: React.FC<FileTreeListProps> = ({ fileTree, handleItem
   return (
     <List sx={{ mr: -2, ml: -2 }}>
       {fileTree.map((item) => {
-        const isDirectory = typeof item !== 'string';
-        const name = isDirectory ? Object.keys(item)[0] : item;
+        const isDirectory = !('path' in item);
+        const name = isDirectory ? Object.keys(item)[0] : (item as FileTreeItem).path.split('/').pop();
         const itemPath = currentPath === '' ? name : `${currentPath}/${name}`;
 
         const handleClick = () => {

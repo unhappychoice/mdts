@@ -20,7 +20,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchFileTree());
-  }, [dispatch]);
+  }, [dispatch, location]);
 
   useEffect(() => {
     dispatch(updateHistoryFromLocation(location.pathname));

@@ -13,8 +13,8 @@ jest.mock('@mui/x-tree-view', () => ({
 
 describe('FileTreeContent', () => {
   const mockFileTree = [
-    { 'folder1': ['file1.md', { 'subfolder': ['file2.txt'] }] },
-    'file3.js',
+    { 'folder1': [{ path: 'file1.md', status: ' ' }, { 'subfolder': [{ path: 'folder1/subfolder/file2.txt', status: ' ' }] }] },
+    { path: 'file3.js', status: ' ' },
   ];
 
   test('renders loading spinner when loading is true', () => {
