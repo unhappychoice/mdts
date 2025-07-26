@@ -24,6 +24,14 @@ jest.mock('../../src/server/server', () => ({
   serve: jest.fn(),
 }));
 
+jest.mock('../../src/utils/logger', () => ({
+  logger: {
+    setSilent: jest.fn(),
+    log: jest.fn(),
+    error: jest.fn(),
+  },
+}));
+
 describe('cli', () => {
   let cli: CLI;
   let originalArgv: string[];

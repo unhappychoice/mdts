@@ -13,7 +13,7 @@ describe('CLI e2e tests', () => {
   let tempDir: string;
   let originalPath: string | undefined;
 
-  beforeAll((done) => {
+  beforeAll(async () => {
     // Create a temporary directory for our dummy 'open' executable
     tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'mdts-test-'));
 
@@ -30,22 +30,28 @@ describe('CLI e2e tests', () => {
       env: { ...process.env, PATH: process.env.PATH }, // Pass the modified PATH to the child process
     });
 
-    cliProcess.stdout?.on('data', (data: Buffer) => {
-      const output = data.toString();
-      if (output.includes(`Server listening at http://localhost:${port}`)) {
-        done();
-      }
-    });
-
+    // Optional: Log stderr for debugging
     cliProcess.stderr?.on('data', (data: Buffer) => {
       console.error(`CLI stderr: ${data}`);
     });
 
-    cliProcess.on('error', (err: Error) => {
-      console.error('Failed to start CLI process:', err);
-      done(err);
-    });
-  }, 20000); // Increase timeout for beforeAll
+    // Poll for server readiness
+    const maxAttempts = 30;
+    const delayMs = 1000;
+    for (let i = 0; i < maxAttempts; i++) {
+      try {
+        const response = await axios.get(`http://localhost:${port}/api/markdown/content/test.md`);
+        if (response.status === 200) {
+          console.log(`Server is ready after ${i + 1} attempts.`);
+          return; // Server is ready
+        }
+      } catch {
+        // Server not ready yet, continue polling
+      }
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+    }
+    throw new Error('Server did not become ready within the timeout.');
+  }, 60000); // Keep the overall timeout for beforeAll
 
   afterAll(() => {
     if (cliProcess) {
