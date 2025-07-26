@@ -18,6 +18,7 @@ export class CLI {
 
         program
           .version(packageJson.version)
+          .option('-H, --host <host>', 'Host to listen on', 'localhost')
           .option('-p, --port <port>', 'Port to serve on', String(DEFAULT_PORT))
           .option('-s, --silent', 'Suppress server logs', false)
           .argument('[directory]', 'Directory to serve', DEFAULT_DIRECTORY)
@@ -29,12 +30,14 @@ export class CLI {
 
             logger.log('CLI', '⚙  Options: ' + JSON.stringify(options));
             const port = parseInt(options.port, 10);
+            const host = options.host;
             const absoluteDirectory = path.resolve(process.cwd(), directory);
-            serve(absoluteDirectory, port);
+            serve(absoluteDirectory, port, host);
             const readmePath = path.join(absoluteDirectory, 'README.md');
             const initialPath = existsSync(readmePath) ? '/README.md' : '';
-            logger.log('CLI', `🌐 Opening browser at http://localhost:${port}${initialPath}`);
-            open(`http://localhost:${port}${initialPath}`);
+            const displayHost = (host === '0.0.0.0' || host === '::') ? 'localhost' : host;
+            logger.log('CLI', `🌐 Opening browser at http://${displayHost}:${port}${initialPath}`);
+            open(`http://${displayHost}:${port}${initialPath}`);
           });
 
         program.parse(process.argv);

@@ -39,12 +39,13 @@ Your current directory becomes a browsable Markdown tree.
 ## 🛠 Options
 
 ```bash
-npx mdts <directory> --port 3000
+npx mdts <directory> --host 0.0.0.0 --port 3000 --silent
 ```
 
 | Option         | Description                           | Example |
 | -------------- | ------------------------------------- |---------| 
 | `<directory>`  | Specify root directory (default .)    | ./docs  |
+| `--host`       | Host to listen on (default localhost) | 0.0.0.0 |
 | `--port`       | Change the server port (default 8521) | 8000    |
 | `--silent`     | Suppress server logs                  | false   |
 
