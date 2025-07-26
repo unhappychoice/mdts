@@ -1,7 +1,16 @@
 type LogTag = 'CLI' | 'Server' | 'Livereload' | 'Announcement';
 
 class Logger {
+  private silent = false;
+
+  setSilent(silent: boolean): void {
+    this.silent = silent;
+  }
+
   log(tag: LogTag, message: string, ...args: unknown[]): void {
+    if (this.silent) {
+      return;
+    }
     this.getTagColor(tag)
       .then(chalk => {
         const paddedTag = tag.padEnd(12, ' '); // Pad to 12 characters

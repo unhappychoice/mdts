@@ -19,8 +19,11 @@ export class CLI {
         program
           .version(packageJson.version)
           .option('-p, --port <port>', 'Port to serve on', String(DEFAULT_PORT))
+          .option('-s, --silent', 'Suppress server logs', false)
           .argument('[directory]', 'Directory to serve', DEFAULT_DIRECTORY)
           .action((directory, options) => {
+            logger.setSilent(options.silent);
+
             logger.log('Announcement', '🎉 Thanks for using mdts!');
             logger.log('Announcement', '✨ Like it? Star it on GitHub: https://github.com/unhappychoice/mdts');
 
