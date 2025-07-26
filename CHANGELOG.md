@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.8.0 (2025-07-26)
+
+### Features
+
+- Add --host option ([`9889148`](https://github.com/unhappychoice/mdts/commit/9889148))
+- Show file git status ([`5f8033c`](https://github.com/unhappychoice/mdts/commit/5f8033c))
+
+### Bug Fixes
+
+- Update tests to reflect host argument in serve function ([`ee45252`](https://github.com/unhappychoice/mdts/commit/ee45252))
+- Fix test ([`e8a6c39`](https://github.com/unhappychoice/mdts/commit/e8a6c39))
+
+### Refactoring
+
+- Use simple-git ([`2c016a7`](https://github.com/unhappychoice/mdts/commit/2c016a7))
+
+### Others
+
+- Update specs ([`3552805`](https://github.com/unhappychoice/mdts/commit/3552805))
+- Add silient option to CLI ([`084d5bf`](https://github.com/unhappychoice/mdts/commit/084d5bf))
+- Improve log readability with chalk ([`23977c1`](https://github.com/unhappychoice/mdts/commit/23977c1))
+- Fix lint ([`cb40088`](https://github.com/unhappychoice/mdts/commit/cb40088))
+- Improve documents ([`a085ba1`](https://github.com/unhappychoice/mdts/commit/a085ba1))
+- Rewrite documents ([`1de7d91`](https://github.com/unhappychoice/mdts/commit/1de7d91))
+- Add markdown_features.md document ([`ce32e5a`](https://github.com/unhappychoice/mdts/commit/ce32e5a))
+- Add usecases.md document ([`02ade13`](https://github.com/unhappychoice/mdts/commit/02ade13))
+- Add faq.md document ([`221e1d1`](https://github.com/unhappychoice/mdts/commit/221e1d1))
+- Add comparison.md ([`e60d0e1`](https://github.com/unhappychoice/mdts/commit/e60d0e1)) 
+
 ## 0.7.1 (2025-07-23)
 
 ### Bug Fixes
