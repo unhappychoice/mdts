@@ -103,7 +103,7 @@ describe('watcher.ts unit tests', () => {
       }
     });
     setupWatcher('/mock/directory', mockServer, 3000);
-    expect(logger.log).toHaveBeenCalledWith('🚀 WebSocket server listening at ws://localhost:3000');
+    expect(logger.log).toHaveBeenCalledWith('Livereload', '🚀 WebSocket server listening at ws://localhost:3000');
   });
 
   describe('WebSocket client interactions', () => {
@@ -114,7 +114,7 @@ describe('watcher.ts unit tests', () => {
     });
 
     it('should log when Livereload Client connected', () => {
-      expect(logger.log).toHaveBeenCalledWith('🤝 Livereload Client connected');
+      expect(logger.log).toHaveBeenCalledWith('Livereload', '🤝 Livereload Client connected');
     });
 
     it('should log when Livereload Client closed and close content watcher if no other clients', () => {
@@ -126,7 +126,7 @@ describe('watcher.ts unit tests', () => {
       mockWss.clients.delete(mockClient);
       expect(mockContentWatcher.close).not.toHaveBeenCalled(); // Should not be called initially
       onClientClose();
-      expect(logger.log).toHaveBeenCalledWith('👋 Livereload Client closed');
+      expect(logger.log).toHaveBeenCalledWith('Livereload', '👋 Livereload Client closed');
       expect(mockContentWatcher.close).toHaveBeenCalled();
     });
 
@@ -151,7 +151,7 @@ describe('watcher.ts unit tests', () => {
       (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher); // For content watcher
       onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file.md' }));
 
-      expect(logger.log).toHaveBeenCalledWith('👀 Watching file: /mock/file.md');
+      expect(logger.log).toHaveBeenCalledWith('Livereload', '👀 Watching file: /mock/file.md');
       expect(chokidar.watch).toHaveBeenCalledWith('/mock/file.md', { ignoreInitial: true });
       expect(mockContentWatcher.on).toHaveBeenCalledWith('change', expect.any(Function));
       expect(mockContentWatcher.on).toHaveBeenCalledWith('error', expect.any(Function));
@@ -167,7 +167,7 @@ describe('watcher.ts unit tests', () => {
       const onChangeCallback = (mockContentWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'change')[1];
       onChangeCallback('/mock/file.md');
 
-      expect(logger.log).toHaveBeenCalledWith('🔃 File changed: /mock/file.md, reloading content...');
+      expect(logger.log).toHaveBeenCalledWith('Livereload', '🔃 File changed: /mock/file.md, reloading content...');
       expect(mockClient.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-content' }));
     });
 
@@ -218,7 +218,7 @@ describe('watcher.ts unit tests', () => {
       const onAddCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'add')[1];
       onAddCallback('new-file.md');
 
-      expect(logger.log).toHaveBeenCalledWith('🌲 File added: new-file.md, reloading tree...');
+      expect(logger.log).toHaveBeenCalledWith('Livereload', '🌲 File added: new-file.md, reloading tree...');
       expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
     });
 
@@ -229,7 +229,7 @@ describe('watcher.ts unit tests', () => {
       const onUnlinkCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'unlink')[1];
       onUnlinkCallback('deleted-file.md');
 
-      expect(logger.log).toHaveBeenCalledWith('🌲 File removed: deleted-file.md, reloading tree...');
+      expect(logger.log).toHaveBeenCalledWith('Livereload', '🌲 File removed: deleted-file.md, reloading tree...');
       expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
     });
 

@@ -43,9 +43,10 @@ npx mdts <directory> --port 3000
 ```
 
 | Option         | Description                           | Example |
-| -------------- | ------------------------------------- | --------| 
+| -------------- | ------------------------------------- |---------| 
 | `<directory>`  | Specify root directory (default .)    | ./docs  |
 | `--port`       | Change the server port (default 8521) | 8000    |
+| `--silent`     | Suppress server logs                  | false   |
 
 ## 📚 Documentation
 
