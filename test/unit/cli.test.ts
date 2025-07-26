@@ -60,7 +60,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -71,7 +71,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521');
       });
   });
@@ -82,7 +82,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 9000);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 9000, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });
@@ -93,7 +93,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 8521);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 8521, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -104,7 +104,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 9000);
+        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 9000, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });

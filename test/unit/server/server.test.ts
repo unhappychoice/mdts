@@ -6,8 +6,10 @@ import { setupWatcher } from '../../../src/server/watcher';
 jest.mock('express', () => {
   const mockUse = jest.fn();
   const mockGet = jest.fn();
-  const mockListen = jest.fn((port, callback) => {
-    callback();
+  const mockListen = jest.fn((port, host, callback) => {
+    if (callback) {
+      callback();
+    }
     return { close: jest.fn() };
   });
   const mockExpress = jest.fn(() => ({
@@ -236,8 +238,8 @@ describe('server.ts unit tests', () => {
 
   describe('serve', () => {
     it('should start a server and setup watcher', () => {
-      const server = serve('/mock/directory', 3000);
-      expect(app.listen).toHaveBeenCalledWith(3000, expect.any(Function));
+      const server = serve('/mock/directory', 3000, 'localhost');
+      expect(app.listen).toHaveBeenCalledWith(3000, 'localhost', expect.any(Function));
       expect(setupWatcher).toHaveBeenCalledWith('/mock/directory', server, 3000);
     });
   });
