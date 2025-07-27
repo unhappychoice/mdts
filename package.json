@@ -36,7 +36,7 @@
   "bugs": {
     "url": "https://github.com/unhappychoice/mdts/issues"
   },
-  "homepage": "https://github.com/unhappychoice/mdts#readme",
+  "homepage": "https://mdts.unhappychoice.com",
   "devDependencies": {
     "@types/commander": "^2.12.0",
     "@types/express": "^4.17.21",
