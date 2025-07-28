@@ -3,7 +3,7 @@
 exports[`FileTreeHeader renders correctly when closed 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-swwgw5"
+    class="MuiBox-root css-luhtu9"
   >
     <button
       aria-label="toggle file tree"
@@ -30,7 +30,7 @@ exports[`FileTreeHeader renders correctly when closed 1`] = `
 exports[`FileTreeHeader renders correctly when open 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1v5tldx"
+    class="MuiBox-root css-xonpca"
   >
     <div
       class="MuiBox-root css-1g3qtqm"

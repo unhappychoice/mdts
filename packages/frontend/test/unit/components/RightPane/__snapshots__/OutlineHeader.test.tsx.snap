@@ -3,7 +3,7 @@
 exports[`OutlineHeader renders correctly when closed 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1lsng3a"
+    class="MuiBox-root css-umcnn2"
   >
     <button
       aria-label="toggle outline"
@@ -30,7 +30,7 @@ exports[`OutlineHeader renders correctly when closed 1`] = `
 exports[`OutlineHeader renders correctly when open 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1nqjmij"
+    class="MuiBox-root css-mzwsmu"
   >
     <button
       aria-label="toggle outline"

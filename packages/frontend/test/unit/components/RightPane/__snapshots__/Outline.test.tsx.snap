@@ -3,10 +3,10 @@
 exports[`Outline renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1kkx8h9"
+    class="MuiBox-root css-153qrh4"
   >
     <div
-      class="MuiBox-root css-1nqjmij"
+      class="MuiBox-root css-mzwsmu"
     >
       <button
         aria-label="toggle outline"
@@ -33,7 +33,7 @@ exports[`Outline renders correctly 1`] = `
       </h6>
     </div>
     <ul
-      class="MuiList-root MuiList-padding MuiList-dense css-h9oyac-MuiList-root"
+      class="MuiList-root MuiList-padding MuiList-dense custom-scrollbar css-18l7s16-MuiList-root"
     >
       <li
         class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1s7t0kb-MuiListItem-root"

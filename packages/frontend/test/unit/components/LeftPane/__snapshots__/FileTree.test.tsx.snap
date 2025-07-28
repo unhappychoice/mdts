@@ -3,10 +3,10 @@
 exports[`FileTree renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-pl1hb3"
+    class="MuiBox-root css-b3tbtb"
   >
     <div
-      class="MuiBox-root css-1v5tldx"
+      class="MuiBox-root css-xonpca"
     >
       <div
         class="MuiBox-root css-1g3qtqm"
@@ -73,7 +73,7 @@ exports[`FileTree renders correctly 1`] = `
       </button>
     </div>
     <div
-      class="MuiBox-root css-1qm1lh"
+      class="MuiBox-root css-kuuj3l"
     >
       <div
         class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"
@@ -89,7 +89,7 @@ exports[`FileTree renders correctly 1`] = `
     </div>
     <ul
       aria-multiselectable="false"
-      class="MuiSimpleTreeView-root css-162o9s3-MuiSimpleTreeView-root"
+      class="custom-scrollbar MuiSimpleTreeView-root css-5c3a1o-MuiSimpleTreeView-root"
       defaultcollapseicon="[object Object]"
       defaultexpandicon="[object Object]"
       id="mui-tree-view-1"

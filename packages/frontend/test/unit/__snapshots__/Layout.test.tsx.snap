@@ -108,10 +108,10 @@ exports[`Layout renders correctly 1`] = `
       class="MuiBox-root css-1b2sp54"
     >
       <div
-        class="MuiBox-root css-pl1hb3"
+        class="MuiBox-root css-b3tbtb"
       >
         <div
-          class="MuiBox-root css-1v5tldx"
+          class="MuiBox-root css-xonpca"
         >
           <div
             class="MuiBox-root css-1g3qtqm"
@@ -178,7 +178,7 @@ exports[`Layout renders correctly 1`] = `
           </button>
         </div>
         <div
-          class="MuiBox-root css-1qm1lh"
+          class="MuiBox-root css-kuuj3l"
         >
           <div
             class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"
@@ -194,7 +194,7 @@ exports[`Layout renders correctly 1`] = `
         </div>
         <ul
           aria-multiselectable="false"
-          class="MuiSimpleTreeView-root css-162o9s3-MuiSimpleTreeView-root"
+          class="custom-scrollbar MuiSimpleTreeView-root css-5c3a1o-MuiSimpleTreeView-root"
           defaultcollapseicon="[object Object]"
           defaultexpandicon="[object Object]"
           id="mui-tree-view-1"
@@ -203,7 +203,7 @@ exports[`Layout renders correctly 1`] = `
         />
       </div>
       <div
-        class="MuiBox-root css-lttem5"
+        class="custom-scrollbar MuiBox-root css-lttem5"
       >
         <nav
           aria-label="breadcrumb"
@@ -278,7 +278,7 @@ exports[`Layout renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="markdown-body light MuiBox-root css-x7jyj4"
+          class="markdown-body MuiBox-root css-x7jyj4"
         >
           <div
             data-testid="mock-react-markdown"
@@ -286,10 +286,10 @@ exports[`Layout renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-1kkx8h9"
+        class="MuiBox-root css-153qrh4"
       >
         <div
-          class="MuiBox-root css-1nqjmij"
+          class="MuiBox-root css-mzwsmu"
         >
           <button
             aria-label="toggle outline"
@@ -316,7 +316,7 @@ exports[`Layout renders correctly 1`] = `
           </h6>
         </div>
         <ul
-          class="MuiList-root MuiList-padding MuiList-dense css-h9oyac-MuiList-root"
+          class="MuiList-root MuiList-padding MuiList-dense custom-scrollbar css-18l7s16-MuiList-root"
         />
       </div>
     </main>
