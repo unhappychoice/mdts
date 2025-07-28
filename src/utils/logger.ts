@@ -29,7 +29,7 @@ class Logger {
   error(message: string, ...args: unknown[]): void {
     import('chalk')
       .then((module) => module.default)
-      .then(chalk => { console.error(chalk.bgRed.white(' Error '), message, ...args); });
+      .then(chalk => { console.error(chalk.bgRed.black(' Error'.padEnd(14, ' ')), message, ...args); });
   }
 
   private getTagColor(tag: LogTag) {

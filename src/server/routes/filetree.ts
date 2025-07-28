@@ -2,6 +2,7 @@ import { Router } from 'express';
 import fs, { Dirent } from 'fs';
 import path from 'path';
 import simpleGit, { SimpleGit, StatusResult, FileStatusResult } from 'simple-git';
+import { EXCLUDED_DIRECTORIES } from '../../constants';
 
 type FileTreeItem = { path: string, status: string, isDirectory?: boolean } | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
@@ -24,13 +25,8 @@ const isDotFileOrDirectory = (entryName: string): boolean => {
   return entryName.startsWith('.');
 };
 
-const isLibraryDirectory = (entryName: string): boolean => {
-  const libraryDirs = ['node_modules', 'vendor', 'bundle', 'venv', 'env', 'site-packages'];
-  return libraryDirs.includes(entryName);
-};
-
 const shouldIncludeEntry = (entry: Dirent): boolean => {
-  return !isDotFileOrDirectory(entry.name) && !isLibraryDirectory(entry.name);
+  return !isDotFileOrDirectory(entry.name) && !EXCLUDED_DIRECTORIES.includes(entry.name);
 };
 
 const getFileTree = async (
