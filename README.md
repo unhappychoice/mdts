@@ -57,3 +57,8 @@ npx mdts <directory> --host 0.0.0.0 --port 3000 --silent
 - [Screenshots](docs/screenshots.md)
 - [Comparison with other tools](docs/comparison.md)
 - [FAQ](docs/faq.md)
+
+## Contributing
+
+Found a bug? Have an idea? Want to send a PR?  
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details — we'd love to have your help!

@@ -52,7 +52,9 @@ Before opening a PR:
 
 ```
 npm run lint
+npm run lint:frontend
 npm test
+npm test:frontend
 ```
 
 - Keep changes minimal and focused. Small, clear PRs are easier to review.
