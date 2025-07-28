@@ -106,7 +106,7 @@ const FileTreeContent: React.FC<FileTreeContentProps> = ({
 
   return (
     <>
-      {loading ? (
+      {loading && !(filteredFileTree && filteredFileTree.length > 0) ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 180px)' }}>
           <CircularProgress />
         </Box>
