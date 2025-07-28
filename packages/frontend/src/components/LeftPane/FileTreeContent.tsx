@@ -1,11 +1,10 @@
 import { ArticleOutlined, FolderOutlined } from '@mui/icons-material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
 import { TreeItem } from '@mui/x-tree-view';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import React from 'react';
-import { AppDispatch } from '../../store/store';
 
 interface FileTreeItem {
   path: string;
@@ -115,11 +114,19 @@ const FileTreeContent: React.FC<FileTreeContentProps> = ({
         <Typography color="error">Error: {error}</Typography>
       ) : (
         <SimpleTreeView
+          className="custom-scrollbar"
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
           expandedItems={expandedNodes}
           onExpandedItemsChange={onExpandedItemsChange}
-          sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto', height: 'calc(100vh - 180px)' }}
+          sx={{
+            flexGrow: 1,
+            maxWidth: 400,
+            overflowY: 'auto',
+            height: 'calc(100vh - 180px)',
+            px: 2,
+            pb: 2
+          }}
         >
           {renderTreeItems(filteredFileTree, onFileSelect)}
         </SimpleTreeView>

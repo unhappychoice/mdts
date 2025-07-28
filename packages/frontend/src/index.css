@@ -1,0 +1,11 @@
+@import url('./styles/scrollbar.css');
+
+:root {
+  --scrollbar-thumb-color: #888;
+  --scrollbar-thumb-hover-color: #555;
+}
+
+[data-theme="dark"] {
+  --scrollbar-thumb-color: #555;
+  --scrollbar-thumb-hover-color: #888;
+}
