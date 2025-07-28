@@ -42,11 +42,12 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
           maxWidth: '800px',
           margin: '0 auto',
         }),
+        height: '100%',
       }}
     >
       <BreadCrumb onDirectorySelect={onDirectorySelect} />
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-        <FolderOutlined sx={{ mr: 2 }} color="primary" fontSize="large"/>
+        <FolderOutlined sx={{ mr: 2 }} color="primary" fontSize="large" />
         <Typography variant="h4" gutterBottom sx={{ mb: 0 }}>
           {currentPath}
         </Typography>

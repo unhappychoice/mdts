@@ -37,7 +37,7 @@ const Layout = () => {
   }, [dispatch, toggleOutline]);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <AppHeader
         darkMode={darkMode}
         contentMode={contentMode}
@@ -45,7 +45,7 @@ const Layout = () => {
       />
       <Box
         component="main"
-        sx={{ flexGrow: 1, display: 'flex', overflowY: 'auto' }}
+        sx={{ flexGrow: 1, display: 'flex', overflowY: 'hidden', height: '100%' }}
       >
         <FileTree
           onFileSelect={handleFileSelect}

@@ -3,7 +3,7 @@
 exports[`Layout renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-zf0iqh"
+    class="MuiBox-root css-s92abg"
   >
     <header
       class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-10054e1-MuiPaper-root-MuiAppBar-root"
@@ -105,7 +105,7 @@ exports[`Layout renders correctly 1`] = `
       </div>
     </header>
     <main
-      class="MuiBox-root css-1ctmjs9"
+      class="MuiBox-root css-1b2sp54"
     >
       <div
         class="MuiBox-root css-pl1hb3"
@@ -194,7 +194,7 @@ exports[`Layout renders correctly 1`] = `
         </div>
         <ul
           aria-multiselectable="false"
-          class="MuiSimpleTreeView-root css-281oti-MuiSimpleTreeView-root"
+          class="MuiSimpleTreeView-root css-162o9s3-MuiSimpleTreeView-root"
           defaultcollapseicon="[object Object]"
           defaultexpandicon="[object Object]"
           id="mui-tree-view-1"
@@ -203,7 +203,7 @@ exports[`Layout renders correctly 1`] = `
         />
       </div>
       <div
-        class="MuiBox-root css-cf17b1"
+        class="MuiBox-root css-lttem5"
       >
         <nav
           aria-label="breadcrumb"
@@ -316,7 +316,7 @@ exports[`Layout renders correctly 1`] = `
           </h6>
         </div>
         <ul
-          class="MuiList-root MuiList-padding MuiList-dense css-b7dj7n-MuiList-root"
+          class="MuiList-root MuiList-padding MuiList-dense css-h9oyac-MuiList-root"
         />
       </div>
     </main>

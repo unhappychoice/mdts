@@ -64,6 +64,8 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
           maxWidth: '800px',
           margin: '0 auto',
         }),
+        height: '100%',
+        overflowY: 'scroll',
       }}
     >
       <BreadCrumb onDirectorySelect={onDirectorySelect} />
@@ -76,14 +78,14 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
       {frontmatter.tags && Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0 && (
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
           {frontmatter.tags.map((tag) => (
-            <Chip key={tag} label={tag} size="small" />
+            <Chip key={tag} label={tag} size='small' />
           ))}
         </Box>
       )}
       {frontmatter.categories && Array.isArray(frontmatter.categories) && frontmatter.categories.length > 0 && (
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
           {frontmatter.categories.map((category) => (
-            <Chip key={category} label={category} size="small" />
+            <Chip key={category} label={category} size='small' />
           ))}
         </Box>
       )}

@@ -108,7 +108,7 @@ const FileTreeContent: React.FC<FileTreeContentProps> = ({
   return (
     <>
       {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 180px)' }}>
           <CircularProgress />
         </Box>
       ) : error ? (
@@ -119,7 +119,7 @@ const FileTreeContent: React.FC<FileTreeContentProps> = ({
           defaultExpandIcon={<ChevronRightIcon />}
           expandedItems={expandedNodes}
           onExpandedItemsChange={onExpandedItemsChange}
-          sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+          sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto', height: 'calc(100vh - 180px)' }}
         >
           {renderTreeItems(filteredFileTree, onFileSelect)}
         </SimpleTreeView>

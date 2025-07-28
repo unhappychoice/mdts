@@ -17,7 +17,7 @@ interface OutlineContentProps {
 const OutlineContent: React.FC<OutlineContentProps> = ({ outline, loading, error, onItemClick }) => {
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 132px)' }}>
         <CircularProgress />
       </Box>
     );
@@ -28,7 +28,7 @@ const OutlineContent: React.FC<OutlineContentProps> = ({ outline, loading, error
   }
 
   return (
-    <List dense>
+    <List dense sx={{ overflowY: 'auto', height: 'calc(100vh - 132px)' }}>
       {outline.map((item, index) => (
         <ListItem button key={`${item.id}-${index}`} sx={{ pl: item.level * 2 }} onClick={() => onItemClick(item.id)}>
           <ListItemText
