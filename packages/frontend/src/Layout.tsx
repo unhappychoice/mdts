@@ -58,7 +58,7 @@ const Layout = () => {
         sx={{
           flexGrow: 1,
           display: "flex",
-          overflowY: "scroll",
+          overflowY: "hidden",
           height: "100%",
         }}
       >
