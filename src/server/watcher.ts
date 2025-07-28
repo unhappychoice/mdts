@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as http from 'http';
 import { WebSocket, WebSocketServer } from 'ws';
 import { logger } from '../utils/logger';
+import { EXCLUDED_DIRECTORIES } from '../constants';
 
 let contentWatcher: FSWatcher | null = null;
 let currentWatchedFile: string | null = null;
@@ -47,18 +48,18 @@ const handleWebSocketClose = (wss: WebSocketServer): void => {
 const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatcher | null => {
   try {
     const watcher = chokidar.watch(directory, {
-      ignored: (watchedFilePath: string) => {
-        if (watchedFilePath.includes('node_modules')) {
+      ignored: (watchedFilePath: string, stats?: fs.Stats) => {
+        if (EXCLUDED_DIRECTORIES.some(p => watchedFilePath.includes(`/${p}`))) {
           return true;
         }
-        try {
-          if (fs.statSync(watchedFilePath).isDirectory()) {
-            return false;
-          }
-        } catch {
+
+        if (stats) {
+          return !stats.isDirectory();
+        } else {
+          // If stats is undefined, it's a directory that hasn't been scanned yet.
+          // We want to traverse directories, so don't ignore.
           return false;
         }
-        return !isMarkdownOrSimpleAsset(watchedFilePath);
       },
       ignoreInitial: true,
     });
@@ -75,6 +76,18 @@ const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatch
       wss.clients.forEach((client) => {
         client.send(JSON.stringify({ type: 'reload-tree' }));
       });
+    });
+
+    watcher.on('error', (error) => {
+      watcher.unwatch(directory);
+      watcher.close()
+        .then((a) => console.log(a));
+
+      logger.error('🚫 Error watching directory:', error);
+      logger.error('Livereload will be disabled');
+
+      if (error && typeof error === 'object' && 'code' in error && error.code === 'EMFILE')
+        logger.error('This error is likely caused by too many open files. Try increasing the ulimit.');
     });
 
     return watcher;
@@ -101,9 +114,4 @@ const setupContentWatcher = (ws: WebSocket, filePath: string): void => {
       logger.error(`🚫 Error watching content file ${filePath}:`, e);
     });
   }
-};
-
-const isMarkdownOrSimpleAsset = (filePath: string): boolean => {
-  const ext = filePath.toLowerCase().split('.').pop();
-  return !!ext && (ext === 'md' || ext === 'markdown');
 };
