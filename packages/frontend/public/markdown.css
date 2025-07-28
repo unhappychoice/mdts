@@ -1,10 +1,25 @@
+:root {
+    --markdown-border-color: rgba(0, 0, 0, .12);
+    --markdown-pre-background-color: #f4f5f7;
+    --markdown-code-background-color: #f4f5f7;
+    --markdown-blockquote-color: rgba(0, 0, 0, .24);
+    --markdown-link-color: #1976d2;
+}
+
+[data-theme="dark"] {
+    --markdown-border-color: rgba(255, 255, 255, .12);
+    --markdown-pre-background-color: #161819;
+    --markdown-code-background-color: #161819;
+    --markdown-blockquote-color: rgba(255, 255, 255, .24);
+}
+
 .markdown-body {
     h1 {
         margin: 48px 0 24px;
         padding-bottom: 16px;
         font-weight: 500;
         font-size: 26px;
-        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        border-bottom: 1px solid var(--markdown-border-color);
     }
 
     h2 {
@@ -12,7 +27,7 @@
         padding-bottom: 10px;
         font-weight: 500;
         font-size: 22px;
-        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        border-bottom: 1px solid var(--markdown-border-color);
     }
 
     h3 {
@@ -56,7 +71,7 @@
     hr {
         margin: 48px 0;
         border: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        border-bottom: 1px solid var(--markdown-border-color);
     }
 
     img {
@@ -76,12 +91,12 @@
         }
 
         tr {
-            border-top: 1px solid rgba(0, 0, 0, .12);
+            border-top: 1px solid var(--markdown-border-color);
         }
 
         td, th {
             padding: 6px 12px;
-            border: 1px solid rgba(0, 0, 0, .12);
+            border: 1px solid var(--markdown-border-color);
         }
     }
 
@@ -89,7 +104,7 @@
         padding: 16px;
         overflow: auto;
         font-size: 0.85rem;
-        background-color: #f4f5f7;
+        background-color: var(--markdown-pre-background-color);
 
         code {
             padding: 0;
@@ -105,7 +120,7 @@
         padding: .1em .6em;
         margin: 0;
         font-size: 80%;
-        background-color: #f4f5f7;
+        background-color: var(--markdown-code-background-color);
         border-radius: 2px;
     }
 
@@ -113,8 +128,8 @@
         margin: 24px 0;
         padding: 5px 16px;
         font-size: 14px;
-        color: rgba(0, 0, 0, .24);
-        border-left: 4px solid rgba(0, 0, 0, .12);
+        color: var(--markdown-blockquote-color);
+        border-left: 4px solid var(--markdown-border-color);
 
         blockquote {
             margin: 12px 0;
@@ -126,49 +141,12 @@
     }
 
     a {
-        color: #1976d2;
+        color: var(--markdown-link-color);
         transition: color 0.1s ease-in-out;
 
         &:hover {
             opacity: 0.8;
             text-decoration: none;
         }
-    }
-}
-
-.markdown-body.dark {
-    h1 {
-        border-color: rgba(255, 255, 255, .12);
-    }
-
-    h2 {
-        border-color: rgba(255, 255, 255, .12);
-    }
-
-    table {
-        tr {
-            border-color: rgba(255, 255, 255, .12);
-        }
-
-        td, th {
-            border-color: rgba(255, 255, 255, .12);
-        }
-    }
-
-    pre {
-        background-color: #161819;
-    }
-
-    code {
-        background-color: #161819;
-    }
-
-    blockquote {
-        color: rgba(255, 255, 255, .24);
-        border-color: rgba(255, 255, 255, .12);
-    }
-
-    hr {
-        border-color: rgba(255, 255, 255, .12);
     }
 }

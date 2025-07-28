@@ -27,10 +27,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFi
   };
 
   return (
-    <Box
-      className={["markdown-body", theme.palette.mode === 'dark' ? 'dark' : 'light'].join(' ')}
-      sx={{ py: 2, px: 0, fontSize: '0.9rem' }}
-    >
+    <Box className={"markdown-body"} sx={{ py: 2, px: 0, fontSize: '0.9rem' }}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkSlug]}
         rehypePlugins={[rehypeRaw]}
