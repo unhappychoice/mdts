@@ -1,4 +1,4 @@
-import { CircularProgress, List, ListItem, ListItemText, Box } from '@mui/material';
+import { Box, CircularProgress, List, ListItem, ListItemText } from '@mui/material';
 import React from 'react';
 
 interface OutlineItem {
@@ -28,7 +28,11 @@ const OutlineContent: React.FC<OutlineContentProps> = ({ outline, loading, error
   }
 
   return (
-    <List dense sx={{ overflowY: 'auto', height: 'calc(100vh - 132px)' }}>
+    <List
+      dense
+      className="custom-scrollbar"
+      sx={{ overflowY: 'auto', height: 'calc(100vh - 132px)', px: 2 }}
+    >
       {outline.map((item, index) => (
         <ListItem button key={`${item.id}-${index}`} sx={{ pl: item.level * 2 }} onClick={() => onItemClick(item.id)}>
           <ListItemText

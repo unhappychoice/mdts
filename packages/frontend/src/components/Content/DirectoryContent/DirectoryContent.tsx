@@ -4,8 +4,8 @@ import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { selectFilteredFileTree } from '../../../store/slices/fileTreeSlice';
 import { RootState } from '../../../store/store';
-import ErrorView from '../ErrorView';
 import BreadCrumb from '../BreadCrumb';
+import ErrorView from '../ErrorView';
 import { FileTreeList } from './FileTreeList';
 
 interface DirectoryContentProps {
@@ -34,15 +34,17 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
 
   return (
     <Box
+      className="custom-scrollbar"
       sx={{
-        flexGrow: 1,
-        p: 4,
-        bgcolor: 'background.paper',
-        ...(contentMode === 'fixed' && {
-          maxWidth: '800px',
-          margin: '0 auto',
-        }),
-        height: '100%',
+          flexGrow: 1,
+          p: 4,
+          bgcolor: 'background.paper',
+          ...(contentMode === 'fixed' && {
+            maxWidth: '800px',
+            margin: '0 auto',
+          }),
+          height: '100%',
+          overflowY: 'scroll',
       }}
     >
       <BreadCrumb onDirectorySelect={onDirectorySelect} />

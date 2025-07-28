@@ -14,9 +14,14 @@ const App = () => {
   const location = useLocation();
 
   const { currentPath } = useSelector((state: RootState) => state.history);
+  const { darkMode } = useSelector((state: RootState) => state.appSetting);
   const theme = useTheme();
 
   useWebSocket(currentPath);
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
   useEffect(() => {
     dispatch(fetchFileTree());

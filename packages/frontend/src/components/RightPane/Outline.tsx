@@ -24,8 +24,8 @@ const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onTogg
   return (
     <Box sx={{
       width: isOpen ? '300px' : '66px',
+      py: 2,
       bgcolor: 'background.paper',
-      p: isOpen ? 2 : 0.5,
       borderLeft: '1px solid',
       borderColor: 'divider',
       minHeight: '100%',

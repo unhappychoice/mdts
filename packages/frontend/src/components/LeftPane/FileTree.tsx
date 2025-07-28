@@ -74,7 +74,7 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
     <Box sx={{
       width: isOpen ? '300px' : '66px',
       bgcolor: 'background.paper',
-      p: isOpen ? 2 : 0.5,
+      py: 2,
       borderRight: '1px solid',
       borderColor: 'divider',
       minHeight: '100%',

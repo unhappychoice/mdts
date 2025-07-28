@@ -3,7 +3,7 @@
 exports[`FileTreeSearch renders correctly with a search query 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1qm1lh"
+    class="MuiBox-root css-kuuj3l"
   >
     <div
       class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-adornedEnd css-pe16f2-MuiInputBase-root"
@@ -45,7 +45,7 @@ exports[`FileTreeSearch renders correctly with a search query 1`] = `
 exports[`FileTreeSearch renders correctly with empty search query 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1qm1lh"
+    class="MuiBox-root css-kuuj3l"
   >
     <div
       class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"

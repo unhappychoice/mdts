@@ -10,7 +10,16 @@ interface OutlineHeaderProps {
 
 const OutlineHeader: React.FC<OutlineHeaderProps> = ({ isOpen, onToggle }) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', height: '34px', marginTop: isOpen ? '0' : '16px', marginBottom: 2 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        height: '34px',
+        marginBottom: 2,
+        px: isOpen ? 2 : 0.5,
+      }}
+    >
       <IconButton onClick={onToggle} size="small" sx={{ marginBottom: 0, marginLeft: isOpen ? '0' : '12px' }} aria-label="toggle outline">
         {isOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
       </IconButton>

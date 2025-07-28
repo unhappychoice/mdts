@@ -10,7 +10,7 @@ interface FileTreeSearchProps {
 
 const FileTreeSearch: React.FC<FileTreeSearchProps> = ({ searchQuery, onSearchChange, onClearSearch }) => {
   return (
-    <Box mb={2}>
+    <Box mb={2} px={2}>
       <InputBase
         placeholder="Search files..."
         inputProps={{ 'aria-label': 'search files' }}

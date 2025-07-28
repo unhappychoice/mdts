@@ -14,7 +14,16 @@ interface FileTreeHeaderProps {
 
 const FileTreeHeader: React.FC<FileTreeHeaderProps> = ({ isOpen, onToggle, onExpandAllClick, onCollapseAll }) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '34px', marginTop: isOpen ? '0' : '16px', marginBottom: 2 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: '34px',
+        marginBottom: 2,
+        px: isOpen ? 2 : 0.5
+      }}
+    >
       {isOpen && (
         <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
           <Typography variant="h6" gutterBottom sx={{ flex: 1, marginLeft: 1, marginBottom: 0 }}>

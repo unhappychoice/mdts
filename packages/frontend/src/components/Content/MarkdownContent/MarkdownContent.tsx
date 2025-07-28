@@ -1,15 +1,15 @@
 import { ArticleOutlined } from '@mui/icons-material';
 import { Box, Chip, Typography, } from '@mui/material';
 import React, { useEffect } from 'react';
-import { useFrontmatter } from '../../../hooks/useFrontmatter';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFrontmatter } from '../../../hooks/useFrontmatter';
+import { useViewMode } from '../../../hooks/useViewMode';
 import { fetchContent } from '../../../store/slices/contentSlice';
 import { AppDispatch, RootState } from '../../../store/store';
 import BreadCrumb from '../BreadCrumb';
 import ErrorView from '../ErrorView';
 import MarkdownContentTabs from './MarkdownContentTabs';
 import MarkdownContentView from './MarkdownContentView';
-import { useViewMode } from '../../../hooks/useViewMode';
 
 interface MarkdownContentProps {
   scrollToId: string | null;
@@ -56,6 +56,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
 
   return (
     <Box
+      className="custom-scrollbar"
       sx={{
         flexGrow: 1,
         p: 4,
