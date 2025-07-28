@@ -1,285 +1,313 @@
 # Changelog
 
-## 0.8.2 (2025-07-26)
+## v0.9.0
+
+### 🐛 Bug Fixes
+- Handle FSWatcher errors ([202ee8c](https://github.com/unhappychoice/mdts/commit/202ee8c)) ([#105](https://github.com/unhappychoice/mdts/pull/105))
+- Fix action trigger condition ([05aeaaa](https://github.com/unhappychoice/mdts/commit/05aeaaa)) ([#89](https://github.com/unhappychoice/mdts/pull/89))
+
+### 👍 Improvements
+- Do not show loading spinner on FileTree everytime ([ab58f8d](https://github.com/unhappychoice/mdts/commit/ab58f8d)) ([#105](https://github.com/unhappychoice/mdts/pull/105))
+- Make scroll bars more pretty ([f1bbaff](https://github.com/unhappychoice/mdts/commit/f1bbaff)) ([#103](https://github.com/unhappychoice/mdts/pull/103))
+- Set height to FileTreeContent / OutlineContent ([898c82c](https://github.com/unhappychoice/mdts/commit/898c82c)) ([#87](https://github.com/unhappychoice/mdts/pull/87))
+- Make only markdown previwer section to scroll-able. ([2b84e01](https://github.com/unhappychoice/mdts/commit/2b84e01)) ([#87](https://github.com/unhappychoice/mdts/pull/87))
+- Add CODEOWNERS ([58b9f08](https://github.com/unhappychoice/mdts/commit/58b9f08)) ([#89](https://github.com/unhappychoice/mdts/pull/89))
+- Add CONTRIBUTING.md ([fd697ae](https://github.com/unhappychoice/mdts/commit/fd697ae)) ([#89](https://github.com/unhappychoice/mdts/pull/89))
+- Update npm homepage ([a79c801](https://github.com/unhappychoice/mdts/commit/a79c801))
+
+### ♻️ Refactor
+- Refactor markdown.css ([7732bf4](https://github.com/unhappychoice/mdts/commit/7732bf4)) ([#103](https://github.com/unhappychoice/mdts/pull/103))
+
+### 🆙 Update Packages
+- Update dependencies:
+    - react-dom ([3e66ddc](https://github.com/unhappychoice/mdts/commit/3e66ddc)) ([#98](https://github.com/unhappychoice/mdts/pull/98))
+    - jest from 30.0.4 to 30.0.5 in /packages/frontend ([2b37f8a](https://github.com/unhappychoice/mdts/commit/2b37f8a)) ([#96](https://github.com/unhappychoice/mdts/pull/96))
+    - react from 19.1.0 to 19.1.1 in /packages/frontend ([6851e2f](https://github.com/unhappychoice/mdts/commit/6851e2f)) ([#96](https://github.com/unhappychoice/mdts/pull/96))
+    - @types/commander from 2.12.0 to 2.12.5 ([9e4a996](https://github.com/unhappychoice/mdts/commit/9e4a996)) ([#102](https://github.com/unhappychoice/mdts/pull/102))
+    - jest from 30.0.4 to 30.0.5 ([cd6bf68](https://github.com/unhappychoice/mdts/commit/cd6bf68)) ([#101](https://github.com/unhappychoice/mdts/pull/101))
+    - react-router-dom in /packages/frontend ([6e70ba5](https://github.com/unhappychoice/mdts/commit/6e70ba5)) ([#100](https://github.com/unhappychoice/mdts/pull/100))
+    - jest-environment-jsdom in /packages/frontend ([67b44b8](https://github.com/unhappychoice/mdts/commit/67b44b8)) ([#99](https://github.com/unhappychoice/mdts/pull/99))
+    - typescript-eslint from 8.37.0 to 8.38.0 ([fa1f7d0](https://github.com/unhappychoice/mdts/commit/fa1f7d0)) ([#95](https://github.com/unhappychoice/mdts/pull/95))
+    - babel-jest from 30.0.4 to 30.0.5 in /packages/frontend ([2d25ba2](https://github.com/unhappychoice/mdts/commit/2d25ba2)) ([#93](https://github.com/unhappychoice/mdts/pull/93))
+
+### 👕 Code Style
+- Restore style ([f094a83](https://github.com/unhappychoice/mdts/commit/f094a83)) ([#87](https://github.com/unhappychoice/mdts/pull/87))
+
+### 💚 CI/Test
+- Update spec ([d65c97c](https://github.com/unhappychoice/mdts/commit/d65c97c)) ([#105](https://github.com/unhappychoice/mdts/pull/105))
+- Update snapshot ([4383e0c](https://github.com/unhappychoice/mdts/commit/4383e0c)) ([#103](https://github.com/unhappychoice/mdts/pull/103))
+- Add dependabot.yml ([70a0f9c](https://github.com/unhappychoice/mdts/commit/70a0f9c)) ([#92](https://github.com/unhappychoice/mdts/pull/92))
+- Update snapshots ([f9b5f10](https://github.com/unhappychoice/mdts/commit/f9b5f10)) ([#87](https://github.com/unhappychoice/mdts/pull/87))
+
+## v0.8.2
+
+### 🐛 Bug Fixes
+- Handle non-Git directories in filetree route ([ace45a2](https://github.com/unhappychoice/mdts/commit/ace45a2)) ([#84](https://github.com/unhappychoice/mdts/pull/84))
+
+## v0.8.1
+
+### 🐛 Bug Fixes
+- Fix log color ([5743174](https://github.com/unhappychoice/mdts/commit/5743174)) ([#83](https://github.com/unhappychoice/mdts/pull/83))
+
+## v0.8.0
+
+### ✨ Features
+- Add --host option ([9889148](https://github.com/unhappychoice/mdts/commit/9889148)) ([#82](https://github.com/unhappychoice/mdts/pull/82))
+- Add silient option to CLI ([084d5bf](https://github.com/unhappychoice/mdts/commit/084d5bf)) ([#81](https://github.com/unhappychoice/mdts/pull/81))
+- Improve log readability with chalk ([23977c1](https://github.com/unhappychoice/mdts/commit/23977c1)) ([#81](https://github.com/unhappychoice/mdts/pull/81))
+- Show file git status ([5f8033c](https://github.com/unhappychoice/mdts/commit/5f8033c)) ([#80](https://github.com/unhappychoice/mdts/pull/80))
+- Use simple-git ([2c016a7](https://github.com/unhappychoice/mdts/commit/2c016a7)) ([#80](https://github.com/unhappychoice/mdts/pull/80))
+
+### 👍 Improvements
+- Improve documents ([a085ba1](https://github.com/unhappychoice/mdts/commit/a085ba1)) ([#77](https://github.com/unhappychoice/mdts/pull/77))
+- Rewrite documents ([1de7d91](https://github.com/unhappychoice/mdts/commit/1de7d91)) ([#77](https://github.com/unhappychoice/mdts/pull/77))
+- Add markdown_features.md document ([ce32e5a](https://github.com/unhappychoice/mdts/commit/ce32e5a)) ([#77](https://github.com/unhappychoice/mdts/pull/77))
+- Add usecases.md document ([02ade13](https://github.com/unhappychoice/mdts/commit/02ade13)) ([#77](https://github.com/unhappychoice/mdts/pull/77))
+- Add faq.md document ([221e1d1](https://github.com/unhappychoice/mdts/commit/221e1d1)) ([#77](https://github.com/unhappychoice/mdts/pull/77))
+- Add comparison.md ([e60d0e1](https://github.com/unhappychoice/mdts/commit/e60d0e1)) ([#77](https://github.com/unhappychoice/mdts/pull/77))
+
+### 👕 Code Style
+- Fix lint ([cb40088](https://github.com/unhappychoice/mdts/commit/cb40088)) ([#80](https://github.com/unhappychoice/mdts/pull/80))
+
+### 💚 CI/Test
+- Update tests to reflect host argument in serve function ([ee45252](https://github.com/unhappychoice/mdts/commit/ee45252)) ([#82](https://github.com/unhappychoice/mdts/pull/82))
+- Update specs ([3552805](https://github.com/unhappychoice/mdts/commit/3552805)) ([#81](https://github.com/unhappychoice/mdts/pull/81))
+- Fix test ([e8a6c39](https://github.com/unhappychoice/mdts/commit/e8a6c39)) ([#80](https://github.com/unhappychoice/mdts/pull/80))
+
+## v0.7.1
+
+### 🐛 Bug Fixes
+- Fix version string is not udpated ([246111b](https://github.com/unhappychoice/mdts/commit/246111b)) ([#73](https://github.com/unhappychoice/mdts/pull/73))
 
-### Bug Fixes
+## v0.7.0
 
-- Handle non-Git directories in filetree route ([`ace45a2`](https://github.com/unhappychoice/mdts/commit/ace45a2))
+### ✨ Features
+- Show GitHub link and version on header ([11df520](https://github.com/unhappychoice/mdts/commit/11df520)) ([#71](https://github.com/unhappychoice/mdts/pull/71))
+- Add --version option to CLI ([2ec2567](https://github.com/unhappychoice/mdts/commit/2ec2567)) ([#71](https://github.com/unhappychoice/mdts/pull/71))
+- Configure settings ([4202133](https://github.com/unhappychoice/mdts/commit/4202133)) ([#67](https://github.com/unhappychoice/mdts/pull/67))
 
-## 0.8.1 (2025-07-26)
+### 👍 Improvements
+- Add npm run dev command ([51c140a](https://github.com/unhappychoice/mdts/commit/51c140a)) ([#69](https://github.com/unhappychoice/mdts/pull/69))
+- Add frontend features documentation ([d11dbb4](https://github.com/unhappychoice/mdts/commit/d11dbb4)) ([#67](https://github.com/unhappychoice/mdts/pull/67))
 
-### Bug Fixes
+### ♻️ Refactor
+- Refactor frontend ([d0a622a](https://github.com/unhappychoice/mdts/commit/d0a622a)) ([#67](https://github.com/unhappychoice/mdts/pull/67))
+- Refactor server module ([2799235](https://github.com/unhappychoice/mdts/commit/2799235)) ([#66](https://github.com/unhappychoice/mdts/pull/66))
 
-- Fix log color ([`5743174`](https://github.com/unhappychoice/mdts/commit/5743174))
+### 🚀 Performance
+- Optimize livereload logic ([84ec123](https://github.com/unhappychoice/mdts/commit/84ec123)) ([#69](https://github.com/unhappychoice/mdts/pull/69))
 
-## 0.8.0 (2025-07-26)
+### 💚 CI/Test
+- Generate CHANGELOG.md ([e32e697](https://github.com/unhappychoice/mdts/commit/e32e697)) ([#72](https://github.com/unhappychoice/mdts/pull/72))
+- Update specs ([ae95d1b](https://github.com/unhappychoice/mdts/commit/ae95d1b)) ([#71](https://github.com/unhappychoice/mdts/pull/71))
+- Update specs ([eeeacff](https://github.com/unhappychoice/mdts/commit/eeeacff)) ([#69](https://github.com/unhappychoice/mdts/pull/69))
+- Update specs ([8e76425](https://github.com/unhappychoice/mdts/commit/8e76425)) ([#67](https://github.com/unhappychoice/mdts/pull/67))
+- Update specs ([61423a4](https://github.com/unhappychoice/mdts/commit/61423a4)) ([#66](https://github.com/unhappychoice/mdts/pull/66))
 
-### Features
+## v0.6.0
 
-- Show file git status ([`5f8033c`](https://github.com/unhappychoice/mdts/commit/5f8033c))
-- Add --host option ([`9889148`](https://github.com/unhappychoice/mdts/commit/9889148))
-- Add --silent option to CLI ([`084d5bf`](https://github.com/unhappychoice/mdts/commit/084d5bf))
+### ✨ Features
+- Highlight raw markdown ([d257417](https://github.com/unhappychoice/mdts/commit/d257417)) ([#63](https://github.com/unhappychoice/mdts/pull/63))
+- Use history to select tabs ([9fb152f](https://github.com/unhappychoice/mdts/commit/9fb152f)) ([#62](https://github.com/unhappychoice/mdts/pull/62))
+- Handle frontmatter ([0b2255d](https://github.com/unhappychoice/mdts/commit/0b2255d)) ([#54](https://github.com/unhappychoice/mdts/pull/54))
+- Render marmaid diagram ([3899dac](https://github.com/unhappychoice/mdts/commit/3899dac)) ([#53](https://github.com/unhappychoice/mdts/pull/53))
 
-### Others
+### 🐛 Bug Fixes
+- Fix outline don't have unique key ([c509faa](https://github.com/unhappychoice/mdts/commit/c509faa)) ([#56](https://github.com/unhappychoice/mdts/pull/56))
 
-- Improve log readability with chalk ([`23977c1`](https://github.com/unhappychoice/mdts/commit/23977c1))
-- Fix lint ([`cb40088`](https://github.com/unhappychoice/mdts/commit/cb40088))
-- Improve documents ([`a085ba1`](https://github.com/unhappychoice/mdts/commit/a085ba1))
-- Rewrite documents ([`1de7d91`](https://github.com/unhappychoice/mdts/commit/1de7d91))
-- Add markdown_features.md document ([`ce32e5a`](https://github.com/unhappychoice/mdts/commit/ce32e5a))
-- Add usecases.md document ([`02ade13`](https://github.com/unhappychoice/mdts/commit/02ade13))
-- Add faq.md document ([`221e1d1`](https://github.com/unhappychoice/mdts/commit/221e1d1))
-- Add comparison.md ([`e60d0e1`](https://github.com/unhappychoice/mdts/commit/e60d0e1)) 
+### ♻️ Refactor
+- Separate logger ([d082bc4](https://github.com/unhappychoice/mdts/commit/d082bc4)) ([#56](https://github.com/unhappychoice/mdts/pull/56))
 
-## 0.7.1 (2025-07-23)
+### 🆙 Update Packages
+- Update package ([9693348](https://github.com/unhappychoice/mdts/commit/9693348))
 
-### Bug Fixes
+### 💚 CI/Test
+- Update spec ([4663689](https://github.com/unhappychoice/mdts/commit/4663689)) ([#63](https://github.com/unhappychoice/mdts/pull/63))
+- Add more frontned tests ([6fc8208](https://github.com/unhappychoice/mdts/commit/6fc8208)) ([#56](https://github.com/unhappychoice/mdts/pull/56))
+- Add more tests ([3fddd08](https://github.com/unhappychoice/mdts/commit/3fddd08)) ([#56](https://github.com/unhappychoice/mdts/pull/56))
+- Fix coverage is not collected ([048892b](https://github.com/unhappychoice/mdts/commit/048892b)) ([#56](https://github.com/unhappychoice/mdts/pull/56))
+- Collect test coverage ([174ee2b](https://github.com/unhappychoice/mdts/commit/174ee2b)) ([#55](https://github.com/unhappychoice/mdts/pull/55))
+- Update spec ([d56f04f](https://github.0com/unhappychoice/mdts/commit/d56f04f)) ([#54](https://github.com/unhappychoice/mdts/pull/54))
 
-- Fix version string is not udpated ([`246111b`](https://github.com/unhappychoice/mdts/commit/246111b))
+## v0.5.1
 
-## 0.7.0 (2025-07-23)
+### 🐛 Bug Fixes
+- Fix non-ascii named file is not found ([78aed75](https://github.com/unhappychoice/mdts/commit/78aed75)) ([#52](https://github.com/unhappychoice/mdts/pull/52))
 
-### Features
+## v0.5.0
 
-- Show GitHub link and version on header ([`11df520`](https://github.com/unhappychoice/mdts/commit/11df520))
-- Add --version option to CLI ([`2ec2567`](https://github.com/unhappychoice/mdts/commit/2ec2567))
-- Add npm run dev command ([`51c140a`](https://github.com/unhappychoice/mdts/commit/51c140a))
-- Add frontend features documentation ([`d11dbb4`](https://github.com/unhappychoice/mdts/commit/d11dbb4))
-- Configure settings ([`4202133`](https://github.com/unhappychoice/mdts/commit/4202133))
+### ✨ Features
+- Persist app state ([d3eba70](https://github.com/unhappychoice/mdts/commit/d3eba70)) ([#50](https://github.com/unhappychoice/mdts/pull/50))
+- Persist AppSetting state ([efeb6af](https://github.com/unhappychoice/mdts/commit/efeb6af)) ([#50](https://github.com/unhappychoice/mdts/pull/50))
+- Add sample documents ([82a3022](https://github.com/unhappychoice/mdts/commit/82a3022)) ([#48](https://github.com/unhappychoice/mdts/pull/48))
+- Handle 404 appropriately ([ce82024](https://github.com/unhappychoice/mdts/commit/ce82024)) ([#48](https://github.com/unhappychoice/mdts/pull/48))
+- Handle links in markdowns ([4640657](https://github.com/unhappychoice/mdts/commit/4640657)) ([#48](https://github.com/unhappychoice/mdts/pull/48))
 
-### Refactoring
+### 👍 Improvements
+- Tweak styles ([8b252e4](https://github.com/unhappychoice/mdts/commit/8b252e4)) ([#49](https://github.com/unhappychoice/mdts/pull/49))
 
-- Optimize livereload logic ([`84ec123`](https://github.com/unhappychoice/mdts/commit/84ec123))
-- Refactor frontend ([`d0a622a`](https://github.com/unhappychoice/mdts/commit/d0a622a))
-- Refactor server module ([`2799235`](https://github.com/unhappychoice/mdts/commit/2799235))
+### 💚 CI/Test
+- Update specs ([ea4e533](https://github.com/unhappychoice/mdts/commit/ea4e533)) ([#50](https://github.com/unhappychoice/mdts/pull/50))
+- Update specs ([3c7daef](https://github.com/unhappychoice/mdts/commit/3c7daef)) ([#48](https://github.com/unhappychoice/mdts/pull/48))
 
-### Others
+## v0.4.5
 
-- Update specs ([`ae95d1b`](https://github.com/unhappychoice/mdts/commit/ae95d1b), [`eeeacff`](https://github.com/unhappychoice/mdts/commit/eeeacff), [`8e76425`](https://github.com/unhappychoice/mdts/commit/8e76425), [`61423a4`](https://github.com/unhappychoice/mdts/commit/61423a4))
+### 🐛 Bug Fixes
+- Fix livereloading ([38c33d4](https://github.com/unhappychoice/mdts/commit/38c33d4))
 
-## 0.6.0 (2025-07-21)
+### 👍 Improvements
+- Add redux packages ([b8c8f09](https://github.com/unhappychoice/mdts/commit/b8c8f09)) ([#47](https://github.com/unhappychoice/mdts/pull/47))
 
-### Features
+### ♻️ Refactor
+- Create AppSettings slice ([34e214a](https://github.com/unhappychoice/mdts/commit/34e214a)) ([#47](https://github.com/unhappychoice/mdts/pull/47))
+- Refactor ([d41e3ae](https://github.com/unhappychoice/mdts/commit/d41e3ae)) ([#47](https://github.com/unhappychoice/mdts/pull/47))
+- Create Outline slice ([9db5c9b](https://github.com/unhappychoice/mdts/commit/9db5c9b)) ([#47](https://github.com/unhappychoice/mdts/pull/47))
+- Create FileTree slice ([096dbcb](https://github.com/unhappychoice/mdts/commit/096dbcb)) ([#47](https://github.com/unhappychoice/mdts/pull/47))
+- Create Content slice ([be8f51e](https://github.com/unhappychoice/mdts/commit/be8f51e)) ([#47](https://github.com/unhappychoice/mdts/pull/47))
 
-- Highlight raw markdown ([`d257417`](https://github.com/unhappychoice/mdts/commit/d257417))
-- Use history to select tabs ([`9fb152f`](https://github.com/unhappychoice/mdts/commit/9fb152f))
-- Handle frontmatter ([`0b2255d`](https://github.com/unhappychoice/mdts/commit/0b2255d))
-- Render marmaid diagram ([`3899dac`](https://github.com/unhappychoice/mdts/commit/3899dac))
+### 🚿 Delete Features
+- Delete .js files ([31d985f](https://github.com/unhappychoice/mdts/commit/31d985f)) ([#47](https://github.com/unhappychoice/mdts/pull/47))
 
-### Bug Fixes
+### 💚 CI/Test
+- Update specs ([d7e88e0](https://github.com/unhappychoice/mdts/commit/d7e88e0)) ([#47](https://github.com/unhappychoice/mdts/pull/47))
 
-- Fix outline don't have unique key ([`c509faa`](https://github.com/unhappychoice/mdts/commit/c509faa))
-- Fix non-ascii named file is not found ([`78aed75`](https://github.com/unhappychoice/mdts/commit/78aed75))
+## v0.4.4
 
-### Refactoring
+### 🐛 Bug Fixes
+- Fix index.html loads bundle.js twice ([98fcc25](https://github.com/unhappychoice/mdts/commit/98fcc25))
 
-- Separate logger ([`d082bc4`](https://github.com/unhappychoice/mdts/commit/d082bc4))
+## v0.4.3
 
-### Others
+### 🐛 Bug Fixes
+- Fix welcome.md outline is not found ([5e2cae6](https://github.com/unhappychoice/mdts/commit/5e2cae6))
 
-- Add more frontned tests ([`6fc8208`](https://github.com/unhappychoice/mdts/commit/6fc8208))
-- Add more tests ([`3fddd08`](https://github.com/unhappychoice/mdts/commit/3fddd08))
-- Fix coverage is not collected ([`048892b`](https://github.com/unhappychoice/mdts/commit/048892b))
-- Collect test coverage ([`174ee2b`](https://github.com/unhappychoice/mdts/commit/174ee2b))
-- Update spec ([`4663689`](https://github.com/unhappychoice/mdts/commit/4663689), [`d56f04f`](https://github.com/unhappychoice/mdts/commit/d56f04f))
-- Update package ([`9693348`](https://github.com/unhappychoice/mdts/commit/9693348))
+## v0.4.2
 
-## 0.5.1 (2025-07-18)
+## v0.4.1
 
-### Bug Fixes
+### ✨ Features
+- Implement file search feature ([5e11669](https://github.com/unhappychoice/mdts/commit/5e11669)) ([#43](https://github.com/unhappychoice/mdts/pull/43))
 
-- Fix non-ascii named file is not found ([`78aed75`](https://github.com/unhappychoice/mdts/commit/78aed75))
+### 🐛 Bug Fixes
+- Fix open is not defined ([9d79fd7](https://github.com/unhappychoice/mdts/commit/9d79fd7))
+- Fix entry point ([846537a](https://github.com/unhappychoice/mdts/commit/846537a))
 
-## 0.5.0 (2025-07-18)
+### 👍 Improvements
+- Update screenshot.png ([75bf08c](https://github.com/unhappychoice/mdts/commit/75bf08c))
 
-### Features
+### ♻️ Refactor
+- Separate frontend package ([141a293](https://github.com/unhappychoice/mdts/commit/141a293)) ([#39](https://github.com/unhappychoice/mdts/pull/39))
 
-- Persist app state ([`d3eba70`](https://github.com/unhappychoice/mdts/commit/d3eba70))
-- Persist AppSetting state ([`efeb6af`](https://github.com/unhappychoice/mdts/commit/efeb6af))
-- Tweak styles ([`8b252e4`](https://github.com/unhappychoice/mdts/commit/8b252e4))
-- Add sample documents ([`82a3022`](https://github.com/unhappychoice/mdts/commit/82a3022))
-- Handle 404 appropriately ([`ce82024`](https://github.com/unhappychoice/mdts/commit/ce82024))
-- Handle links in markdowns ([`4640657`](https://github.com/unhappychoice/mdts/commit/4640657))
+### 👕 Code Style
+- Improve style ([328bdaa](https://github.com/unhappychoice/mdts/commit/328bdaa)) ([#42](https://github.com/unhappychoice/mdts/pull/42))
 
-### Others
+### 💚 CI/Test
+- Fix release action ([ba6434d](https://github.com/unhappychoice/mdts/commit/ba6434d))
+- Fix release action ([b461da6](https://github.com/unhappychoice/mdts/commit/b461da6))
+- Fix release action ([544c50b](https://github.com/unhappychoice/mdts/commit/544c50b))
+- Enable eslint ([fe3b4c5](https://github.com/unhappychoice/mdts/commit/fe3b4c5)) ([#42](https://github.com/unhappychoice/mdts/pull/42))
+- Add frontend unit tests ([e2e0a8b](https://github.com/unhappychoice/mdts/commit/e2e0a8b)) ([#40](https://github.com/unhappychoice/mdts/pull/40))
+- Add e2e tests ([d5351cd](https://github.com/unhappychoice/mdts/commit/d5351cd)) ([#40](https://github.com/unhappychoice/mdts/pull/40))
+- Add unit tests ([957dda3](https://github.com/unhappychoice/mdts/commit/957dda3)) ([#40](https://github.com/unhappychoice/mdts/pull/40))
+- Add fixture ([2bbce62](https://github.com/unhappychoice/mdts/commit/2bbce62)) ([#40](https://github.com/unhappychoice/mdts/pull/40))
+- Add test GitHub action ([1b31849](https://github.com/unhappychoice/mdts/commit/1b31849)) ([#40](https://github.com/unhappychoice/mdts/pull/40))
+- Use jest project ([9db298e](https://github.com/unhappychoice/mdts/commit/9db298e)) ([#40](https://github.com/unhappychoice/mdts/pull/40))
+- Setup server test environment ([9c4cba1](https://github.com/unhappychoice/mdts/commit/9c4cba1)) ([#40](https://github.com/unhappychoice/mdts/pull/40))
+- Setup frontend test environment ([76b291a](https://github.com/unhappychoice/mdts/commit/76b291a)) ([#40](https://github.com/unhappychoice/mdts/pull/40))
 
-- Update specs ([`ea4e533`](https://github.com/unhappychoice/mdts/commit/ea4e533), [`3c7daef`](https://github.com/unhappychoice/mdts/commit/3c7daef))
+## v0.3.2
 
-## 0.4.5 (2025-07-17)
+### 🐛 Bug Fixes
+- Fix build ([205e5bb](https://github.com/unhappychoice/mdts/commit/205e5bb))
+- Handle watch can failed due to FD limit ([dda7c7f](https://github.com/unhappychoice/mdts/commit/dda7c7f)) ([#33](https://github.com/unhappychoice/mdts/pull/33))
 
-### Bug Fixes
+## v0.3.1
 
-- Fix livereloading ([`38c33d4`](https://github.com/unhappychoice/mdts/commit/38c33d4))
+### 🐛 Bug Fixes
+- Fix package.json ([09f905a](https://github.com/unhappychoice/mdts/commit/09f905a))
 
-### Refactoring
+## v0.3.0
 
-- Delete .js files ([`31d985f`](https://github.com/unhappychoice/mdts/commit/31d985f))
-- Create AppSettings slice ([`34e214a`](https://github.com/unhappychoice/mdts/commit/34e214a))
-- Refactor ([`d41e3ae`](https://github.com/unhappychoice/mdts/commit/d41e3ae))
-- Create Outline slice ([`9db5c9b`](https://github.com/unhappychoice/mdts/commit/9db5c9b))
-- Create FileTree slice ([`096dbcb`](https://github.com/unhappychoice/mdts/commit/096dbcb))
-- Create Content slice ([`be8f51e`](https://github.com/unhappychoice/mdts/commit/be8f51e))
+### ✨ Features
+- Implement Breadcrumb ([ecd8639](https://github.com/unhappychoice/mdts/commit/ecd8639)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
+- Implement FileTree expand/collapse buttons ([c4e9a7c](https://github.com/unhappychoice/mdts/commit/c4e9a7c)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
+- Implement livereload feature ([71a5edd](https://github.com/unhappychoice/mdts/commit/71a5edd)) ([#30](https://github.com/unhappychoice/mdts/pull/30))
+- Enable syntax highlighting ([b783303](https://github.com/unhappychoice/mdts/commit/b783303)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
+- Use rehype-raw ([e973f69](https://github.com/unhappychoice/mdts/commit/e973f69)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
+- Show welcome document ([9b55a71](https://github.com/unhappychoice/mdts/commit/9b55a71)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
 
-### Others
+### 🐛 Bug Fixes
+- Fix loading behavior ([2617807](https://github.com/unhappychoice/mdts/commit/2617807)) ([#32](https://github.com/unhappychoice/mdts/pull/32))
+- Fix serving logic ([c74bbe9](https://github.com/unhappychoice/mdts/commit/c74bbe9)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
+- Fix express mount ([5f181ec](https://github.com/unhappychoice/mdts/commit/5f181ec)) ([#30](https://github.com/unhappychoice/mdts/pull/30))
 
-- Update specs ([`d7e88e0`](https://github.com/unhappychoice/mdts/commit/d7e88e0))
-- Add redux packages ([`b8c8f09`](https://github.com/unhappychoice/mdts/commit/b8c8f09))
-- Update README.md ([`0384f14`](https://github.com/unhappychoice/mdts/commit/0384f14), [`ad3da81`](https://github.com/unhappychoice/mdts/commit/ad3da81))
+### 👍 Improvements
+- Tweak design ([d95d7d0](https://github.com/unhappychoice/mdts/commit/d95d7d0)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
 
-## 0.4.4 (2025-07-16)
+### ♻️ Refactor
+- Refactor Layout ([45cdc70](https://github.com/unhappychoice/mdts/commit/45cdc70)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
+- Refactor api hooks ([737fab1](https://github.com/unhappychoice/mdts/commit/737fab1)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
+- Separate App.tsx ([bcd9286](https://github.com/unhappychoice/mdts/commit/bcd9286)) ([#31](https://github.com/unhappychoice/mdts/pull/31))
+- Refactor ([23c7c17](https://github.com/unhappychoice/mdts/commit/23c7c17)) ([#30](https://github.com/unhappychoice/mdts/pull/30))
 
-### Bug Fixes
+## v0.2.0
 
-- Fix index.html loads bundle.js twice ([`98fcc25`](https://github.com/unhappychoice/mdts/commit/98fcc25))
+### ✨ Features
+- Implement outline ([22819be](https://github.com/unhappychoice/mdts/commit/22819be)) ([#23](https://github.com/unhappychoice/mdts/pull/23))
 
-## 0.4.3 (2025-07-16)
+### 👍 Improvements
+- Filter out unnecessary directories / files ([f7be8f5](https://github.com/unhappychoice/mdts/commit/f7be8f5)) ([#21](https://github.com/unhappychoice/mdts/pull/21))
 
-### Bug Fixes
+### ♻️ Refactor
+- Refactor server ([502afe2](https://github.com/unhappychoice/mdts/commit/502afe2)) ([#23](https://github.com/unhappychoice/mdts/pull/23))
 
-- Fix welcome.md outline is not found ([`5e2cae6`](https://github.com/unhappychoice/mdts/commit/5e2cae6))
+## v0.1.7
 
-## 0.4.2 (2025-07-16)
+### 🐛 Bug Fixes
+- Fix static file mounting ([09a63e7](https://github.com/unhappychoice/mdts/commit/09a63e7))
 
-(No specific changes identified from commit message)
+## v0.1.6
 
-## 0.4.1 (2025-07-16)
+### 💚 CI/Test
+- Add public directory ([0efa00d](https://github.com/unhappychoice/mdts/commit/0efa00d))
 
-(No specific changes identified from commit message)
+## v0.1.5
 
-## 0.4.0 (2025-07-16)
+### 🐛 Bug Fixes
+- Fix frontend is not built ([13bebe9](https://github.com/unhappychoice/mdts/commit/13bebe9))
 
-### Features
+## v0.1.4
 
-- Implement file search feature ([`5e11669`](https://github.com/unhappychoice/mdts/commit/5e11669))
+### 🐛 Bug Fixes
+- Fix .npmignore ([eeb27cd](https://github.com/unhappychoice/mdts/commit/eeb27cd))
 
-### Others
+## v0.1.3
 
-- Update screenshot.png ([`75bf08c`](https://github.com/unhappychoice/mdts/commit/75bf08c))
-- Improve style ([`328bdaa`](https://github.com/unhappychoice/mdts/commit/328bdaa))
-- Enable eslint ([`fe3b4c5`](https://github.com/unhappychoice/mdts/commit/fe3b4c5))
-- Add frontend unit tests ([`e2e0a8b`](https://github.com/unhappychoice/mdts/commit/e2e0a8b))
-- Add e2e tests ([`d5351cd`](https://github.com/unhappychoice/mdts/commit/d5351cd))
-- Add unit tests ([`957dda3`](https://github.com/unhappychoice/mdts/commit/957dda3))
-- Add fixture ([`2bbce62`](https://github.com/unhappychoice/mdts/commit/2bbce62))
-- Add test GitHub action ([`1b31849`](https://github.com/unhappychoice/mdts/commit/1b31849))
-- Use jest project ([`9db298e`](https://github.com/unhappychoice/mdts/commit/9db298e))
-- Setup server test environment ([`9c4cba1`](https://github.com/unhappychoice/mdts/commit/9c4cba1))
-- Setup frontend test environment ([`76b291a`](https://github.com/unhappychoice/mdts/commit/76b291a))
+### 🐛 Bug Fixes
+- Fix __dirname is not defined ([dabd51b](https://github.com/unhappychoice/mdts/commit/dabd51b))
 
-### Refactoring
+## v0.1.2
 
-- Separate frontend package ([`141a293`](https://github.com/unhappychoice/mdts/commit/141a293))
+### 💚 CI/Test
+- Use ESM ([fd70031](https://github.com/unhappychoice/mdts/commit/fd70031))
 
-## 0.3.2 (2025-07-14)
+## v0.1.1
 
-### Bug Fixes
+### 🐛 Bug Fixes
+- Fix bin directory is not staged ([1cc380d](https://github.com/unhappychoice/mdts/commit/1cc380d))
 
-- Fix build ([`205e5bb`](https://github.com/unhappychoice/mdts/commit/205e5bb))
+## v0.1.0
 
-## 0.3.1 (2025-07-14)
+### ✨ Features
+- Implement basic server ([eeb0be1](https://github.com/unhappychoice/mdts/commit/eeb0be1)) ([#4](https://github.com/unhappychoice/mdts/pull/4))
+- Implement CLI ([ded0dd6](https://github.com/unhappychoice/mdts/commit/ded0dd6)) ([#5](https://github.com/unhappychoice/mdts/pull/5))
+- Implement basic frontend ([16e1a9b](https://github.com/unhappychoice/mdts/commit/16e1a9b)) ([#6](https://github.com/unhappychoice/mdts/pull/6))
+- Use MaterialUI ([f76dfe0](https://github.com/unhappychoice/mdts/commit/f76dfe0)) ([#18](https://github.com/unhappychoice/mdts/pull/18))
+- Implement basic UI ([a1a226b](https://github.com/unhappychoice/mdts/commit/a1a226b)) ([#18](https://github.com/unhappychoice/mdts/pull/18))
 
-### Bug Fixes
+### 👍 Improvements
+- Update package.json ([85f4e5e](https://github.com/unhappychoice/mdts/commit/85f4e5e)) ([#20](https://github.com/unhappychoice/mdts/pull/20))
 
-- Handle watch can failed due to FD limit ([`dda7c7f`](https://github.com/unhappychoice/mdts/commit/dda7c7f))
-- Fix package.json ([`09f905a`](https://github.com/unhappychoice/mdts/commit/09f905a))
-
-## 0.3.0 (2025-07-14)
-
-### Features
-
-- Enable syntax highlighting ([`b783303`](https://github.com/unhappychoice/mdts/commit/b783303))
-- Use rehype-raw ([`e973f69`](https://github.com/unhappychoice/mdts/commit/e973f69))
-- Show welcom document ([`9b55a71`](https://github.com/unhappychoice/mdts/commit/9b55a71))
-- Tweak design ([`d95d7d0`](https://github.com/unhappychoice/mdts/commit/d95d7d0))
-- Implement Breadcrumb ([`ecd8639`](https://github.com/unhappychoice/mdts/commit/ecd8639))
-- Implenet FileTree expand/collapse buttons ([`c4e9a7c`](https://github.com/unhappychoice/mdts/commit/c4e9a7c))
-- Implement livereload feature ([`71a5edd`](https://github.com/unhappychoice/mdts/commit/71a5edd))
-
-### Bug Fixes
-
-- Fix loading behavior ([`2617807`](https://github.com/unhappychoice/mdts/commit/2617807))
-- Fix serving logic ([`c74bbe9`](https://github.com/unhappychoice/mdts/commit/c74bbe9))
-- Fix express mount ([`5f181ec`](https://github.com/unhappychoice/mdts/commit/5f181ec))
-
-### Refactoring
-
-- Refactor Layout ([`45cdc70`](https://github.com/unhappychoice/mdts/commit/45cdc70))
-- Refactor api hooks ([`737fab1`](https://github.com/unhappychoice/mdts/commit/737fab1))
-- Separate App.tsx ([`bcd9286`](https://github.com/unhappychoice/mdts/commit/bcd9286))
-- Refactor ([`23c7c17`](https://github.com/unhappychoice/mdts/commit/23c7c17))
-
-### Others
-
-- Update README.md ([`2e0caa7`](https://github.com/unhappychoice/mdts/commit/2e0caa7), [`00cb017`](https://github.com/unhappychoice/mdts/commit/00cb017), [`0cfbdd9`](https://github.com/unhappychoice/mdts/commit/0cfbdd9))
-
-## 0.2.0 (2025-07-13)
-
-### Features
-
-- Implement outline ([`22819be`](https://github.com/unhappychoice/mdts/commit/22819be))
-- Filter out unnecessary directories / files ([`f7be8f5`](https://github.com/unhappychoice/mdts/commit/f7be8f5))
-
-### Refactoring
-
-- Refactor server ([`502afe2`](https://github.com/unhappychoice/mdts/commit/502afe2))
-
-## 0.1.7 (2025-07-13)
-
-### Bug Fixes
-
-- Fix static file mounting ([`09a63e7`](https://github.com/unhappychoice/mdts/commit/09a63e7))
-
-## 0.1.6 (2025-07-13)
-
-### Others
-
-- Add public directory ([`0efa00d`](https://github.com/unhappychoice/mdts/commit/0efa00d))
-
-## 0.1.5 (2025-07-13)
-
-### Bug Fixes
-
-- Fix frontend is not built ([`13bebe9`](https://github.com/unhappychoice/mdts/commit/13bebe9))
-
-## 0.1.4 (2025-07-13)
-
-### Bug Fixes
-
-- Fix .npmignore ([`eeb27cd`](https://github.com/unhappychoice/mdts/commit/eeb27cd))
-
-## 0.1.3 (2025-07-13)
-
-### Bug Fixes
-
-- Fix __dirname is not defined ([`dabd51b`](https://github.com/unhappychoice/mdts/commit/dabd51b))
-
-## 0.1.2 (2025-07-13)
-
-### Others
-
-- Use ESM ([`fd70031`](https://github.com/unhappychoice/mdts/commit/fd70031))
-
-## 0.1.1 (2025-07-13)
-
-### Bug Fixes
-
-- Fix bin directory is not staged ([`1cc380d`](https://github.com/unhappychoice/mdts/commit/1cc380d))
-
-## 0.1.0 (2025-07-13)
-
-### Others
-
-- Fix CI ([`d2682d8`](https://github.com/unhappychoice/mdts/commit/d2682d8))
-
-## 0.0.1 (2025-07-13)
-
-### Features
-
-- Add release GitHub Action ([`97de253`](https://github.com/unhappychoice/mdts/commit/97de253))
-- Update package.json ([`85f4e5e`](https://github.com/unhappychoice/mdts/commit/85f4e5e))
-- Add README.md ([`eb6bf05`](https://github.com/unhappychoice/mdts/commit/eb6bf05))
-- Implement basic UI ([`a1a226b`](https://github.com/unhappychoice/mdts/commit/a1a226b))
-- Use MaterialUI ([`f76dfe0`](https://github.com/unhappychoice/mdts/commit/f76dfe0))
-- Implement basic frontend ([`16e1a9b`](https://github.com/unhappychoice/mdts/commit/16e1a9b))
-- Implement CLI ([`ded0dd6`](https://github.com/unhappychoice/mdts/commit/ded0dd6))
-- Implement basic server ([`eeb0be1`](https://github.com/unhappychoice/mdts/commit/eeb0be1))
+### 💚 CI/Test
+- Add release GitHub Action ([97de253](https://github.com/unhappychoice/mdts/commit/97de253)) ([#20](https://github.com/unhappychoice/mdts/pull/20))
+- Fix CI ([d2682d8](https://github.com/unhappychoice/mdts/commit/d2682d8))
