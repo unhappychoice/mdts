@@ -89,7 +89,7 @@ exports[`FileTree renders correctly 1`] = `
     </div>
     <ul
       aria-multiselectable="false"
-      class="MuiSimpleTreeView-root css-281oti-MuiSimpleTreeView-root"
+      class="MuiSimpleTreeView-root css-162o9s3-MuiSimpleTreeView-root"
       defaultcollapseicon="[object Object]"
       defaultexpandicon="[object Object]"
       id="mui-tree-view-1"

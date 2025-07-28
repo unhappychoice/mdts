@@ -3,7 +3,7 @@
 exports[`OutlineContent renders outline items correctly 1`] = `
 <DocumentFragment>
   <ul
-    class="MuiList-root MuiList-padding MuiList-dense css-b7dj7n-MuiList-root"
+    class="MuiList-root MuiList-padding MuiList-dense css-h9oyac-MuiList-root"
   >
     <li
       class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1s7t0kb-MuiListItem-root"
