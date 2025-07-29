@@ -34,7 +34,7 @@
     "redux-mock-store": "^1.5.5",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
-    "remark-slug": "^7.0.1"
+    "remark-slug": "^8.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
