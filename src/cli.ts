@@ -25,6 +25,7 @@ export class CLI {
           .action((directory, options) => {
             logger.setSilent(options.silent);
 
+            logger.showLogo();
             logger.log('Announcement', '🎉 Thanks for using mdts!');
             logger.log('Announcement', '✨ Like it? Star it on GitHub: https://github.com/unhappychoice/mdts');
 

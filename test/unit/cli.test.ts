@@ -27,6 +27,7 @@ jest.mock('../../src/server/server', () => ({
 jest.mock('../../src/utils/logger', () => ({
   logger: {
     setSilent: jest.fn(),
+    showLogo: jest.fn(),
     log: jest.fn(),
     error: jest.fn(),
   },
