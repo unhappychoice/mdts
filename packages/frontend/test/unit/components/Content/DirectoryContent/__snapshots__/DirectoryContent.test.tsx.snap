@@ -3,7 +3,7 @@
 exports[`DirectoryContent renders correctly with initial state 1`] = `
 <DocumentFragment>
   <div
-    class="custom-scrollbar MuiBox-root css-lttem5"
+    class="MuiBox-root css-15o69w1"
   >
     <nav
       aria-label="breadcrumb"

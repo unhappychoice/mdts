@@ -1,6 +1,5 @@
 import appSettingReducer, {
-  toggleContentMode,
-  toggleDarkMode,
+  saveAppSetting,
   toggleFileTree,
   toggleOutline,
 } from '../../../src/store/slices/appSettingSlice';
@@ -8,37 +7,27 @@ import appSettingReducer, {
 describe('appSettingSlice', () => {
   it('should return the initial state', () => {
     expect(appSettingReducer(undefined, { type: '' })).toEqual({
-      darkMode: true,
-      contentMode: 'fixed',
+      darkMode: 'auto',
+      contentMode: 'compact',
       fileTreeOpen: true,
       outlineOpen: true,
     });
   });
 
-  it('should handle toggleDarkMode', () => {
+  it('should handle saveAppSetting', () => {
     const previousState = {
-      darkMode: true,
-      contentMode: 'fixed',
+      darkMode: 'auto',
+      contentMode: 'compact',
       fileTreeOpen: true,
       outlineOpen: true,
     };
-    expect(appSettingReducer(previousState, toggleDarkMode())).toEqual({
-      darkMode: false,
-      contentMode: 'fixed',
-      fileTreeOpen: true,
-      outlineOpen: true,
-    });
-  });
-
-  it('should handle toggleContentMode', () => {
-    const previousState = {
-      darkMode: true,
-      contentMode: 'fixed',
-      fileTreeOpen: true,
-      outlineOpen: true,
-    };
-    expect(appSettingReducer(previousState, toggleContentMode())).toEqual({
-      darkMode: true,
+    expect(
+      appSettingReducer(
+        previousState,
+        saveAppSetting({ darkMode: 'dark', contentMode: 'full' }),
+      ),
+    ).toEqual({
+      darkMode: 'dark',
       contentMode: 'full',
       fileTreeOpen: true,
       outlineOpen: true,
@@ -47,14 +36,14 @@ describe('appSettingSlice', () => {
 
   it('should handle toggleFileTree', () => {
     const previousState = {
-      darkMode: true,
-      contentMode: 'fixed',
+      darkMode: 'auto',
+      contentMode: 'compact',
       fileTreeOpen: true,
       outlineOpen: true,
     };
     expect(appSettingReducer(previousState, toggleFileTree())).toEqual({
-      darkMode: true,
-      contentMode: 'fixed',
+      darkMode: 'auto',
+      contentMode: 'compact',
       fileTreeOpen: false,
       outlineOpen: true,
     });
@@ -62,14 +51,14 @@ describe('appSettingSlice', () => {
 
   it('should handle toggleOutline', () => {
     const previousState = {
-      darkMode: true,
-      contentMode: 'fixed',
+      darkMode: 'auto',
+      contentMode: 'compact',
       fileTreeOpen: true,
       outlineOpen: true,
     };
     expect(appSettingReducer(previousState, toggleOutline())).toEqual({
-      darkMode: true,
-      contentMode: 'fixed',
+      darkMode: 'auto',
+      contentMode: 'compact',
       fileTreeOpen: true,
       outlineOpen: false,
     });

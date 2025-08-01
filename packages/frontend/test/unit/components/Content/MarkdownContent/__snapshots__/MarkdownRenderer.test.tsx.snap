@@ -3,7 +3,7 @@
 exports[`MarkdownRenderer renders markdown content correctly 1`] = `
 <DocumentFragment>
   <div
-    class="markdown-body MuiBox-root css-x7jyj4"
+    class="markdown-body MuiBox-root css-1yyviwt"
   >
     <div
       data-testid="mock-react-markdown-root"

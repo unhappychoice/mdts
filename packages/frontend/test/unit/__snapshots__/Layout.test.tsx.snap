@@ -30,7 +30,7 @@ exports[`Layout renders correctly 1`] = `
           </button>
         </div>
         <button
-          aria-label="Exit Fullscreen"
+          aria-label="Settings"
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-v8k5r1-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
@@ -39,31 +39,12 @@ exports[`Layout renders correctly 1`] = `
           <svg
             aria-hidden="true"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-            data-testid="CropFreeIcon"
+            data-testid="SettingsIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
             <path
-              d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2m2 10H3v4c0 1.1.9 2 2 2h4v-2H5zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2zm0-16h-4v2h4v4h2V5c0-1.1-.9-2-2-2"
-            />
-          </svg>
-        </button>
-        <button
-          aria-label="Switch to Dark Mode"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-v8k5r1-MuiButtonBase-root-MuiIconButton-root"
-          data-mui-internal-clone-element="true"
-          tabindex="0"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-            data-testid="Brightness4Icon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zM12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6c3.31 0 6 2.69 6 6s-2.69 6-6 6"
+              d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6"
             />
           </svg>
         </button>
@@ -200,89 +181,198 @@ exports[`Layout renders correctly 1`] = `
           id="mui-tree-view-1"
           role="tree"
           style="--TreeView-itemChildrenIndentation: 12px;"
-        />
-      </div>
-      <div
-        class="custom-scrollbar MuiBox-root css-lttem5"
-      >
-        <nav
-          aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1eq4jhp-MuiTypography-root-MuiBreadcrumbs-root"
         >
-          <ol
-            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
-          />
-        </nav>
-        <div
-          class="MuiBox-root css-1ol10sz"
-        >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-1oa9u9i-MuiSvgIcon-root"
-            data-testid="ArticleOutlinedIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
-            />
-            <path
-              d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
-            />
-          </svg>
-          <h4
-            class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-129bu66-MuiTypography-root"
-          >
-            🎉 Welcome to mdts!
-          </h4>
-        </div>
-        <div
-          class="MuiBox-root css-i3qfz4"
-        >
-          <div
-            class="MuiTabs-root css-jhczcq-MuiTabs-root"
+          <li
+            aria-selected="false"
+            class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
+            id="mui-tree-view-1-test.md"
+            role="treeitem"
+            style="--TreeView-itemDepth: 0;"
+            tabindex="0"
           >
             <div
-              class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
-              style="overflow: hidden; margin-bottom: 0px;"
+              class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-1w3465f-MuiTreeItem-content"
             >
               <div
-                aria-label="view mode tabs"
-                class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
-                role="tablist"
-              >
-                <button
-                  aria-selected="true"
-                  class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-mobu7h-MuiButtonBase-root-MuiTab-root"
-                  role="tab"
-                  tabindex="0"
-                  type="button"
-                >
-                  Preview
-                </button>
-                <button
-                  aria-selected="false"
-                  class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
-                  role="tab"
-                  tabindex="-1"
-                  type="button"
-                >
-                  Raw
-                </button>
-              </div>
-              <span
-                class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
-                style="left: 0px; width: 0px;"
+                class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
               />
+              <div
+                class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-eep7r1-MuiSvgIcon-root"
+                    data-testid="ArticleOutlinedIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
+                    />
+                    <path
+                      d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+                    />
+                  </svg>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-iewwb3-MuiTypography-root"
+                  >
+                    test.md
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </li>
+          <li
+            aria-expanded="false"
+            aria-selected="false"
+            class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
+            id="mui-tree-view-1-folder"
+            role="treeitem"
+            style="--TreeView-itemDepth: 0;"
+            tabindex="-1"
+          >
+            <div
+              class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-1w3465f-MuiTreeItem-content"
+            >
+              <div
+                class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="TreeViewExpandIconIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-muidwl-MuiSvgIcon-root"
+                    data-testid="FolderOutlinedIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="m9.17 6 2 2H20v10H4V6zM10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8z"
+                    />
+                  </svg>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-1jo9ady-MuiTypography-root"
+                  >
+                    folder
+                  </p>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="MuiBox-root css-1fthtn0"
+      >
         <div
-          class="markdown-body MuiBox-root css-x7jyj4"
+          class="custom-scrollbar MuiBox-root css-ynu778"
         >
           <div
-            data-testid="mock-react-markdown"
-          />
+            class="MuiBox-root css-15o69w1"
+          >
+            <nav
+              aria-label="breadcrumb"
+              class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1eq4jhp-MuiTypography-root-MuiBreadcrumbs-root"
+            >
+              <ol
+                class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
+              />
+            </nav>
+            <div
+              class="MuiBox-root css-1ol10sz"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-1oa9u9i-MuiSvgIcon-root"
+                data-testid="ArticleOutlinedIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
+                />
+                <path
+                  d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+                />
+              </svg>
+              <h4
+                class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-129bu66-MuiTypography-root"
+              >
+                🎉 Welcome to mdts!
+              </h4>
+            </div>
+            <div
+              class="MuiBox-root css-i3qfz4"
+            >
+              <div
+                class="MuiTabs-root css-jhczcq-MuiTabs-root"
+              >
+                <div
+                  class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
+                  style="overflow: hidden; margin-bottom: 0px;"
+                >
+                  <div
+                    aria-label="view mode tabs"
+                    class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
+                    role="tablist"
+                  >
+                    <button
+                      aria-selected="true"
+                      class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-mobu7h-MuiButtonBase-root-MuiTab-root"
+                      role="tab"
+                      tabindex="0"
+                      type="button"
+                    >
+                      Preview
+                    </button>
+                    <button
+                      aria-selected="false"
+                      class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
+                      role="tab"
+                      tabindex="-1"
+                      type="button"
+                    >
+                      Raw
+                    </button>
+                  </div>
+                  <span
+                    class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
+                    style="left: 0px; width: 0px;"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiBox-root css-hk7m0v"
+            >
+              <div
+                class="markdown-body MuiBox-root css-1yyviwt"
+              >
+                <div
+                  data-testid="mock-react-markdown"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div

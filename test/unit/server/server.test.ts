@@ -2,6 +2,7 @@ import { type Express, type NextFunction, type Request, type Response } from 'ex
 import * as fs from 'fs';
 import { createApp, serve } from '../../../src/server/server';
 import { setupWatcher } from '../../../src/server/watcher';
+import { getConfig, saveConfig } from '../../../src/server/config';
 
 jest.mock('express', () => {
   const mockUse = jest.fn();
@@ -12,13 +13,17 @@ jest.mock('express', () => {
     }
     return { close: jest.fn() };
   });
+  const mockPost = jest.fn();
   const mockExpress = jest.fn(() => ({
     use: mockUse,
     get: mockGet,
+    post: mockPost,
     listen: mockListen,
   }));
   mockExpress.static = jest.fn().mockReturnValue(jest.fn());
+  mockExpress.json = jest.fn(() => jest.fn());
   mockExpress.Router = jest.fn(() => ({
+    json: jest.fn().mockReturnValue(jest.fn()),
     get: jest.fn(),
   }));
   return mockExpress;
@@ -33,6 +38,12 @@ jest.mock('fs', () => ({
 
 // Mock setupWatcher
 jest.mock('../../../src/server/watcher');
+
+// Mock config functions
+jest.mock('../../../src/server/config', () => ({
+  getConfig: jest.fn(),
+  saveConfig: jest.fn(),
+}));
 
 describe('server.ts unit tests', () => {
   let app: Express;
@@ -61,8 +72,52 @@ describe('server.ts unit tests', () => {
     });
 
     it('should define /api/filetree and /api/outline routes', () => {
-      expect(app.use).toHaveBeenCalledWith('/api/filetree', { get: expect.any(Function) });
-      expect(app.use).toHaveBeenCalledWith('/api/outline', { get: expect.any(Function) });
+      expect(app.use).toHaveBeenCalledWith('/api/filetree', expect.objectContaining({ get: expect.any(Function) }));
+      expect(app.use).toHaveBeenCalledWith('/api/outline', expect.objectContaining({ get: expect.any(Function) }));
+    });
+
+    it('should define /api/config GET route', async () => {
+      const mockConfig = { fontFamily: 'Test', fontSize: 16 };
+      (getConfig as jest.Mock).mockReturnValue(mockConfig);
+      const mockJson = jest.fn();
+      const configGetHandler = (app.get as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) =>
+          call[0] === '/api/config' && call.length === 2,
+      )[1];
+      configGetHandler({} as Request, { json: mockJson } as unknown as Response);
+      expect(getConfig).toHaveBeenCalled();
+      expect(mockJson).toHaveBeenCalledWith(mockConfig);
+    });
+
+    it('should define /api/config POST route', async () => {
+      const mockBody = { fontFamily: 'NewFont', fontSize: 18 };
+      const mockStatus = jest.fn().mockReturnThis();
+      const mockSend = jest.fn();
+      const configPostHandler = (app.post as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) =>
+          call[0] === '/api/config' && call.length === 3,
+      )[2]; // Index 2 because of express.json() middleware
+      configPostHandler({ body: mockBody } as Request, { status: mockStatus, send: mockSend } as unknown as Response);
+      expect(saveConfig).toHaveBeenCalledWith(mockBody);
+      expect(mockStatus).toHaveBeenCalledWith(200);
+      expect(mockSend).toHaveBeenCalledWith('Config saved');
+    });
+
+    it('should handle errors in /api/config POST route', async () => {
+      (saveConfig as jest.Mock).mockImplementation(() => {
+        throw new Error('Save failed');
+      });
+      const mockBody = { fontFamily: 'NewFont', fontSize: 18 };
+      const mockStatus = jest.fn().mockReturnThis();
+      const mockSend = jest.fn();
+      const configPostHandler = (app.post as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) =>
+          call[0] === '/api/config' && call.length === 3,
+      )[2];
+      configPostHandler({ body: mockBody } as Request, { status: mockStatus, send: mockSend } as unknown as Response);
+      expect(saveConfig).toHaveBeenCalledWith(mockBody);
+      expect(mockStatus).toHaveBeenCalledWith(500);
+      expect(mockSend).toHaveBeenCalledWith('Failed to save config');
     });
 
     it('should serve welcome markdown', async () => {

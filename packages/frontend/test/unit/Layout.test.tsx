@@ -2,10 +2,9 @@ import { act, render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import configureStore from 'redux-mock-store';
-import { thunk } from 'redux-thunk';
 import Layout from '../../src/Layout';
 import { toggleFileTree, toggleOutline } from '../../src/store/slices/appSettingSlice';
+import { createMockStore } from '../utils';
 
 jest.mock('@mui/x-tree-view', () => ({
   ...jest.requireActual('@mui/x-tree-view'),
@@ -15,8 +14,6 @@ jest.mock('@mui/x-tree-view', () => ({
     </div>
   ),
 }));
-
-const mockStore = configureStore([thunk]);
 
 // Mock react-router-dom's useNavigate
 const mockNavigate = jest.fn();
@@ -36,37 +33,7 @@ describe('Layout', () => {
   let store;
 
   beforeEach(() => {
-    store = mockStore({
-      appSetting: {
-        darkMode: false,
-        contentMode: 'fixed',
-        fileTreeOpen: true,
-        outlineOpen: true,
-      },
-      fileTree: {
-        fileTree: [],
-        filteredFileTree: [],
-        loading: false,
-        error: null,
-        searchQuery: '',
-        expandedNodes: [],
-        mountedDirectoryPath: '',
-      },
-      content: {
-        content: '',
-        loading: false,
-        error: null,
-      },
-      outline: {
-        outline: [],
-        loading: false,
-        error: null,
-      },
-      history: {
-        currentPath: null,
-        isDirectory: false,
-      },
-    });
+    store = createMockStore();
     store.dispatch = jest.fn();
   });
 
