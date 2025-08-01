@@ -15,25 +15,29 @@ const Content: React.FC<ContentProps> = ({ onFileSelect, onDirectorySelect, scro
   const { currentPath, isDirectory } = useSelector((state: RootState) => state.history);
   const { contentMode } = useSelector((state: RootState) => state.appSetting);
 
-  const contentWidth = contentMode === 'compact' ? '800px' : '100%';
-
   return (
     <Box
       sx={{
-        flexGrow: 1,
-        overflowY: 'auto',
         display: 'flex',
+        height: 'calc(100vh - 64px)',
+        flexGrow: 1,
         justifyContent: 'center',
-        width: contentWidth,
-        maxWidth: contentWidth,
-        mx: 'auto',
+        ...(contentMode === 'full' && { bgcolor: 'background.paper' }),
       }}
     >
+      <Box
+        className="custom-scrollbar"
+        sx={{
+          overflowY: 'scroll',
+          width: '100%',
+        }}
+      >
       {currentPath && isDirectory ? (
         <DirectoryContent onFileSelect={onFileSelect} onDirectorySelect={onDirectorySelect} />
       ) : (
         <MarkdownContent onDirectorySelect={onDirectorySelect} scrollToId={scrollToId} />
       )}
+      </Box>
     </Box>
   );
 };

@@ -34,17 +34,17 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
 
   return (
     <Box
-      className="custom-scrollbar"
       sx={{
-          flexGrow: 1,
-          p: 4,
-          bgcolor: 'background.paper',
-          ...(contentMode === 'fixed' && {
-            maxWidth: '800px',
-            margin: '0 auto',
-          }),
-          height: '100%',
-          overflowY: 'scroll',
+        display: 'table',
+        width: '100%',
+        minHeight: 'calc(100vh - 64px)',
+        m: 0,
+        p: 4,
+        bgcolor: 'background.paper',
+        ...(contentMode === 'compact' && {
+          width: '800px',
+          margin: '0 auto',
+        })
       }}
     >
       <BreadCrumb onDirectorySelect={onDirectorySelect} />
