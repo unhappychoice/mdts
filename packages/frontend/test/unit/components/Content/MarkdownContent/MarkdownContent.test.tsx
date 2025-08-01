@@ -33,8 +33,13 @@ describe('MarkdownContent', () => {
         isDirectory: false,
       },
       appSetting: {
-        contentMode: 'fixed',
+        contentMode: 'compact',
       },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      }
     });
   });
 
@@ -53,8 +58,13 @@ describe('MarkdownContent', () => {
         isDirectory: false,
       },
       appSetting: {
-        contentMode: 'fixed',
+        contentMode: 'compact',
       },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      }
     });
 
     let fragment;
@@ -88,8 +98,13 @@ describe('MarkdownContent', () => {
         isDirectory: false,
       },
       appSetting: {
-        contentMode: 'fixed',
+        contentMode: 'compact',
       },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      }
     });
 
     await act(async () => {
@@ -121,8 +136,13 @@ describe('MarkdownContent', () => {
         isDirectory: false,
       },
       appSetting: {
-        contentMode: 'fixed',
+        contentMode: 'compact',
       },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      }
     });
 
     await act(async () => {
@@ -152,8 +172,13 @@ describe('MarkdownContent', () => {
         isDirectory: false,
       },
       appSetting: {
-        contentMode: 'fixed',
+        contentMode: 'compact',
       },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      }
     });
 
     await act(async () => {
@@ -184,8 +209,13 @@ describe('MarkdownContent', () => {
         isDirectory: false,
       },
       appSetting: {
-        contentMode: 'fixed',
+        contentMode: 'compact',
       },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      }
     });
 
     await act(async () => {
@@ -219,8 +249,13 @@ describe('MarkdownContent', () => {
         isDirectory: false,
       },
       appSetting: {
-        contentMode: 'fixed',
+        contentMode: 'compact',
       },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      }
     });
 
     await act(async () => {
@@ -264,8 +299,13 @@ describe('MarkdownContent', () => {
         isDirectory: false,
       },
       appSetting: {
-        contentMode: 'fixed',
+        contentMode: 'compact',
       },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      }
     });
 
     await act(async () => {

@@ -3,7 +3,15 @@
 exports[`Content renders correctly 1`] = `
 <DocumentFragment>
   <div
-    data-testid="mock-markdown-content"
-  />
+    class="MuiBox-root css-1fthtn0"
+  >
+    <div
+      class="custom-scrollbar MuiBox-root css-ynu778"
+    >
+      <div
+        data-testid="mock-markdown-content"
+      />
+    </div>
+  </div>
 </DocumentFragment>
 `;

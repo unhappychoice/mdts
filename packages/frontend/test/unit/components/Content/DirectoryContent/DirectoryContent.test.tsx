@@ -27,7 +27,7 @@ describe('DirectoryContent', () => {
         isDirectory: true,
       },
       appSetting: {
-        contentMode: 'fixed',
+        contentMode: 'compact',
       },
     });
   });

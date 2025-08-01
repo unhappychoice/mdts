@@ -1,5 +1,6 @@
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -7,6 +8,7 @@ import { nightOwl, prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkSlug from 'remark-slug';
+import { RootState } from '../../../store/store';
 import MermaidRenderer from './MermaidRenderer';
 
 interface MarkdownRendererProps {
@@ -17,6 +19,7 @@ interface MarkdownRendererProps {
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFilePath }) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { fontFamilyMonospace, fontSize } = useSelector((state: RootState) => state.config);
 
   const resolvePath = (href: string) => {
     if (!selectedFilePath || href.startsWith('http') || href.startsWith('//') || href.startsWith('/')) {
@@ -27,7 +30,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFi
   };
 
   return (
-    <Box className={"markdown-body"} sx={{ py: 2, px: 0, fontSize: '0.9rem' }}>
+    <Box className={"markdown-body"} sx={{ py: 2, px: 0 }}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkSlug]}
         rehypePlugins={[rehypeRaw]}
@@ -53,18 +56,19 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFi
 
             return !inline && match ? (
               <SyntaxHighlighter
-                style={theme.palette.mode === 'dark' ? nightOwl : prism}
+                style={(theme.palette.mode === 'dark' ? nightOwl : prism)}
                 className={'syntax-highlighter'}
                 customStyle={{  margin: 0, background: 'transparent' }}
                 showLineNumbers={true}
                 language={match[1]}
+                codeTagProps={{ style: { fontFamily: fontFamilyMonospace } }}
                 PreTag="div"
                 {...props}
               >
                 {String(children).replace(/\n$/, '')}
               </SyntaxHighlighter>
             ) : (
-              <code className={className} {...props}>
+              <code className={className}{...props} style={{ fontFamily: fontFamilyMonospace }}>
                 {children}
               </code>
             );

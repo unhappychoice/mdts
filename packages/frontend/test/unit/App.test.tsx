@@ -2,9 +2,14 @@ import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import configureStore from 'redux-mock-store';
-import { thunk } from 'redux-thunk';
 import App from '../../src/App';
+import { createMockStore } from '../utils';
+
+jest.mock('@mui/material', () => ({
+  ...jest.requireActual('@mui/material'),
+  CssBaseline: () => null, // Mock CssBaseline to render nothing
+  AppBar: ({ children, ...props }: any) => <div {...props}>{children}</div>, // Mock AppBar
+}));
 
 jest.mock('@mui/x-tree-view', () => ({
   ...jest.requireActual('@mui/x-tree-view'),
@@ -14,8 +19,6 @@ jest.mock('@mui/x-tree-view', () => ({
     </div>
   ),
 }));
-
-const mockStore = configureStore([thunk]);
 
 // Mock the useFileTree hook
 jest.mock('../../src/api', () => ({
@@ -27,41 +30,7 @@ describe('App', () => {
   let store;
 
   beforeEach(() => {
-    store = mockStore({
-      appSetting: {
-        darkMode: false,
-        contentMode: 'fixed',
-        fileTreeOpen: true,
-        outlineOpen: true,
-      },
-      fileTree: {
-        fileTree: [
-          { path: 'test.md', status: ' ' },
-          { 'folder': [{ path: 'folder/subfile.md', status: 'M' }] }
-        ],
-        filteredFileTree: [
-          { path: 'test.md', status: ' ' },
-          { 'folder': [{ path: 'folder/subfile.md', status: 'M' }] }
-        ],
-        loading: false,
-        error: null,
-        searchQuery: '',
-      },
-      content: {
-        content: '',
-        loading: false,
-        error: null,
-      },
-      outline: {
-        outline: [],
-        loading: false,
-        error: null,
-      },
-      history: {
-        currentPath: null,
-        isDirectory: false,
-      },
-    });
+    store = createMockStore();
   });
 
   test('renders without crashing', async () => {

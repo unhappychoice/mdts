@@ -20,6 +20,12 @@ describe('Content', () => {
         currentPath: null,
         isDirectory: false,
       },
+      appSetting: {
+        darkMode: 'auto',
+        contentMode: 'compact',
+        fileTreeOpen: true,
+        outlineOpen: true,
+      },
     });
     DirectoryContent.mockClear();
     MarkdownContent.mockClear();
@@ -53,6 +59,12 @@ describe('Content', () => {
         currentPath: 'path/to/file.md',
         isDirectory: false,
       },
+      appSetting: {
+        darkMode: 'auto',
+        contentMode: 'compact',
+        fileTreeOpen: true,
+        outlineOpen: true,
+      },
     });
     render(
       <Provider store={store}>
@@ -68,6 +80,12 @@ describe('Content', () => {
       history: {
         currentPath: 'path/to/directory',
         isDirectory: true,
+      },
+      appSetting: {
+        darkMode: 'auto',
+        contentMode: 'compact',
+        fileTreeOpen: true,
+        outlineOpen: true,
       },
     });
     render(
@@ -102,6 +120,12 @@ describe('Content', () => {
       history: {
         currentPath: 'path/to/directory',
         isDirectory: true,
+      },
+      appSetting: {
+        darkMode: 'auto',
+        contentMode: 'compact',
+        fileTreeOpen: true,
+        outlineOpen: true,
       },
     });
     render(

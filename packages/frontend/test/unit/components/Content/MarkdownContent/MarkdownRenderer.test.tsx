@@ -1,8 +1,13 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter, useNavigate } from 'react-router-dom';
+import configureStore from 'redux-mock-store';
+import { thunk } from 'redux-thunk';
 import MarkdownRenderer from '../../../../../src/components/Content/MarkdownContent/MarkdownRenderer';
+
+const mockStore = configureStore([thunk]);
 
 // Mock react-router-dom's useNavigate
 jest.mock('react-router-dom', () => ({
@@ -76,12 +81,37 @@ const renderWithProviders = (content: string, selectedFilePath: string | null = 
       mode: 'light',
     },
   });
+  const store = mockStore({
+    content: {
+      content: '# Test Markdown',
+      loading: false,
+      error: null,
+    },
+    fileTree: {
+      loading: false,
+    },
+    history: {
+      currentPath: '/',
+      isDirectory: false,
+    },
+    appSetting: {
+      contentMode: 'compact',
+    },
+    config: {
+      fontFamily: 'Roboto',
+      fontFamilyMonospace: 'monospace',
+      fontSize: 14,
+    }
+  });
+
   return render(
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <MarkdownRenderer content={content} selectedFilePath={selectedFilePath} />
-      </ThemeProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <MarkdownRenderer content={content} selectedFilePath={selectedFilePath} />
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
   );
 };
 
