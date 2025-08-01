@@ -1,10 +1,13 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import SettingsDialog from './components/SettingsDialog/SettingsDialog';
 import { useTheme } from './hooks/useTheme';
 import { useWebSocket } from './hooks/useWebSocket';
 import Layout from './Layout';
+import { saveAppSetting } from './store/slices/appSettingSlice';
+import { fetchConfig } from './store/slices/configSlice';
 import { fetchFileTree } from './store/slices/fileTreeSlice';
 import { updateHistoryFromLocation } from './store/slices/historySlice';
 import { AppDispatch, RootState } from './store/store';
@@ -14,14 +17,21 @@ const App = () => {
   const location = useLocation();
 
   const { currentPath } = useSelector((state: RootState) => state.history);
-  const { darkMode } = useSelector((state: RootState) => state.appSetting);
+  const { darkMode, contentMode } = useSelector((state: RootState) => state.appSetting);
+  const { fontSize } = useSelector((state: RootState) => state.config);
   const theme = useTheme();
 
-  useWebSocket(currentPath);
+  const [isSettingsDialogOpen, setIsSettingsDialogOpen] = useState(false);
 
-  useEffect(() => {
-    document.body.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-  }, [darkMode]);
+  const handleSettingsClick = useCallback(() => {
+    setIsSettingsDialogOpen(true);
+  }, []);
+
+  const handleCloseSettingsDialog = useCallback(() => {
+    setIsSettingsDialogOpen(false);
+  }, []);
+
+  useWebSocket(currentPath);
 
   useEffect(() => {
     dispatch(fetchFileTree());
@@ -31,10 +41,24 @@ const App = () => {
     dispatch(updateHistoryFromLocation(location.pathname));
   }, [location, dispatch]);
 
+  useEffect(() => {
+    dispatch(fetchConfig());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const actualSize = Math.floor(fontSize / 0.875);
+    document.documentElement.style.fontSize = `${actualSize}px`;
+  }, [fontSize]);
+
+  useEffect(() => {
+    dispatch(saveAppSetting({ darkMode, contentMode }));
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout />
+      <Layout onSettingsClick={handleSettingsClick} />
+      <SettingsDialog open={isSettingsDialogOpen} onClose={handleCloseSettingsDialog} />
     </ThemeProvider>
   );
 };

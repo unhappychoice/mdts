@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import DirectoryContent from './DirectoryContent/DirectoryContent';
 import MarkdownContent from './MarkdownContent/MarkdownContent';
+import { Box } from '@mui/material';
 
 interface ContentProps {
   onFileSelect: (path: string) => void;
@@ -12,11 +13,28 @@ interface ContentProps {
 
 const Content: React.FC<ContentProps> = ({ onFileSelect, onDirectorySelect, scrollToId }) => {
   const { currentPath, isDirectory } = useSelector((state: RootState) => state.history);
+  const { contentMode } = useSelector((state: RootState) => state.appSetting);
 
-  return currentPath && isDirectory ? (
-    <DirectoryContent onFileSelect={onFileSelect} onDirectorySelect={onDirectorySelect} />
-  ) : (
-    <MarkdownContent onDirectorySelect={onDirectorySelect} scrollToId={scrollToId} />
+  const contentWidth = contentMode === 'compact' ? '800px' : '100%';
+
+  return (
+    <Box
+      sx={{
+        flexGrow: 1,
+        overflowY: 'auto',
+        display: 'flex',
+        justifyContent: 'center',
+        width: contentWidth,
+        maxWidth: contentWidth,
+        mx: 'auto',
+      }}
+    >
+      {currentPath && isDirectory ? (
+        <DirectoryContent onFileSelect={onFileSelect} onDirectorySelect={onDirectorySelect} />
+      ) : (
+        <MarkdownContent onDirectorySelect={onDirectorySelect} scrollToId={scrollToId} />
+      )}
+    </Box>
   );
 };
 

@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type ContentMode = 'fixed' | 'full';
+type DarkMode = 'dark' | 'light' | 'auto';
+type ContentMode = 'full' | 'compact';
 
 interface AppSettingState {
-  darkMode: boolean;
+  darkMode: DarkMode;
   contentMode: ContentMode;
   fileTreeOpen: boolean;
   outlineOpen: boolean;
 }
 
 const initialState: AppSettingState = {
-  darkMode: true,
-  contentMode: 'fixed',
+  darkMode: 'auto',
+  contentMode: 'compact',
   fileTreeOpen: true,
   outlineOpen: true,
 };
@@ -20,11 +21,9 @@ const appSettingSlice = createSlice({
   name: 'appSetting',
   initialState,
   reducers: {
-    toggleDarkMode: (state) => {
-      state.darkMode = !state.darkMode;
-    },
-    toggleContentMode: (state) => {
-      state.contentMode = state.contentMode === 'fixed' ? 'full' : 'fixed';
+    saveAppSetting: (state, action: PayloadAction<{ darkMode: DarkMode, contentMode: ContentMode }>) => {
+      state.darkMode = action.payload.darkMode;
+      state.contentMode = action.payload.contentMode;
     },
     toggleFileTree: (state) => {
       state.fileTreeOpen = !state.fileTreeOpen;
@@ -35,6 +34,6 @@ const appSettingSlice = createSlice({
   },
 });
 
-export const { toggleDarkMode, toggleContentMode, toggleFileTree, toggleOutline } = appSettingSlice.actions;
+export const { saveAppSetting, toggleFileTree, toggleOutline } = appSettingSlice.actions;
 
 export default appSettingSlice.reducer;

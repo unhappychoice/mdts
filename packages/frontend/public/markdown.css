@@ -4,6 +4,8 @@
     --markdown-code-background-color: #f4f5f7;
     --markdown-blockquote-color: rgba(0, 0, 0, .24);
     --markdown-link-color: #1976d2;
+    --markdown-font-family: Roboto;
+    --markdown-monospace-font-family: monospace;
 }
 
 [data-theme="dark"] {
@@ -14,11 +16,12 @@
 }
 
 .markdown-body {
+    font-family: var(--markdown-font-family);
     h1 {
         margin: 48px 0 24px;
         padding-bottom: 16px;
         font-weight: 500;
-        font-size: 26px;
+        font-size: 1.857rem;
         border-bottom: 1px solid var(--markdown-border-color);
     }
 
@@ -26,31 +29,32 @@
         margin: 48px 0 24px;
         padding-bottom: 10px;
         font-weight: 500;
-        font-size: 22px;
+        font-size: 1.571rem;
         border-bottom: 1px solid var(--markdown-border-color);
     }
 
     h3 {
         margin: 48px 0 24px;
         padding-bottom: 10px;
-        font-size: 18px;
+        font-size: 1.286rem;
         font-weight: 500;
     }
 
     h4 {
         margin: 48px 0 24px;
-        font-size: 16px;
+        font-size: 1.143rem;
         font-weight: 400;
     }
 
     h5 {
         margin: 48px 0 24px;
-        font-size: 16px;
+        font-size: 1.143rem;
         font-weight: 400;
     }
 
     p, ul, ol {
         margin: 24px 0 24px;
+        font-size: 0.875rem;
         line-height: 1.8;
 
         li {
@@ -103,11 +107,13 @@
     pre {
         padding: 16px;
         overflow: auto;
-        font-size: 0.85rem;
+        font-size: 0.875rem;
         background-color: var(--markdown-pre-background-color);
+        font-family: var(--markdown-monospace-font-family);
 
         code {
             padding: 0;
+            font-size: 0.875rem;
             word-break: normal;
             white-space: pre;
             background: transparent;
@@ -119,15 +125,16 @@
         display: inline-block;
         padding: .1em .6em;
         margin: 0;
-        font-size: 80%;
+        font-size: 0.8em;
         background-color: var(--markdown-code-background-color);
         border-radius: 2px;
+        font-family: var(--markdown-monospace-font-family);
     }
 
     blockquote {
         margin: 24px 0;
         padding: 5px 16px;
-        font-size: 14px;
+        font-size: 1rem;
         color: var(--markdown-blockquote-color);
         border-left: 4px solid var(--markdown-border-color);
 

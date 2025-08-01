@@ -4,6 +4,7 @@ import path from 'path';
 import { logger } from '../utils/logger';
 import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
+import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
 
 export const serve = (directory: string, port: number, host: string): import('http').Server => {
@@ -31,6 +32,18 @@ export const createApp = (
   // Define API
   app.use('/api/filetree', fileTreeRouter(directory));
   app.use('/api/outline', outlineRouter(directory));
+  app.get('/api/config', (req, res) => {
+    res.json(getConfig());
+  });
+  app.post('/api/config', express.json(), (req, res) => {
+    try {
+      saveConfig(req.body);
+      res.status(200).send('Config saved');
+    } catch (error) {
+      logger.error('Failed to save config:', error);
+      res.status(500).send('Failed to save config');
+    }
+  });
 
   app.get('/api/markdown/mdts-welcome-markdown.md', (req, res) => {
     res.setHeader('Content-Type', 'text/plain');

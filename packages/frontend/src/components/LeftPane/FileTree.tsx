@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFileTree, setExpandedNodes, setSearchQuery, expandAllNodes, FileTreeItem } from '../../store/slices/fileTreeSlice';
 import { AppDispatch, RootState } from '../../store/store';

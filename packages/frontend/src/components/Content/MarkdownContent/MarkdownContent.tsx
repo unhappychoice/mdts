@@ -23,6 +23,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   const { contentMode } = useSelector((state: RootState) => state.appSetting);
   const { content, loading: contentLoading, error } = useSelector((state: RootState) => state.content);
   const { loading: fileTreeLoading } = useSelector((state: RootState) => state.fileTree);
+  const { fontFamily } = useSelector((state: RootState) => state.config);
 
   const { frontmatter, markdownContent } = useFrontmatter(content);
   const viewMode = useViewMode();
@@ -91,13 +92,15 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
         </Box>
       )}
       <MarkdownContentTabs viewMode={viewMode} hasFrontmatter={hasFrontmatter} />
-      <MarkdownContentView
-        loading={loading}
-        viewMode={viewMode}
-        content={content}
-        frontmatter={frontmatter}
-        markdownContent={markdownContent}
-      />
+      <Box sx={{ fontFamily: fontFamily }}>
+        <MarkdownContentView
+          loading={loading}
+          viewMode={viewMode}
+          content={content}
+          frontmatter={frontmatter}
+          markdownContent={markdownContent}
+        />
+      </Box>
     </Box>
   );
 };
