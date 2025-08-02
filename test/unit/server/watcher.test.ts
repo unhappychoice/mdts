@@ -1,6 +1,7 @@
 import chokidar, { type FSWatcher } from 'chokidar';
 import * as fs from 'fs';
 import * as http from 'http';
+import path from 'path';
 import { WebSocket, WebSocketServer } from 'ws';
 import { setupWatcher } from '../../../src/server/watcher';
 import { logger } from '../../../src/utils/logger';
@@ -153,7 +154,8 @@ describe('watcher.ts unit tests', () => {
       onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file.md' }));
 
       expect(logger.log).toHaveBeenCalledWith('Livereload', '👀 Watching file: /mock/file.md');
-      expect(chokidar.watch).toHaveBeenCalledWith('/mock/file.md', { ignoreInitial: true });
+      expect(chokidar.watch)
+        .toHaveBeenCalledWith(path.join('/mock/directory', '/mock/file.md'), { ignoreInitial: true });
       expect(mockContentWatcher.on).toHaveBeenCalledWith('change', expect.any(Function));
       expect(mockContentWatcher.on).toHaveBeenCalledWith('error', expect.any(Function));
     });
