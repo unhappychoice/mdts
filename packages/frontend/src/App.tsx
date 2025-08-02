@@ -51,7 +51,11 @@ const App: React.FC = () => {
   }, [fontSize]);
 
   useEffect(() => {
-    dispatch(saveAppSetting({ darkMode, contentMode }));
+    if (!(['dark', 'light', 'auto'].includes(darkMode))) {
+      dispatch(saveAppSetting({ darkMode: 'auto', contentMode: 'compact' }));
+    } else {
+      dispatch(saveAppSetting({ darkMode, contentMode }));
+    }
   }, []);
 
   return (

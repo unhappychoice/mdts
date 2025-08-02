@@ -65,18 +65,14 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
         role="combobox"
         tabindex="0"
       >
-        <span
-          aria-hidden="true"
-          class="notranslate"
-        >
-          ​
-        </span>
+        Auto
       </div>
       <input
         aria-hidden="true"
         aria-invalid="false"
         class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
         tabindex="-1"
+        value="auto"
       />
       <svg
         aria-hidden="true"

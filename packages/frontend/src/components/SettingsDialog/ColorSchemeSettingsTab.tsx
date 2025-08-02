@@ -17,9 +17,12 @@ const ColorSchemeSettingsTab: React.FC<ColorSchemeSettingsTabProps> = ({
   setSyntaxHighlighterTheme,
 }) => {
   const theme = useTheme();
-  const selectableThemes = (darkMode === 'dark' || (darkMode === 'auto' && theme.palette.mode === 'dark'))
-    ? DARK_SYNTAX_HIGHLIGHTER_THEMES
-    : LIGHT_SYNTAX_HIGHLIGHTER_THEMES;
+  const selectableThemes =
+  darkMode === 'auto'
+    ? [...DARK_SYNTAX_HIGHLIGHTER_THEMES, ...LIGHT_SYNTAX_HIGHLIGHTER_THEMES]
+    : (darkMode === 'dark' || (darkMode === 'auto' && theme.palette.mode === 'dark'))
+      ? DARK_SYNTAX_HIGHLIGHTER_THEMES
+      : LIGHT_SYNTAX_HIGHLIGHTER_THEMES;
 
   const handleDarkModeChange = useCallback((_, newMode) => {
     if (newMode)
@@ -96,7 +99,7 @@ const ColorSchemeSettingsTab: React.FC<ColorSchemeSettingsTabProps> = ({
       <Select
         labelId="syntax-highlighter-theme-label"
         id="syntaxHighlighterTheme"
-        value={syntaxHighlighterTheme}
+        value={syntaxHighlighterTheme || 'auto'}
         onChange={handleThemChange}
         fullWidth
         variant="outlined"

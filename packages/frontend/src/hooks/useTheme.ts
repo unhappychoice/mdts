@@ -8,10 +8,10 @@ export const useTheme = (): Theme => {
 
   const theme = useMemo(() => {
     let mode: 'dark' | 'light';
-    if (darkMode === 'auto') {
-      mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    } else {
+    if (darkMode === 'dark' || darkMode === 'light') {
       mode = darkMode;
+    } else {
+      mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
 
     return createTheme({
