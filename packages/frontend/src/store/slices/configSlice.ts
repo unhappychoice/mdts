@@ -35,7 +35,7 @@ const initialState: ConfigState = {
   fontFamily: 'Roboto',
   fontFamilyMonospace: 'monospace',
   fontSize: 14,
-  syntaxHighlighterTheme: 'prism',
+  syntaxHighlighterTheme: 'auto',
 };
 
 const configSlice = createSlice({

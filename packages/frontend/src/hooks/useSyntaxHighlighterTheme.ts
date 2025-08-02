@@ -100,7 +100,7 @@ export const useSyntaxHighlighterTheme = (syntaxHighlighterTheme: string): objec
     if (syntaxHighlighterTheme === 'auto') {
       return theme.palette.mode === 'dark' ? atomDark : vs;
     }
-    return themeMap[syntaxHighlighterTheme] || vs;
+    return themeMap[syntaxHighlighterTheme] || atomDark;
   };
 
   return getSyntaxHighlighterTheme();
