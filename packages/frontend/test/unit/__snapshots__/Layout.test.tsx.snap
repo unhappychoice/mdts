@@ -6,7 +6,7 @@ exports[`Layout renders correctly 1`] = `
     class="MuiBox-root css-s92abg"
   >
     <header
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-10054e1-MuiPaper-root-MuiAppBar-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-83mobe-MuiPaper-root-MuiAppBar-root"
       style="--Paper-shadow: none;"
     >
       <div
@@ -287,7 +287,7 @@ exports[`Layout renders correctly 1`] = `
           class="custom-scrollbar MuiBox-root css-ynu778"
         >
           <div
-            class="MuiBox-root css-15o69w1"
+            class="MuiBox-root css-pw6frz"
           >
             <nav
               aria-label="breadcrumb"

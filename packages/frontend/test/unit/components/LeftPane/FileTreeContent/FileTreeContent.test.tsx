@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
-import FileTreeContent from '../../../../src/components/LeftPane/FileTreeContent';
+import FileTreeContent from '../../../../../src/components/LeftPane/FileTreeContent/FileTreeContent';
 
 jest.mock('@mui/x-tree-view', () => ({
   ...jest.requireActual('@mui/x-tree-view'),
-  SimpleTreeView: ({ children, defaultCollapseIcon, defaultExpandIcon, ...props }: any) => (
+  SimpleTreeView: ({ children, ...props }: { children: React.ReactNode }) => (
     <div data-testid="mock-simple-tree-view" {...props}>
       {children}
     </div>

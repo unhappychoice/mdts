@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RemarkGfm = () => {
+const RemarkGfm = (): React.ReactElement | null => {
   return null;
 };
 

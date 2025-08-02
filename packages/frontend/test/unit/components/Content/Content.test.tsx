@@ -30,8 +30,8 @@ describe('Content', () => {
     DirectoryContent.mockClear();
     MarkdownContent.mockClear();
 
-    (DirectoryContent as jest.Mock).mockImplementation(({ onFileSelect, onDirectorySelect, ...props }) => <div data-testid="mock-directory-content" />);
-    (MarkdownContent as jest.Mock).mockImplementation(({ onDirectorySelect, scrollToId, ...props }) => <div data-testid="mock-markdown-content" />);
+    (DirectoryContent as jest.Mock).mockImplementation(() => <div data-testid="mock-directory-content" />);
+    (MarkdownContent as jest.Mock).mockImplementation(() => <div data-testid="mock-markdown-content" />);
   });
 
   test('renders correctly', () => {

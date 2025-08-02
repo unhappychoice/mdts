@@ -3,7 +3,7 @@
 exports[`DirectoryContent renders correctly with initial state 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-15o69w1"
+    class="MuiBox-root css-pw6frz"
   >
     <nav
       aria-label="breadcrumb"

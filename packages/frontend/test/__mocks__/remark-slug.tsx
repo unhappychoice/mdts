@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RemarkSlug = () => {
+const RemarkSlug = (): React.ReactElement | null => {
   return null;
 };
 

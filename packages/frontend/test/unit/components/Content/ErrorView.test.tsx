@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import ErrorView from '../../../../src/components/Content/ErrorView';
+import ErrorView from '../../../../src/components/ErrorView';
 
 describe('ErrorView', () => {
   test('renders nothing when error is null', () => {

@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ColorSchemeSettingsTab should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-19midj6"
+  >
+    <h6
+      class="MuiTypography-root MuiTypography-subtitle2 css-n2une3-MuiTypography-root"
+    >
+      Dark Mode
+    </h6>
+    <div
+      aria-label="dark mode"
+      class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal MuiToggleButtonGroup-fullWidth css-1jjbo4h-MuiToggleButtonGroup-root"
+      role="group"
+    >
+      <button
+        aria-label="dark"
+        aria-pressed="false"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        tabindex="0"
+        type="button"
+        value="dark"
+      >
+        Dark
+      </button>
+      <button
+        aria-label="light"
+        aria-pressed="false"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        tabindex="0"
+        type="button"
+        value="light"
+      >
+        Light
+      </button>
+      <button
+        aria-label="auto"
+        aria-pressed="false"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        tabindex="0"
+        type="button"
+        value="auto"
+      >
+        Auto (System)
+      </button>
+    </div>
+    <h6
+      class="MuiTypography-root MuiTypography-subtitle2 css-14l8bx7-MuiTypography-root"
+      id="syntax-highlighter-theme-label"
+    >
+      Syntax Highlighter Theme
+    </h6>
+    <div
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiSelect-root css-134kgh-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+      data-testid="syntax-highlighter-theme-select"
+    >
+      <div
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        aria-labelledby="syntax-highlighter-theme-label syntaxHighlighterTheme"
+        class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-19marfc-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+        id="syntaxHighlighterTheme"
+        role="combobox"
+        tabindex="0"
+      >
+        <span
+          aria-hidden="true"
+          class="notranslate"
+        >
+          ​
+        </span>
+      </div>
+      <input
+        aria-hidden="true"
+        aria-invalid="false"
+        class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
+        tabindex="-1"
+      />
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-1rfqz7c-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
+        data-testid="ArrowDropDownIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 10l5 5 5-5z"
+        />
+      </svg>
+      <fieldset
+        aria-hidden="true"
+        class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+      >
+        <legend
+          class="css-1nf2c5d-MuiNotchedOutlined-root"
+        >
+          <span
+            aria-hidden="true"
+            class="notranslate"
+          >
+            ​
+          </span>
+        </legend>
+      </fieldset>
+    </div>
+  </div>
+</DocumentFragment>
+`;
