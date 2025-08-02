@@ -75,7 +75,10 @@ describe('server.ts unit tests', () => {
         {} as Request,
         { setHeader: jest.fn(), sendFile: mockSendFile } as unknown as Response,
       );
-      expect(mockSendFile).toHaveBeenCalledWith(expect.stringContaining('public/welcome.md'));
+      expect(mockSendFile).toHaveBeenCalledWith(
+        expect.stringContaining('welcome.md'),
+        expect.any(Object),
+      );
     });
 
     it('should prevent path traversal for /api/markdown', async () => {
@@ -140,11 +143,14 @@ describe('server.ts unit tests', () => {
       const res = { sendFile: mockSendFile } as unknown as Response;
 
       const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
       )[1];
       await catchAllRoute(req, res);
 
-      expect(mockSendFile).toHaveBeenCalledWith(expect.stringContaining('frontend/index.html'));
+      expect(mockSendFile).toHaveBeenCalledWith(
+        expect.stringContaining('index.html'),
+        expect.any(Object),
+      );
     });
 
     it('should serve index.html for directory paths', async () => {
@@ -156,11 +162,14 @@ describe('server.ts unit tests', () => {
       const res = { sendFile: mockSendFile } as unknown as Response;
 
       const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
       )[1];
       await catchAllRoute(req, res);
 
-      expect(mockSendFile).toHaveBeenCalledWith(expect.stringContaining('frontend/index.html'));
+      expect(mockSendFile).toHaveBeenCalledWith(
+        expect.stringContaining('index.html'),
+        expect.any(Object),
+      );
     });
 
     it('should serve non-markdown files with root option', async () => {
@@ -174,7 +183,7 @@ describe('server.ts unit tests', () => {
       const res = { sendFile: mockSendFile } as unknown as Response;
 
       const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
       )[1];
       await catchAllRoute(req, res);
 
@@ -202,7 +211,7 @@ describe('server.ts unit tests', () => {
       } as unknown as Response;
 
       const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
       )[1];
       await catchAllRoute(req, res);
 
@@ -227,7 +236,7 @@ describe('server.ts unit tests', () => {
       } as unknown as Response;
 
       const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
-        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*',
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
       )[1];
       await catchAllRoute(req, res);
 

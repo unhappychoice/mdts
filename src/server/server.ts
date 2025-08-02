@@ -34,7 +34,7 @@ export const createApp = (
 
   app.get('/api/markdown/mdts-welcome-markdown.md', (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
-    res.sendFile(path.join(currentLocation, './public/welcome.md'));
+    res.sendFile('welcome.md', { root: path.join(currentLocation, './public') });
   });
 
   app.use('/api/markdown', (req, res, next) => {
@@ -62,7 +62,7 @@ export const createApp = (
   app.use('/api/markdown', express.static(directory));
 
   // Catch-all route to serve index.html for any other requests
-  app.get('*', async (req, res) => {
+  app.get('*splat', async (req, res) => {
     const filePath = path.join(directory, req.path);
     let isDirectory = false;
     try {
@@ -77,7 +77,7 @@ export const createApp = (
       req.path.toLowerCase().endsWith('.md') ||
       req.path.toLowerCase().endsWith('.markdown')
     ) {
-      return res.sendFile(path.join(currentLocation, '../frontend/index.html'));
+      return res.sendFile('index.html', { root: path.join(currentLocation, '../frontend') });
     } else {
       return res.sendFile(req.path, { root: directory }, (err) => {
         if (err) {
