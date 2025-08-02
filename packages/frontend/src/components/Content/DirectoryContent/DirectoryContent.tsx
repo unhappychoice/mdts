@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectFilteredFileTree } from '../../../store/slices/fileTreeSlice';
 import { RootState } from '../../../store/store';
 import BreadCrumb from '../BreadCrumb';
-import ErrorView from '../ErrorView';
+import ErrorView from '../../ErrorView';
 import { FileTreeList } from './FileTreeList';
 
 interface DirectoryContentProps {
@@ -35,7 +35,6 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
   return (
     <Box
       sx={{
-        display: 'table',
         width: '100%',
         minHeight: 'calc(100vh - 64px)',
         m: 0,

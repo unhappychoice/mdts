@@ -7,11 +7,12 @@ module.exports = {
         '^.+\.(t|j)sx?$': 'babel-jest',
       },
       transformIgnorePatterns: [
-        '/node_modules/(?!mermaid)/',
+        '/node_modules/(?!mermaid|@mui/x-tree-view)/',
       ],
       moduleNameMapper: {
         '\.(css|less)$': 'identity-obj-proxy',
         'react-syntax-highlighter': '<rootDir>/test/__mocks__/react-syntax-highlighter.tsx',
+        'mermaid': '<rootDir>/test/__mocks__/mermaid.tsx',
       },
       setupFilesAfterEnv: ['<rootDir>/test/setupTests.ts'],
       testEnvironment: 'jsdom',

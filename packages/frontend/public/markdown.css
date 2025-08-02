@@ -121,6 +121,11 @@
         }
     }
 
+    pre:has(.syntax-highlighter) {
+        padding: 0;
+        background: transparent;
+    }
+
     code {
         display: inline-block;
         padding: .1em .6em;

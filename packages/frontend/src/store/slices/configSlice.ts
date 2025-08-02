@@ -28,12 +28,14 @@ export interface ConfigState {
   fontFamily: string;
   fontFamilyMonospace: string;
   fontSize: number;
+  syntaxHighlighterTheme: string;
 }
 
 const initialState: ConfigState = {
   fontFamily: 'Roboto',
   fontFamilyMonospace: 'monospace',
   fontSize: 14,
+  syntaxHighlighterTheme: 'prism',
 };
 
 const configSlice = createSlice({
@@ -45,6 +47,7 @@ const configSlice = createSlice({
       state.fontFamily = action.payload.fontFamily;
       state.fontFamilyMonospace = action.payload.fontFamilyMonospace;
       state.fontSize = action.payload.fontSize;
+      state.syntaxHighlighterTheme = action.payload.syntaxHighlighterTheme;
     });
   },
 });

@@ -1,11 +1,11 @@
 import { Box } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFileTree, setExpandedNodes, setSearchQuery, expandAllNodes, FileTreeItem } from '../../store/slices/fileTreeSlice';
 import { AppDispatch, RootState } from '../../store/store';
 import FileTreeHeader from './FileTreeHeader';
 import FileTreeSearch from './FileTreeSearch';
-import FileTreeContent from './FileTreeContent';
+import FileTreeContent from './FileTreeContent/FileTreeContent';
 
 interface FileTreeComponentProps {
   onFileSelect: (path: string) => void;
@@ -16,7 +16,14 @@ interface FileTreeComponentProps {
 
 const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { fileTree, filteredFileTree, loading, error, searchQuery, expandedNodes } = useSelector((state: RootState) => state.fileTree);
+  const {
+    fileTree,
+    filteredFileTree,
+    loading,
+    error,
+    searchQuery,
+    expandedNodes
+  } = useSelector((state: RootState) => state.fileTree);
 
   useEffect(() => {
     dispatch(fetchFileTree());

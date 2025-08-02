@@ -7,7 +7,7 @@ import { useViewMode } from '../../../hooks/useViewMode';
 import { fetchContent } from '../../../store/slices/contentSlice';
 import { AppDispatch, RootState } from '../../../store/store';
 import BreadCrumb from '../BreadCrumb';
-import ErrorView from '../ErrorView';
+import ErrorView from '../../ErrorView';
 import MarkdownContentTabs from './MarkdownContentTabs';
 import MarkdownContentView from './MarkdownContentView';
 
@@ -41,6 +41,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
       }
     }
   }, [scrollToId, content]);
+
   const displayFileName = frontmatter.title
     ? String(frontmatter.title)
     : currentPath
@@ -58,7 +59,6 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   return (
     <Box
       sx={{
-        display: 'table',
         width: '100%',
         minHeight: 'calc(100vh - 64px)',
         m: 0,

@@ -32,11 +32,11 @@ const Content: React.FC<ContentProps> = ({ onFileSelect, onDirectorySelect, scro
           width: '100%',
         }}
       >
-      {currentPath && isDirectory ? (
-        <DirectoryContent onFileSelect={onFileSelect} onDirectorySelect={onDirectorySelect} />
-      ) : (
-        <MarkdownContent onDirectorySelect={onDirectorySelect} scrollToId={scrollToId} />
-      )}
+        {currentPath && isDirectory ? (
+          <DirectoryContent onFileSelect={onFileSelect} onDirectorySelect={onDirectorySelect} />
+        ) : (
+          <MarkdownContent onDirectorySelect={onDirectorySelect} scrollToId={scrollToId} />
+        )}
       </Box>
     </Box>
   );

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { fetchOutline } from '../../store/slices/outlineSlice';
 import OutlineHeader from './OutlineHeader';
-import OutlineContent from './OutlineContent';
+import OutlineContent from './OutlineContent/OutlineContent';
 
 interface OutlineProps {
   filePath: string;
