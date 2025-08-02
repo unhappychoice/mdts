@@ -7,7 +7,13 @@ module.exports = {
         '^.+\.(t|j)sx?$': 'babel-jest',
       },
       transformIgnorePatterns: [
+<<<<<<< Updated upstream
         '/node_modules/(?!mermaid|@mui/x-tree-view)/',
+||||||| Stash base
+        '/node_modules/(?!mermaid)/',
+=======
+        '/node_modules/(?!mermaid|rehype-slug)/',
+>>>>>>> Stashed changes
       ],
       moduleNameMapper: {
         '\.(css|less)$': 'identity-obj-proxy',

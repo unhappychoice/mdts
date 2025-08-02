@@ -10,6 +10,7 @@ exports[`MarkdownRenderer renders markdown content correctly 1`] = `
     >
       <h1
         data-testid="mock-h1"
+        id="hello-world"
         node="[object Object]"
       >
         Hello World
