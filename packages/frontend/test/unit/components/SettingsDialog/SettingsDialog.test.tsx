@@ -54,18 +54,22 @@ describe('SettingsDialog', () => {
 
     await waitFor(() => {
       expect(saveAppSetting).toHaveBeenCalledWith({ darkMode: 'dark', contentMode: 'compact' });
-      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14 });
+      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, syntaxHighlighterTheme: 'atom-dark' });
       expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
 
-  test('resets state and closes on Cancel button click', () => {
+  test('resets state and closes on Cancel button click', async () => {
     const onClose = jest.fn();
     renderComponent(true, onClose);
 
     // Change some settings
-    fireEvent.click(screen.getByLabelText('dark')); // Change dark mode
     fireEvent.click(screen.getByLabelText('full')); // Change content mode
+    fireEvent.click(screen.getByRole('tab', { name: 'Color Scheme' }));
+    await waitFor(() => {
+      fireEvent.click(screen.getByLabelText('dark')); // Change dark mode
+    });
+    fireEvent.click(screen.getByRole('tab', { name: 'Font' })); // Select Font tab
     fireEvent.change(screen.getByRole('slider', { name: 'Font Size' }), { target: { value: 18 } }); // Change font size
 
     fireEvent.click(screen.getByText('Cancel'));
@@ -74,7 +78,7 @@ describe('SettingsDialog', () => {
     // Verify state is reset by checking if save was not called with changed values
     fireEvent.click(screen.getByText('Save')); // Try to save after cancel
     expect(saveAppSetting).toHaveBeenCalledWith({ darkMode: 'dark', contentMode: 'compact' });
-    expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14 });
+    expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, syntaxHighlighterTheme: 'atom-dark' });
   });
 
   test('resets to default settings on Reset to Default button click', async () => {
@@ -82,31 +86,45 @@ describe('SettingsDialog', () => {
     renderComponent(true, onClose);
 
     // Change some settings
-    fireEvent.click(screen.getByLabelText('dark')); // Change dark mode
     fireEvent.click(screen.getByLabelText('full')); // Change content mode
+    fireEvent.click(screen.getByRole('tab', { name: 'Color Scheme' }));
+    await waitFor(() => {
+      fireEvent.click(screen.getByLabelText('dark')); // Change dark mode
+    });
+    fireEvent.click(screen.getByRole('tab', { name: 'Font' })); // Select Font tab
     fireEvent.change(screen.getByRole('slider', { name: 'Font Size' }), { target: { value: 18 } }); // Change font size
 
-    fireEvent.click(screen.getByText('Reset to Default'));
+    fireEvent.click(screen.getByText('Restore default setting'));
 
     await waitFor(() => {
       expect(saveAppSetting).toHaveBeenCalledWith({ darkMode: 'auto', contentMode: 'compact' });
-      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14 });
+      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, syntaxHighlighterTheme: 'auto' });
     });
   });
 
-  test('toggles dark mode', () => {
+  test('toggles dark mode', async () => {
     const onClose = jest.fn();
     renderComponent(true, onClose);
 
-    fireEvent.click(screen.getByLabelText('dark'));
+    fireEvent.click(screen.getByRole('tab', { name: 'Color Scheme' }));
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByLabelText('dark'));
+    });
     fireEvent.click(screen.getByText('Save'));
     expect(saveAppSetting).toHaveBeenCalledWith(expect.objectContaining({ darkMode: 'dark' }));
 
-    fireEvent.click(screen.getByLabelText('light'));
+    fireEvent.click(screen.getByRole('tab', { name: 'Color Scheme' }));
+    await waitFor(() => {
+      fireEvent.click(screen.getByLabelText('light'));
+    });
     fireEvent.click(screen.getByText('Save'));
     expect(saveAppSetting).toHaveBeenCalledWith(expect.objectContaining({ darkMode: 'light' }));
 
-    fireEvent.click(screen.getByLabelText('auto'));
+    fireEvent.click(screen.getByRole('tab', { name: 'Color Scheme' }));
+    await waitFor(() => {
+      fireEvent.click(screen.getByLabelText('auto'));
+    });
     fireEvent.click(screen.getByText('Save'));
     expect(saveAppSetting).toHaveBeenCalledWith(expect.objectContaining({ darkMode: 'auto' }));
   });
@@ -124,11 +142,15 @@ describe('SettingsDialog', () => {
     expect(saveAppSetting).toHaveBeenCalledWith(expect.objectContaining({ contentMode: 'compact' }));
   });
 
-  test('changes font size', () => {
+  test('changes font size', async () => {
     const onClose = jest.fn();
     renderComponent(true, onClose);
 
-    fireEvent.change(screen.getByRole('slider', { name: 'Font Size' }), { target: { value: 20 } });
+    fireEvent.click(screen.getByRole('tab', { name: 'Font' }));
+
+    await waitFor(() => {
+      fireEvent.change(screen.getByRole('slider', { name: 'Font Size' }), { target: { value: 20 } });
+    });
     fireEvent.click(screen.getByText('Save'));
     expect(saveConfigToBackend).toHaveBeenCalledWith(expect.objectContaining({ fontSize: 20 }));
   });
@@ -137,7 +159,11 @@ describe('SettingsDialog', () => {
     const onClose = jest.fn();
     renderComponent(true, onClose);
 
-    fireEvent.click(within(screen.getByRole('group', { name: 'font input mode' })).getByText('Select from list'));
+    fireEvent.click(screen.getByRole('tab', { name: 'Font' }));
+
+    await waitFor(() => {
+      fireEvent.click(within(screen.getByRole('radiogroup', { name: 'Font Family' })).getByText('Select from list'));
+    });
 
     const select = screen.getByTestId('font-family-select');
     const button = within(select).getByRole('combobox');
@@ -153,7 +179,11 @@ describe('SettingsDialog', () => {
     const onClose = jest.fn();
     renderComponent(true, onClose);
 
-    fireEvent.click(within(screen.getByRole('group', { name: 'font input mode' })).getByText('Enter manually'));
+    fireEvent.click(screen.getByRole('tab', { name: 'Font' }));
+
+    await waitFor(() => {
+      fireEvent.click(within(screen.getByRole('radiogroup', { name: 'Font Family' })).getByText('Enter manually'));
+    });
     const input = screen.getByTestId('font-family-input').querySelector('input') as HTMLInputElement;
     fireEvent.change(input, { target: { value: 'Custom Font' } });
     fireEvent.click(screen.getByText('Save'));
@@ -164,7 +194,11 @@ describe('SettingsDialog', () => {
     const onClose = jest.fn();
     renderComponent(true, onClose);
 
-    fireEvent.click(within(screen.getByRole('group', { name: 'monospace font input mode' })).getByText('Select from list'));
+    fireEvent.click(screen.getByRole('tab', { name: 'Font' }));
+
+    await waitFor(() => {
+      fireEvent.click(within(screen.getByRole('radiogroup', { name: 'Monospace Font Family' })).getByText('Select from list'));
+    });
 
     const select = screen.getByTestId('monospace-font-family-select');
     const button = within(select).getByRole('combobox');
@@ -180,7 +214,11 @@ describe('SettingsDialog', () => {
     const onClose = jest.fn();
     renderComponent(true, onClose);
 
-    fireEvent.click(within(screen.getByRole('group', { name: 'monospace font input mode' })).getByText('Enter manually'));
+    fireEvent.click(screen.getByRole('tab', { name: 'Font' }));
+
+    await waitFor(() => {
+      fireEvent.click(within(screen.getByRole('radiogroup', { name: 'Monospace Font Family' })).getByText('Enter manually'));
+    });
     const input = screen.getByTestId('monospace-font-family-input').querySelector('input') as HTMLInputElement;
     fireEvent.change(input, { target: { value: 'Custom Monospace' } });
     fireEvent.click(screen.getByText('Save'));

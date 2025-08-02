@@ -5,7 +5,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, useNavigate } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
-import MarkdownRenderer from '../../../../../src/components/Content/MarkdownContent/MarkdownRenderer';
+import MarkdownRenderer
+  from '../../../../../../src/components/Content/MarkdownContent/MarkdownRenderer/MarkdownRenderer';
 
 const mockStore = configureStore([thunk]);
 
@@ -16,7 +17,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 // Mock Mermaid component
-jest.mock('../../../../../src/components/Content/MarkdownContent/MermaidRenderer', () => ({
+jest.mock('../../../../../../src/components/Content/MarkdownContent/MarkdownRenderer/MermaidRenderer', () => ({
   __esModule: true,
   default: ({ chart }: { chart: string }) => <div data-testid="mock-mermaid-chart">{chart}</div>,
 }));
@@ -27,7 +28,7 @@ jest.mock('react-markdown', () => {
   const ActualReactMarkdown = jest.requireActual('react-markdown').default;
 
   
-  const MockCode = (props: any) => {
+  const MockCode = (props: React.ComponentProps<'pre'>) => {
     if (props.className && props.className.includes('language-mermaid')) {
       return <div data-testid="mock-mermaid-chart">{props.children}</div>;
     }
@@ -37,12 +38,17 @@ jest.mock('react-markdown', () => {
       </pre>
     );
   };
-  const MockH1 = (props: any) => <h1 data-testid="mock-h1" {...props}>{props.children}</h1>;
-  const MockP = (props: any) => <p data-testid="mock-p" {...props}>{props.children}</p>;
+  const MockH1 = (props: React.ComponentProps<'h1'>) => <h1 data-testid="mock-h1" {...props}>{props.children}</h1>;
+  const MockP = (props: React.ComponentProps<'p'>) => <p data-testid="mock-p" {...props}>{props.children}</p>;
 
   return {
     __esModule: true,
-    default: ({ children, components, remarkPlugins, rehypePlugins }: { children: string; components?: any; remarkPlugins?: any[]; rehypePlugins?: any[] }) => {
+    default: ({ children, components, remarkPlugins, rehypePlugins }: {
+      children: string;
+      components?: Record<string, React.ComponentType<React.ComponentProps<React.ElementType>>>;
+      remarkPlugins?: unknown[];
+      rehypePlugins?: unknown[];
+    }) => {
       const finalComponents = {
         ...components,
         
@@ -64,7 +70,15 @@ jest.mock('react-markdown', () => {
 // Mock SyntaxHighlighter
 jest.mock('react-syntax-highlighter', () => ({
   Prism: {
-    SyntaxHighlighter: ({ children, language, ...props }: any) => (
+    SyntaxHighlighter: ({
+      children,
+      language,
+      ...props
+    }: {
+      children: React.ReactNode;
+      language: string;
+      [key: string]: unknown;
+    }) => (
       <pre data-testid="mock-syntax-highlighter" className={`language-${language}`} {...props}>
         <code data-testid="mock-syntax-highlighter-code">{children}</code>
       </pre>
@@ -132,10 +146,10 @@ describe('MarkdownRenderer', () => {
   });
 
   it('renders code blocks with syntax highlighting', () => {
-    const content = '```javascript\nconsole.log(\"Hello\");\n```';
+    const content = '```javascript\nconsole.log("Hello");\n```';
     renderWithProviders(content);
     expect(screen.getByTestId('mock-syntax-highlighter')).toBeInTheDocument();
-    expect(screen.getByTestId('mock-syntax-highlighter-code')).toHaveTextContent('console.log(\"Hello\");');
+    expect(screen.getByTestId('mock-syntax-highlighter-code')).toHaveTextContent('console.log("Hello");');
     expect(screen.getByTestId('mock-syntax-highlighter')).toHaveClass('language-javascript');
   });
 

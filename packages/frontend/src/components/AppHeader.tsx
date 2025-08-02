@@ -2,7 +2,6 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { AppBar, Box, IconButton, Link, Toolbar, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 
 interface AppHeaderProps {
   handleFileSelect: (path: string) => void;
@@ -13,21 +12,15 @@ const AppHeader: React.FC<AppHeaderProps> = ({
   handleFileSelect,
   onSettingsClick,
 }) => {
-  const dispatch = useDispatch();
-
   const handleFileSelectClick = useCallback(() => {
     handleFileSelect('');
-  }, [dispatch, handleFileSelect]);
+  }, [handleFileSelect]);
 
   return (
     <AppBar
       position="static"
       elevation={0}
-      sx={(theme) => ({
-        bgcolor: theme.palette.background.paper,
-        color: theme.palette.text.primary,
-        borderBottom: `1px solid ${theme.palette.divider}`,
-      })}
+      sx={{ bgcolor: 'background.paper', color: 'text.primary', borderBottom: '1px solid ', borderColor: 'divider' }}
     >
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>

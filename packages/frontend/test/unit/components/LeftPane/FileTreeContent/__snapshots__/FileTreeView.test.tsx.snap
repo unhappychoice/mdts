@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FileTreeView should render correctly 1`] = `
+<DocumentFragment>
+  <ul
+    aria-multiselectable="false"
+    class="custom-scrollbar MuiSimpleTreeView-root css-5c3a1o-MuiSimpleTreeView-root"
+    defaultcollapseicon="[object Object]"
+    defaultexpandicon="[object Object]"
+    id="mui-tree-view-1"
+    role="tree"
+    style="--TreeView-itemChildrenIndentation: 12px;"
+  >
+    <li
+      aria-selected="false"
+      class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
+      id="mui-tree-view-1-file1.md"
+      role="treeitem"
+      style="--TreeView-itemDepth: 0;"
+      tabindex="0"
+    >
+      <div
+        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-1w3465f-MuiTreeItem-content"
+      >
+        <div
+          class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
+        />
+        <div
+          class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
+        >
+          <div
+            class="MuiBox-root css-70qvj9"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-eep7r1-MuiSvgIcon-root"
+              data-testid="ArticleOutlinedIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
+              />
+              <path
+                d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+              />
+            </svg>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-7o9xsw-MuiTypography-root"
+            >
+              file1.md
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-17gssqf-MuiTypography-root"
+            >
+              added
+            </p>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li
+      aria-expanded="true"
+      aria-selected="false"
+      class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
+      id="mui-tree-view-1-dir1"
+      role="treeitem"
+      style="--TreeView-itemDepth: 0;"
+      tabindex="-1"
+    >
+      <div
+        class="MuiTreeItem-content MuiSimpleTreeView-itemContent Mui-expanded css-1w3465f-MuiTreeItem-content"
+        data-expanded=""
+      >
+        <div
+          class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="TreeViewCollapseIconIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+            />
+          </svg>
+        </div>
+        <div
+          class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
+        >
+          <div
+            class="MuiBox-root css-70qvj9"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-muidwl-MuiSvgIcon-root"
+              data-testid="FolderOutlinedIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="m9.17 6 2 2H20v10H4V6zM10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8z"
+              />
+            </svg>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-1jo9ady-MuiTypography-root"
+            >
+              dir1
+            </p>
+          </div>
+        </div>
+      </div>
+      <ul
+        class="MuiCollapse-root MuiCollapse-vertical MuiTreeItem-groupTransition MuiSimpleTreeView-itemGroupTransition MuiCollapse-entered css-yfhh0o-MuiCollapse-root-MuiTreeItem-groupTransition"
+        role="group"
+        style="min-height: 0px;"
+      >
+        <div
+          class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
+        >
+          <div
+            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
+          >
+            <li
+              aria-selected="false"
+              class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
+              id="mui-tree-view-1-dir1/file2.md"
+              role="treeitem"
+              style="--TreeView-itemDepth: 1;"
+              tabindex="-1"
+            >
+              <div
+                class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-1w3465f-MuiTreeItem-content"
+              >
+                <div
+                  class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
+                />
+                <div
+                  class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
+                >
+                  <div
+                    class="MuiBox-root css-70qvj9"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-eep7r1-MuiSvgIcon-root"
+                      data-testid="ArticleOutlinedIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
+                      />
+                      <path
+                        d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+                      />
+                    </svg>
+                    <p
+                      class="MuiTypography-root MuiTypography-body2 css-1fqsg4f-MuiTypography-root"
+                    >
+                      file2.md
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body2 css-1afdyvc-MuiTypography-root"
+                    >
+                      modified
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+      </ul>
+    </li>
+  </ul>
+</DocumentFragment>
+`;

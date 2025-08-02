@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`TabPanel should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    aria-labelledby="vertical-tab-0"
+    id="vertical-tabpanel-0"
+    role="tabpanel"
+    style="width: 100%;"
+  >
+    <div
+      class="MuiBox-root css-19kzrtu"
+    >
+      Test Content
+    </div>
+  </div>
+</DocumentFragment>
+`;

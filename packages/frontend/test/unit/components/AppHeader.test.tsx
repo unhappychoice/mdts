@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
-import AppHeader from '../../src/components/AppHeader';
-import { createMockStore } from '../utils';
+import AppHeader from '../../../src/components/AppHeader';
+import { createMockStore } from '../../utils';
 
 describe('AppHeader', () => {
   let store;

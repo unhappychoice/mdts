@@ -32,7 +32,7 @@ describe('Outline', () => {
     await act(async () => {
       const { asFragment: f } = render(
         <Provider store={store}>
-          <Outline filePath="/test.md" onItemClick={() => {}} isOpen={true} onToggle={() => {}} />
+          <Outline filePath="/test.md" onItemClick={jest.fn()} isOpen={true} onToggle={jest.fn()} />
         </Provider>
       );
       asFragment = f;
@@ -43,7 +43,7 @@ describe('Outline', () => {
   test('dispatches fetchOutline on mount with correct filePath', () => {
     render(
       <Provider store={store}>
-        <Outline filePath="/test.md" onItemClick={() => {}} isOpen={true} onToggle={() => {}} />
+        <Outline filePath="/test.md" onItemClick={jest.fn()} isOpen={true} onToggle={jest.fn()} />
       </Provider>
     );
     expect(store.dispatch).toHaveBeenCalledWith(fetchOutline('/test.md'));
@@ -52,7 +52,7 @@ describe('Outline', () => {
   test('dispatches fetchOutline with null when filePath is null', () => {
     render(
       <Provider store={store}>
-        <Outline filePath={null} onItemClick={() => {}} isOpen={true} onToggle={() => {}} />
+        <Outline filePath={null} onItemClick={jest.fn()} isOpen={true} onToggle={jest.fn()} />
       </Provider>
     );
     expect(store.dispatch).toHaveBeenCalledWith(fetchOutline(null));
@@ -62,7 +62,7 @@ describe('Outline', () => {
     const onItemClickMock = jest.fn();
     render(
       <Provider store={store}>
-        <Outline filePath="/test.md" onItemClick={onItemClickMock} isOpen={true} onToggle={() => {}} />
+        <Outline filePath="/test.md" onItemClick={onItemClickMock} isOpen={true} onToggle={jest.fn()} />
       </Provider>
     );
 
@@ -81,7 +81,7 @@ describe('Outline', () => {
 
     render(
       <Provider store={store}>
-        <Outline filePath="/test.md" onItemClick={() => {}} isOpen={true} onToggle={() => {}} />
+        <Outline filePath="/test.md" onItemClick={jest.fn()} isOpen={true} onToggle={jest.fn()} />
       </Provider>
     );
 
@@ -99,7 +99,7 @@ describe('Outline', () => {
 
     render(
       <Provider store={store}>
-        <Outline filePath="/test.md" onItemClick={() => {}} isOpen={true} onToggle={() => {}} />
+        <Outline filePath="/test.md" onItemClick={jest.fn()} isOpen={true} onToggle={jest.fn()} />
       </Provider>
     );
 

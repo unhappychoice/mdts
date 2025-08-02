@@ -12,7 +12,7 @@ import { fetchFileTree } from './store/slices/fileTreeSlice';
 import { updateHistoryFromLocation } from './store/slices/historySlice';
 import { AppDispatch, RootState } from './store/store';
 
-const App = () => {
+const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
 

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`OutlineList should render correctly 1`] = `
+<DocumentFragment>
+  <ul
+    class="MuiList-root MuiList-padding MuiList-dense custom-scrollbar css-18l7s16-MuiList-root"
+  >
+    <li
+      class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1s7t0kb-MuiListItem-root"
+    >
+      <div
+        class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-2wbpcv-MuiTypography-root"
+        >
+          Heading 1
+        </span>
+      </div>
+    </li>
+    <li
+      class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1bz6dlg-MuiListItem-root"
+    >
+      <div
+        class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-2wbpcv-MuiTypography-root"
+        >
+          Heading 2
+        </span>
+      </div>
+    </li>
+  </ul>
+</DocumentFragment>
+`;

@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs } from '@mui/material';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 interface MarkdownContentTabsProps {
@@ -10,10 +10,14 @@ interface MarkdownContentTabsProps {
 const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, hasFrontmatter }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: 'preview' | 'frontmatter' | 'raw') => {
+  const handleChange = useCallback((_: React.SyntheticEvent | null, newValue: 'preview' | 'frontmatter' | 'raw') => {
     searchParams.set('tab', newValue);
     setSearchParams(searchParams);
-  };
+  }, [searchParams, setSearchParams]);
+
+  const handleClick = useCallback(() => {
+    handleChange(null, 'preview');
+  }, [handleChange]);
 
   return (
     <Box
@@ -26,10 +30,8 @@ const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, has
       }}
     >
       <Tabs value={viewMode} onChange={handleChange} aria-label="view mode tabs">
-        <Tab value="preview" label="Preview" />
-        {hasFrontmatter &&
-          <Tab value="frontmatter" label="Frontmatter" />
-        }
+        <Tab value="preview" label="Preview" onClick={handleClick} />
+        {hasFrontmatter && <Tab value="frontmatter" label="Frontmatter" />}
         <Tab value="raw" label="Raw" />
       </Tabs>
     </Box>

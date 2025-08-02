@@ -8,12 +8,12 @@ import { createMockStore } from '../utils';
 jest.mock('@mui/material', () => ({
   ...jest.requireActual('@mui/material'),
   CssBaseline: () => null, // Mock CssBaseline to render nothing
-  AppBar: ({ children, ...props }: any) => <div {...props}>{children}</div>, // Mock AppBar
+  AppBar: ({ children, ...props }: { children: React.ReactNode }) => <div {...props}>{children}</div>, // Mock AppBar
 }));
 
 jest.mock('@mui/x-tree-view', () => ({
   ...jest.requireActual('@mui/x-tree-view'),
-  SimpleTreeView: ({ children, defaultCollapseIcon, defaultExpandIcon, ...props }: any) => (
+  SimpleTreeView: ({ children, ...props }: { children: React.ReactNode }) => (
     <div data-testid="mock-simple-tree-view" {...props}>
       {children}
     </div>

@@ -46,6 +46,7 @@ export const createMockStore = (
       fontFamily: 'Roboto',
       fontFamilyMonospace: 'monospace',
       fontSize: 14,
+      syntaxHighlighterTheme: 'atom-dark',
     },
   };
 

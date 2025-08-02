@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RehypeRaw = () => {
+const RehypeRaw = (): React.ReactElement | null => {
   return null;
 };
 

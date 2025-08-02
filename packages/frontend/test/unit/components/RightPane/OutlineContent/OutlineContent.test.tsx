@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import OutlineContent from '../../../../src/components/RightPane/OutlineContent';
+import OutlineContent from '../../../../../src/components/RightPane/OutlineContent/OutlineContent';
 
 describe('OutlineContent', () => {
   const mockOutline = [

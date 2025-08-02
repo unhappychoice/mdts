@@ -2,14 +2,14 @@ import { Box, CircularProgress, List, ListItem, ListItemText } from '@mui/materi
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
-import MarkdownRenderer from './MarkdownRenderer';
+import MarkdownRenderer from './MarkdownRenderer/MarkdownRenderer';
 
 interface MarkdownContentViewProps {
   loading: boolean;
   viewMode: 'preview' | 'frontmatter' | 'raw';
   content: string | null;
   markdownContent: string;
-  frontmatter: Record<string, any>;
+  frontmatter: Record<string, unknown>;
 }
 
 const MarkdownContentView: React.FC<MarkdownContentViewProps> = (

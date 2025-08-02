@@ -3,7 +3,7 @@
 exports[`AppHeader renders correctly 1`] = `
 <DocumentFragment>
   <header
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-10054e1-MuiPaper-root-MuiAppBar-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-83mobe-MuiPaper-root-MuiAppBar-root"
     style="--Paper-shadow: none;"
   >
     <div

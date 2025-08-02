@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`DirectoryTreeItemView should render correctly 1`] = `
+<DocumentFragment>
+  <ul
+    aria-multiselectable="false"
+    class="MuiSimpleTreeView-root css-1o8c9x7-MuiSimpleTreeView-root"
+    id="mui-tree-view-1"
+    role="tree"
+    style="--TreeView-itemChildrenIndentation: 12px;"
+  >
+    <li
+      aria-expanded="false"
+      aria-selected="false"
+      class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
+      id="mui-tree-view-1-/test-path"
+      role="treeitem"
+      style="--TreeView-itemDepth: 0;"
+      tabindex="0"
+    >
+      <div
+        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-1w3465f-MuiTreeItem-content"
+      >
+        <div
+          class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="TreeViewExpandIconIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+            />
+          </svg>
+        </div>
+        <div
+          class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
+        >
+          <div
+            class="MuiBox-root css-70qvj9"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-muidwl-MuiSvgIcon-root"
+              data-testid="FolderOutlinedIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="m9.17 6 2 2H20v10H4V6zM10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8z"
+              />
+            </svg>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-1jo9ady-MuiTypography-root"
+            >
+              test-dir
+            </p>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</DocumentFragment>
+`;

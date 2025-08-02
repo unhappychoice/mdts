@@ -3,11 +3,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import MarkdownContentView from '../../../../../src/components/Content/MarkdownContent/MarkdownContentView';
-import MarkdownRenderer from '../../../../../src/components/Content/MarkdownContent/MarkdownRenderer';
+import MarkdownRenderer from '../../../../../src/components/Content/MarkdownContent/MarkdownRenderer/MarkdownRenderer';
 
 const mockStore = configureStore([]);
 
-jest.mock('../../../../../src/components/Content/MarkdownContent/MarkdownRenderer', () => ({
+jest.mock('../../../../../src/components/Content/MarkdownContent/MarkdownRenderer/MarkdownRenderer', () => ({
   __esModule: true,
   default: jest.fn(() => <div data-testid="mock-markdown-renderer" />),
 }));

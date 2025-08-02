@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`LayoutSettingsTab should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-19midj6"
+  >
+    <h6
+      class="MuiTypography-root MuiTypography-subtitle2 css-n2une3-MuiTypography-root"
+    >
+      Content Width
+    </h6>
+    <div
+      aria-label="content width"
+      class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal MuiToggleButtonGroup-fullWidth css-1jjbo4h-MuiToggleButtonGroup-root"
+      role="group"
+    >
+      <button
+        aria-label="full"
+        aria-pressed="false"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        tabindex="0"
+        type="button"
+        value="full"
+      >
+        Full
+      </button>
+      <button
+        aria-label="compact"
+        aria-pressed="false"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        tabindex="0"
+        type="button"
+        value="compact"
+      >
+        Compact
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

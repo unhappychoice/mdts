@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`MarkdownCode should render code block correctly 1`] = `
+<DocumentFragment>
+  <pre>
+    console.log("hello");
+  </pre>
+</DocumentFragment>
+`;
+
+exports[`MarkdownCode should render inline code correctly 1`] = `
+<DocumentFragment>
+  <code
+    style="font-family: monospace;"
+  >
+    console.log("hello");
+  </code>
+</DocumentFragment>
+`;
+
+exports[`MarkdownCode should render mermaid chart correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <svg />
+  </div>
+</DocumentFragment>
+`;

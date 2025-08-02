@@ -38,6 +38,7 @@ describe('configSlice', () => {
       fontFamily: 'Roboto',
       fontFamilyMonospace: 'monospace',
       fontSize: 14,
+      syntaxHighlighterTheme: 'prism',
     });
   });
 
