@@ -1,5 +1,37 @@
 # Changelog
 
+## v0.10.0
+
+### ✨ Features
+- Implement color scheme setting ([6ccf9bf](https://github.com/unhappychoice/mdts/commit/6ccf9bf)) ([#120](https://github.com/unhappychoice/mdts/pull/120))
+- Add font settings and improve config handling ([d0c65f0](https://github.com/unhappychoice/mdts/commit/d0c65f0)) ([#119](https://github.com/unhappychoice/mdts/pull/119))
+
+### 🐛 Bug Fixes
+- Fix livereloading is not working sometimes ([2817c24](https://github.com/unhappychoice/mdts/commit/2817c24)) ([#122](https://github.com/unhappychoice/mdts/pull/122))
+- Fix misc bugs ([88eb66d](https://github.com/unhappychoice/mdts/commit/88eb66d)) ([#121](https://github.com/unhappychoice/mdts/pull/121))
+- Fix scrollbar position ([88c7d35](https://github.com/unhappychoice/mdts/commit/88c7d35)) ([#119](https://github.com/unhappychoice/mdts/pull/119))
+
+### 👍 Improvements
+- Show mdts logo ([070c9e8](https://github.com/unhappychoice/mdts/commit/070c9e8)) ([#117](https://github.com/unhappychoice/mdts/pull/117))
+
+### ♻️ Refactor
+- Use rehype-slug instead of remark-slug ([b9c34b2](https://github.com/unhappychoice/mdts/commit/b9c34b2)) ([#116](https://github.com/unhappychoice/mdts/pull/116))
+- Update server.ts for Express compatibility and refactor path handling ([0812eae](https://github.com/unhappychoice/mdts/commit/0812eae)) ([#109](https://github.com/unhappychoice/mdts/pull/109))
+
+### 🆙 Update Packages
+- Bump remark-slug from 7.0.1 to 8.0.0 in /packages/frontend ([f372951](https://github.com/unhappychoice/mdts/commit/f372951)) ([#116](https://github.com/unhappychoice/mdts/pull/116))
+- Bump copy-webpack-plugin from 12.0.2 to 13.0.0 in /packages/frontend ([da35937](https://github.com/unhappychoice/mdts/commit/da35937)) ([#115](https://github.com/unhappychoice/mdts/pull/115))
+- Bump @mui/x-tree-view from 8.9.0 to 8.9.2 in /packages/frontend ([1960d94](https://github.com/unhappychoice/mdts/commit/1960d94)) ([#118](https://github.com/unhappychoice/mdts/pull/118))
+- Bump axios from 1.10.0 to 1.11.0 ([1a70f14](https://github.com/unhappychoice/mdts/commit/1a70f14)) ([#110](https://github.com/unhappychoice/mdts/pull/110))
+- Bump @testing-library/jest-dom from 6.6.3 to 6.6.4 in /packages/frontend ([806d3c4](https://github.com/unhappychoice/mdts/commit/806d3c4)) ([#111](https://github.com/unhappychoice/mdts/pull/111))
+- Bump webpack from 5.100.2 to 5.101.0 in /packages/frontend ([87857d0](https://github.com/unhappychoice/mdts/commit/87857d0)) ([#112](https://github.com/unhappychoice/mdts/pull/112))
+- Bump supertest from 7.1.3 to 7.1.4 ([432f61c](https://github.com/unhappychoice/mdts/commit/432f61c)) ([#113](https://github.com/unhappychoice/mdts/pull/113))
+- Bump express and @types/express ([f0a9ecc](https://github.com/unhappychoice/mdts/commit/f0a9ecc)) ([#109](https://github.com/unhappychoice/mdts/pull/109))
+
+### 💚 CI/Test
+- Update spec ([af6065b](https://github.com/unhappychoice/mdts/commit/af6065b)) ([#120](https://github.com/unhappychoice/mdts/pull/120))
+- Update specs ([f0214a4](https://github.com/unhappychoice/mdts/commit/f0214a4)) ([#119](https://github.com/unhappychoice/mdts/pull/119))
+
 ## v0.9.0
 
 ### 🐛 Bug Fixes
