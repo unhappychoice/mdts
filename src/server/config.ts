@@ -6,12 +6,16 @@ export interface Config {
   fontFamily: string;
   fontFamilyMonospace: string;
   fontSize: number;
+  theme: string
+  syntaxHighlighterTheme: string;
 }
 
 const defaultConfig: Config = {
   fontFamily: 'Roboto',
-  fontFamilyMonospace: 'monospace',
+  fontFamilyMonospace: 'Roboto Mono',
   fontSize: 16,
+  theme: 'default',
+  syntaxHighlighterTheme: 'auto',
 };
 
 const configPath = path.join(os.homedir(), '.config', 'mdts', 'config.json');

@@ -64,7 +64,7 @@ describe('Layout', () => {
     });
 
     // Simulate a file selection from AppHeader (logo click)
-    fireEvent.click(screen.getByAltText('mdts logo'));
+    fireEvent.click(screen.getByText('mdts'));
     expect(mockNavigate).toHaveBeenCalledWith('/');
   });
 

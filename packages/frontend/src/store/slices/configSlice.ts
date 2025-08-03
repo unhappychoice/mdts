@@ -25,17 +25,19 @@ export const saveConfigToBackend = createAsyncThunk(
 );
 
 export interface ConfigState {
+  theme: string;
+  syntaxHighlighterTheme: string;
   fontFamily: string;
   fontFamilyMonospace: string;
   fontSize: number;
-  syntaxHighlighterTheme: string;
 }
 
 const initialState: ConfigState = {
+  theme: 'default',
+  syntaxHighlighterTheme: 'auto',
   fontFamily: 'Roboto',
   fontFamilyMonospace: 'monospace',
   fontSize: 14,
-  syntaxHighlighterTheme: 'auto',
 };
 
 const configSlice = createSlice({
@@ -44,10 +46,11 @@ const configSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchConfig.fulfilled, (state, action: PayloadAction<ConfigState>) => {
+      state.theme = action.payload.theme;
+      state.syntaxHighlighterTheme = action.payload.syntaxHighlighterTheme;
       state.fontFamily = action.payload.fontFamily;
       state.fontFamilyMonospace = action.payload.fontFamilyMonospace;
       state.fontSize = action.payload.fontSize;
-      state.syntaxHighlighterTheme = action.payload.syntaxHighlighterTheme;
     });
   },
 });

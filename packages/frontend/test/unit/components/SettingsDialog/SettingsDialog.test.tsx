@@ -98,7 +98,7 @@ describe('SettingsDialog', () => {
 
     await waitFor(() => {
       expect(saveAppSetting).toHaveBeenCalledWith({ darkMode: 'auto', contentMode: 'compact' });
-      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, syntaxHighlighterTheme: 'auto' });
+      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, theme: 'default', syntaxHighlighterTheme: 'auto' });
     });
   });
 

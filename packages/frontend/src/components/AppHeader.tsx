@@ -3,6 +3,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { AppBar, Box, IconButton, Link, Toolbar, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
 
+import Logo from './Logo';
+
 interface AppHeaderProps {
   handleFileSelect: (path: string) => void;
   onSettingsClick: () => void;
@@ -26,11 +28,9 @@ const AppHeader: React.FC<AppHeaderProps> = ({
         <Box sx={{ flexGrow: 1 }}>
           <Tooltip title="Top page">
             <IconButton disableRipple onClick={handleFileSelectClick} color="inherit">
-              <img
-                src="/logo.svg"
-                alt="mdts logo"
-                style={{ height: '56px', marginTop: '-8px', marginLeft: '-36px' }}
-              />
+              <div style={{ height: '56px', marginTop: '-8px', marginLeft: '-16px' }}>
+                <Logo />
+              </div>
             </IconButton>
           </Tooltip>
         </Box>

@@ -11,8 +11,8 @@ describe('useTheme', () => {
       wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
     });
     expect(result.current.palette.mode).toBe('light');
-    expect(result.current.palette.background.default).toBe('#f4f5f7');
-    expect(result.current.palette.background.paper).toBe('#ffffff');
+    expect(result.current.palette.background.default).toBe('#f5f7fa');
+    expect(result.current.palette.background.paper).toBe('#eef1f5');
   });
 
   test('should return a dark theme when darkMode is true', () => {

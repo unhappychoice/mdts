@@ -1,10 +1,10 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
 import { fetchOutline } from '../../store/slices/outlineSlice';
-import OutlineHeader from './OutlineHeader';
+import { AppDispatch, RootState } from '../../store/store';
 import OutlineContent from './OutlineContent/OutlineContent';
+import OutlineHeader from './OutlineHeader';
 
 interface OutlineProps {
   filePath: string;
@@ -15,6 +15,7 @@ interface OutlineProps {
 
 const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onToggle }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const theme = useTheme();
   const { outline, loading, error } = useSelector((state: RootState) => state.outline);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onTogg
     <Box sx={{
       width: isOpen ? '300px' : '66px',
       py: 2,
-      bgcolor: 'background.paper',
+      background: theme.palette.background.paper,
       borderLeft: '1px solid',
       borderColor: 'divider',
       minHeight: '100%',

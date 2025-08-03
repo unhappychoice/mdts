@@ -1,13 +1,13 @@
 import { ArticleOutlined } from '@mui/icons-material';
-import { Box, Chip, Typography, } from '@mui/material';
+import { Box, Chip, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFrontmatter } from '../../../hooks/useFrontmatter';
 import { useViewMode } from '../../../hooks/useViewMode';
 import { fetchContent } from '../../../store/slices/contentSlice';
 import { AppDispatch, RootState } from '../../../store/store';
-import BreadCrumb from '../BreadCrumb';
 import ErrorView from '../../ErrorView';
+import BreadCrumb from '../BreadCrumb';
 import MarkdownContentTabs from './MarkdownContentTabs';
 import MarkdownContentView from './MarkdownContentView';
 
@@ -67,6 +67,9 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
         ...(contentMode === 'compact' && {
           width: '800px',
           margin: '0 auto',
+          borderRight: '1px solid',
+          borderLeft: '1px solid',
+          borderColor: 'divider',
         })
       }}
     >
