@@ -11,7 +11,7 @@ exports[`MarkdownCode should render code block correctly 1`] = `
 exports[`MarkdownCode should render inline code correctly 1`] = `
 <DocumentFragment>
   <code
-    style="font-family: monospace;"
+    style="color: rgb(255, 255, 255); font-family: monospace; border-radius: 4px;"
   >
     console.log("hello");
   </code>

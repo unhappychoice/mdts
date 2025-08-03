@@ -28,7 +28,7 @@ describe('AppHeader', () => {
         <AppHeader handleFileSelect={handleFileSelectMock} onSettingsClick={jest.fn()} />
       </Provider>
     );
-    fireEvent.click(screen.getByAltText('mdts logo'));
+    fireEvent.click(screen.getByText('mdts'));
     expect(handleFileSelectMock).toHaveBeenCalledWith('');
   });
 });

@@ -32,8 +32,10 @@ describe('config', () => {
     const config = getConfig();
     expect(config).toEqual({
       fontFamily: 'Roboto',
-      fontFamilyMonospace: 'monospace',
+      fontFamilyMonospace: 'Roboto Mono',
       fontSize: 16,
+      theme: 'default',
+      syntaxHighlighterTheme: 'auto',
     });
     expect(fs.existsSync).toHaveBeenCalledWith(configPath);
     expect(fs.readFileSync).not.toHaveBeenCalled();
@@ -51,6 +53,8 @@ describe('config', () => {
       fontFamily: 'CustomFont',
       fontFamilyMonospace: 'CustomMono',
       fontSize: 20,
+      theme: 'default',
+      syntaxHighlighterTheme: 'auto',
     });
     expect(fs.existsSync).toHaveBeenCalledWith(configPath);
     expect(fs.readFileSync).toHaveBeenCalledWith(configPath, 'utf-8');
@@ -64,8 +68,10 @@ describe('config', () => {
     const config = getConfig();
     expect(config).toEqual({
       fontFamily: 'PartialFont',
-      fontFamilyMonospace: 'monospace',
+      fontFamilyMonospace: 'Roboto Mono',
       fontSize: 16,
+      theme: 'default',
+      syntaxHighlighterTheme: 'auto',
     });
   });
 
@@ -74,6 +80,8 @@ describe('config', () => {
       fontFamily: 'NewFont',
       fontFamilyMonospace: 'NewMono',
       fontSize: 22,
+      theme: 'default',
+      syntaxHighlighterTheme: 'auto',
     };
     saveConfig(newConfig);
     expect(fs.mkdirSync).toHaveBeenCalledWith(path.dirname(configPath), { recursive: true });
@@ -82,18 +90,19 @@ describe('config', () => {
 
   it('saveConfig should merge new config with existing config before writing', () => {
     (fs.existsSync as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as jest.Mock).mockReturnValue(JSON.stringify({
-      fontFamily: 'ExistingFont',
-      fontSize: 18,
-    }));
+    (fs.readFileSync as jest.Mock).mockReturnValue(JSON.stringify({ fontFamily: 'ExistingFont', fontSize: 18 }));
+
     const newConfig = {
       fontFamilyMonospace: 'NewMono',
     };
     saveConfig(newConfig);
+
     expect(fs.writeFileSync).toHaveBeenCalledWith(configPath, JSON.stringify({
       fontFamily: 'ExistingFont',
       fontFamilyMonospace: 'NewMono',
       fontSize: 18,
+      theme: 'default',
+      syntaxHighlighterTheme: 'auto',
     }, null, 2));
   });
 });

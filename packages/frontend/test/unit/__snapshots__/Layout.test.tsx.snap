@@ -22,11 +22,91 @@ exports[`Layout renders correctly 1`] = `
             tabindex="0"
             type="button"
           >
-            <img
-              alt="mdts logo"
-              src="/logo.svg"
-              style="height: 56px; margin-top: -8px; margin-left: -36px;"
-            />
+            <div
+              style="height: 56px; margin-top: -8px; margin-left: -16px;"
+            >
+              <svg
+                style="width: auto; height: 100%;"
+                viewBox="0 0 180 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  <lineargradient
+                    id="grad"
+                    x1="0"
+                    x2="1"
+                    y1="0"
+                    y2="1"
+                  >
+                    <stop
+                      offset="0%"
+                      stop-color="#1976d2"
+                    />
+                    <stop
+                      offset="100%"
+                      stop-color="#1976d2"
+                    />
+                  </lineargradient>
+                  <style>
+                    
+            .text {
+              font-family: 'Segoe UI', 'Arial', sans-serif;
+              font-size: 42px;
+              font-weight: 700;
+              fill: url(#grad);
+              letter-spacing: 2px;
+            }
+            .icon {
+              fill: url(#grad);
+            }
+          
+                  </style>
+                </defs>
+                <g
+                  class="icon"
+                  transform="translate(10, 20)"
+                >
+                  <path
+                    d="M5 25 L15 45"
+                    stroke="url(#grad)"
+                    stroke-width="2"
+                  />
+                  <path
+                    d="M25 25 L15 45"
+                    stroke="url(#grad)"
+                    stroke-width="2"
+                  />
+                  <rect
+                    height="10"
+                    rx="2"
+                    width="10"
+                    x="0"
+                    y="20"
+                  />
+                  <rect
+                    height="10"
+                    rx="2"
+                    width="10"
+                    x="20"
+                    y="20"
+                  />
+                  <rect
+                    height="10"
+                    rx="2"
+                    width="10"
+                    x="10"
+                    y="40"
+                  />
+                </g>
+                <text
+                  class="text"
+                  x="60"
+                  y="70"
+                >
+                  mdts
+                </text>
+              </svg>
+            </div>
           </button>
         </div>
         <button
@@ -89,7 +169,7 @@ exports[`Layout renders correctly 1`] = `
       class="MuiBox-root css-1b2sp54"
     >
       <div
-        class="MuiBox-root css-b3tbtb"
+        class="MuiBox-root css-9681nh"
       >
         <div
           class="MuiBox-root css-xonpca"
@@ -287,7 +367,7 @@ exports[`Layout renders correctly 1`] = `
           class="custom-scrollbar MuiBox-root css-ynu778"
         >
           <div
-            class="MuiBox-root css-pw6frz"
+            class="MuiBox-root css-u35m6v"
           >
             <nav
               aria-label="breadcrumb"
@@ -376,7 +456,7 @@ exports[`Layout renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-153qrh4"
+        class="MuiBox-root css-fm7iwp"
       >
         <div
           class="MuiBox-root css-mzwsmu"
