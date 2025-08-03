@@ -4,8 +4,6 @@
     --markdown-code-background-color: #f4f5f7;
     --markdown-blockquote-color: rgba(0, 0, 0, .24);
     --markdown-link-color: #1976d2;
-    --markdown-font-family: Roboto;
-    --markdown-monospace-font-family: monospace;
 }
 
 [data-theme="dark"] {
@@ -16,7 +14,6 @@
 }
 
 .markdown-body {
-    font-family: var(--markdown-font-family);
     h1 {
         margin: 48px 0 24px;
         padding-bottom: 16px;
@@ -105,19 +102,27 @@
     }
 
     pre {
-        padding: 16px;
+        padding: 0;
         overflow: auto;
         font-size: 0.875rem;
-        background-color: var(--markdown-pre-background-color);
-        font-family: var(--markdown-monospace-font-family);
+        border-radius: 4px;
 
         code {
-            padding: 0;
+            width: 100%;
+            margin: 0;
+            padding: 16px;
             font-size: 0.875rem;
+            line-height: 1.8;
             word-break: normal;
             white-space: pre;
             background: transparent;
             border: 0;
+        }
+
+        .syntax-highlighter {
+            code {
+                padding: 0;
+            }
         }
     }
 
@@ -131,9 +136,7 @@
         padding: .1em .6em;
         margin: 0;
         font-size: 0.8em;
-        background-color: var(--markdown-code-background-color);
         border-radius: 2px;
-        font-family: var(--markdown-monospace-font-family);
     }
 
     blockquote {

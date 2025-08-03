@@ -4,8 +4,8 @@ import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { selectFilteredFileTree } from '../../../store/slices/fileTreeSlice';
 import { RootState } from '../../../store/store';
-import BreadCrumb from '../BreadCrumb';
 import ErrorView from '../../ErrorView';
+import BreadCrumb from '../BreadCrumb';
 import { FileTreeList } from './FileTreeList';
 
 interface DirectoryContentProps {

@@ -1,11 +1,17 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFileTree, setExpandedNodes, setSearchQuery, expandAllNodes, FileTreeItem } from '../../store/slices/fileTreeSlice';
+import {
+  expandAllNodes,
+  fetchFileTree,
+  FileTreeItem,
+  setExpandedNodes,
+  setSearchQuery
+} from '../../store/slices/fileTreeSlice';
 import { AppDispatch, RootState } from '../../store/store';
+import FileTreeContent from './FileTreeContent/FileTreeContent';
 import FileTreeHeader from './FileTreeHeader';
 import FileTreeSearch from './FileTreeSearch';
-import FileTreeContent from './FileTreeContent/FileTreeContent';
 
 interface FileTreeComponentProps {
   onFileSelect: (path: string) => void;
@@ -16,6 +22,7 @@ interface FileTreeComponentProps {
 
 const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const theme = useTheme();
   const {
     fileTree,
     filteredFileTree,
@@ -77,10 +84,12 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
     dispatch(setExpandedNodes(newExpanded));
   }, [searchQuery, filteredFileTree, dispatch]);
 
+  const overlay = theme.palette.mode === 'dark' ? 'rgba(16, 16, 16, 0.01)' : 'rgba(192, 192, 192, 0.01)';
+
   return (
     <Box sx={{
       width: isOpen ? '300px' : '66px',
-      bgcolor: 'background.paper',
+      background: `linear-gradient(135deg, ${overlay} 0%, ${theme.palette.background.paper} 100%)`,
       py: 2,
       borderRight: '1px solid',
       borderColor: 'divider',
