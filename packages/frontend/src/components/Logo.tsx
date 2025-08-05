@@ -18,21 +18,21 @@ const Logo: React.FC = () => {
         </linearGradient>
         <style>
           {`
-            .text {
+            .logo-text {
               font-family: 'Segoe UI', 'Arial', sans-serif;
               font-size: 42px;
               font-weight: 700;
               fill: url(#grad);
               letter-spacing: 2px;
             }
-            .icon {
+            .logo-icon {
               fill: url(#grad);
             }
           `}
         </style>
       </defs>
 
-      <g className="icon" transform="translate(10, 20)">
+      <g className="logo-icon" transform="translate(10, 20)">
         <path d="M5 25 L15 45" stroke="url(#grad)" strokeWidth="2" />
         <path d="M25 25 L15 45" stroke="url(#grad)" strokeWidth="2" />
         <rect x="0" y="20" width="10" height="10" rx="2" />
@@ -40,7 +40,7 @@ const Logo: React.FC = () => {
         <rect x="10" y="40" width="10" height="10" rx="2" />
       </g>
 
-      <text x="60" y="70" className="text">
+      <text x="60" y="70" className="logo-text">
         mdts
       </text>
     </svg>

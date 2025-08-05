@@ -164,4 +164,9 @@
             text-decoration: none;
         }
     }
+
+    .katex {
+        position: relative;
+        font-size: 1.143rem;
+    }
 }
