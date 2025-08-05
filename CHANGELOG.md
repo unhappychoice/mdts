@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.11.0
+
+### ✨ Features
+- Add base color theme setting feature ([3b5736c](https://github.com/unhappychoice/mdts/commit/3b5736c)) ([#124](https://github.com/unhappychoice/mdts/pull/124))
+
+### 🆙 Update Packages
+- Bump chalk from 5.4.1 to 5.5.0 ([e3f6949](https://github.com/unhappychoice/mdts/commit/e3f6949)) ([#126](https://github.com/unhappychoice/mdts/pull/126))
+- Bump ts-jest from 29.4.0 to 29.4.1 ([0da7ec7](https://github.com/unhappychoice/mdts/commit/0da7ec7)) ([#125](https://github.com/unhappychoice/mdts/pull/125))
+
+### 💚 CI/Test
+- Update specs ([6728ebd](https://github.com/unhappychoice/mdts/commit/6728ebd))
+
 ## v0.10.0
 
 ### ✨ Features
