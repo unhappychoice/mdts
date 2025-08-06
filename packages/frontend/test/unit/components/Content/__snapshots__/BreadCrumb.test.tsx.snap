@@ -13,7 +13,7 @@ exports[`BreadCrumb renders breadcrumbs for a directory path 1`] = `
         class="MuiBreadcrumbs-li"
       >
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-i9kmoy-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-drt9hv-MuiTypography-root-MuiLink-root"
           href="#"
         >
           folder1
@@ -52,7 +52,7 @@ exports[`BreadCrumb renders breadcrumbs for a file path 1`] = `
         class="MuiBreadcrumbs-li"
       >
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-i9kmoy-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-drt9hv-MuiTypography-root-MuiLink-root"
           href="#"
         >
           folder1
@@ -68,7 +68,7 @@ exports[`BreadCrumb renders breadcrumbs for a file path 1`] = `
         class="MuiBreadcrumbs-li"
       >
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-i9kmoy-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-drt9hv-MuiTypography-root-MuiLink-root"
           href="#"
         >
           subfolder
