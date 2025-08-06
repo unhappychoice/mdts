@@ -49,21 +49,21 @@ exports[`Layout renders correctly 1`] = `
                   </lineargradient>
                   <style>
                     
-            .text {
+            .logo-text {
               font-family: 'Segoe UI', 'Arial', sans-serif;
               font-size: 42px;
               font-weight: 700;
               fill: url(#grad);
               letter-spacing: 2px;
             }
-            .icon {
+            .logo-icon {
               fill: url(#grad);
             }
           
                   </style>
                 </defs>
                 <g
-                  class="icon"
+                  class="logo-icon"
                   transform="translate(10, 20)"
                 >
                   <path
@@ -99,7 +99,7 @@ exports[`Layout renders correctly 1`] = `
                   />
                 </g>
                 <text
-                  class="text"
+                  class="logo-text"
                   x="60"
                   y="70"
                 >
