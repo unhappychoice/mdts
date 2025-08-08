@@ -1,5 +1,34 @@
 # Changelog
 
+## v0.12.0
+
+### ✨ Features
+- Support math syntax ([5754480](https://github.com/unhappychoice/mdts/commit/5754480)) ([#136](https://github.com/unhappychoice/mdts/pull/136))
+
+### 🐛 Bug Fixes
+- Fix outline ID is not correct ([892a8b6](https://github.com/unhappychoice/mdts/commit/892a8b6)) ([#143](https://github.com/unhappychoice/mdts/pull/143))
+
+### 👕 Code Style
+- Enable Stylistic ([ce4ed8b](https://github.com/unhappychoice/mdts/commit/ce4ed8b)) ([#144](https://github.com/unhappychoice/mdts/pull/144))
+
+### 🆙 Update Packages
+- Bump react-router-dom in /packages/frontend ([af58c8d](https://github.com/unhappychoice/mdts/commit/af58c8d)) ([#142](https://github.com/unhappychoice/mdts/pull/142))
+- Bump typescript from 5.8.3 to 5.9.2 ([4ffb3dc](https://github.com/unhappychoice/mdts/commit/4ffb3dc)) ([#137](https://github.com/unhappychoice/mdts/pull/137))
+- Bump @mui/icons-material in /packages/frontend ([fb9b238](https://github.com/unhappychoice/mdts/commit/fb9b238)) ([#141](https://github.com/unhappychoice/mdts/pull/141))
+- Bump @mui/material from 7.3.0 to 7.3.1 in /packages/frontend ([250cf07](https://github.com/unhappychoice/mdts/commit/250cf07)) ([#140](https://github.com/unhappychoice/mdts/pull/140))
+- Bump typescript-eslint from 8.38.0 to 8.39.0 ([792b172](https://github.com/unhappychoice/mdts/commit/792b172)) ([#139](https://github.com/unhappychoice/mdts/pull/139))
+- Bump @typescript-eslint/eslint-plugin from 8.38.0 to 8.39.0 ([72aaf02](https://github.com/unhappychoice/mdts/commit/72aaf02)) ([#135](https://github.com/unhappychoice/mdts/pull/135))
+- Bump @mui/material from 7.2.0 to 7.3.0 in /packages/frontend ([597a6b0](https://github.com/unhappychoice/mdts/commit/597a6b0)) ([#127](https://github.com/unhappychoice/mdts/pull/127))
+- Bump typescript-eslint in /packages/frontend ([05759fc](https://github.com/unhappychoice/mdts/commit/05759fc)) ([#132](https://github.com/unhappychoice/mdts/pull/132))
+- Bump @typescript-eslint/parser in /packages/frontend ([d9df64c](https://github.com/unhappychoice/mdts/commit/d9df64c)) ([#133](https://github.com/unhappychoice/mdts/pull/133))
+- Bump typescript from 5.8.3 to 5.9.2 ([764b36f](https://github.com/unhappychoice/mdts/commit/764b36f)) ([#131](https://github.com/unhappychoice/mdts/pull/131))
+- Bump typescript-eslint from 8.38.0 to 8.39.0 ([3d9bf66](https://github.com/unhappychoice/mdts/commit/3d9bf66)) ([#129](https://github.com/unhappychoice/mdts/pull/129))
+- Bump @mui/icons-material in /packages/frontend ([0be2a60](https://github.com/unhappychoice/mdts/commit/0be2a60)) ([#128](https://github.com/unhappychoice/mdts/pull/128))
+
+### 💚 CI/Test
+- Update spec ([07f9b56](https://github.com/unhappychoice/mdts/commit/07f9b56))
+- Update spec ([355b79e](https://github.com/unhappychoice/mdts/commit/355b79e))
+
 ## v0.11.0
 
 ### ✨ Features
