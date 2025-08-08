@@ -29,7 +29,7 @@
     "react-dom": "^19.1.1",
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.7.1",
+    "react-router-dom": "^7.8.0",
     "react-syntax-highlighter": "^15.6.1",
     "redux-mock-store": "^1.5.5",
     "rehype-raw": "^7.0.0",
