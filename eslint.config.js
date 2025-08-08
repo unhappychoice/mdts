@@ -1,13 +1,17 @@
 import pluginJs from "@eslint/js";
+import stylistic from '@stylistic/eslint-plugin'
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   pluginJs.configs.recommended,
   tseslint.configs.recommended,
   {
+    plugins: {
+      '@stylistic': stylistic
+    },
     files: ["src/**/*.{js,mjs,cjs,ts}", "test/**/*.{js,mjs,cjs,ts}"],
     rules: {
-      indent: [
+      '@stylistic/indent': [
         'error',
         2,
         {
@@ -19,29 +23,29 @@ export default tseslint.config(
           ],
         },
       ],
-      'linebreak-style': [
+      '@stylistic/linebreak-style': [
         'error',
         'unix'
       ],
-      'max-len': [
+      '@stylistic/max-len': [
         'error',
         {
           code: 120,
           ignoreComments: true
         }
       ],
-      quotes: [
+      '@stylistic/quotes': [
         'error',
         'single'
       ],
-      semi: [
+      '@stylistic/semi': [
         'error',
         'always'
       ],
       '@typescript-eslint/explicit-module-boundary-types': ['error'],
-      'keyword-spacing': ['error'],
-      'space-before-blocks': ['error'],
-      'space-infix-ops': ['error']
+      '@stylistic/keyword-spacing': ['error'],
+      '@stylistic/space-before-blocks': ['error'],
+      '@stylistic/space-infix-ops': ['error']
     },
   },
 );

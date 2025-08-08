@@ -1,5 +1,6 @@
 const globals = require("globals");
 const pluginJs = require("@eslint/js");
+const stylistic = require('@stylistic/eslint-plugin');
 const tseslint = require("typescript-eslint");
 const pluginReactConfig = require("eslint-plugin-react/configs/recommended.js");
 const hooksPlugin = require("eslint-plugin-react-hooks");
@@ -16,6 +17,7 @@ module.exports = tseslint.config(
       pluginReactConfig,
     ],
     plugins: {
+      '@stylistic': stylistic,
       "react-hooks": hooksPlugin,
       jest: jestPlugin,
       import: importPlugin,
@@ -39,14 +41,14 @@ module.exports = tseslint.config(
       '@typescript-eslint/explicit-module-boundary-types': 'error',
       '@typescript-eslint/no-var-requires': 'warn',
       '@typescript-eslint/no-unused-vars': 'error',
-      'indent': ['error', 2, {'SwitchCase': 1}],
-      'linebreak-style': ['error', 'unix'],
-      'max-len': ['error', { code: 120, ignoreComments: true, ignoreStrings: true }],
-      'quotes': ['error', 'single'],
+      '@stylistic/indent': ['error', 2, {'SwitchCase': 1}],
+      '@stylistic/linebreak-style': ['error', 'unix'],
+      '@stylistic/max-len': ['error', { code: 120, ignoreComments: true, ignoreStrings: true }],
+      '@stylistic/quotes': ['error', 'single'],
       'react/jsx-no-bind': 'error',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'semi': ['error', 'always'],
+      '@stylistic/semi': ['error', 'always'],
     },
     settings: {
       react: {
