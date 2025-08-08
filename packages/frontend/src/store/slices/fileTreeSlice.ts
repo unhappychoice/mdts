@@ -101,7 +101,7 @@ export const fetchFileTree = createAsyncThunk(
     const data = await fetchData<{
       fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
       mountedDirectoryPath: string;
-        }>('/api/filetree', 'json');
+    }>('/api/filetree', 'json');
     return { fileTree: data?.fileTree || [], mountedDirectoryPath: data?.mountedDirectoryPath };
   }
 );
