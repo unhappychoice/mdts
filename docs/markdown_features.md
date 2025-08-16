@@ -2,8 +2,6 @@
 
 `mdts` provides a rich Markdown reading experience by supporting the full [CommonMark](https://commonmark.org/) specification along with many popular extensions like GitHub Flavored Markdown (GFM) and additional enhancements for modern documentation.
 
----
-
 ## ✅ CommonMark Features
 
 All standard Markdown syntax is fully supported:
@@ -23,8 +21,6 @@ All standard Markdown syntax is fully supported:
 - **Links**: `[label](https://example.com)`
 - **Images**: `![alt text](image.png)`
 - **Horizontal Rules**: `---`, `***`, or `___`
-
----
 
 ## 🚀 Extended Features
 
@@ -47,6 +43,27 @@ Perfect for checklists and todos.
 - [x] Write documentation
 - [ ] Implement feature
 ```
+
+### 💡 GitHub Flavored Markdown (GFM)
+
+`mdts` supports most GFM extensions, including:
+
+* **Autolinks**: Bare URLs like `https://example.com` become clickable links
+* **Strikethrough**: `~~text~~` renders as ~~text~~
+* **Tables & Task Lists**: (as shown above)
+
+We aim to maintain compatibility with widely adopted Markdown standards to ensure smooth reading, sharing, and collaboration across platforms.
+
+### 🎨 Syntax Highlighting
+Code blocks get automatic syntax highlighting when a language is specified.
+
+````markdown
+```rust
+fn main() {
+    println!("Hello, mdts!");
+}
+```
+````
 
 ### 🔗 Footnotes
 
@@ -92,27 +109,24 @@ graph TD;
 ```
 ````
 
-### 🎨 Syntax Highlighting
+### 🧮 Math Formulas (KaTeX)
 
-Code blocks get automatic syntax highlighting when a language is specified.
+Embed LaTeX-style math formulas.
+
 ````markdown
-```rust
-fn main() {
-    println!("Hello, mdts!");
-}
+```math
+L = \frac{1}{2} \rho v^2 S C_L
 ```
 ````
 
----
+### 📢 GitHub-Style Alerts
 
-## 💡 GitHub Flavored Markdown (GFM)
+Create admonitions like notes, tips, and warnings.
 
-`mdts` supports most GFM extensions, including:
+```markdown
+> [!NOTE]
+> This is a note.
 
-* **Autolinks**: Bare URLs like `https://example.com` become clickable links
-* **Strikethrough**: `~~text~~` renders as ~~text~~
-* **Tables & Task Lists**: (as shown above)
-
----
-
-We aim to maintain compatibility with widely adopted Markdown standards to ensure smooth reading, sharing, and collaboration across platforms.
+> [!WARNING]
+> This is a warning.
+```
