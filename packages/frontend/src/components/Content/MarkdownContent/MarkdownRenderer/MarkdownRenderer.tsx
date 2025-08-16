@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
@@ -9,6 +10,7 @@ import remarkMath from 'remark-math';
 import MarkdownCode from './MarkdownCode';
 import MarkdownLink from './MarkdownLink';
 
+import 'rehype-github-alerts/styling/css/index.css';
 import 'katex/dist/katex.css';
 
 interface MarkdownRendererProps {
@@ -21,7 +23,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFi
     <Box className={'markdown-body'} sx={{ py: 2, px: 0 }}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
-        rehypePlugins={[rehypeRaw, rehypeSlug, rehypeKatex]}
+        rehypePlugins={[rehypeRaw, rehypeSlug, rehypeKatex, rehypeGithubAlerts]}
         components={{
           a: ({ href, children }) =>
             <MarkdownLink href={href} selectedFilePath={selectedFilePath}>{children}</MarkdownLink>,
