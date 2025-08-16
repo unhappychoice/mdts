@@ -26,6 +26,12 @@ describe('Content', () => {
         fileTreeOpen: true,
         outlineOpen: true,
       },
+      content: {
+        content: '',
+        loading: false,
+        error: null,
+        scrollPosition: 0,
+      },
     });
     DirectoryContent.mockClear();
     MarkdownContent.mockClear();
@@ -65,6 +71,12 @@ describe('Content', () => {
         fileTreeOpen: true,
         outlineOpen: true,
       },
+      content: {
+        content: '',
+        loading: false,
+        error: null,
+        scrollPosition: 0,
+      },
     });
     render(
       <Provider store={store}>
@@ -86,6 +98,12 @@ describe('Content', () => {
         contentMode: 'compact',
         fileTreeOpen: true,
         outlineOpen: true,
+      },
+      content: {
+        content: '',
+        loading: false,
+        error: null,
+        scrollPosition: 0,
       },
     });
     render(
@@ -126,6 +144,12 @@ describe('Content', () => {
         contentMode: 'compact',
         fileTreeOpen: true,
         outlineOpen: true,
+      },
+      content: {
+        content: '',
+        loading: false,
+        error: null,
+        scrollPosition: 0,
       },
     });
     render(
