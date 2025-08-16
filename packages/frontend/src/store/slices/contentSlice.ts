@@ -1,17 +1,19 @@
 
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { fetchData } from '../../api';
 
 interface ContentState {
   content: string;
   loading: boolean;
   error: string | null;
+  scrollPosition: number;
 }
 
 const initialState: ContentState = {
   content: '',
   loading: true,
   error: null,
+  scrollPosition: 0,
 };
 
 export const fetchContent = createAsyncThunk(
@@ -26,11 +28,17 @@ export const fetchContent = createAsyncThunk(
 const contentSlice = createSlice({
   name: 'content',
   initialState,
-  reducers: {},
+  reducers: {
+    setScrollPosition: (state, action: PayloadAction<number>) => {
+      state.scrollPosition = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchContent.pending, (state) => {
-        state.loading = true;
+        if (!state.content) {
+          state.loading = true;
+        }
         state.error = null;
       })
       .addCase(fetchContent.fulfilled, (state, action) => {
@@ -43,5 +51,7 @@ const contentSlice = createSlice({
       });
   },
 });
+
+export const { setScrollPosition } = contentSlice.actions;
 
 export default contentSlice.reducer;
