@@ -1,5 +1,34 @@
 # Changelog
 
+## v0.13.0
+
+### ✨ Features
+- Support github alerts ([2e3baa4](https://github.com/unhappychoice/mdts/commit/2e3baa4)) ([#163](https://github.com/unhappychoice/mdts/pull/163))
+
+### 🐛 Bug Fixes
+- Do not show loading indicator on live reload ([668c690](https://github.com/unhappychoice/mdts/commit/668c690)) ([#165](https://github.com/unhappychoice/mdts/pull/165))
+
+### 🆙 Update Packages
+- Bump @babel/preset-env in /packages/frontend ([75f264b](https://github.com/unhappychoice/mdts/commit/75f264b)) ([#160](https://github.com/unhappychoice/mdts/pull/160))
+- Bump html-webpack-plugin in /packages/frontend ([1fa8200](https://github.com/unhappychoice/mdts/commit/1fa8200)) ([#162](https://github.com/unhappychoice/mdts/pull/162))
+- Bump @babel/core from 7.28.0 to 7.28.3 in /packages/frontend ([1e415a0](https://github.com/unhappychoice/mdts/commit/1e415a0)) ([#161](https://github.com/unhappychoice/mdts/pull/161))
+- Bump webpack from 5.101.1 to 5.101.2 in /packages/frontend ([83c597d](https://github.com/unhappychoice/mdts/commit/83c597d)) ([#159](https://github.com/unhappychoice/mdts/pull/159))
+- Bump @testing-library/jest-dom in /packages/frontend ([b6cfc50](https://github.com/unhappychoice/mdts/commit/b6cfc50)) ([#157](https://github.com/unhappychoice/mdts/pull/157))
+- Bump webpack from 5.101.0 to 5.101.1 in /packages/frontend ([77c9e8f](https://github.com/unhappychoice/mdts/commit/77c9e8f)) ([#156](https://github.com/unhappychoice/mdts/pull/156))
+- Bump copy-webpack-plugin in /packages/frontend ([5388403](https://github.com/unhappychoice/mdts/commit/5388403)) ([#155](https://github.com/unhappychoice/mdts/pull/155))
+- Bump typescript-eslint from 8.39.0 to 8.39.1 ([dc66c25](https://github.com/unhappychoice/mdts/commit/dc66c25)) ([#153](https://github.com/unhappychoice/mdts/pull/153))
+- Bump @typescript-eslint/parser from 8.39.0 to 8.39.1 ([cb96fc8](https://github.com/unhappychoice/mdts/commit/cb96fc8)) ([#152](https://github.com/unhappychoice/mdts/pull/152))
+- Bump typescript-eslint in /packages/frontend ([1e3d4e4](https://github.com/unhappychoice/mdts/commit/1e3d4e4)) ([#150](https://github.com/unhappychoice/mdts/pull/150))
+- Bump @typescript-eslint/parser in /packages/frontend ([c84b272](https://github.com/unhappychoice/mdts/commit/c84b272)) ([#149](https://github.com/unhappychoice/mdts/pull/149))
+- Bump @mui/x-tree-view in /packages/frontend ([5fcfb27](https://github.com/unhappychoice/mdts/commit/5fcfb27)) ([#145](https://github.com/unhappychoice/mdts/pull/145))
+- Bump eslint from 9.32.0 to 9.33.0 ([9ff1a07](https://github.com/unhappychoice/mdts/commit/9ff1a07)) ([#146](https://github.com/unhappychoice/mdts/pull/146))
+- Bump eslint from 9.32.0 to 9.33.0 in /packages/frontend ([7002414](https://github.com/unhappychoice/mdts/commit/7002414)) ([#147](https://github.com/unhappychoice/mdts/pull/147))
+- Bump @eslint/compat from 1.3.1 to 1.3.2 in /packages/frontend ([9808d93](https://github.com/unhappychoice/mdts/commit/9808d93)) ([#148](https://github.com/unhappychoice/mdts/pull/148))
+
+### 📝 Others
+- Update documents ([c73fe4d](https://github.com/unhappychoice/mdts/commit/c73fe4d)) ([#166](https://github.com/unhappychoice/mdts/pull/166))
+- Rename sample_documents to example_documents ([2ec0d16](https://github.com/unhappychoice/mdts/commit/2ec0d16)) ([#166](https://github.com/unhappychoice/mdts/pull/166))
+
 ## v0.12.0
 
 ### ✨ Features
