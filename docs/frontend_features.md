@@ -2,8 +2,6 @@
 
 `mdts` offers a clean and intuitive interface for browsing and reading Markdown documents, with a focus on comfort, performance, and real-time preview.
 
----
-
 ## 🖥️ 1. Intuitive and Clean Layout
 
 The UI is divided into three panels—file tree, document view, and outline—making navigation effortless.
@@ -37,8 +35,6 @@ The UI is divided into three panels—file tree, document view, and outline—ma
 - **Table of Contents**: All headings listed hierarchically.
 - **Quick Jumps**: Click to jump to a section in long documents.
 
----
-
 ## ⚙️ 2. Interactive Viewing Modes
 
 - **Preview Mode**: Default view with full rendering.
@@ -46,15 +42,20 @@ The UI is divided into three panels—file tree, document view, and outline—ma
 - **Raw Mode**: See the raw Markdown source.
 - **Live Reload**: Changes made in external editors appear instantly in the viewer.
 
----
-
 ## 🧩 3. Customizable Environment
 
-- **Light/Dark Theme**: Choose your preferred reading style.
-- **Layout Modes**: Switch between fixed and full-width content.
-- **Toggle Panels**: Hide file tree or outline panel for distraction-free reading.
+`mdts` allows you to tailor the viewing experience to your preferences through a detailed settings dialog.
 
----
+- **Layout Settings**:
+  - **Content Width**: Choose between a `compact`, centered layout for focused reading or a `full-width` layout that spans your entire screen.
+- **Color Scheme Settings**:
+  - **Light/Dark Mode**: Instantly switch between light and dark themes.
+  - **Application Themes**: Select from a variety of built-in color themes to change the application's overall look and feel.
+  - **Syntax Highlighting Themes**: Customize the appearance of your code blocks by choosing from a wide range of popular syntax highlighting themes.
+- **Font Settings**:
+  - **Font Size**: Adjust the global font size for comfortable reading.
+  - **Font Family**: Set a custom font for regular text.
+  - **Monospace Font Family**: Define a specific font for all code blocks and inline code.
 
 ## 🚀 4. Fast and Reliable
 

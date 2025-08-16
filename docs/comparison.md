@@ -11,8 +11,6 @@
 | md-fileserver | https://github.com/commenthol/md-fileserver |
 | grip          | https://github.com/joeyespo/grip |
 
----
-
 ## Feature Comparison
 
 | Feature                        | **mdts** | markserv | md-fileserver | grip |
@@ -25,8 +23,6 @@
 | **Modern UI**                  | ✅ SPA-like with clean UX | △ | ❌ (very minimal) | △ Depends on GitHub API |
 | **Project-wide document overview** | ✅ Strong support | △ | ❌ | ❌ |
 | **Live reload**                | ✅ | ✅ | ❌ | ❌ |
-
----
 
 ## Why Choose `mdts`
 
@@ -47,8 +43,6 @@ You can start using it immediately with a single command:
 npx mdts
 ```
 
----
-
 ## Use Case Guide
 
 | Use Case | Recommended Tool |
@@ -58,10 +52,6 @@ npx mdts
 | Serve `.md` files with minimal setup | md-fileserver |
 | Live-preview Markdown while editing | markserv |
 
----
-
 ## Conclusion
 
 Unlike most Markdown preview tools, `mdts` is tailored for **navigating and understanding structured document sets**. If your project documentation spans multiple files and folders, `mdts` provides a natural and effective way to browse, review, and consume it.
-
----
