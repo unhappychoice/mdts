@@ -25,6 +25,7 @@ jest.mock('express', () => {
   mockExpress.Router = jest.fn(() => ({
     json: jest.fn().mockReturnValue(jest.fn()),
     get: jest.fn(),
+    post: jest.fn(),
   }));
   return mockExpress;
 });
@@ -93,10 +94,11 @@ describe('server.ts unit tests', () => {
       const mockBody = { fontFamily: 'NewFont', fontSize: 18 };
       const mockStatus = jest.fn().mockReturnThis();
       const mockSend = jest.fn();
-      const configPostHandler = (app.post as jest.Mock).mock.calls.find(
+      const configPostCall = (app.post as jest.Mock).mock.calls.find(
         (call: [string, (req: Request, res: Response) => void]) =>
-          call[0] === '/api/config' && call.length === 3,
-      )[2]; // Index 2 because of express.json() middleware
+          call[0] === '/api/config',
+      );
+      const configPostHandler = configPostCall[1];
       configPostHandler({ body: mockBody } as Request, { status: mockStatus, send: mockSend } as unknown as Response);
       expect(saveConfig).toHaveBeenCalledWith(mockBody);
       expect(mockStatus).toHaveBeenCalledWith(200);
@@ -110,10 +112,11 @@ describe('server.ts unit tests', () => {
       const mockBody = { fontFamily: 'NewFont', fontSize: 18 };
       const mockStatus = jest.fn().mockReturnThis();
       const mockSend = jest.fn();
-      const configPostHandler = (app.post as jest.Mock).mock.calls.find(
+      const configPostCall = (app.post as jest.Mock).mock.calls.find(
         (call: [string, (req: Request, res: Response) => void]) =>
-          call[0] === '/api/config' && call.length === 3,
-      )[2];
+          call[0] === '/api/config',
+      );
+      const configPostHandler = configPostCall[1];
       configPostHandler({ body: mockBody } as Request, { status: mockStatus, send: mockSend } as unknown as Response);
       expect(saveConfig).toHaveBeenCalledWith(mockBody);
       expect(mockStatus).toHaveBeenCalledWith(500);

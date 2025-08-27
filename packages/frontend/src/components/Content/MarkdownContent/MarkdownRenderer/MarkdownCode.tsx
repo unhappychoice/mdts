@@ -5,6 +5,7 @@ import { SYNTAX_HIGHLIGHTER_THEMES } from '../../../../constants';
 import { useSyntaxHighlighterTheme } from '../../../../hooks/useSyntaxHighlighterTheme';
 import { RootState } from '../../../../store/store';
 import MermaidRenderer from './MermaidRenderer';
+import PlantUMLRenderer from './PlantUMLRenderer';
 
 interface MarkdownCodeProps {
   inline?: boolean;
@@ -19,6 +20,9 @@ const MarkdownCode: React.FC<MarkdownCodeProps> = ({ inline, className, children
   const match = /language-(\w+)/.exec(className || '');
   if (match && match[1] === 'mermaid') {
     return <MermaidRenderer chart={String(children).replace(/\n$/, '')} />;
+  }
+  if (match && (match[1] === 'plantuml' || match[1] === 'puml')) {
+    return <PlantUMLRenderer chart={String(children).replace(/\n$/, '')} />;
   }
 
   return !inline && match ? (

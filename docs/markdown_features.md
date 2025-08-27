@@ -120,6 +120,31 @@ graph TD;
 ```
 ````
 
+### 🎯 PlantUML Diagrams
+
+Create UML diagrams with PlantUML syntax for sequence diagrams, class diagrams, and more.
+
+````markdown
+```plantuml
+@startuml
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+@enduml
+```
+
+```puml
+@startuml
+class Car {
+  +String brand
+  +start()
+  +stop()
+}
+@enduml
+```
+````
+
+Supports both `plantuml` and `puml` language identifiers. Diagrams are rendered using the official PlantUML server.
+
 ### 🧮 Math Formulas (KaTeX)
 
 Render beautiful mathematical expressions using LaTeX syntax with KaTeX.

@@ -54,6 +54,7 @@ Explore these interactive examples to see mdts's comprehensive Markdown support:
 ### 📊 Rich Content Features  
 - **[Tables](/example_documents/features/tables.md)** - Beautiful table rendering with alignment support
 - **[Mermaid Diagrams](/example_documents/features/mermaid.md)** - Interactive flowcharts, sequence diagrams, and more
+- **[PlantUML Diagrams](/example_documents/features/plantuml.md)** - UML diagrams with sequence, class, activity, and more
 - **[Math Formulas](/example_documents/features/math.md)** - LaTeX-style mathematical expressions with KaTeX
 - **[GitHub Alerts](/example_documents/features/alerts.md)** - Note, warning, and caution callouts
 
