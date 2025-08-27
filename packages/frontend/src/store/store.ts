@@ -5,6 +5,7 @@ import outlineReducer from './slices/outlineSlice';
 import appSettingReducer, { saveAppSetting } from './slices/appSettingSlice';
 import historyReducer from './slices/historySlice';
 import configReducer from './slices/configSlice';
+import plantUMLReducer from './slices/plantUMLSlice';
 
 // Helper to load state from localStorage
 const loadState = () => {
@@ -55,6 +56,7 @@ export const store = configureStore({
     appSetting: appSettingReducer,
     history: historyReducer,
     config: configReducer,
+    plantUML: plantUMLReducer,
   },
   preloadedState: loadState(),
   middleware: (getDefaultMiddleware) =>
