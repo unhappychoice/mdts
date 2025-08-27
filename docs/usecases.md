@@ -1,4 +1,12 @@
-# Use Cases for mdts
+---
+title: Use Cases for mdts
+description: Common scenarios and workflows where mdts provides value
+category: Documentation
+tags:
+  - use-cases
+  - workflows
+  - examples
+---
 
 `mdts` provides a fast, local, and intuitive way to browse multiple Markdown files organized in directories. Typical use cases include:
 
@@ -26,7 +34,3 @@ Writers often draft blog posts or articles in Markdown.
 
 `mdts` features a simple, clean interface designed to minimize distractions.  
 This allows users to focus on reading and understanding content, making it ideal for deep study or review sessions.
-
-## Summary
-
-If your workflow involves handling many Markdown files locally and you want a simple, fast way to navigate them in a browser, `mdts` fits perfectly.

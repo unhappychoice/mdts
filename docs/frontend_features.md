@@ -1,3 +1,14 @@
+---
+title: Frontend Features
+description: Comprehensive guide to mdts web interface features and customization options
+category: Documentation
+tags:
+  - frontend
+  - ui
+  - features
+  - customization
+---
+
 # ✨ Key Features of `mdts`
 
 `mdts` offers a clean and intuitive interface for browsing and reading Markdown documents, with a focus on comfort, performance, and real-time preview.
@@ -9,9 +20,9 @@ The UI is divided into three panels—file tree, document view, and outline—ma
 ### 🧭 Header Bar
 
 - **Logo & Title**: Click to return to the home page.
-- **Theme Toggle**: Switch between Light and Dark Mode. The app remembers your choice.
-- **Display Mode**: Toggle between fixed-width (centered) and full-width layouts.
-- **Links**: Access version info, GitHub repo, and changelog.
+- **Settings Button**: Opens comprehensive settings dialog for customizing appearance.
+- **GitHub Link**: Quick access to the project repository.
+- **Version Info**: Shows current version with link to changelog.
 
 ### 🌲 File Tree (Left Panel)
 
@@ -42,20 +53,32 @@ The UI is divided into three panels—file tree, document view, and outline—ma
 - **Raw Mode**: See the raw Markdown source.
 - **Live Reload**: Changes made in external editors appear instantly in the viewer.
 
-## 🧩 3. Customizable Environment
+## 🧩 3. Comprehensive Settings & Customization
 
-`mdts` allows you to tailor the viewing experience to your preferences through a detailed settings dialog.
+`mdts` provides an advanced settings dialog (accessible via the gear icon) with three main configuration tabs:
 
-- **Layout Settings**:
-  - **Content Width**: Choose between a `compact`, centered layout for focused reading or a `full-width` layout that spans your entire screen.
-- **Color Scheme Settings**:
-  - **Light/Dark Mode**: Instantly switch between light and dark themes.
-  - **Application Themes**: Select from a variety of built-in color themes to change the application's overall look and feel.
-  - **Syntax Highlighting Themes**: Customize the appearance of your code blocks by choosing from a wide range of popular syntax highlighting themes.
-- **Font Settings**:
-  - **Font Size**: Adjust the global font size for comfortable reading.
-  - **Font Family**: Set a custom font for regular text.
-  - **Monospace Font Family**: Define a specific font for all code blocks and inline code.
+### 🎨 Layout Settings
+- **Content Width**: Toggle between `compact` (centered, focused reading) and `full-width` (spans entire screen) layouts
+- **Responsive Design**: Automatically adjusts to different screen sizes
+
+### 🌈 Color Scheme Settings  
+- **Light/Dark Mode**: Instantly switch between light and dark themes
+- **Application Themes**: Choose from multiple built-in color schemes to personalize the interface
+- **Syntax Highlighting Themes**: Select from a wide variety of popular code highlighting themes (Atom One Dark, GitHub, VS Code, etc.)
+
+### 🔤 Font Settings
+- **Font Size**: Adjust global text size with live preview (14px - 24px range)
+- **Font Family**: Customize regular text font (system defaults or custom fonts)
+- **Monospace Font**: Set specific font for code blocks and inline code
+- **Font Input Modes**: Choose between dropdown selection or custom font input
+
+### 💾 Persistent Settings
+Settings are saved in two locations for maximum flexibility:
+
+- **Browser Storage (localStorage)**: Theme preferences, layout settings, and file tree state
+- **System Configuration**: Font settings and global preferences saved to `~/.config/mdts/config.json`
+
+This dual approach ensures your customizations persist across different browsers and sessions while maintaining system-wide consistency for core settings like fonts.
 
 ## 🚀 4. Fast and Reliable
 
