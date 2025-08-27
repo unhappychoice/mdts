@@ -79,11 +79,15 @@
         max-width: 100%;
     }
 
-    table {
-        display: block;
+    .table-wrapper {
         margin: 48px 0;
-        width: max-content;
-        overflow: auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        width: 100%;
+        min-width: max-content;
         border-spacing: 0;
         border-collapse: collapse;
 
@@ -98,6 +102,8 @@
         td, th {
             padding: 6px 12px;
             border: 1px solid var(--markdown-border-color);
+            min-width: 120px;
+            word-break: break-word;
         }
     }
 
