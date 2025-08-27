@@ -32,6 +32,11 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFi
               {children}
             </MarkdownCode>
           ),
+          table: ({ children, ...props }) => (
+            <div className="table-wrapper">
+              <table {...props}>{children}</table>
+            </div>
+          ),
         }}
       >
         {content}
