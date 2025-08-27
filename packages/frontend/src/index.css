@@ -3,9 +3,11 @@
 :root {
   --scrollbar-thumb-color: #888;
   --scrollbar-thumb-hover-color: #555;
+  --scrollbar-track-color: rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="dark"] {
   --scrollbar-thumb-color: #555;
   --scrollbar-thumb-hover-color: #888;
+  --scrollbar-track-color: rgba(255, 255, 255, 0.05);
 }

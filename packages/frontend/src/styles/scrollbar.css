@@ -1,9 +1,17 @@
+/* Vertical scrollbar for general use */
 .custom-scrollbar {
   overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.custom-scrollbar:hover {
+  scrollbar-color: var(--scrollbar-thumb-color) transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -11,25 +19,85 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: transparent; /* Initially transparent */
+  background: transparent;
   border-radius: 4px;
 }
 
-/* Light mode: Show scrollbar thumb on hover */
-.custom-scrollbar:hover::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb-color);
-}
-
-/* Light mode: Scrollbar thumb hover color */
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover-color);
-}
-
-/* Dark mode: Show scrollbar thumb on hover */
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb-color);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover-color);
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Horizontal scrollbar styling for code blocks and tables */
+.syntax-highlighter,
+.table-wrapper,
+.markdown-body pre {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.syntax-highlighter::-webkit-scrollbar,
+.table-wrapper::-webkit-scrollbar,
+.markdown-body pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.syntax-highlighter::-webkit-scrollbar-track,
+.table-wrapper::-webkit-scrollbar-track,
+.markdown-body pre::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+  border-radius: 4px;
+}
+
+.syntax-highlighter::-webkit-scrollbar-thumb,
+.table-wrapper::-webkit-scrollbar-thumb,
+.markdown-body pre::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 4px;
+  border: 1px solid var(--scrollbar-track-color);
+}
+
+.syntax-highlighter::-webkit-scrollbar-thumb:hover,
+.table-wrapper::-webkit-scrollbar-thumb:hover,
+.markdown-body pre::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
+}
+
+/* Raw tab specific styling */
+.raw-content {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.raw-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.raw-content::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+  border-radius: 4px;
+}
+
+.raw-content::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 4px;
+  border: 1px solid var(--scrollbar-track-color);
+}
+
+.raw-content::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
+}
+
+.raw-content::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track-color);
 }
