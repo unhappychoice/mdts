@@ -6,6 +6,7 @@ import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
 import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
+import { plantumlRouter } from './routes/plantuml';
 
 export const serve = (directory: string, port: number, host: string): import('http').Server => {
   const app = createApp(directory);
@@ -25,6 +26,9 @@ export const createApp = (
 ): express.Express => {
   const app = express();
 
+  // JSON middleware - must be before routes that need it
+  app.use(express.json());
+
   // Mount library static files
   app.use(express.static(path.join(currentLocation, './public')));
   app.use(express.static(path.join(currentLocation, '../frontend')));
@@ -32,10 +36,11 @@ export const createApp = (
   // Define API
   app.use('/api/filetree', fileTreeRouter(directory));
   app.use('/api/outline', outlineRouter(directory));
+  app.use('/api/plantuml', plantumlRouter());
   app.get('/api/config', (req, res) => {
     res.json(getConfig());
   });
-  app.post('/api/config', express.json(), (req, res) => {
+  app.post('/api/config', (req, res) => {
     try {
       saveConfig(req.body);
       res.status(200).send('Config saved');
