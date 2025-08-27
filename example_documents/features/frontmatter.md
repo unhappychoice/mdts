@@ -11,8 +11,6 @@ published: true
 version: 1.0.0
 ---
 
-# Document Title from Frontmatter
-
 This document demonstrates the use of **Frontmatter**.
 
 Frontmatter is a block of YAML (or sometimes JSON) at the top of a Markdown file, used to store metadata about the document.

@@ -1,4 +1,14 @@
-# Mermaid Diagram Samples
+---
+title: Mermaid Diagram Samples
+description: Comprehensive examples of Mermaid diagrams and visualizations
+category: Example
+tags:
+  - mermaid
+  - diagrams
+  - flowchart
+  - visualization
+feature: mermaid
+---
 
 This document demonstrates various types of diagrams that can be created using Mermaid syntax within Markdown.
 

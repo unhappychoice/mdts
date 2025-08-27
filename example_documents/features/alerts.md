@@ -1,6 +1,20 @@
 ---
 title: GitHub Alerts
+description: Examples of GitHub-style alerts and callouts
+category: Example
+tags:
+  - alerts
+  - callouts
+  - github
+  - notifications
+feature: alerts
 ---
+
+This document demonstrates how to use GitHub-style alerts in Markdown.
+
+Alerts are special callout boxes that help highlight important information with visual distinction.
+
+----
 
 > [!NOTE]
 > Highlights information that users should take into account.

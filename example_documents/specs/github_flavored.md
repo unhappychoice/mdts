@@ -1,3 +1,15 @@
+---
+title: GitHub Flavored Markdown Features
+description: Examples of GitHub Flavored Markdown extensions and features
+category: Specification
+tags:
+  - gfm
+  - github
+  - extensions
+  - specification
+spec: github-flavored
+---
+
 # GitHub Flavored Markdown (GFM) Features
 
 This document showcases various features specific to GitHub Flavored Markdown (GFM).

@@ -1,4 +1,13 @@
-# Definition Lists Example
+---
+title: Definition Lists Example
+description: How to create and format definition lists in markdown
+category: Example
+tags:
+  - definition-lists
+  - terms
+  - definitions
+feature: definition-lists
+---
 
 This document demonstrates how to create definition lists in Markdown.
 

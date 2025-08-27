@@ -1,4 +1,14 @@
-# Markdown Link Samples
+---
+title: Link Examples
+description: Comprehensive examples of different link types in markdown
+category: Example
+tags:
+  - links
+  - navigation
+  - references
+  - urls
+feature: links
+---
 
 This document demonstrates various ways to create links in Markdown.
 

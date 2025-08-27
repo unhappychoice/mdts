@@ -1,4 +1,12 @@
-# Comparison with Other Markdown Server Tools
+---
+title: Comparison with Other Markdown Server Tools
+description: Feature comparison between mdts and other markdown preview tools
+category: Documentation
+tags:
+  - comparison
+  - features
+  - tools
+---
 
 `mdts` is a unique Markdown preview tool designed to serve Markdown files from a local directory **with a structured, navigable file tree**. This page compares `mdts` with similar tools to highlight its strengths and distinct design philosophy.
 
@@ -21,6 +29,8 @@
 | **Zero-install usage**         | ✅ `npx mdts` supported | ❌ (global install recommended) | ✅ `npx` supported | ❌ |
 | **Static HTML export**         | ❌ | ❌ | ❌ | ✅ |
 | **Modern UI**                  | ✅ SPA-like with clean UX | △ | ❌ (very minimal) | △ Depends on GitHub API |
+| **Theme customization**        | ✅ Multiple themes + dark/light mode | ❌ | ❌ | ❌ |
+| **Syntax highlighting themes** | ✅ Extensive theme collection | △ Basic | ❌ | ✅ GitHub style |
 | **Project-wide document overview** | ✅ Strong support | △ | ❌ | ❌ |
 | **Live reload**                | ✅ | ✅ | ❌ | ❌ |
 
@@ -33,8 +43,13 @@ While most Markdown preview tools focus on rendering single files or flat direct
 - Hosting project wikis or internal knowledge bases locally
 - Previewing document structure before publishing
 
-### ✅ Clean, Focused UI
-Built with React and modern CSS, `mdts` offers a distraction-free reading experience. It avoids unnecessary decorations or dependencies, making it ideal for focused document consumption.
+### ✅ Clean, Focused UI with Extensive Customization
+Built with React and modern CSS, `mdts` offers a distraction-free reading experience with comprehensive theming options:
+
+- **Multiple Application Themes**: Choose from 20+ built-in color schemes (Aurora, Ocean, Forest, etc.)
+- **Dark/Light Mode**: Seamless switching with system preference detection
+- **Syntax Highlighting Themes**: Extensive collection of popular code themes (Atom One Dark, VS Code, GitHub, etc.)
+- **Layout Options**: Compact centered or full-width modes for different reading preferences
 
 ### ✅ Zero-install via `npx`
 You can start using it immediately with a single command:
@@ -48,7 +63,9 @@ npx mdts
 | Use Case | Recommended Tool |
 |----------|------------------|
 | Explore a full Markdown-based documentation structure | ✅ **mdts** |
-| Match GitHub’s exact Markdown appearance | grip |
+| Customize appearance with themes and dark mode | ✅ **mdts** |
+| Professional presentation with multiple color schemes | ✅ **mdts** |
+| Match GitHub's exact Markdown appearance | grip |
 | Serve `.md` files with minimal setup | md-fileserver |
 | Live-preview Markdown while editing | markserv |
 

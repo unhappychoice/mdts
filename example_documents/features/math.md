@@ -1,4 +1,14 @@
-# Math Equations with remark-math
+---
+title: Math Equations
+description: Mathematical expressions and formulas using KaTeX rendering
+category: Example
+tags:
+  - math
+  - katex
+  - equations
+  - formulas
+feature: math
+---
 
 This document demonstrates math equation rendering using `remark-math`.
 

@@ -1,4 +1,12 @@
-# FAQ – Frequently Asked Questions
+---
+title: FAQ - Frequently Asked Questions
+description: Common questions and answers about mdts usage and features
+category: Documentation
+tags:
+  - faq
+  - help
+  - troubleshooting
+---
 
 ## ❓ What is `mdts`?
 
@@ -32,12 +40,35 @@ Code blocks in fenced markdown will be highlighted automatically.
 
 ## ❓ Can I customize the style or layout?
 
-Currently no, but theme customization may be supported in the future.
+Yes! `mdts` provides comprehensive customization options through the settings dialog (gear icon in the header):
+
+- **Layout Settings**: Choose between compact (centered) or full-width content layout
+- **Color Scheme**: Switch between light/dark modes and select from various application themes
+- **Syntax Highlighting**: Choose from multiple syntax highlighting themes for code blocks
+- **Font Settings**: Customize font size, font family for regular text, and monospace font for code
+
+All settings are automatically saved to localStorage and persist across sessions.
 
 ## ❓ Is it safe to use for private documentation?
 
 Yes. By default, `mdts` only serves files from your local machine on `localhost`.  
 If you change the host to be accessible over the network, take appropriate security precautions.
+
+## ❓ How are my settings stored and managed?
+
+`mdts` uses both localStorage (browser) and configuration files (system) to save your preferences:
+
+### Browser Settings (localStorage)
+- **Theme settings**: Dark/light mode, application color themes, syntax highlighting themes
+- **Layout preferences**: Content width (compact/full), panel visibility
+- **File tree state**: Expanded/collapsed folder states and recent file paths
+
+### System Configuration File
+Some settings are also saved to `~/.config/mdts/config.json` on your system:
+- **Font settings**: Font family, size, and monospace preferences
+- **Global theme preferences**: Default theme and syntax highlighting settings
+
+All settings persist across browser sessions and require no manual configuration. You can reset to defaults using the "Restore default setting" button in the settings dialog.
 
 ## ❓ How is this different from tools like `grip`, `markserv`, or `md-fileserver`?
 

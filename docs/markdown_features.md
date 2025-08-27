@@ -1,4 +1,13 @@
-# 📚 Supported Markdown Features
+---
+title: Supported Markdown Features
+description: Complete list of markdown syntax and extensions supported by mdts
+category: Documentation
+tags:
+  - markdown
+  - syntax
+  - features
+  - gfm
+---
 
 `mdts` provides a rich Markdown reading experience by supporting the full [CommonMark](https://commonmark.org/) specification along with many popular extensions like GitHub Flavored Markdown (GFM) and additional enhancements for modern documentation.
 
@@ -54,8 +63,8 @@ Perfect for checklists and todos.
 
 We aim to maintain compatibility with widely adopted Markdown standards to ensure smooth reading, sharing, and collaboration across platforms.
 
-### 🎨 Syntax Highlighting
-Code blocks get automatic syntax highlighting when a language is specified.
+### 🎨 Advanced Syntax Highlighting
+Code blocks get professional syntax highlighting with customizable themes through the settings dialog.
 
 ````markdown
 ```rust
@@ -64,6 +73,8 @@ fn main() {
 }
 ```
 ````
+
+Choose from popular themes like Atom One Dark, GitHub, VS Code, and many more to match your preferred coding environment.
 
 ### 🔗 Footnotes
 
@@ -111,13 +122,17 @@ graph TD;
 
 ### 🧮 Math Formulas (KaTeX)
 
-Embed LaTeX-style math formulas.
+Render beautiful mathematical expressions using LaTeX syntax with KaTeX.
 
 ````markdown
 ```math
 L = \frac{1}{2} \rho v^2 S C_L
 ```
+
+Inline math: $E = mc^2$
 ````
+
+Both block-level and inline mathematical expressions are fully supported with professional rendering quality.
 
 ### 📢 GitHub-Style Alerts
 
