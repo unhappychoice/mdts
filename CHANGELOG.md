@@ -1,5 +1,59 @@
 # Changelog
 
+## v0.14.0
+
+### ✨ Features
+- Implement PlantUML diagram support ([f22076d](https://github.com/unhappychoice/mdts/commit/f22076d)) ([#204](https://github.com/unhappychoice/mdts/pull/204))
+  - Add server-side PlantUML rendering with node-plantuml-back ([2d94f60](https://github.com/unhappychoice/mdts/commit/2d94f60))
+  - Add frontend PlantUML support with Redux integration ([d59c21a](https://github.com/unhappychoice/mdts/commit/d59c21a))
+  - Add comprehensive test suite for PlantUML functionality ([08d1581](https://github.com/unhappychoice/mdts/commit/08d1581))
+  - Add PlantUML documentation and examples ([43c0b99](https://github.com/unhappychoice/mdts/commit/43c0b99))
+- Add Netlify static site deployment for live demo ([781bf53](https://github.com/unhappychoice/mdts/commit/781bf53)) ([#191](https://github.com/unhappychoice/mdts/pull/191))
+  - Add complete Netlify deployment infrastructure ([7cbd872](https://github.com/unhappychoice/mdts/commit/7cbd872))
+  - Add live demo link to README ([e069611](https://github.com/unhappychoice/mdts/commit/e069611))
+  - Enable production mode builds for frontend ([dd2a15b](https://github.com/unhappychoice/mdts/commit/dd2a15b))
+  - Add Netlify deployment dependencies and build script ([35dd9c6](https://github.com/unhappychoice/mdts/commit/35dd9c6))
+- Enhance welcome pages with improved content and navigation ([ee397f8](https://github.com/unhappychoice/mdts/commit/ee397f8))
+- Reorganize demo structure and add frontmatter to examples ([695b446](https://github.com/unhappychoice/mdts/commit/695b446))
+
+### 🐛 Bug Fixes
+- Fix table width overflow issues ([8d36338](https://github.com/unhappychoice/mdts/commit/8d36338)) ([#196](https://github.com/unhappychoice/mdts/pull/196))
+
+### 👍 Improvements
+- Improve horizontal scrollbar styling ([ba9235b](https://github.com/unhappychoice/mdts/commit/ba9235b)) ([#197](https://github.com/unhappychoice/mdts/pull/197))
+
+### 📝 Documentation
+- Modernize documentation with comprehensive guides and features ([be0f39b](https://github.com/unhappychoice/mdts/commit/be0f39b)) ([#199](https://github.com/unhappychoice/mdts/pull/199))
+
+### 🆙 Update Packages
+- Bump babel-jest from 30.0.5 to 30.1.0 in /packages/frontend ([5d139a1](https://github.com/unhappychoice/mdts/commit/5d139a1)) ([#202](https://github.com/unhappychoice/mdts/pull/202))
+- Bump jest from 30.0.5 to 30.1.0 in /packages/frontend ([9948249](https://github.com/unhappychoice/mdts/commit/9948249)) ([#201](https://github.com/unhappychoice/mdts/pull/201))
+- Bump jest from 30.0.5 to 30.1.0 ([5fe4873](https://github.com/unhappychoice/mdts/commit/5fe4873)) ([#200](https://github.com/unhappychoice/mdts/pull/200))
+- Bump @typescript-eslint/eslint-plugin from 8.40.0 to 8.41.0 ([be5a9dc](https://github.com/unhappychoice/mdts/commit/be5a9dc)) ([#189](https://github.com/unhappychoice/mdts/pull/189))
+- Bump @typescript-eslint/parser from 8.40.0 to 8.41.0 in /packages/frontend ([0bef394](https://github.com/unhappychoice/mdts/commit/0bef394)) ([#188](https://github.com/unhappychoice/mdts/pull/188))
+- Bump typescript-eslint from 8.40.0 to 8.41.0 in /packages/frontend ([1f138b6](https://github.com/unhappychoice/mdts/commit/1f138b6)) ([#187](https://github.com/unhappychoice/mdts/pull/187))
+- Bump react-syntax-highlighter from 15.6.3 to 15.6.6 in /packages/frontend ([51408d7](https://github.com/unhappychoice/mdts/commit/51408d7)) ([#184](https://github.com/unhappychoice/mdts/pull/184))
+- Bump @typescript-eslint/parser from 8.40.0 to 8.41.0 ([959821c](https://github.com/unhappychoice/mdts/commit/959821c)) ([#185](https://github.com/unhappychoice/mdts/pull/185))
+- Bump typescript-eslint from 8.40.0 to 8.41.0 ([d130c39](https://github.com/unhappychoice/mdts/commit/d130c39)) ([#186](https://github.com/unhappychoice/mdts/pull/186))
+- Bump mermaid from 11.10.0 to 11.10.1 in /packages/frontend ([0372c9b](https://github.com/unhappychoice/mdts/commit/0372c9b)) ([#182](https://github.com/unhappychoice/mdts/pull/182))
+- Bump eslint from 9.33.0 to 9.34.0 in /packages/frontend ([4769e5f](https://github.com/unhappychoice/mdts/commit/4769e5f)) ([#181](https://github.com/unhappychoice/mdts/pull/181))
+- Bump react-router-dom from 7.8.1 to 7.8.2 in /packages/frontend ([d00bdd4](https://github.com/unhappychoice/mdts/commit/d00bdd4)) ([#183](https://github.com/unhappychoice/mdts/pull/183))
+- Bump eslint from 9.33.0 to 9.34.0 ([7881bdd](https://github.com/unhappychoice/mdts/commit/7881bdd)) ([#180](https://github.com/unhappychoice/mdts/pull/180))
+- Bump react-syntax-highlighter from 15.6.1 to 15.6.3 in /packages/frontend ([677d204](https://github.com/unhappychoice/mdts/commit/677d204)) ([#179](https://github.com/unhappychoice/mdts/pull/179))
+- Bump @mui/x-tree-view from 8.10.0 to 8.10.2 in /packages/frontend ([68b63b4](https://github.com/unhappychoice/mdts/commit/68b63b4)) ([#177](https://github.com/unhappychoice/mdts/pull/177))
+- Bump @testing-library/jest-dom from 6.7.0 to 6.8.0 in /packages/frontend ([448acfc](https://github.com/unhappychoice/mdts/commit/448acfc)) ([#178](https://github.com/unhappychoice/mdts/pull/178))
+- Bump typescript-eslint from 8.39.1 to 8.40.0 in /packages/frontend ([c1c7d4e](https://github.com/unhappychoice/mdts/commit/c1c7d4e)) ([#173](https://github.com/unhappychoice/mdts/pull/173))
+- Bump typescript-eslint from 8.39.1 to 8.40.0 ([58e84f0](https://github.com/unhappychoice/mdts/commit/58e84f0)) ([#175](https://github.com/unhappychoice/mdts/pull/175))
+- Bump @typescript-eslint/parser from 8.39.1 to 8.40.0 ([cf8b1b0](https://github.com/unhappychoice/mdts/commit/cf8b1b0)) ([#171](https://github.com/unhappychoice/mdts/pull/171))
+- Bump mermaid from 11.9.0 to 11.10.0 in /packages/frontend ([38c1a4e](https://github.com/unhappychoice/mdts/commit/38c1a4e)) ([#176](https://github.com/unhappychoice/mdts/pull/176))
+- Bump webpack from 5.101.2 to 5.101.3 in /packages/frontend ([22d7eed](https://github.com/unhappychoice/mdts/commit/22d7eed)) ([#172](https://github.com/unhappychoice/mdts/pull/172))
+- Bump @typescript-eslint/parser from 8.39.1 to 8.40.0 in /packages/frontend ([2ee7304](https://github.com/unhappychoice/mdts/commit/2ee7304)) ([#170](https://github.com/unhappychoice/mdts/pull/170))
+- Bump react-router-dom from 7.8.0 to 7.8.1 in /packages/frontend ([407fe5e](https://github.com/unhappychoice/mdts/commit/407fe5e)) ([#167](https://github.com/unhappychoice/mdts/pull/167))
+- Bump chalk from 5.5.0 to 5.6.0 ([6aedcf8](https://github.com/unhappychoice/mdts/commit/6aedcf8)) ([#168](https://github.com/unhappychoice/mdts/pull/168))
+
+### 🛠️ Chores
+- Update TypeScript configuration for Netlify functions ([ba7daf4](https://github.com/unhappychoice/mdts/commit/ba7daf4))
+
 ## v0.13.0
 
 ### ✨ Features
