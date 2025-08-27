@@ -1,4 +1,14 @@
-# Inline HTML Example
+---
+title: Inline HTML Example
+description: Embedding raw HTML elements within markdown content
+category: Example
+tags:
+  - html
+  - inline
+  - embedding
+  - raw-html
+feature: inline-html
+---
 
 This document demonstrates how inline HTML can be used within Markdown.
 

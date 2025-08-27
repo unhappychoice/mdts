@@ -1,4 +1,13 @@
-# Abbreviations Example
+---
+title: Abbreviations Example
+description: How to define and use abbreviations with tooltip definitions
+category: Example
+tags:
+  - abbreviations
+  - tooltips
+  - definitions
+feature: abbreviations
+---
 
 This document demonstrates how to use abbreviations in Markdown.
 

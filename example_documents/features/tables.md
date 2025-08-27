@@ -1,4 +1,13 @@
-# Tables Example
+---
+title: Tables Example
+description: Demonstration of table creation and formatting in markdown
+category: Example
+tags:
+  - tables
+  - formatting
+  - alignment
+feature: tables
+---
 
 This document demonstrates various ways to create tables in Markdown.
 

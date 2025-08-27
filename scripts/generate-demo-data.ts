@@ -142,8 +142,8 @@ function main(): void {
     readAllFiles(DOCS_DIR, 'docs', fileContents);
   }
 
-  // Read welcome.md
-  const welcomePath = path.join(__dirname, '../public/welcome.md');
+  // Read welcome-demo.md
+  const welcomePath = path.join(__dirname, '../public/welcome-demo.md');
   let welcomeContent = '';
   if (fs.existsSync(welcomePath)) {
     welcomeContent = fs.readFileSync(welcomePath, 'utf8');

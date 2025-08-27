@@ -1,3 +1,15 @@
+---
+title: Code Syntax Highlighting
+description: Examples of syntax highlighting for various programming languages
+category: Example
+tags:
+  - code
+  - syntax
+  - highlighting
+  - programming
+feature: code-syntax
+---
+
 ```typescript
 const helloWorld = () => {
   console.log('Hello World!')

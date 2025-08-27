@@ -1,4 +1,13 @@
-# Footnote Samples
+---
+title: Footnote Samples
+description: Examples of footnotes and reference links in markdown
+category: Example
+tags:
+  - footnotes
+  - references
+  - citations
+feature: footnotes
+---
 
 This document demonstrates how footnotes work in Markdown.
 

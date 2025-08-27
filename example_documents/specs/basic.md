@@ -1,3 +1,15 @@
+---
+title: Basic Markdown Specification
+description: Comprehensive demonstration of CommonMark specification features
+category: Specification
+tags:
+  - commonmark
+  - basic
+  - specification
+  - reference
+spec: basic
+---
+
 # Markdown Comprehensive Sample
 
 This file demonstrates a wide variety of Markdown features.
