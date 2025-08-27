@@ -1,0 +1,31 @@
+[build]
+  publish = "dist/frontend"
+  functions = "netlify/functions"
+  
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/filetree/*"
+  to = "/.netlify/functions/filetree/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/outline/*"
+  to = "/.netlify/functions/outline/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/markdown/*"
+  to = "/.netlify/functions/markdown/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/config"
+  to = "/.netlify/functions/config"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
