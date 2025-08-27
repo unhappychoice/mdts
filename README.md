@@ -5,6 +5,14 @@
 **A zero-config CLI tool to preview your local Markdown files in a browser.**  **`npx mdts` — and you're done.**
 
 <p align="center">
+  <a href="https://mdts-unhappychoice.netlify.app" target="_blank">
+    <strong>🔗 Try the Live Demo</strong>
+  </a>
+  <br>
+  <small><em>⚠️ Note: Demo may be slower than local usage due to serverless function cold starts</em></small>
+</p>
+
+<p align="center">
   <img src="docs/images/screen_animation.gif" width="640" alt="mdts demo">
 </p>
 
