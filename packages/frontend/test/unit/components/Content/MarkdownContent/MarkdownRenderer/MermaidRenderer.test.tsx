@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import mermaid from 'mermaid';
 import React from 'react';
-import MermaidRenderer from '../../../../../src/components/Content/MarkdownContent/MarkdownRenderer/MermaidRenderer';
+import MermaidRenderer from '../../../../../../src/components/Content/MarkdownContent/MarkdownRenderer/MermaidRenderer';
 
 // Mock the mermaid library
 jest.mock('mermaid', () => ({
