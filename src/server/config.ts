@@ -29,7 +29,7 @@ export const getConfig = (): Config => {
   return { ...defaultConfig, ...config };
 };
 
-export const saveConfig = (newConfig: Config): void => {
+export const saveConfig = (newConfig: Partial<Config>): void => {
   const currentConfig = getConfig();
   const updatedConfig = { ...currentConfig, ...newConfig };
   fs.mkdirSync(path.dirname(configPath), { recursive: true });
