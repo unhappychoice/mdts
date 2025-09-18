@@ -19,10 +19,10 @@ exports[`DirectoryTreeItemView should render correctly 1`] = `
       tabindex="0"
     >
       <div
-        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-1w3465f-MuiTreeItem-content"
+        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
       >
         <div
-          class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
+          class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
         >
           <svg
             aria-hidden="true"

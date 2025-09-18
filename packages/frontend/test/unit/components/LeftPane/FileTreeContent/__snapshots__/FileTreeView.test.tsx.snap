@@ -20,10 +20,10 @@ exports[`FileTreeView should render correctly 1`] = `
       tabindex="0"
     >
       <div
-        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-1w3465f-MuiTreeItem-content"
+        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
       >
         <div
-          class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
+          class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
         />
         <div
           class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
@@ -69,11 +69,11 @@ exports[`FileTreeView should render correctly 1`] = `
       tabindex="-1"
     >
       <div
-        class="MuiTreeItem-content MuiSimpleTreeView-itemContent Mui-expanded css-1w3465f-MuiTreeItem-content"
+        class="MuiTreeItem-content MuiSimpleTreeView-itemContent Mui-expanded css-cn2zdx-MuiTreeItem-content"
         data-expanded=""
       >
         <div
-          class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
+          class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
         >
           <svg
             aria-hidden="true"
@@ -132,10 +132,10 @@ exports[`FileTreeView should render correctly 1`] = `
               tabindex="-1"
             >
               <div
-                class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-1w3465f-MuiTreeItem-content"
+                class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
               >
                 <div
-                  class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-ppatc2-MuiTreeItem-iconContainer"
+                  class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
                 />
                 <div
                   class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
