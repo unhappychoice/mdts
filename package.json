@@ -71,7 +71,7 @@
     "github-slugger": "^2.0.0",
     "markdown-it": "^14.1.0",
     "node-plantuml-back": "^1.1.4",
-    "open": "^10.2.0",
+    "open": "^11.0.0",
     "plantuml": "^0.0.2",
     "plantuml-encoder": "^1.4.0",
     "simple-git": "^3.28.0",
