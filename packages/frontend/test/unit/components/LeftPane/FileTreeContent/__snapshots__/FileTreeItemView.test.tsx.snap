@@ -10,7 +10,7 @@ exports[`FileTreeItemView should render correctly 1`] = `
     style="--TreeView-itemChildrenIndentation: 12px;"
   >
     <li
-      aria-selected="false"
+      aria-checked="false"
       class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
       id="mui-tree-view-1-test.md"
       role="treeitem"

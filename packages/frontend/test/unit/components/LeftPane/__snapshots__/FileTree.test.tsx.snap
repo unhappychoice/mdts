@@ -97,7 +97,7 @@ exports[`FileTree renders correctly 1`] = `
       style="--TreeView-itemChildrenIndentation: 12px;"
     >
       <li
-        aria-selected="false"
+        aria-checked="false"
         class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
         id="mui-tree-view-1-file3.js"
         role="treeitem"
@@ -140,8 +140,8 @@ exports[`FileTree renders correctly 1`] = `
         </div>
       </li>
       <li
+        aria-checked="false"
         aria-expanded="false"
-        aria-selected="false"
         class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
         id="mui-tree-view-1-folder1"
         role="treeitem"

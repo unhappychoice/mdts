@@ -12,8 +12,8 @@ exports[`FileTreeContent renders file tree correctly 1`] = `
     style="--TreeView-itemChildrenIndentation: 12px;"
   >
     <li
+      aria-checked="false"
       aria-expanded="true"
-      aria-selected="false"
       class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
       id="mui-tree-view-1-folder1"
       role="treeitem"
@@ -76,7 +76,7 @@ exports[`FileTreeContent renders file tree correctly 1`] = `
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <li
-              aria-selected="false"
+              aria-checked="false"
               class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
               id="mui-tree-view-1-file1.md"
               role="treeitem"
@@ -119,8 +119,8 @@ exports[`FileTreeContent renders file tree correctly 1`] = `
               </div>
             </li>
             <li
+              aria-checked="false"
               aria-expanded="false"
-              aria-selected="false"
               class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
               id="mui-tree-view-1-folder1/subfolder"
               role="treeitem"
@@ -176,7 +176,7 @@ exports[`FileTreeContent renders file tree correctly 1`] = `
       </ul>
     </li>
     <li
-      aria-selected="false"
+      aria-checked="false"
       class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
       id="mui-tree-view-1-file3.js"
       role="treeitem"
