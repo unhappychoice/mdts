@@ -24,7 +24,7 @@
     "@reduxjs/toolkit": "^2.11.0",
     "buffer": "^6.0.3",
     "gray-matter": "^4.0.3",
-    "mermaid": "^11.12.1",
+    "mermaid": "^11.12.2",
     "react": "^19.1.1",
     "react-dom": "^19.2.0",
     "react-markdown": "^10.1.0",
