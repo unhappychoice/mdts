@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "chalk": "^5.4.1",
-    "chokidar": "^4.0.3",
+    "chokidar": "^5.0.0",
     "commander": "^14.0.0",
     "express": "^5.1.0",
     "github-slugger": "^2.0.0",
