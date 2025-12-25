@@ -20,7 +20,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^7.3.6",
     "@mui/material": "^7.3.1",
-    "@mui/x-tree-view": "^8.22.0",
+    "@mui/x-tree-view": "^8.23.0",
     "@reduxjs/toolkit": "^2.11.2",
     "buffer": "^6.0.3",
     "gray-matter": "^4.0.3",
