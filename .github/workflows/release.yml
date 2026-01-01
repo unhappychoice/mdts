@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '24'
+          node-version-file: 'package.json'
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Install dependencies
@@ -52,4 +52,4 @@ jobs:
         run: npm run build:frontend
 
       - name: Publish to npm
-        run: npm publish
+        run: npx npm@11.5.1 publish
