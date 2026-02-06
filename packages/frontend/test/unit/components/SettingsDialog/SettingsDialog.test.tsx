@@ -54,7 +54,7 @@ describe('SettingsDialog', () => {
 
     await waitFor(() => {
       expect(saveAppSetting).toHaveBeenCalledWith({ darkMode: 'dark', contentMode: 'compact' });
-      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, syntaxHighlighterTheme: 'atom-dark' });
+      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, syntaxHighlighterTheme: 'atom-dark', theme: 'default', enableBreaks: false });
       expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
@@ -78,7 +78,7 @@ describe('SettingsDialog', () => {
     // Verify state is reset by checking if save was not called with changed values
     fireEvent.click(screen.getByText('Save')); // Try to save after cancel
     expect(saveAppSetting).toHaveBeenCalledWith({ darkMode: 'dark', contentMode: 'compact' });
-    expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, syntaxHighlighterTheme: 'atom-dark' });
+    expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, syntaxHighlighterTheme: 'atom-dark', theme: 'default', enableBreaks: false });
   });
 
   test('resets to default settings on Reset to Default button click', async () => {
@@ -98,7 +98,7 @@ describe('SettingsDialog', () => {
 
     await waitFor(() => {
       expect(saveAppSetting).toHaveBeenCalledWith({ darkMode: 'auto', contentMode: 'compact' });
-      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, theme: 'default', syntaxHighlighterTheme: 'auto' });
+      expect(saveConfigToBackend).toHaveBeenCalledWith({ fontFamily: 'Roboto', fontFamilyMonospace: 'monospace', fontSize: 14, theme: 'default', syntaxHighlighterTheme: 'auto', enableBreaks: false });
     });
   });
 

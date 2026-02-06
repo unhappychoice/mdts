@@ -8,6 +8,7 @@ export interface Config {
   fontSize: number;
   theme: string
   syntaxHighlighterTheme: string;
+  enableBreaks: boolean;
 }
 
 const defaultConfig: Config = {
@@ -16,6 +17,7 @@ const defaultConfig: Config = {
   fontSize: 16,
   theme: 'default',
   syntaxHighlighterTheme: 'auto',
+  enableBreaks: false,
 };
 
 const configPath = path.join(os.homedir(), '.config', 'mdts', 'config.json');

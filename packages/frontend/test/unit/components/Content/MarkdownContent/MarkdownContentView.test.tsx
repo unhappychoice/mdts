@@ -19,6 +19,9 @@ describe('MarkdownContentView', () => {
       history: {
         currentPath: '/test.md',
       },
+      config: {
+        enableBreaks: false,
+      },
     });
   });
 

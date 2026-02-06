@@ -36,6 +36,7 @@ describe('config', () => {
       fontSize: 16,
       theme: 'default',
       syntaxHighlighterTheme: 'auto',
+      enableBreaks: false,
     });
     expect(fs.existsSync).toHaveBeenCalledWith(configPath);
     expect(fs.readFileSync).not.toHaveBeenCalled();
@@ -55,6 +56,7 @@ describe('config', () => {
       fontSize: 20,
       theme: 'default',
       syntaxHighlighterTheme: 'auto',
+      enableBreaks: false,
     });
     expect(fs.existsSync).toHaveBeenCalledWith(configPath);
     expect(fs.readFileSync).toHaveBeenCalledWith(configPath, 'utf-8');
@@ -72,6 +74,7 @@ describe('config', () => {
       fontSize: 16,
       theme: 'default',
       syntaxHighlighterTheme: 'auto',
+      enableBreaks: false,
     });
   });
 
@@ -82,6 +85,7 @@ describe('config', () => {
       fontSize: 22,
       theme: 'default',
       syntaxHighlighterTheme: 'auto',
+      enableBreaks: false,
     };
     saveConfig(newConfig);
     expect(fs.mkdirSync).toHaveBeenCalledWith(path.dirname(configPath), { recursive: true });
@@ -103,6 +107,7 @@ describe('config', () => {
       fontSize: 18,
       theme: 'default',
       syntaxHighlighterTheme: 'auto',
+      enableBreaks: false,
     }, null, 2));
   });
 });

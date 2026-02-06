@@ -13,6 +13,7 @@ interface UseSettingsFormReturn {
   fontFamilyMonospace: string;
   fontSize: number;
   syntaxHighlighterTheme: string;
+  enableBreaks: boolean;
   fontInputMode: 'select' | 'text';
   fontInputModeMonospace: 'select' | 'text';
   setDarkMode: (mode: 'dark' | 'light' | 'auto') => void;
@@ -22,6 +23,7 @@ interface UseSettingsFormReturn {
   setFontFamilyMonospace: (font: string) => void;
   setFontSize: (size: number) => void;
   setSyntaxHighlighterTheme: (theme: string) => void;
+  setEnableBreaks: (enable: boolean) => void;
   setFontInputMode: (mode: 'select' | 'text') => void;
   setFontInputModeMonospace: (mode: 'select' | 'text') => void;
   handleSave: () => void;
@@ -47,6 +49,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     fontFamily: initialFontFamily,
     fontFamilyMonospace: initialFontFamilyMonospace,
     fontSize: initialFontSize,
+    enableBreaks: initialEnableBreaks,
   } = useSelector((state: RootState) => state.config);
 
   const [darkMode, setDarkMode] = useState(initialDarkMode);
@@ -56,6 +59,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
   const [fontFamilyMonospace, setFontFamilyMonospace] = useState(initialFontFamilyMonospace);
   const [fontSize, setFontSize] = useState(initialFontSize);
   const [syntaxHighlighterTheme, setSyntaxHighlighterTheme] = useState(initialSyntaxHighlighterTheme);
+  const [enableBreaks, setEnableBreaks] = useState(initialEnableBreaks);
   const [fontInputMode, setFontInputMode] = useState<'select' | 'text'>(WEB_SAFE_FONTS.includes(initialFontFamily) ? 'select' : 'text');
   const [fontInputModeMonospace, setFontInputModeMonospace] = useState<'select' | 'text'>(
     WEB_SAFE_MONOSPACE_FONTS.includes(initialFontFamilyMonospace) ? 'select' : 'text'
@@ -69,6 +73,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     setFontFamily(initialFontFamily);
     setFontFamilyMonospace(initialFontFamilyMonospace);
     setFontSize(initialFontSize);
+    setEnableBreaks(initialEnableBreaks);
     setFontInputMode(WEB_SAFE_FONTS.includes(initialFontFamily) ? 'select' : 'text');
     setFontInputModeMonospace(WEB_SAFE_MONOSPACE_FONTS.includes(initialFontFamilyMonospace) ? 'select' : 'text');
   }, [
@@ -78,13 +83,19 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     initialSyntaxHighlighterTheme,
     initialFontFamily,
     initialFontFamilyMonospace,
-    initialFontSize
+    initialFontSize,
+    initialEnableBreaks
   ]);
 
   const handleSave = useCallback(() => {
-    dispatch(saveConfigToBackend({ theme: theme, syntaxHighlighterTheme, fontFamily, fontFamilyMonospace, fontSize }));
+    dispatch(saveConfigToBackend({
+      theme, syntaxHighlighterTheme, fontFamily, fontFamilyMonospace, fontSize, enableBreaks,
+    }));
     dispatch(saveAppSetting({ darkMode, contentMode }));
-  }, [contentMode, darkMode, theme, dispatch, fontFamily, fontFamilyMonospace, fontSize, syntaxHighlighterTheme]);
+  }, [
+    contentMode, darkMode, theme, dispatch, fontFamily, fontFamilyMonospace,
+    fontSize, syntaxHighlighterTheme, enableBreaks,
+  ]);
 
   const handleCancel = useCallback(() => {
     setDarkMode(initialDarkMode);
@@ -94,6 +105,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     setFontFamilyMonospace(initialFontFamilyMonospace);
     setFontSize(initialFontSize);
     setSyntaxHighlighterTheme(initialSyntaxHighlighterTheme);
+    setEnableBreaks(initialEnableBreaks);
     setFontInputMode(WEB_SAFE_FONTS.includes(initialFontFamily) ? 'select' : 'text');
     setFontInputModeMonospace(WEB_SAFE_MONOSPACE_FONTS.includes(initialFontFamilyMonospace) ? 'select' : 'text');
   }, [
@@ -104,6 +116,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     initialFontFamilyMonospace,
     initialFontSize,
     initialSyntaxHighlighterTheme,
+    initialEnableBreaks,
   ]);
 
   const handleToggleDarkMode = useCallback((mode: 'dark' | 'light' | 'auto') => {
@@ -144,6 +157,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     const defaultFontFamilyMonospace = 'monospace';
     const defaultFontSize = 14;
     const defaultSyntaxHighlighterTheme = 'auto';
+    const defaultEnableBreaks = false;
 
     setDarkMode(defaultDarkMode);
     setContentMode(defaultContentMode);
@@ -152,6 +166,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     setFontFamilyMonospace(defaultFontFamilyMonospace);
     setFontSize(defaultFontSize);
     setSyntaxHighlighterTheme(defaultSyntaxHighlighterTheme);
+    setEnableBreaks(defaultEnableBreaks);
     setFontInputMode(WEB_SAFE_FONTS.includes(defaultFontFamily) ? 'select' : 'text');
     setFontInputModeMonospace(WEB_SAFE_MONOSPACE_FONTS.includes(defaultFontFamilyMonospace) ? 'select' : 'text');
 
@@ -161,6 +176,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
       fontFamily: defaultFontFamily,
       fontFamilyMonospace: defaultFontFamilyMonospace,
       fontSize: defaultFontSize,
+      enableBreaks: defaultEnableBreaks,
     }));
     dispatch(saveAppSetting({ darkMode: defaultDarkMode, contentMode: defaultContentMode }));
   }, [dispatch]);
@@ -173,6 +189,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     fontFamilyMonospace,
     fontSize,
     syntaxHighlighterTheme,
+    enableBreaks,
     fontInputMode,
     fontInputModeMonospace,
     setDarkMode,
@@ -182,6 +199,7 @@ export const useSettingsForm = (): UseSettingsFormReturn => {
     setFontFamilyMonospace,
     setFontSize,
     setSyntaxHighlighterTheme,
+    setEnableBreaks,
     setFontInputMode,
     setFontInputModeMonospace,
     handleSave,
