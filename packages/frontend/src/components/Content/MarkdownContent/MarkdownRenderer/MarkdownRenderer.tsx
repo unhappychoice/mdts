@@ -1,10 +1,11 @@
 import { Box } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
+import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import MarkdownCode from './MarkdownCode';
@@ -16,13 +17,19 @@ import 'katex/dist/katex.css';
 interface MarkdownRendererProps {
   content: string;
   selectedFilePath: string | null;
+  enableBreaks?: boolean;
 }
 
-const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFilePath }) => {
+const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, selectedFilePath, enableBreaks = false }) => {
+  const remarkPlugins = useMemo(
+    () => enableBreaks ? [remarkGfm, remarkMath, remarkBreaks] : [remarkGfm, remarkMath],
+    [enableBreaks]
+  );
+
   return (
     <Box className={'markdown-body'} sx={{ py: 2, px: 0 }}>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm, remarkMath]}
+        remarkPlugins={remarkPlugins}
         rehypePlugins={[rehypeRaw, rehypeSlug, rehypeKatex, rehypeGithubAlerts]}
         components={{
           a: ({ href, children }) =>

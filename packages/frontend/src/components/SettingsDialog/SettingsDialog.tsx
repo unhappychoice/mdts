@@ -24,12 +24,14 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ open, onClose }) => {
     fontFamilyMonospace,
     fontSize,
     syntaxHighlighterTheme,
+    enableBreaks,
     fontInputMode,
     fontInputModeMonospace,
     setFontFamily,
     setFontFamilyMonospace,
     setFontSize,
     setSyntaxHighlighterTheme,
+    setEnableBreaks,
     handleSave: handleSaveForm,
     handleCancel: handleCancelForm,
     handleToggleDarkMode,
@@ -84,7 +86,9 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ open, onClose }) => {
             <TabPanel value={selectedTab} index={0}>
               <LayoutSettingsTab
                 contentMode={contentMode}
+                enableBreaks={enableBreaks}
                 handleToggleContentMode={handleToggleContentMode}
+                setEnableBreaks={setEnableBreaks}
               />
             </TabPanel>
           )}

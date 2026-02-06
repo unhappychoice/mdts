@@ -40,6 +40,7 @@ describe('configSlice', () => {
       fontSize: 14,
       theme: 'default',
       syntaxHighlighterTheme: 'auto',
+      enableBreaks: false,
     });
   });
 

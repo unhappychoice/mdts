@@ -4,7 +4,14 @@ import LayoutSettingsTab from '../../../../src/components/SettingsDialog/LayoutS
 
 describe('LayoutSettingsTab', () => {
   it('should render correctly', () => {
-    const { asFragment } = render(<LayoutSettingsTab />);
+    const { asFragment } = render(
+      <LayoutSettingsTab
+        contentMode="compact"
+        enableBreaks={false}
+        handleToggleContentMode={jest.fn()}
+        setEnableBreaks={jest.fn()}
+      />
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 });
