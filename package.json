@@ -71,6 +71,7 @@
     "commander": "^14.0.0",
     "express": "^5.1.0",
     "github-slugger": "^2.0.0",
+    "glob": "^13.0.1",
     "markdown-it": "^14.1.0",
     "node-plantuml-back": "^1.1.4",
     "open": "^11.0.0",

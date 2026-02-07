@@ -1,6 +1,7 @@
 import { CLI } from '../../src/cli';
 import path from 'path';
 import { serve } from '../../src/server/server';
+import { resolveGlobPatterns } from '../../src/utils/glob';
 
 // Mock fs first, before any other imports that might use it
 let mockExistsSyncResult = false;
@@ -8,6 +9,9 @@ jest.mock('fs', () => ({
   existsSync: jest.fn(() => mockExistsSyncResult),
   readFileSync: jest.fn(() => JSON.stringify({
     version: '0.0.0-test',
+  })),
+  statSync: jest.fn(() => ({
+    isDirectory: () => true,
   })),
 }));
 
@@ -31,6 +35,14 @@ jest.mock('../../src/utils/logger', () => ({
     log: jest.fn(),
     error: jest.fn(),
   },
+}));
+
+// Mock resolveGlobPatterns
+jest.mock('../../src/utils/glob', () => ({
+  resolveGlobPatterns: jest.fn((directory: string) => ({
+    directory,
+    filePatterns: ['docs/guide.md'],
+  })),
 }));
 
 describe('cli', () => {
@@ -61,7 +73,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -72,7 +84,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521');
       });
   });
@@ -83,7 +95,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 9000, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 9000, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });
@@ -94,7 +106,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 8521, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -105,8 +117,44 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 9000, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 9000, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
+      });
+  });
+
+  it('should call resolveGlobPatterns when --glob option is provided', () => {
+    setExistsSyncResult(false);
+    process.argv = ['node', 'cli.ts', './docs', '--glob', '*.md'];
+
+    return cli.run()
+      .then(() => {
+        expect(resolveGlobPatterns).toHaveBeenCalledWith(path.resolve('./docs'), ['*.md']);
+        expect(mockServe).toHaveBeenCalledWith(
+          { directory: path.resolve('./docs'), filePatterns: ['docs/guide.md'] },
+          8521,
+          'localhost',
+        );
+      });
+  });
+
+  it('should pass multiple glob patterns with -g shorthand', () => {
+    setExistsSyncResult(false);
+    process.argv = ['node', 'cli.ts', '.', '-g', '*.md', 'notes/*.md'];
+
+    return cli.run()
+      .then(() => {
+        expect(resolveGlobPatterns).toHaveBeenCalledWith(path.resolve('.'), ['*.md', 'notes/*.md']);
+      });
+  });
+
+  it('should not call resolveGlobPatterns when --glob is not provided', () => {
+    setExistsSyncResult(false);
+    process.argv = ['node', 'cli.ts', '.'];
+
+    return cli.run()
+      .then(() => {
+        expect(resolveGlobPatterns).not.toHaveBeenCalled();
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost');
       });
   });
 });

@@ -93,7 +93,7 @@ describe('watcher.ts unit tests', () => {
   });
 
   it('should setup WebSocketServer and directory watcher', () => {
-    setupWatcher('/mock/directory', mockServer, 3000);
+    setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
     expect(WebSocketServer).toHaveBeenCalledWith({ server: mockServer });
     expect(chokidar.watch).toHaveBeenCalledWith('/mock/directory', expect.any(Object));
   });
@@ -104,13 +104,13 @@ describe('watcher.ts unit tests', () => {
         callback();
       }
     });
-    setupWatcher('/mock/directory', mockServer, 3000);
+    setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
     expect(logger.log).toHaveBeenCalledWith('Livereload', '🚀 WebSocket server listening at ws://localhost:3000');
   });
 
   describe('WebSocket client interactions', () => {
     beforeEach(() => {
-      setupWatcher('/mock/directory', mockServer, 3000);
+      setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
       // Manually trigger connection to set up client handlers
       (mockWss.on as jest.Mock).mock.calls.find(call => call[0] === 'connection')[1](mockClient);
     });
@@ -211,7 +211,7 @@ describe('watcher.ts unit tests', () => {
 
   describe('Directory watcher interactions', () => {
     beforeEach(() => {
-      setupWatcher('/mock/directory', mockServer, 3000);
+      setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
     });
 
     it('should send reload-tree message on file add', () => {
@@ -241,7 +241,7 @@ describe('watcher.ts unit tests', () => {
         throw new Error('Directory watch error');
       });
 
-      setupWatcher('/mock/directory', mockServer, 3000);
+      setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
 
       expect(logger.error).toHaveBeenCalledWith('🚫 Error watching directory:', expect.any(Error));
       expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
@@ -249,10 +249,10 @@ describe('watcher.ts unit tests', () => {
   });
 
   describe('chokidar ignored option', () => {
-    let ignoredFn: (path: string) => boolean;
+    let ignoredFn: (path: string, stats?: { isDirectory: () => boolean; isFile?: () => boolean }) => boolean;
 
     beforeEach(() => {
-      setupWatcher('/mock/directory', mockServer, 3000);
+      setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
       ignoredFn = (chokidar.watch as jest.Mock).mock.calls.find(call => call[0] === '/mock/directory')[1].ignored;
     });
 
@@ -281,6 +281,103 @@ describe('watcher.ts unit tests', () => {
         throw new Error('stat sync error');
       });
       expect(ignoredFn('anyfile')).toBe(false);
+    });
+  });
+
+  describe('File pattern watcher interactions', () => {
+    let mockPatternWatcher: FSWatcher;
+
+    beforeEach(() => {
+      mockPatternWatcher = {
+        on: jest.fn().mockReturnThis(),
+        close: jest.fn().mockResolvedValue(undefined),
+      } as unknown as FSWatcher;
+      (chokidar.watch as jest.Mock).mockReturnValue(mockPatternWatcher);
+    });
+
+    it('should watch resolved absolute paths when filePatterns are provided', () => {
+      setupWatcher(
+        { directory: '/mock/directory', filePatterns: ['a.md', 'sub/b.md'] },
+        mockServer,
+        3000,
+      );
+
+      expect(chokidar.watch).toHaveBeenCalledWith(
+        ['/mock/directory/a.md', '/mock/directory/sub/b.md'],
+        { ignoreInitial: true },
+      );
+    });
+
+    it('should send reload-tree on add event', () => {
+      const client = { send: jest.fn() } as unknown as WebSocket;
+      mockWss.clients.add(client);
+
+      setupWatcher(
+        { directory: '/mock/directory', filePatterns: ['a.md'] },
+        mockServer,
+        3000,
+      );
+
+      const onAddCallback = (mockPatternWatcher.on as jest.Mock).mock.calls
+        .find(call => call[0] === 'add')[1];
+      onAddCallback('/mock/directory/a.md');
+
+      expect(logger.log).toHaveBeenCalledWith(
+        'Livereload',
+        '🌲 File added: /mock/directory/a.md, reloading tree...',
+      );
+      expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
+    });
+
+    it('should send reload-tree on unlink event', () => {
+      const client = { send: jest.fn() } as unknown as WebSocket;
+      mockWss.clients.add(client);
+
+      setupWatcher(
+        { directory: '/mock/directory', filePatterns: ['a.md'] },
+        mockServer,
+        3000,
+      );
+
+      const onUnlinkCallback = (mockPatternWatcher.on as jest.Mock).mock.calls
+        .find(call => call[0] === 'unlink')[1];
+      onUnlinkCallback('/mock/directory/a.md');
+
+      expect(logger.log).toHaveBeenCalledWith(
+        'Livereload',
+        '🌲 File removed: /mock/directory/a.md, reloading tree...',
+      );
+      expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
+    });
+
+    it('should handle error and disable livereload', () => {
+      setupWatcher(
+        { directory: '/mock/directory', filePatterns: ['a.md'] },
+        mockServer,
+        3000,
+      );
+
+      const onErrorCallback = (mockPatternWatcher.on as jest.Mock).mock.calls
+        .find(call => call[0] === 'error')[1];
+      onErrorCallback(new Error('watch error'));
+
+      expect(logger.error).toHaveBeenCalledWith('🚫 Error watching files:', expect.any(Error));
+      expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
+    });
+
+    it('should handle chokidar watch exception for file patterns', () => {
+      (chokidar.watch as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('File pattern watch error');
+      });
+
+      setupWatcher(
+        { directory: '/mock/directory', filePatterns: ['a.md'] },
+        mockServer,
+        3000,
+      );
+
+      expect(logger.error).toHaveBeenCalledWith('🚫 Error watching files:', expect.any(Error));
+      expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
     });
   });
 });

@@ -140,6 +140,29 @@ npx mdts --host 192.168.1.100
 - Restart the mdts server
 - Verify no proxy/firewall is blocking WebSocket connections
 
+## Glob Pattern Issues
+
+### ❌ No files appear when using `--glob`
+**Problem:** The file tree is empty after specifying glob patterns.
+
+**Solution:**
+- Verify patterns match actual files: run `find . -path '<pattern>'` or `ls <pattern>` (simple patterns only) in the target directory
+- Patterns are relative to the directory argument, not to your current working directory
+- Ensure matched files end in `.md` or `.markdown` — other extensions are filtered out
+- Quote patterns in your shell to prevent premature expansion: `-g '**/*.md'`
+
+### ❌ Shell expands glob before mdts receives it
+**Problem:** Your shell expands `*` patterns into file names before mdts can process them.
+
+**Solution:**
+```bash
+# Wrong — shell expands the pattern
+npx mdts . -g docs/*.md
+
+# Correct — quote the pattern
+npx mdts . -g 'docs/*.md'
+```
+
 ## File System Issues
 
 ### ❌ "Permission denied" errors

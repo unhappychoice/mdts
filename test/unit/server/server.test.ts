@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import { createApp, serve } from '../../../src/server/server';
 import { setupWatcher } from '../../../src/server/watcher';
 import { getConfig, saveConfig } from '../../../src/server/config';
+import { ServerContext } from '../../../src/server/context';
 
 jest.mock('express', () => {
   const mockUse = jest.fn();
@@ -59,7 +60,7 @@ describe('server.ts unit tests', () => {
       isDirectory: jest.fn().mockReturnValue(false),
     });
 
-    app = createApp('/mock/directory');
+    app = createApp({ directory: '/mock/directory' });
   });
 
   describe('createApp', () => {
@@ -305,9 +306,10 @@ describe('server.ts unit tests', () => {
 
   describe('serve', () => {
     it('should start a server and setup watcher', () => {
-      const server = serve('/mock/directory', 3000, 'localhost');
+      const context: ServerContext = { directory: '/mock/directory' };
+      const server = serve(context, 3000, 'localhost');
       expect(app.listen).toHaveBeenCalledWith(3000, 'localhost', expect.any(Function));
-      expect(setupWatcher).toHaveBeenCalledWith('/mock/directory', server, 3000);
+      expect(setupWatcher).toHaveBeenCalledWith(context, server, 3000);
     });
   });
 });

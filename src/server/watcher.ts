@@ -5,11 +5,12 @@ import path from 'path';
 import { WebSocket, WebSocketServer } from 'ws';
 import { logger } from '../utils/logger';
 import { EXCLUDED_DIRECTORIES } from '../constants';
+import { ServerContext } from './context';
 
 let contentWatcher: FSWatcher | null = null;
 let currentWatchedFile: string | null = null;
 
-export const setupWatcher = (directory: string, server: http.Server, port: number): void => {
+export const setupWatcher = (context: ServerContext, server: http.Server, port: number): void => {
   const wss = new WebSocketServer({ server });
 
   wss.on('listening', () => {
@@ -18,12 +19,16 @@ export const setupWatcher = (directory: string, server: http.Server, port: numbe
 
   wss.on('connection', (ws) => {
     logger.log('Livereload', '🤝 Livereload Client connected');
-    ws.on('message', (message) => handleWebSocketMessage(ws, directory, message.toString()));
+    ws.on('message', (message) => handleWebSocketMessage(ws, context.directory, message.toString()));
     ws.on('close', () => handleWebSocketClose(wss));
     ws.on('error', (e) => logger.error('🚫 Error on WebSocket client:', e));
   });
 
-  setupDirectoryWatcher(directory, wss);
+  if (context.filePatterns) {
+    setupFilePatternWatcher(context, wss);
+  } else {
+    setupDirectoryWatcher(context.directory, wss);
+  }
 };
 
 const handleWebSocketMessage = (ws: WebSocket, directory: string, message: string): void => {
@@ -46,6 +51,22 @@ const handleWebSocketClose = (wss: WebSocketServer): void => {
   }
 };
 
+const attachTreeReloadHandlers = (watcher: FSWatcher, wss: WebSocketServer): void => {
+  watcher.on('add', (filePath) => {
+    logger.log('Livereload', `🌲 File added: ${filePath}, reloading tree...`);
+    wss.clients.forEach((client) => {
+      client.send(JSON.stringify({ type: 'reload-tree' }));
+    });
+  });
+
+  watcher.on('unlink', (filePath) => {
+    logger.log('Livereload', `🌲 File removed: ${filePath}, reloading tree...`);
+    wss.clients.forEach((client) => {
+      client.send(JSON.stringify({ type: 'reload-tree' }));
+    });
+  });
+};
+
 const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatcher | null => {
   try {
     const watcher = chokidar.watch(directory, {
@@ -65,24 +86,12 @@ const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatch
       ignoreInitial: true,
     });
 
-    watcher.on('add', (filePath) => {
-      logger.log('Livereload', `🌲 File added: ${filePath}, reloading tree...`);
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify({ type: 'reload-tree' }));
-      });
-    });
-
-    watcher.on('unlink', (filePath) => {
-      logger.log('Livereload', `🌲 File removed: ${filePath}, reloading tree...`);
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify({ type: 'reload-tree' }));
-      });
-    });
+    attachTreeReloadHandlers(watcher, wss);
 
     watcher.on('error', (error) => {
       watcher.unwatch(directory);
       watcher.close()
-        .then((a) => console.log(a));
+        .then(() => logger.log('Livereload', 'Directory watcher closed'));
 
       logger.error('🚫 Error watching directory:', error);
       logger.error('Livereload will be disabled');
@@ -94,6 +103,31 @@ const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatch
     return watcher;
   } catch (e) {
     logger.error('🚫 Error watching directory:', e);
+    logger.error('Livereload will be disabled');
+    return null;
+  }
+};
+
+const setupFilePatternWatcher = (context: ServerContext, wss: WebSocketServer): FSWatcher | null => {
+  const { directory, filePatterns } = context;
+  if (!filePatterns || filePatterns.length === 0) return null;
+
+  try {
+    const absolutePaths = filePatterns.map(f => path.join(directory, f));
+    const watcher = chokidar.watch(absolutePaths, { ignoreInitial: true });
+
+    attachTreeReloadHandlers(watcher, wss);
+
+    watcher.on('error', (error) => {
+      watcher.close()
+        .then(() => logger.log('Livereload', 'File pattern watcher closed'));
+      logger.error('🚫 Error watching files:', error);
+      logger.error('Livereload will be disabled');
+    });
+
+    return watcher;
+  } catch (e) {
+    logger.error('🚫 Error watching files:', e);
     logger.error('Livereload will be disabled');
     return null;
   }
