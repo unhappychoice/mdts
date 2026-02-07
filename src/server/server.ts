@@ -2,28 +2,33 @@ import express from 'express';
 import * as fs from 'fs';
 import path from 'path';
 import { logger } from '../utils/logger';
+import { ServerContext } from './context';
 import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
 import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
 import { plantumlRouter } from './routes/plantuml';
 
-export const serve = (directory: string, port: number, host: string): import('http').Server => {
-  const app = createApp(directory);
+export const serve = (context: ServerContext, port: number, host: string): import('http').Server => {
+  const app = createApp(context);
   const server = app.listen(port, host, () => {
-    logger.log('Server', `📁 Mounted directory: ${directory}`);
+    logger.log('Server', `📁 Mounted directory: ${context.directory}`);
+    if (context.filePatterns) {
+      logger.log('Server', `📄 Watching ${context.filePatterns.length} files from glob patterns`);
+    }
     logger.log('Server', `🚀 Server listening at http://${host}:${port}`);
   });
 
-  setupWatcher(directory, server, port);
+  setupWatcher(context, server, port);
 
   return server;
 };
 
 export const createApp = (
-  directory: string,
+  context: ServerContext,
   currentLocation: string = __dirname,
 ): express.Express => {
+  const { directory } = context;
   const app = express();
 
   // JSON middleware - must be before routes that need it
@@ -34,7 +39,7 @@ export const createApp = (
   app.use(express.static(path.join(currentLocation, '../frontend')));
 
   // Define API
-  app.use('/api/filetree', fileTreeRouter(directory));
+  app.use('/api/filetree', fileTreeRouter(context));
   app.use('/api/outline', outlineRouter(directory));
   app.use('/api/plantuml', plantumlRouter());
   app.get('/api/config', (req, res) => {

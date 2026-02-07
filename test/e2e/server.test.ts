@@ -8,7 +8,7 @@ describe('Server E2E Tests', () => {
 
   beforeAll(async () => {
     app = createApp(
-      path.join(__dirname, '../fixtures/mountDirectory/content'),
+      { directory: path.join(__dirname, '../fixtures/mountDirectory/content') },
       path.join(__dirname, '../fixtures/mountDirectory/dist/server'),
     );
   });

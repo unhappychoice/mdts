@@ -9,6 +9,9 @@ jest.mock('fs', () => ({
   readFileSync: jest.fn(() => JSON.stringify({
     version: '0.0.0-test',
   })),
+  statSync: jest.fn(() => ({
+    isDirectory: () => true,
+  })),
 }));
 
 // Helper to set the mock result for existsSync
@@ -31,6 +34,12 @@ jest.mock('../../src/utils/logger', () => ({
     log: jest.fn(),
     error: jest.fn(),
   },
+}));
+
+// Mock glob to avoid native module issues in tests
+jest.mock('glob', () => ({
+  globSync: jest.fn(() => []),
+  hasMagic: jest.fn(() => false),
 }));
 
 describe('cli', () => {
@@ -61,7 +70,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -72,7 +81,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521');
       });
   });
@@ -83,7 +92,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('.'), 9000, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 9000, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });
@@ -94,7 +103,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 8521, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -105,7 +114,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(path.resolve('./my-dir'), 9000, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 9000, 'localhost');
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });

@@ -5,6 +5,7 @@ import path from 'path';
 import { WebSocket, WebSocketServer } from 'ws';
 import { setupWatcher } from '../../../src/server/watcher';
 import { logger } from '../../../src/utils/logger';
+import { ServerContext } from '../../../src/server/context';
 
 // Mock chokidar
 jest.mock('chokidar');
@@ -93,7 +94,7 @@ describe('watcher.ts unit tests', () => {
   });
 
   it('should setup WebSocketServer and directory watcher', () => {
-    setupWatcher('/mock/directory', mockServer, 3000);
+    setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
     expect(WebSocketServer).toHaveBeenCalledWith({ server: mockServer });
     expect(chokidar.watch).toHaveBeenCalledWith('/mock/directory', expect.any(Object));
   });
@@ -104,13 +105,13 @@ describe('watcher.ts unit tests', () => {
         callback();
       }
     });
-    setupWatcher('/mock/directory', mockServer, 3000);
+    setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
     expect(logger.log).toHaveBeenCalledWith('Livereload', '🚀 WebSocket server listening at ws://localhost:3000');
   });
 
   describe('WebSocket client interactions', () => {
     beforeEach(() => {
-      setupWatcher('/mock/directory', mockServer, 3000);
+      setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
       // Manually trigger connection to set up client handlers
       (mockWss.on as jest.Mock).mock.calls.find(call => call[0] === 'connection')[1](mockClient);
     });
@@ -211,7 +212,7 @@ describe('watcher.ts unit tests', () => {
 
   describe('Directory watcher interactions', () => {
     beforeEach(() => {
-      setupWatcher('/mock/directory', mockServer, 3000);
+      setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
     });
 
     it('should send reload-tree message on file add', () => {
@@ -241,7 +242,7 @@ describe('watcher.ts unit tests', () => {
         throw new Error('Directory watch error');
       });
 
-      setupWatcher('/mock/directory', mockServer, 3000);
+      setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
 
       expect(logger.error).toHaveBeenCalledWith('🚫 Error watching directory:', expect.any(Error));
       expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
@@ -249,10 +250,10 @@ describe('watcher.ts unit tests', () => {
   });
 
   describe('chokidar ignored option', () => {
-    let ignoredFn: (path: string) => boolean;
+    let ignoredFn: (path: string, stats?: { isDirectory: () => boolean; isFile?: () => boolean }) => boolean;
 
     beforeEach(() => {
-      setupWatcher('/mock/directory', mockServer, 3000);
+      setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
       ignoredFn = (chokidar.watch as jest.Mock).mock.calls.find(call => call[0] === '/mock/directory')[1].ignored;
     });
 
