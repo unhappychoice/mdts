@@ -24,9 +24,11 @@ export const setupWatcher = (context: ServerContext, server: http.Server, port: 
     ws.on('error', (e) => logger.error('🚫 Error on WebSocket client:', e));
   });
 
-  context.filePatterns
-    ? setupFilePatternWatcher(context, wss)
-    : setupDirectoryWatcher(context.directory, wss);
+  if (context.filePatterns) {
+    setupFilePatternWatcher(context, wss);
+  } else {
+    setupDirectoryWatcher(context.directory, wss);
+  }
 };
 
 const handleWebSocketMessage = (ws: WebSocket, directory: string, message: string): void => {

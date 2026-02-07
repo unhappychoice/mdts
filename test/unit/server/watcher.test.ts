@@ -5,7 +5,6 @@ import path from 'path';
 import { WebSocket, WebSocketServer } from 'ws';
 import { setupWatcher } from '../../../src/server/watcher';
 import { logger } from '../../../src/utils/logger';
-import { ServerContext } from '../../../src/server/context';
 
 // Mock chokidar
 jest.mock('chokidar');

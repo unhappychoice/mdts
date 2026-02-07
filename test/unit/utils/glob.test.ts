@@ -2,7 +2,6 @@ import { resolveArguments } from '../../../src/utils/glob';
 import path from 'path';
 
 const cwd = process.cwd();
-const readmePath = path.join(cwd, 'README.md');
 
 // Mock fs
 jest.mock('fs', () => ({
@@ -68,8 +67,8 @@ describe('resolveArguments', () => {
   });
 
   it('should return default directory when no markdown files match', () => {
-    const { globSync } = require('glob');
-    (globSync as jest.Mock).mockReturnValueOnce([]);
+    const glob = jest.requireMock('glob');
+    (glob.globSync as jest.Mock).mockReturnValueOnce([]);
 
     const result = resolveArguments(['./nonexistent/*.md']);
     expect(result).toEqual({ directory: path.resolve(cwd, '.') });
