@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: true
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -44,6 +45,21 @@ jobs:
           npm version ${{ github.event.inputs.version_type }}
           git push
           git push --tags
+
+      - name: Update CHANGELOG
+        run: |
+          VERSION_TAG=$(git describe --tags --abbrev=0)
+          ENTRY=$(bash scripts/generate-changelog.sh "$VERSION_TAG")
+          TMPFILE=$(mktemp)
+          echo "# Changelog" > "$TMPFILE"
+          echo "" >> "$TMPFILE"
+          echo "$ENTRY" >> "$TMPFILE"
+          echo "" >> "$TMPFILE"
+          tail -n +2 CHANGELOG.md >> "$TMPFILE"
+          mv "$TMPFILE" CHANGELOG.md
+          git add CHANGELOG.md
+          git commit -m "docs: update CHANGELOG.md for ${VERSION_TAG}"
+          git push
 
       - name: Build project
         run: npm run build
