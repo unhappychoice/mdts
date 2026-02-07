@@ -3,9 +3,10 @@ import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 import { serve } from './server/server';
 import { logger } from './utils/logger';
-import { resolveArguments } from './utils/glob';
+import { resolveGlobPatterns } from './utils/glob';
 
 const DEFAULT_PORT = 8521;
+const DEFAULT_DIRECTORY = '.';
 
 export class CLI {
   run(): Promise<void> {
@@ -22,8 +23,9 @@ export class CLI {
           .option('-p, --port <port>', 'Port to serve on', String(DEFAULT_PORT))
           .option('-s, --silent', 'Suppress server logs', false)
           .option('--no-open', 'Do not open the browser automatically')
-          .argument('[paths...]', 'Directory, files, or glob patterns to serve')
-          .action((paths, options) => {
+          .option('-g, --glob <patterns...>', 'Glob patterns to filter markdown files within the directory')
+          .argument('[directory]', 'Directory to serve', DEFAULT_DIRECTORY)
+          .action((directory, options) => {
             logger.setSilent(options.silent);
 
             logger.showLogo();
@@ -33,7 +35,10 @@ export class CLI {
             logger.log('CLI', '⚙  Options: ' + JSON.stringify(options));
             const port = parseInt(options.port, 10);
             const host = options.host;
-            const context = resolveArguments(paths);
+            const absoluteDirectory = path.resolve(process.cwd(), directory);
+            const context = options.glob
+              ? resolveGlobPatterns(absoluteDirectory, options.glob)
+              : { directory: absoluteDirectory };
             serve(context, port, host);
             const readmePath = path.join(context.directory, 'README.md');
             const initialPath = existsSync(readmePath) ? '/README.md' : '';
