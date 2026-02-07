@@ -51,6 +51,22 @@ const handleWebSocketClose = (wss: WebSocketServer): void => {
   }
 };
 
+const attachTreeReloadHandlers = (watcher: FSWatcher, wss: WebSocketServer): void => {
+  watcher.on('add', (filePath) => {
+    logger.log('Livereload', `🌲 File added: ${filePath}, reloading tree...`);
+    wss.clients.forEach((client) => {
+      client.send(JSON.stringify({ type: 'reload-tree' }));
+    });
+  });
+
+  watcher.on('unlink', (filePath) => {
+    logger.log('Livereload', `🌲 File removed: ${filePath}, reloading tree...`);
+    wss.clients.forEach((client) => {
+      client.send(JSON.stringify({ type: 'reload-tree' }));
+    });
+  });
+};
+
 const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatcher | null => {
   try {
     const watcher = chokidar.watch(directory, {
@@ -70,24 +86,12 @@ const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatch
       ignoreInitial: true,
     });
 
-    watcher.on('add', (filePath) => {
-      logger.log('Livereload', `🌲 File added: ${filePath}, reloading tree...`);
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify({ type: 'reload-tree' }));
-      });
-    });
-
-    watcher.on('unlink', (filePath) => {
-      logger.log('Livereload', `🌲 File removed: ${filePath}, reloading tree...`);
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify({ type: 'reload-tree' }));
-      });
-    });
+    attachTreeReloadHandlers(watcher, wss);
 
     watcher.on('error', (error) => {
       watcher.unwatch(directory);
       watcher.close()
-        .then((a) => console.log(a));
+        .then(() => logger.log('Livereload', 'Directory watcher closed'));
 
       logger.error('🚫 Error watching directory:', error);
       logger.error('Livereload will be disabled');
@@ -112,23 +116,11 @@ const setupFilePatternWatcher = (context: ServerContext, wss: WebSocketServer): 
     const absolutePaths = filePatterns.map(f => path.join(directory, f));
     const watcher = chokidar.watch(absolutePaths, { ignoreInitial: true });
 
-    watcher.on('add', (filePath) => {
-      logger.log('Livereload', `🌲 File added: ${filePath}, reloading tree...`);
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify({ type: 'reload-tree' }));
-      });
-    });
-
-    watcher.on('unlink', (filePath) => {
-      logger.log('Livereload', `🌲 File removed: ${filePath}, reloading tree...`);
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify({ type: 'reload-tree' }));
-      });
-    });
+    attachTreeReloadHandlers(watcher, wss);
 
     watcher.on('error', (error) => {
       watcher.close()
-        .then((a) => console.log(a));
+        .then(() => logger.log('Livereload', 'File pattern watcher closed'));
       logger.error('🚫 Error watching files:', error);
       logger.error('Livereload will be disabled');
     });

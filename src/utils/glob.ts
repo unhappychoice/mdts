@@ -30,7 +30,8 @@ const findCommonParent = (filePaths: string[]): string => {
     }
   }
 
-  return commonParts.length > 0 ? commonParts.join(path.sep) : path.sep;
+  const joined = commonParts.join(path.sep);
+  return joined || path.sep;
 };
 
 export const resolveArguments = (args: string[]): ServerContext => {

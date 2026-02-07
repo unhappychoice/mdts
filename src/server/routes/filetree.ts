@@ -49,7 +49,8 @@ const buildFileTreeFromPatterns = (
     const parentTree = parentPath === '.' ? root : getOrCreateDir(parentPath);
 
     const existing = parentTree.find(
-      (item): item is { [key: string]: FileTree } => typeof item === 'object' && dirName in item,
+      (item): item is { [key: string]: FileTree } =>
+        typeof item === 'object' && !('path' in item) && dirName in item,
     );
 
     if (existing) {
