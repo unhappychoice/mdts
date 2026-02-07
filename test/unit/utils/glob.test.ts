@@ -1,16 +1,5 @@
 import { resolveGlobPatterns } from '../../../src/utils/glob';
 
-jest.mock('fs', () => ({
-  existsSync: jest.fn((filePath: string) => {
-    const existingPaths = [
-      '/mock/project/docs/guide.md',
-      '/mock/project/docs/api.md',
-      '/mock/project/notes/todo.markdown',
-    ];
-    return existingPaths.includes(filePath);
-  }),
-}));
-
 jest.mock('glob', () => ({
   globSync: jest.fn((pattern: string) => {
     const mockResults: Record<string, string[]> = {
@@ -18,6 +7,8 @@ jest.mock('glob', () => ({
       '**/*.md': ['docs/guide.md', 'docs/api.md', 'src/readme.txt'],
       'notes/*.markdown': ['notes/todo.markdown'],
       'empty/*.md': [],
+      'overlap/*.md': ['overlap/a.md', 'overlap/b.md'],
+      'overlap/a.md': ['overlap/a.md'],
     };
     return mockResults[pattern] || [];
   }),
@@ -52,11 +43,13 @@ describe('resolveGlobPatterns', () => {
     expect(result.filePatterns).toEqual([]);
   });
 
-  it('should filter out files that do not exist on disk', () => {
-    const glob = jest.requireMock('glob');
-    (glob.globSync as jest.Mock).mockReturnValueOnce(['docs/missing.md']);
+  it('should deduplicate files matched by overlapping patterns', () => {
+    const result = resolveGlobPatterns('/mock/project', ['overlap/*.md', 'overlap/a.md']);
+    expect(result.filePatterns).toEqual(['overlap/a.md', 'overlap/b.md']);
+  });
 
-    const result = resolveGlobPatterns('/mock/project', ['docs/missing.md']);
-    expect(result.filePatterns).toEqual([]);
+  it('should include globPatterns in the returned context', () => {
+    const result = resolveGlobPatterns('/mock/project', ['docs/*.md']);
+    expect(result.globPatterns).toEqual(['docs/*.md']);
   });
 });

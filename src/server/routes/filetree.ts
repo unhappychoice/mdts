@@ -4,6 +4,7 @@ import path from 'path';
 import simpleGit, { SimpleGit, StatusResult, FileStatusResult } from 'simple-git';
 import { EXCLUDED_DIRECTORIES } from '../../constants';
 import { ServerContext } from '../context';
+import { resolveGlobPatterns } from '../../utils/glob';
 
 type FileTreeItem = { path: string, status: string, isDirectory?: boolean } | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
@@ -16,8 +17,11 @@ export const fileTreeRouter = (context: ServerContext): Router => {
   router.get('/', async (req, res) => {
     const isRepo = await git.checkIsRepo();
     const gitStatus = isRepo ? await git.status() : null;
-    const fileTree = context.filePatterns
-      ? buildFileTreeFromPatterns(context.filePatterns, gitStatus)
+    const filePatterns = context.globPatterns
+      ? resolveGlobPatterns(directory, context.globPatterns).filePatterns
+      : context.filePatterns;
+    const fileTree = filePatterns
+      ? buildFileTreeFromPatterns(filePatterns, gitStatus)
       : await getFileTree(directory, '', gitStatus);
     res.json({ fileTree, mountedDirectoryPath: directory });
   });

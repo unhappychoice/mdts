@@ -146,7 +146,7 @@ npx mdts --host 192.168.1.100
 **Problem:** The file tree is empty after specifying glob patterns.
 
 **Solution:**
-- Verify patterns match actual files: `ls <pattern>` in the target directory
+- Verify patterns match actual files: run `find . -path '<pattern>'` or `ls <pattern>` (simple patterns only) in the target directory
 - Patterns are relative to the directory argument, not to your current working directory
 - Ensure matched files end in `.md` or `.markdown` — other extensions are filtered out
 - Quote patterns in your shell to prevent premature expansion: `-g '**/*.md'`

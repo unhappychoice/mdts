@@ -9,6 +9,11 @@ jest.mock('fs', () => ({
   statSync: jest.fn(),
 }));
 
+// Mock glob to avoid native module issues in tests
+jest.mock('glob', () => ({
+  globSync: jest.fn(() => []),
+}));
+
 // Helper function to create a mock Dirent
 const mockDirent = (name: string, isDirectory: boolean) => ({
   name,

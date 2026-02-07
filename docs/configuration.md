@@ -155,6 +155,20 @@ npx mdts ./notes -g '2026/**/*.md'
 
 When `--glob` is not provided, all markdown files in the directory are shown as before.
 
+### Programmatic Usage
+You can also use mdts as a Node.js module:
+
+```javascript
+import { startServer } from 'mdts';
+
+const server = startServer({
+  directory: './docs',
+  port: 8521,
+  host: 'localhost',
+  silent: false
+});
+```
+
 ### Custom Startup Scripts
 Create shell scripts for common configurations:
 
