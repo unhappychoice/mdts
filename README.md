@@ -3,6 +3,8 @@
 </h1>
 
 <p align="center">
+  <strong>M</strong>ark<strong>d</strong>own <strong>T</strong>ree <strong>S</strong>erver
+  <br>
   A zero-config CLI tool to preview your local Markdown files in a browser.
   <br>
   <strong>npx mdts</strong> — and you're done.
