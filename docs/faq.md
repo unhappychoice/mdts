@@ -70,6 +70,26 @@ Some settings are also saved to `~/.config/mdts/config.json` on your system:
 
 All settings persist across browser sessions and require no manual configuration. You can reset to defaults using the "Restore default setting" button in the settings dialog.
 
+## ❓ Can I filter which files are shown?
+
+Yes. Use the `--glob` (`-g`) option to specify glob patterns. Only matching markdown files will appear in the file tree:
+
+```bash
+npx mdts ./project -g 'docs/**/*.md' 'README.md'
+```
+
+Patterns are resolved relative to the specified directory. You can pass multiple patterns to combine results.
+
+## ❓ How do glob patterns work with `--glob`?
+
+Patterns follow standard glob syntax (powered by the [`glob`](https://www.npmjs.com/package/glob) package):
+
+- `*.md` — all `.md` files in the root
+- `docs/**/*.md` — all `.md` files recursively under `docs/`
+- `packages/*/README.md` — `README.md` in each direct subdirectory of `packages/`
+
+Only files ending in `.md` or `.markdown` are included, even if the pattern matches other files.
+
 ## ❓ How is this different from tools like `grip`, `markserv`, or `md-fileserver`?
 
 See our [comparison table](./comparison.md) for a detailed breakdown.

@@ -19,12 +19,13 @@ export class CLI {
 
         program
           .version(packageJson.version)
-          .option('-H, --host <host>', 'Host to listen on', 'localhost')
-          .option('-p, --port <port>', 'Port to serve on', String(DEFAULT_PORT))
-          .option('-s, --silent', 'Suppress server logs', false)
-          .option('--no-open', 'Do not open the browser automatically')
-          .option('-g, --glob <patterns...>', 'Glob patterns to filter markdown files within the directory')
-          .argument('[directory]', 'Directory to serve', DEFAULT_DIRECTORY)
+          .description('A zero-config CLI tool to preview local Markdown files in a browser')
+          .option('-H, --host <host>', 'host to listen on', 'localhost')
+          .option('-p, --port <port>', 'port to serve on', String(DEFAULT_PORT))
+          .option('-s, --silent', 'suppress server logs', false)
+          .option('--no-open', 'do not open the browser automatically')
+          .option('-g, --glob <patterns...>', 'glob patterns to filter markdown files (e.g. "docs/*.md")')
+          .argument('[directory]', 'directory to serve', DEFAULT_DIRECTORY)
           .action((directory, options) => {
             logger.setSilent(options.silent);
 

@@ -52,17 +52,35 @@ See [detailed use cases](docs/usecases.md) for more examples and workflows.
 ## 🛠 Options
 
 ```bash
-npx mdts <directory> --host 0.0.0.0 --port 3000 --silent
+npx mdts [directory] [options]
 ```
 
-| Option              | Description                           | Example |
-| ------------------- | ------------------------------------- |---------|
-| `<directory>`       | Directory to serve (default .)       | ./docs  |
-| `--host`, `-H`      | Host to listen on (default localhost) | 0.0.0.0 |
-| `--port`, `-p`      | Port to serve on (default 8521)      | 8000    |
-| `--silent`, `-s`    | Suppress server logs (default false) |         |
-| `--version`, `-V`   | Output version number                 |         |
-| `--help`, `-h`      | Display help for command              |         |
+| Option              | Description                                          | Example                        |
+| ------------------- | ---------------------------------------------------- | ------------------------------ |
+| `[directory]`       | Directory to serve (default `.`)                     | `./docs`                       |
+| `--glob`, `-g`      | Glob patterns to filter markdown files               | `-g 'docs/*.md' 'specs/*.md'` |
+| `--host`, `-H`      | Host to listen on (default `localhost`)              | `0.0.0.0`                      |
+| `--port`, `-p`      | Port to serve on (default `8521`)                    | `8000`                         |
+| `--silent`, `-s`    | Suppress server logs (default `false`)               |                                |
+| `--no-open`         | Do not open the browser automatically                |                                |
+| `--version`, `-V`   | Output version number                                |                                |
+| `--help`, `-h`      | Display help for command                             |                                |
+
+### Examples
+
+```bash
+# Serve current directory (all markdown files)
+npx mdts
+
+# Serve a specific directory
+npx mdts ./docs
+
+# Filter with glob patterns (only matching files are shown)
+npx mdts ./project -g 'docs/**/*.md' 'README.md'
+
+# Combine options
+npx mdts ./monorepo -g 'packages/*/README.md' --port 3000 --no-open
+```
 
 ## 📚 Documentation
 

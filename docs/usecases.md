@@ -30,7 +30,22 @@ With `mdts`, you can serve and explore these docs locally without complex build 
 Writers often draft blog posts or articles in Markdown.  
 `mdts` helps organize and preview multiple drafts efficiently before publishing.
 
-## 5. Focused Reading with Minimalist UI
+## 5. Monorepo & Large Project Documentation
+
+In monorepos or large codebases, you may only care about a subset of markdown files.  
+Use the `--glob` option to narrow the file tree to the files you need:
+
+```bash
+# Show only package READMEs in a monorepo
+npx mdts . -g 'packages/*/README.md'
+
+# Focus on API docs and changelogs
+npx mdts . -g 'docs/api/**/*.md' 'CHANGELOG.md'
+```
+
+This improves startup performance and keeps the UI uncluttered.
+
+## 6. Focused Reading with Minimalist UI
 
 `mdts` features a simple, clean interface designed to minimize distractions.  
 This allows users to focus on reading and understanding content, making it ideal for deep study or review sessions.

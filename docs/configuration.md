@@ -138,19 +138,22 @@ rm ~/.config/mdts/config.json
 
 ## CLI Integration
 
-### Programmatic Usage
-You can also use mdts as a Node.js module:
+### Glob Patterns
+Use the `--glob` (`-g`) option to filter which markdown files are shown in the file tree.
+Patterns are resolved relative to the specified directory.
 
-```javascript
-import { startServer } from 'mdts';
+```bash
+# Show only files matching a pattern
+npx mdts ./project -g 'docs/**/*.md'
 
-const server = startServer({
-  directory: './docs',
-  port: 8521,
-  host: 'localhost',
-  silent: false
-});
+# Multiple patterns
+npx mdts ./monorepo -g 'packages/*/README.md' 'docs/*.md'
+
+# Meeting notes from a specific year
+npx mdts ./notes -g '2026/**/*.md'
 ```
+
+When `--glob` is not provided, all markdown files in the directory are shown as before.
 
 ### Custom Startup Scripts
 Create shell scripts for common configurations:
@@ -159,6 +162,9 @@ Create shell scripts for common configurations:
 #!/bin/bash
 # docs-server.sh
 npx mdts ./documentation --host 0.0.0.0 --port 3000
+
+# monorepo-docs.sh — only show package READMEs
+npx mdts . -g 'packages/*/README.md' 'docs/**/*.md'
 ```
 
 ## Advanced Customization
