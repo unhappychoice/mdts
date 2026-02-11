@@ -69,7 +69,7 @@
     "jest-runner-eslint": "^2.3.0",
     "style-loader": "^4.0.0",
     "typescript-eslint": "^8.55.0",
-    "webpack": "^5.105.0",
+    "webpack": "^5.105.1",
     "webpack-cli": "^6.0.1"
   },
   "overrides": {
