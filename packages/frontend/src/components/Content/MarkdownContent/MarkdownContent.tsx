@@ -60,6 +60,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
     <Box
       sx={{
         width: '100%',
+        minWidth: 0,
         minHeight: 'calc(100vh - 64px)',
         m: 0,
         p: 4,
