@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.16.1
+
+### ✨ Features
+- automate CHANGELOG generation with release workflow integration ([b555a40](https://github.com/unhappychoice/mdts/commit/b555a40)) ([#511](https://github.com/unhappychoice/mdts/pull/511))
+
+### 🐛 Bug Fixes
+- prevent code blocks from overflowing content area in full mode ([be0bd94](https://github.com/unhappychoice/mdts/commit/be0bd94)) ([#532](https://github.com/unhappychoice/mdts/pull/532))
+
+### 🆙 Update Packages
+- Bump @mui/icons-material in /packages/frontend ([931af44](https://github.com/unhappychoice/mdts/commit/931af44)) ([#529](https://github.com/unhappychoice/mdts/pull/529))
+- Bump webpack in /packages/frontend ([5dc2ff7](https://github.com/unhappychoice/mdts/commit/5dc2ff7)) ([#531](https://github.com/unhappychoice/mdts/pull/531))
+- Bump eslint-plugin-jest in /packages/frontend ([d517236](https://github.com/unhappychoice/mdts/commit/d517236)) ([#530](https://github.com/unhappychoice/mdts/pull/530))
+- Bump glob from 13.0.2 to 13.0.3 ([cd419dc](https://github.com/unhappychoice/mdts/commit/cd419dc)) ([#528](https://github.com/unhappychoice/mdts/pull/528))
+- Bump @mui/material in /packages/frontend ([4780469](https://github.com/unhappychoice/mdts/commit/4780469)) ([#527](https://github.com/unhappychoice/mdts/pull/527))
+- Bump webpack in /packages/frontend ([1a6c3ec](https://github.com/unhappychoice/mdts/commit/1a6c3ec)) ([#526](https://github.com/unhappychoice/mdts/pull/526))
+- Bump markdown-it from 14.1.0 to 14.1.1 ([0968263](https://github.com/unhappychoice/mdts/commit/0968263)) ([#525](https://github.com/unhappychoice/mdts/pull/525))
+- Bump glob from 13.0.1 to 13.0.2 ([28e7246](https://github.com/unhappychoice/mdts/commit/28e7246)) ([#524](https://github.com/unhappychoice/mdts/pull/524))
+- Bump @stylistic/eslint-plugin in /packages/frontend (#523) ([292a3ed](https://github.com/unhappychoice/mdts/commit/292a3ed))
+- Bump @typescript-eslint/parser from 8.54.0 to 8.55.0 (#521) ([fc8c189](https://github.com/unhappychoice/mdts/commit/fc8c189))
+- Bump @typescript-eslint/parser in /packages/frontend (#517) ([401849a](https://github.com/unhappychoice/mdts/commit/401849a))
+- Bump typescript-eslint from 8.54.0 to 8.55.0 (#516) ([9c5bafa](https://github.com/unhappychoice/mdts/commit/9c5bafa))
+- Bump typescript-eslint in /packages/frontend (#515) ([996b29d](https://github.com/unhappychoice/mdts/commit/996b29d))
+- Bump @stylistic/eslint-plugin from 5.7.1 to 5.8.0 (#514) ([14a9e00](https://github.com/unhappychoice/mdts/commit/14a9e00))
+- Bump axios from 1.13.4 to 1.13.5 ([bf78248](https://github.com/unhappychoice/mdts/commit/bf78248)) ([#513](https://github.com/unhappychoice/mdts/pull/513))
+- Bump eslint-plugin-jest in /packages/frontend ([4c92d51](https://github.com/unhappychoice/mdts/commit/4c92d51)) ([#512](https://github.com/unhappychoice/mdts/pull/512))
+
+### 💚 CI/Test
+- update snapshots for minWidth: 0 style change ([f65cef5](https://github.com/unhappychoice/mdts/commit/f65cef5)) ([#532](https://github.com/unhappychoice/mdts/pull/532))
+
+
 ## v0.16.0
 
 ### ✨ Features
