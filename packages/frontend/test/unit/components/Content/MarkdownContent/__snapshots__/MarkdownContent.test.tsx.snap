@@ -3,7 +3,7 @@
 exports[`MarkdownContent renders welcome message when no file is selected 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-u35m6v"
+    class="MuiBox-root css-1t4r39b"
   >
     <nav
       aria-label="breadcrumb"

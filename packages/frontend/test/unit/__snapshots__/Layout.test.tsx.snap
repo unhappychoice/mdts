@@ -361,13 +361,13 @@ exports[`Layout renders correctly 1`] = `
         </ul>
       </div>
       <div
-        class="MuiBox-root css-1fthtn0"
+        class="MuiBox-root css-jv7lyf"
       >
         <div
           class="custom-scrollbar MuiBox-root css-ynu778"
         >
           <div
-            class="MuiBox-root css-u35m6v"
+            class="MuiBox-root css-1t4r39b"
           >
             <nav
               aria-label="breadcrumb"
