@@ -1,6 +1,6 @@
 {
   "name": "mdts",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "packageManager": "npm@11.5.1",
   "description": "A markdown preview server.",
   "main": "dist/index.js",
