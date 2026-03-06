@@ -24,7 +24,7 @@ exports[`FileTreeList renders correctly with files and folders 1`] = `
         </svg>
       </div>
       <div
-        class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
+        class="MuiListItemText-root css-1suf81v-MuiListItemText-root"
       >
         <span
           class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1px98du-MuiTypography-root"
@@ -55,7 +55,7 @@ exports[`FileTreeList renders correctly with files and folders 1`] = `
         </svg>
       </div>
       <div
-        class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
+        class="MuiListItemText-root css-1suf81v-MuiListItemText-root"
       >
         <span
           class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1px98du-MuiTypography-root"
