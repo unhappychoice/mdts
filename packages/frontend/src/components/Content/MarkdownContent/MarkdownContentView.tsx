@@ -1,9 +1,8 @@
-import { Box, CircularProgress, List, ListItem, ListItemText } from '@mui/material';
+import { Box, CircularProgress, List, ListItem, ListItemText, Typography } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ViewMode } from '../../../hooks/useViewMode';
 import { RootState } from '../../../store/store';
-import DiffView from './DiffView';
 import MarkdownRenderer from './MarkdownRenderer/MarkdownRenderer';
 
 interface MarkdownContentViewProps {
@@ -14,6 +13,20 @@ interface MarkdownContentViewProps {
   frontmatter: Record<string, unknown>;
 }
 
+const LoadingView: React.FC = () => (
+  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+    <CircularProgress />
+  </Box>
+);
+
+const EmptyDiffView: React.FC<{ message: string }> = ({ message }) => (
+  <Box sx={{ my: 4, textAlign: 'center' }}>
+    <Typography variant="body1" color="text.secondary">
+      {message}
+    </Typography>
+  </Box>
+);
+
 const MarkdownContentView: React.FC<MarkdownContentViewProps> = (
   { loading, viewMode, markdownContent, frontmatter, content }
 ) => {
@@ -22,11 +35,7 @@ const MarkdownContentView: React.FC<MarkdownContentViewProps> = (
   const { diff, diffPrev, diffLoading, diffPrevLoading } = useSelector((state: RootState) => state.diff);
 
   if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <LoadingView />;
   }
 
   switch (viewMode) {
@@ -49,23 +58,17 @@ const MarkdownContentView: React.FC<MarkdownContentViewProps> = (
         <MarkdownRenderer content={['`````markdown', content, '``````'].join('\n')} selectedFilePath={currentPath} enableBreaks={enableBreaks} />
       );
     case 'diff':
-      if (diffLoading) {
-        return (
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-            <CircularProgress />
-          </Box>
-        );
-      }
-      return <DiffView diff={diff} emptyMessage="No uncommitted changes" />;
+      if (diffLoading) return <LoadingView />;
+      if (!diff) return <EmptyDiffView message="No uncommitted changes" />;
+      return (
+        <MarkdownRenderer content={['`````diff', diff, '``````'].join('\n')} selectedFilePath={currentPath} enableBreaks={enableBreaks} />
+      );
     case 'diff-prev':
-      if (diffPrevLoading) {
-        return (
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-            <CircularProgress />
-          </Box>
-        );
-      }
-      return <DiffView diff={diffPrev} emptyMessage="No previous changes found" />;
+      if (diffPrevLoading) return <LoadingView />;
+      if (!diffPrev) return <EmptyDiffView message="No previous changes found" />;
+      return (
+        <MarkdownRenderer content={['`````diff', diffPrev, '``````'].join('\n')} selectedFilePath={currentPath} enableBreaks={enableBreaks} />
+      );
     default:
       return null;
   }
