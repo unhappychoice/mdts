@@ -27,11 +27,20 @@ export const createMockStore = (
       loading: false,
       error: null,
       searchQuery: '',
+      isGitRepository: true,
     },
     content: {
       content: '',
       loading: false,
       error: null,
+    },
+    diff: {
+      diff: '',
+      diffPrev: '',
+      diffLoading: false,
+      diffPrevLoading: false,
+      diffError: null,
+      diffPrevError: null,
     },
     outline: {
       outline: [],
@@ -66,6 +75,10 @@ export const createMockStore = (
     content: {
       ...defaultState.content,
       ...(initialState.content || {}),
+    },
+    diff: {
+      ...defaultState.diff,
+      ...(initialState.diff || {}),
     },
     outline: {
       ...defaultState.outline,

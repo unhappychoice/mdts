@@ -23,7 +23,7 @@ export const fileTreeRouter = (context: ServerContext): Router => {
     const fileTree = filePatterns
       ? buildFileTreeFromPatterns(filePatterns, gitStatus)
       : await getFileTree(directory, '', gitStatus);
-    res.json({ fileTree, mountedDirectoryPath: directory });
+    res.json({ fileTree, mountedDirectoryPath: directory, isGitRepository: isRepo });
   });
 
   return router;

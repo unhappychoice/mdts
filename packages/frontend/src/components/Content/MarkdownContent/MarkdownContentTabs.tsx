@@ -1,16 +1,21 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import React, { useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import { ViewMode } from '../../../hooks/useViewMode';
+import { RootState } from '../../../store/store';
 
 interface MarkdownContentTabsProps {
-  viewMode: 'preview' | 'frontmatter' | 'raw';
+  viewMode: ViewMode;
   hasFrontmatter: boolean;
 }
 
 const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, hasFrontmatter }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { isGitRepository } = useSelector((state: RootState) => state.fileTree);
+  const { diff } = useSelector((state: RootState) => state.diff);
 
-  const handleChange = useCallback((_: React.SyntheticEvent | null, newValue: 'preview' | 'frontmatter' | 'raw') => {
+  const handleChange = useCallback((_: React.SyntheticEvent | null, newValue: ViewMode) => {
     searchParams.set('tab', newValue);
     setSearchParams(searchParams);
   }, [searchParams, setSearchParams]);
@@ -33,6 +38,8 @@ const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, has
         <Tab value="preview" label="Preview" onClick={handleClick} />
         {hasFrontmatter && <Tab value="frontmatter" label="Frontmatter" />}
         <Tab value="raw" label="Raw" />
+        {isGitRepository && !!diff && <Tab value="diff" label="Diff" />}
+        {isGitRepository && <Tab value="diff-prev" label="Last Commit" />}
       </Tabs>
     </Box>
   );

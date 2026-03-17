@@ -27,6 +27,7 @@ describe('Server E2E Tests', () => {
         { path: 'test.md', status: ' ' },
       ]),
       mountedDirectoryPath: path.join(__dirname, '../fixtures/mountDirectory/content'),
+      isGitRepository: true,
     });
   });
 

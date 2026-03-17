@@ -1,5 +1,6 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import contentReducer from './slices/contentSlice';
+import diffReducer from './slices/diffSlice';
 import fileTreeReducer from './slices/fileTreeSlice';
 import outlineReducer from './slices/outlineSlice';
 import appSettingReducer, { saveAppSetting } from './slices/appSettingSlice';
@@ -51,6 +52,7 @@ listenerMiddleware.startListening({
 export const store = configureStore({
   reducer: {
     content: contentReducer,
+    diff: diffReducer,
     fileTree: fileTreeReducer,
     outline: outlineReducer,
     appSetting: appSettingReducer,
