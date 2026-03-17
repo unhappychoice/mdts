@@ -36,7 +36,7 @@ export const diffPrevRouter = (context: ServerContext): Router => {
   const router = Router();
   const git: SimpleGit = simpleGit({ baseDir: directory });
 
-  // GET /api/diff-prev/:path - diff between HEAD~1 and HEAD
+  // GET /api/diff-prev/:path - diff of the last commit that changed this file
   router.get('/*splat', async (req, res) => {
     const filePath = extractFilePath(req.params);
     try {
@@ -44,7 +44,13 @@ export const diffPrevRouter = (context: ServerContext): Router => {
       if (!isRepo) {
         return res.status(404).json({ error: 'Not a git repository' });
       }
-      const diff = await git.diff(['HEAD~1', 'HEAD', '--', filePath]);
+      const log = await git.log({ maxCount: 1, file: filePath });
+      if (!log.latest) {
+        res.setHeader('Content-Type', 'text/plain');
+        return res.send('');
+      }
+      const hash = log.latest.hash;
+      const diff = await git.diff([`${hash}~1`, hash, '--', filePath]);
       res.setHeader('Content-Type', 'text/plain');
       res.send(diff);
     } catch {

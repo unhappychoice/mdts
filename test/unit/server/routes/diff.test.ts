@@ -64,27 +64,40 @@ describe('diff routes', () => {
   describe('diffPrevRouter', () => {
     let app: express.Application;
     const mockDiff = jest.fn();
+    const mockLog = jest.fn();
     const mockCheckIsRepo = jest.fn();
 
     beforeEach(() => {
       jest.clearAllMocks();
       (simpleGit as unknown as jest.Mock).mockReturnValue({
         diff: mockDiff,
+        log: mockLog,
         checkIsRepo: mockCheckIsRepo,
       });
       app = express();
       app.use('/api/diff-prev', diffPrevRouter({ directory: mockDirectory }));
     });
 
-    it('should return diff between HEAD~1 and HEAD for a file', async () => {
+    it('should return diff of the last commit that changed the file', async () => {
       mockCheckIsRepo.mockResolvedValue(true);
+      mockLog.mockResolvedValue({ latest: { hash: 'abc123' } });
       mockDiff.mockResolvedValue('--- a/test.md\n+++ b/test.md\n@@ -1 +1 @@\n-previous\n+current');
 
       const response = await request(app).get('/api/diff-prev/test.md');
       expect(response.statusCode).toBe(200);
       expect(response.text).toContain('-previous');
       expect(response.text).toContain('+current');
-      expect(mockDiff).toHaveBeenCalledWith(['HEAD~1', 'HEAD', '--', 'test.md']);
+      expect(mockLog).toHaveBeenCalledWith({ maxCount: 1, file: 'test.md' });
+      expect(mockDiff).toHaveBeenCalledWith(['abc123~1', 'abc123', '--', 'test.md']);
+    });
+
+    it('should return empty string when file has no git history', async () => {
+      mockCheckIsRepo.mockResolvedValue(true);
+      mockLog.mockResolvedValue({ latest: null });
+
+      const response = await request(app).get('/api/diff-prev/test.md');
+      expect(response.statusCode).toBe(200);
+      expect(response.text).toBe('');
     });
 
     it('should return 404 when not a git repository', async () => {
@@ -95,9 +108,9 @@ describe('diff routes', () => {
       expect(response.body).toEqual({ error: 'Not a git repository' });
     });
 
-    it('should return 500 when git diff fails', async () => {
+    it('should return 500 when git command fails', async () => {
       mockCheckIsRepo.mockResolvedValue(true);
-      mockDiff.mockRejectedValue(new Error('git error'));
+      mockLog.mockRejectedValue(new Error('git error'));
 
       const response = await request(app).get('/api/diff-prev/test.md');
       expect(response.statusCode).toBe(500);
@@ -106,11 +119,13 @@ describe('diff routes', () => {
 
     it('should handle nested file paths', async () => {
       mockCheckIsRepo.mockResolvedValue(true);
+      mockLog.mockResolvedValue({ latest: { hash: 'def456' } });
       mockDiff.mockResolvedValue('diff content');
 
       const response = await request(app).get('/api/diff-prev/docs/guide.md');
       expect(response.statusCode).toBe(200);
-      expect(mockDiff).toHaveBeenCalledWith(['HEAD~1', 'HEAD', '--', 'docs/guide.md']);
+      expect(mockLog).toHaveBeenCalledWith({ maxCount: 1, file: 'docs/guide.md' });
+      expect(mockDiff).toHaveBeenCalledWith(['def456~1', 'def456', '--', 'docs/guide.md']);
     });
   });
 });

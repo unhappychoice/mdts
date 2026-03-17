@@ -449,7 +449,7 @@ exports[`Layout renders correctly 1`] = `
                       tabindex="-1"
                       type="button"
                     >
-                      History
+                      Prev Diff
                     </button>
                   </div>
                   <span

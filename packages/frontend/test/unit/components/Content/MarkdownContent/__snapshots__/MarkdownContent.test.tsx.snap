@@ -85,7 +85,7 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
               tabindex="-1"
               type="button"
             >
-              History
+              Prev Diff
             </button>
           </div>
           <span
