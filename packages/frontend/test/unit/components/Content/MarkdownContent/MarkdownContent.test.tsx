@@ -103,7 +103,10 @@ describe('MarkdownContent', () => {
     });
     expect(fragment()).toMatchSnapshot();
     expect(screen.getByText('🎉 Welcome to mdts!')).toBeInTheDocument();
-    expect(store.getActions()).toEqual([{ type: 'content/fetchContent', payload: null }]);
+    expect(store.getActions()).toEqual([
+      { type: 'content/fetchContent', payload: null },
+      { type: 'diff/fetchDiff', payload: null },
+    ]);
   });
 
   test('renders file content when a file is selected', async () => {

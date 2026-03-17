@@ -13,6 +13,7 @@ interface MarkdownContentTabsProps {
 const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, hasFrontmatter }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isGitRepository } = useSelector((state: RootState) => state.fileTree);
+  const { diff } = useSelector((state: RootState) => state.diff);
 
   const handleChange = useCallback((_: React.SyntheticEvent | null, newValue: ViewMode) => {
     searchParams.set('tab', newValue);
@@ -37,7 +38,7 @@ const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, has
         <Tab value="preview" label="Preview" onClick={handleClick} />
         {hasFrontmatter && <Tab value="frontmatter" label="Frontmatter" />}
         <Tab value="raw" label="Raw" />
-        {isGitRepository && <Tab value="diff" label="Diff" />}
+        {isGitRepository && !!diff && <Tab value="diff" label="Diff" />}
         {isGitRepository && <Tab value="diff-prev" label="Last Commit" />}
       </Tabs>
     </Box>

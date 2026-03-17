@@ -23,7 +23,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   const { currentPath } = useSelector((state: RootState) => state.history);
   const { contentMode } = useSelector((state: RootState) => state.appSetting);
   const { content, loading: contentLoading, error } = useSelector((state: RootState) => state.content);
-  const { loading: fileTreeLoading } = useSelector((state: RootState) => state.fileTree);
+  const { loading: fileTreeLoading, isGitRepository } = useSelector((state: RootState) => state.fileTree);
   const { fontFamily } = useSelector((state: RootState) => state.config);
 
   const { frontmatter, markdownContent } = useFrontmatter(content);
@@ -35,9 +35,12 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   }, [dispatch, currentPath]);
 
   useEffect(() => {
-    if (viewMode === 'diff') {
+    if (isGitRepository) {
       dispatch(fetchDiff(currentPath));
     }
+  }, [dispatch, currentPath, isGitRepository]);
+
+  useEffect(() => {
     if (viewMode === 'diff-prev') {
       dispatch(fetchDiffPrev(currentPath));
     }

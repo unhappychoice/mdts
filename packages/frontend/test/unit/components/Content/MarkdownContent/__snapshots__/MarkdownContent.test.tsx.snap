@@ -76,15 +76,6 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
               tabindex="-1"
               type="button"
             >
-              Diff
-            </button>
-            <button
-              aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
-              role="tab"
-              tabindex="-1"
-              type="button"
-            >
               Last Commit
             </button>
           </div>
