@@ -1,16 +1,17 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import React, { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { ViewMode } from '../../../hooks/useViewMode';
 
 interface MarkdownContentTabsProps {
-  viewMode: 'preview' | 'frontmatter' | 'raw';
+  viewMode: ViewMode;
   hasFrontmatter: boolean;
 }
 
 const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, hasFrontmatter }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleChange = useCallback((_: React.SyntheticEvent | null, newValue: 'preview' | 'frontmatter' | 'raw') => {
+  const handleChange = useCallback((_: React.SyntheticEvent | null, newValue: ViewMode) => {
     searchParams.set('tab', newValue);
     setSearchParams(searchParams);
   }, [searchParams, setSearchParams]);
@@ -33,6 +34,8 @@ const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, has
         <Tab value="preview" label="Preview" onClick={handleClick} />
         {hasFrontmatter && <Tab value="frontmatter" label="Frontmatter" />}
         <Tab value="raw" label="Raw" />
+        <Tab value="diff" label="Diff" />
+        <Tab value="diff-prev" label="History" />
       </Tabs>
     </Box>
   );

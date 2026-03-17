@@ -22,6 +22,14 @@ describe('MarkdownContentView', () => {
       config: {
         enableBreaks: false,
       },
+      diff: {
+        diff: '',
+        diffPrev: '',
+        diffLoading: false,
+        diffPrevLoading: false,
+        diffError: null,
+        diffPrevError: null,
+      },
     });
   });
 

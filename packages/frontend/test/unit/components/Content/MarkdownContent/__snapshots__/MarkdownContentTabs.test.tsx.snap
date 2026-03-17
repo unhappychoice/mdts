@@ -35,6 +35,24 @@ exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
           >
             Raw
           </button>
+          <button
+            aria-selected="false"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            Diff
+          </button>
+          <button
+            aria-selected="false"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            History
+          </button>
         </div>
         <span
           class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"

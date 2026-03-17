@@ -1,12 +1,14 @@
 import { Box, CircularProgress, List, ListItem, ListItemText } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { ViewMode } from '../../../hooks/useViewMode';
 import { RootState } from '../../../store/store';
+import DiffView from './DiffView';
 import MarkdownRenderer from './MarkdownRenderer/MarkdownRenderer';
 
 interface MarkdownContentViewProps {
   loading: boolean;
-  viewMode: 'preview' | 'frontmatter' | 'raw';
+  viewMode: ViewMode;
   content: string | null;
   markdownContent: string;
   frontmatter: Record<string, unknown>;
@@ -17,6 +19,7 @@ const MarkdownContentView: React.FC<MarkdownContentViewProps> = (
 ) => {
   const { currentPath } = useSelector((state: RootState) => state.history);
   const { enableBreaks } = useSelector((state: RootState) => state.config);
+  const { diff, diffPrev, diffLoading, diffPrevLoading } = useSelector((state: RootState) => state.diff);
 
   if (loading) {
     return (
@@ -45,6 +48,24 @@ const MarkdownContentView: React.FC<MarkdownContentViewProps> = (
       return (
         <MarkdownRenderer content={['`````markdown', content, '``````'].join('\n')} selectedFilePath={currentPath} enableBreaks={enableBreaks} />
       );
+    case 'diff':
+      if (diffLoading) {
+        return (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+            <CircularProgress />
+          </Box>
+        );
+      }
+      return <DiffView diff={diff} emptyMessage="No uncommitted changes" />;
+    case 'diff-prev':
+      if (diffPrevLoading) {
+        return (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+            <CircularProgress />
+          </Box>
+        );
+      }
+      return <DiffView diff={diffPrev} emptyMessage="No previous changes found" />;
     default:
       return null;
   }

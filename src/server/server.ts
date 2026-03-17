@@ -7,6 +7,7 @@ import { fileTreeRouter } from './routes/filetree';
 import { outlineRouter } from './routes/outline';
 import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
+import { diffRouter, diffPrevRouter } from './routes/diff';
 import { plantumlRouter } from './routes/plantuml';
 
 export const serve = (context: ServerContext, port: number, host: string): import('http').Server => {
@@ -41,6 +42,8 @@ export const createApp = (
   // Define API
   app.use('/api/filetree', fileTreeRouter(context));
   app.use('/api/outline', outlineRouter(directory));
+  app.use('/api/diff-prev', diffPrevRouter(context));
+  app.use('/api/diff', diffRouter(context));
   app.use('/api/plantuml', plantumlRouter());
   app.get('/api/config', (req, res) => {
     res.json(getConfig());

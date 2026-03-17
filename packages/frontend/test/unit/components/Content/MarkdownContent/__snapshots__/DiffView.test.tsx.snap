@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`DiffView renders snapshot correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-lq5k59"
+  >
+    <div
+      class="MuiBox-root css-1icyjy7"
+    >
+      +added
+    </div>
+  </div>
+</DocumentFragment>
+`;

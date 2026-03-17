@@ -1,7 +1,9 @@
 
 import { useSearchParams } from 'react-router-dom';
 
-export const useViewMode = (): 'preview' | 'frontmatter' | 'raw' => {
+export type ViewMode = 'preview' | 'frontmatter' | 'raw' | 'diff' | 'diff-prev';
+
+export const useViewMode = (): ViewMode => {
   const [searchParams] = useSearchParams();
-  return (searchParams.get('tab') as 'preview' | 'frontmatter' | 'raw') || 'preview';
+  return (searchParams.get('tab') as ViewMode) || 'preview';
 };

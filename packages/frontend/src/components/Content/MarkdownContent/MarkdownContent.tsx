@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFrontmatter } from '../../../hooks/useFrontmatter';
 import { useViewMode } from '../../../hooks/useViewMode';
 import { fetchContent } from '../../../store/slices/contentSlice';
+import { fetchDiff, fetchDiffPrev } from '../../../store/slices/diffSlice';
 import { AppDispatch, RootState } from '../../../store/store';
 import ErrorView from '../../ErrorView';
 import BreadCrumb from '../BreadCrumb';
@@ -32,6 +33,15 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   useEffect(() => {
     dispatch(fetchContent(currentPath));
   }, [dispatch, currentPath]);
+
+  useEffect(() => {
+    if (viewMode === 'diff') {
+      dispatch(fetchDiff(currentPath));
+    }
+    if (viewMode === 'diff-prev') {
+      dispatch(fetchDiffPrev(currentPath));
+    }
+  }, [dispatch, currentPath, viewMode]);
 
   useEffect(() => {
     if (scrollToId) {
