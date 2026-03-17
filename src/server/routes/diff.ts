@@ -50,7 +50,14 @@ export const diffPrevRouter = (context: ServerContext): Router => {
         return res.send('');
       }
       const hash = log.latest.hash;
-      const diff = await git.diff([`${hash}~1`, hash, '--', filePath]);
+      let diff: string;
+      try {
+        diff = await git.diff([`${hash}~1`, hash, '--', filePath]);
+      } catch {
+        // First commit has no parent; diff against empty tree
+        const emptyTree = '4b825dc642cb6eb9a060e54bf899d69f7cb46252';
+        diff = await git.diff([emptyTree, hash, '--', filePath]);
+      }
       res.setHeader('Content-Type', 'text/plain');
       res.send(diff);
     } catch {

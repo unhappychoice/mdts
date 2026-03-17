@@ -117,6 +117,22 @@ describe('diff routes', () => {
       expect(response.body).toEqual({ error: 'Failed to get previous diff' });
     });
 
+    it('should fallback to empty tree diff for initial commit', async () => {
+      mockCheckIsRepo.mockResolvedValue(true);
+      mockLog.mockResolvedValue({ latest: { hash: 'first123' } });
+      mockDiff
+        .mockRejectedValueOnce(new Error('unknown revision first123~1'))
+        .mockResolvedValueOnce('+initial content');
+
+      const response = await request(app).get('/api/diff-prev/test.md');
+      expect(response.statusCode).toBe(200);
+      expect(response.text).toBe('+initial content');
+      expect(mockDiff).toHaveBeenCalledWith(['first123~1', 'first123', '--', 'test.md']);
+      expect(mockDiff).toHaveBeenCalledWith([
+        '4b825dc642cb6eb9a060e54bf899d69f7cb46252', 'first123', '--', 'test.md',
+      ]);
+    });
+
     it('should handle nested file paths', async () => {
       mockCheckIsRepo.mockResolvedValue(true);
       mockLog.mockResolvedValue({ latest: { hash: 'def456' } });
