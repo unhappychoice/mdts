@@ -23,7 +23,7 @@ export const diffRouter = (context: ServerContext): Router => {
       const diff = await git.diff([filePath]);
       res.setHeader('Content-Type', 'text/plain');
       res.send(diff);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: 'Failed to get diff' });
     }
   });
@@ -47,7 +47,7 @@ export const diffPrevRouter = (context: ServerContext): Router => {
       const diff = await git.diff(['HEAD~1', 'HEAD', '--', filePath]);
       res.setHeader('Content-Type', 'text/plain');
       res.send(diff);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: 'Failed to get previous diff' });
     }
   });
