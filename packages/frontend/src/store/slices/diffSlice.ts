@@ -19,11 +19,14 @@ const initialState: DiffState = {
   diffPrevError: null,
 };
 
+const encodePath = (path: string): string =>
+  path.split('/').map(encodeURIComponent).join('/');
+
 export const fetchDiff = createAsyncThunk(
   'diff/fetchDiff',
   async (path: string | null) => {
     if (!path) return '';
-    const data = await fetchData<string>(`/api/diff/${path}`, 'text');
+    const data = await fetchData<string>(`/api/diff/${encodePath(path)}`, 'text');
     return data || '';
   }
 );
@@ -32,7 +35,7 @@ export const fetchDiffPrev = createAsyncThunk(
   'diff/fetchDiffPrev',
   async (path: string | null) => {
     if (!path) return '';
-    const data = await fetchData<string>(`/api/diff-prev/${path}`, 'text');
+    const data = await fetchData<string>(`/api/diff-prev/${encodePath(path)}`, 'text');
     return data || '';
   }
 );
@@ -53,6 +56,7 @@ const diffSlice = createSlice({
       })
       .addCase(fetchDiff.rejected, (state, action) => {
         state.diffLoading = false;
+        state.diff = '';
         state.diffError = action.error.message || 'Failed to fetch diff';
       })
       .addCase(fetchDiffPrev.pending, (state) => {
@@ -65,6 +69,7 @@ const diffSlice = createSlice({
       })
       .addCase(fetchDiffPrev.rejected, (state, action) => {
         state.diffPrevLoading = false;
+        state.diffPrev = '';
         state.diffPrevError = action.error.message || 'Failed to fetch previous diff';
       });
   },

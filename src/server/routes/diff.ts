@@ -7,6 +7,11 @@ const extractFilePath = (params: Record<string, unknown>): string => {
   return Array.isArray(splat) ? splat.join('/') : String(splat);
 };
 
+const isRootCommitError = (error: unknown): boolean => {
+  const message = error instanceof Error ? error.message : String(error);
+  return /(unknown revision|bad revision|ambiguous argument)/i.test(message);
+};
+
 export const diffRouter = (context: ServerContext): Router => {
   const { directory } = context;
   const router = Router();
@@ -20,7 +25,7 @@ export const diffRouter = (context: ServerContext): Router => {
       if (!isRepo) {
         return res.status(404).json({ error: 'Not a git repository' });
       }
-      const diff = await git.diff([filePath]);
+      const diff = await git.diff(['--', filePath]);
       res.setHeader('Content-Type', 'text/plain');
       res.send(diff);
     } catch {
@@ -53,7 +58,8 @@ export const diffPrevRouter = (context: ServerContext): Router => {
       let diff: string;
       try {
         diff = await git.diff([`${hash}~1`, hash, '--', filePath]);
-      } catch {
+      } catch (error) {
+        if (!isRootCommitError(error)) throw error;
         // First commit has no parent; diff against empty tree
         const emptyTree = '4b825dc642cb6eb9a060e54bf899d69f7cb46252';
         diff = await git.diff([emptyTree, hash, '--', filePath]);

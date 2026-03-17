@@ -31,7 +31,7 @@ describe('diff routes', () => {
       expect(response.statusCode).toBe(200);
       expect(response.text).toContain('-old');
       expect(response.text).toContain('+new');
-      expect(mockDiff).toHaveBeenCalledWith(['test.md']);
+      expect(mockDiff).toHaveBeenCalledWith(['--', 'test.md']);
     });
 
     it('should return 404 when not a git repository', async () => {
@@ -111,6 +111,16 @@ describe('diff routes', () => {
     it('should return 500 when git command fails', async () => {
       mockCheckIsRepo.mockResolvedValue(true);
       mockLog.mockRejectedValue(new Error('git error'));
+
+      const response = await request(app).get('/api/diff-prev/test.md');
+      expect(response.statusCode).toBe(500);
+      expect(response.body).toEqual({ error: 'Failed to get previous diff' });
+    });
+
+    it('should return 500 when diff fails with non-root-commit error', async () => {
+      mockCheckIsRepo.mockResolvedValue(true);
+      mockLog.mockResolvedValue({ latest: { hash: 'abc123' } });
+      mockDiff.mockRejectedValue(new Error('permission denied'));
 
       const response = await request(app).get('/api/diff-prev/test.md');
       expect(response.statusCode).toBe(500);

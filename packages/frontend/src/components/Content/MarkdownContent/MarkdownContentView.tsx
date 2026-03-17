@@ -1,4 +1,4 @@
-import { Box, CircularProgress, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Alert, Box, CircularProgress, List, ListItem, ListItemText, Typography } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ViewMode } from '../../../hooks/useViewMode';
@@ -32,7 +32,9 @@ const MarkdownContentView: React.FC<MarkdownContentViewProps> = (
 ) => {
   const { currentPath } = useSelector((state: RootState) => state.history);
   const { enableBreaks } = useSelector((state: RootState) => state.config);
-  const { diff, diffPrev, diffLoading, diffPrevLoading } = useSelector((state: RootState) => state.diff);
+  const {
+    diff, diffPrev, diffLoading, diffPrevLoading, diffError, diffPrevError,
+  } = useSelector((state: RootState) => state.diff);
 
   if (loading) {
     return <LoadingView />;
@@ -59,12 +61,14 @@ const MarkdownContentView: React.FC<MarkdownContentViewProps> = (
       );
     case 'diff':
       if (diffLoading) return <LoadingView />;
+      if (diffError) return <Alert severity="error">{diffError}</Alert>;
       if (!diff) return <EmptyDiffView message="No uncommitted changes" />;
       return (
         <MarkdownRenderer content={['`````diff', diff, '``````'].join('\n')} selectedFilePath={currentPath} enableBreaks={enableBreaks} />
       );
     case 'diff-prev':
       if (diffPrevLoading) return <LoadingView />;
+      if (diffPrevError) return <Alert severity="error">{diffPrevError}</Alert>;
       if (!diffPrev) return <EmptyDiffView message="No previous changes found" />;
       return (
         <MarkdownRenderer content={['`````diff', diffPrev, '``````'].join('\n')} selectedFilePath={currentPath} enableBreaks={enableBreaks} />
