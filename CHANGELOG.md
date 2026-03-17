@@ -1,5 +1,81 @@
 # Changelog
 
+## v0.17.0
+
+### ✨ Features
+- show Diff tab only when uncommitted changes exist ([d673599](https://github.com/unhappychoice/mdts/commit/d673599)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+- hide diff tabs when not in a git repository ([9a9c46d](https://github.com/unhappychoice/mdts/commit/9a9c46d)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+- add markdown diff view and previous commit history tabs ([84e91d3](https://github.com/unhappychoice/mdts/commit/84e91d3)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+
+### 🐛 Bug Fixes
+- address coderabbit review feedback ([a1fded2](https://github.com/unhappychoice/mdts/commit/a1fded2)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+- handle initial commit in diff-prev and remove example doc change ([16c4ca2](https://github.com/unhappychoice/mdts/commit/16c4ca2)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+- rename Prev Diff tab to Last Commit ([d7cac89](https://github.com/unhappychoice/mdts/commit/d7cac89)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+- use last commit that changed the file for prev diff instead of HEAD~1 ([87ad951](https://github.com/unhappychoice/mdts/commit/87ad951)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+- remove unused error variables in diff routes ([80eb556](https://github.com/unhappychoice/mdts/commit/80eb556)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+
+### 📝 Documentation
+- update CHANGELOG.md for v0.16.1 ([cf934c8](https://github.com/unhappychoice/mdts/commit/cf934c8))
+
+### ♻️ Refactor
+- render diff views using MarkdownRenderer for consistent design ([9b199fe](https://github.com/unhappychoice/mdts/commit/9b199fe)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+
+### 🆙 Update Packages
+- Bump webpack-cli in /packages/frontend ([d1bcdbd](https://github.com/unhappychoice/mdts/commit/d1bcdbd)) ([#598](https://github.com/unhappychoice/mdts/pull/598))
+- Bump @typescript-eslint/parser in /packages/frontend ([1b5453c](https://github.com/unhappychoice/mdts/commit/1b5453c)) ([#597](https://github.com/unhappychoice/mdts/pull/597))
+- Bump typescript-eslint from 8.57.0 to 8.57.1 ([21dbd8c](https://github.com/unhappychoice/mdts/commit/21dbd8c)) ([#596](https://github.com/unhappychoice/mdts/pull/596))
+- Bump typescript-eslint in /packages/frontend ([b1743f7](https://github.com/unhappychoice/mdts/commit/b1743f7)) ([#593](https://github.com/unhappychoice/mdts/pull/593))
+- Bump @typescript-eslint/parser from 8.57.0 to 8.57.1 ([cdd0258](https://github.com/unhappychoice/mdts/commit/cdd0258)) ([#592](https://github.com/unhappychoice/mdts/pull/592))
+- Bump mermaid from 11.12.3 to 11.13.0 in /packages/frontend ([2bf3c61](https://github.com/unhappychoice/mdts/commit/2bf3c61)) ([#590](https://github.com/unhappychoice/mdts/pull/590))
+- Bump jest from 30.2.0 to 30.3.0 in /packages/frontend ([ae6a97a](https://github.com/unhappychoice/mdts/commit/ae6a97a)) ([#589](https://github.com/unhappychoice/mdts/pull/589))
+- Bump typescript-eslint in /packages/frontend ([91d12cf](https://github.com/unhappychoice/mdts/commit/91d12cf)) ([#588](https://github.com/unhappychoice/mdts/pull/588))
+- Bump simple-git from 3.32.3 to 3.33.0 ([79c14a6](https://github.com/unhappychoice/mdts/commit/79c14a6)) ([#587](https://github.com/unhappychoice/mdts/pull/587))
+- Bump typescript-eslint from 8.56.1 to 8.57.0 ([8d10e37](https://github.com/unhappychoice/mdts/commit/8d10e37)) ([#584](https://github.com/unhappychoice/mdts/pull/584))
+- Bump jest from 30.2.0 to 30.3.0 ([229342f](https://github.com/unhappychoice/mdts/commit/229342f)) ([#582](https://github.com/unhappychoice/mdts/pull/582))
+- Bump babel-jest in /packages/frontend ([28528b8](https://github.com/unhappychoice/mdts/commit/28528b8)) ([#581](https://github.com/unhappychoice/mdts/pull/581))
+- Bump jest-environment-jsdom in /packages/frontend ([ae44059](https://github.com/unhappychoice/mdts/commit/ae44059)) ([#583](https://github.com/unhappychoice/mdts/pull/583))
+- Bump babel-loader in /packages/frontend ([d33457b](https://github.com/unhappychoice/mdts/commit/d33457b)) ([#580](https://github.com/unhappychoice/mdts/pull/580))
+- Bump jest-util from 30.2.0 to 30.3.0 ([2a76468](https://github.com/unhappychoice/mdts/commit/2a76468)) ([#579](https://github.com/unhappychoice/mdts/pull/579))
+- Bump babel-loader in /packages/frontend ([09ca2c5](https://github.com/unhappychoice/mdts/commit/09ca2c5)) ([#578](https://github.com/unhappychoice/mdts/pull/578))
+- Bump @eslint/compat in /packages/frontend ([70eb06e](https://github.com/unhappychoice/mdts/commit/70eb06e)) ([#575](https://github.com/unhappychoice/mdts/pull/575))
+- bump @mui/material from 7.3.8 to 7.3.9 and update snapshots ([d87936c](https://github.com/unhappychoice/mdts/commit/d87936c))
+- Bump @stylistic/eslint-plugin in /packages/frontend ([7bb46ad](https://github.com/unhappychoice/mdts/commit/7bb46ad)) ([#574](https://github.com/unhappychoice/mdts/pull/574))
+- Bump @stylistic/eslint-plugin from 5.9.0 to 5.10.0 ([f8b8828](https://github.com/unhappychoice/mdts/commit/f8b8828)) ([#573](https://github.com/unhappychoice/mdts/pull/573))
+- Bump @mui/icons-material in /packages/frontend ([7cd8456](https://github.com/unhappychoice/mdts/commit/7cd8456)) ([#571](https://github.com/unhappychoice/mdts/pull/571))
+- Bump webpack in /packages/frontend ([08a1f09](https://github.com/unhappychoice/mdts/commit/08a1f09)) ([#570](https://github.com/unhappychoice/mdts/pull/570))
+- Bump copy-webpack-plugin in /packages/frontend ([8809380](https://github.com/unhappychoice/mdts/commit/8809380)) ([#569](https://github.com/unhappychoice/mdts/pull/569))
+- Bump axios from 1.13.5 to 1.13.6 ([fb36dd6](https://github.com/unhappychoice/mdts/commit/fb36dd6)) ([#568](https://github.com/unhappychoice/mdts/pull/568))
+- Bump simple-git from 3.32.2 to 3.32.3 ([1ddf986](https://github.com/unhappychoice/mdts/commit/1ddf986)) ([#567](https://github.com/unhappychoice/mdts/pull/567))
+- Bump react-syntax-highlighter in /packages/frontend ([9549ec4](https://github.com/unhappychoice/mdts/commit/9549ec4)) ([#566](https://github.com/unhappychoice/mdts/pull/566))
+- Bump @types/aws-lambda from 8.10.160 to 8.10.161 ([3dd882a](https://github.com/unhappychoice/mdts/commit/3dd882a)) ([#565](https://github.com/unhappychoice/mdts/pull/565))
+- Bump webpack in /packages/frontend ([779db5c](https://github.com/unhappychoice/mdts/commit/779db5c)) ([#564](https://github.com/unhappychoice/mdts/pull/564))
+- Bump @types/supertest from 6.0.3 to 7.2.0 ([26fe199](https://github.com/unhappychoice/mdts/commit/26fe199)) ([#563](https://github.com/unhappychoice/mdts/pull/563))
+- Bump react-router-dom in /packages/frontend ([4632698](https://github.com/unhappychoice/mdts/commit/4632698)) ([#562](https://github.com/unhappychoice/mdts/pull/562))
+- Bump @typescript-eslint/parser in /packages/frontend ([30d2722](https://github.com/unhappychoice/mdts/commit/30d2722)) ([#561](https://github.com/unhappychoice/mdts/pull/561))
+- Bump @typescript-eslint/parser from 8.56.0 to 8.56.1 ([be7f280](https://github.com/unhappychoice/mdts/commit/be7f280)) ([#560](https://github.com/unhappychoice/mdts/pull/560))
+- Bump typescript-eslint from 8.56.0 to 8.56.1 ([d1177c9](https://github.com/unhappychoice/mdts/commit/d1177c9)) ([#558](https://github.com/unhappychoice/mdts/pull/558))
+- Bump typescript-eslint in /packages/frontend ([d24c31d](https://github.com/unhappychoice/mdts/commit/d24c31d)) ([#555](https://github.com/unhappychoice/mdts/pull/555))
+- Bump @mui/x-tree-view in /packages/frontend ([1a7d192](https://github.com/unhappychoice/mdts/commit/1a7d192)) ([#551](https://github.com/unhappychoice/mdts/pull/551))
+- Bump simple-git from 3.31.1 to 3.32.2 ([4bc216a](https://github.com/unhappychoice/mdts/commit/4bc216a)) ([#550](https://github.com/unhappychoice/mdts/pull/550))
+- Bump @stylistic/eslint-plugin from 5.8.0 to 5.9.0 ([b5541af](https://github.com/unhappychoice/mdts/commit/b5541af)) ([#549](https://github.com/unhappychoice/mdts/pull/549))
+- Bump glob from 13.0.5 to 13.0.6 ([3c65ca9](https://github.com/unhappychoice/mdts/commit/3c65ca9)) ([#548](https://github.com/unhappychoice/mdts/pull/548))
+- Bump @stylistic/eslint-plugin in /packages/frontend ([6800282](https://github.com/unhappychoice/mdts/commit/6800282)) ([#547](https://github.com/unhappychoice/mdts/pull/547))
+- Bump mermaid from 11.12.2 to 11.12.3 in /packages/frontend ([5f91db3](https://github.com/unhappychoice/mdts/commit/5f91db3)) ([#546](https://github.com/unhappychoice/mdts/pull/546))
+- Bump glob from 13.0.4 to 13.0.5 ([231a5a8](https://github.com/unhappychoice/mdts/commit/231a5a8)) ([#545](https://github.com/unhappychoice/mdts/pull/545))
+- Bump css-loader in /packages/frontend ([8174ae8](https://github.com/unhappychoice/mdts/commit/8174ae8)) ([#542](https://github.com/unhappychoice/mdts/pull/542))
+- Bump typescript-eslint in /packages/frontend ([c5b0027](https://github.com/unhappychoice/mdts/commit/c5b0027)) ([#541](https://github.com/unhappychoice/mdts/pull/541))
+- Bump @typescript-eslint/eslint-plugin ([1f09c10](https://github.com/unhappychoice/mdts/commit/1f09c10)) ([#540](https://github.com/unhappychoice/mdts/pull/540))
+- Bump @typescript-eslint/parser in /packages/frontend ([9b80d0e](https://github.com/unhappychoice/mdts/commit/9b80d0e)) ([#539](https://github.com/unhappychoice/mdts/pull/539))
+- Bump glob from 13.0.3 to 13.0.4 ([c956f12](https://github.com/unhappychoice/mdts/commit/c956f12)) ([#538](https://github.com/unhappychoice/mdts/pull/538))
+- Bump typescript-eslint from 8.55.0 to 8.56.0 ([1c33859](https://github.com/unhappychoice/mdts/commit/1c33859)) ([#537](https://github.com/unhappychoice/mdts/pull/537))
+- Bump @mui/x-tree-view in /packages/frontend ([059c908](https://github.com/unhappychoice/mdts/commit/059c908)) ([#536](https://github.com/unhappychoice/mdts/pull/536))
+- Bump simple-git from 3.30.0 to 3.31.1 ([d068dda](https://github.com/unhappychoice/mdts/commit/d068dda)) ([#535](https://github.com/unhappychoice/mdts/pull/535))
+- Bump eslint-plugin-jest in /packages/frontend ([41e5b46](https://github.com/unhappychoice/mdts/commit/41e5b46)) ([#534](https://github.com/unhappychoice/mdts/pull/534))
+
+### 💚 CI/Test
+- improve test coverage for diffSlice and MarkdownContentView ([1284a95](https://github.com/unhappychoice/mdts/commit/1284a95)) ([#599](https://github.com/unhappychoice/mdts/pull/599))
+
+
 ## v0.16.1
 
 ### ✨ Features
