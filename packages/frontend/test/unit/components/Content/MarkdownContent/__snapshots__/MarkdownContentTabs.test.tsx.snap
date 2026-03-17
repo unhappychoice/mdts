@@ -51,7 +51,7 @@ exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
             tabindex="-1"
             type="button"
           >
-            Prev Diff
+            Last Commit
           </button>
         </div>
         <span

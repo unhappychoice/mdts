@@ -35,7 +35,7 @@ const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, has
         {hasFrontmatter && <Tab value="frontmatter" label="Frontmatter" />}
         <Tab value="raw" label="Raw" />
         <Tab value="diff" label="Diff" />
-        <Tab value="diff-prev" label="Prev Diff" />
+        <Tab value="diff-prev" label="Last Commit" />
       </Tabs>
     </Box>
   );
