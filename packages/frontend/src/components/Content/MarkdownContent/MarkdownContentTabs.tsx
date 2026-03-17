@@ -1,7 +1,9 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import React, { useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { ViewMode } from '../../../hooks/useViewMode';
+import { RootState } from '../../../store/store';
 
 interface MarkdownContentTabsProps {
   viewMode: ViewMode;
@@ -10,6 +12,7 @@ interface MarkdownContentTabsProps {
 
 const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, hasFrontmatter }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { isGitRepository } = useSelector((state: RootState) => state.fileTree);
 
   const handleChange = useCallback((_: React.SyntheticEvent | null, newValue: ViewMode) => {
     searchParams.set('tab', newValue);
@@ -34,8 +37,8 @@ const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, has
         <Tab value="preview" label="Preview" onClick={handleClick} />
         {hasFrontmatter && <Tab value="frontmatter" label="Frontmatter" />}
         <Tab value="raw" label="Raw" />
-        <Tab value="diff" label="Diff" />
-        <Tab value="diff-prev" label="Last Commit" />
+        {isGitRepository && <Tab value="diff" label="Diff" />}
+        {isGitRepository && <Tab value="diff-prev" label="Last Commit" />}
       </Tabs>
     </Box>
   );

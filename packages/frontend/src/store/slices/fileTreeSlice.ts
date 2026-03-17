@@ -6,12 +6,13 @@ export interface FileTreeItem {
   status: string;
 }
 
-interface FileTreeState {
+export interface FileTreeState {
   fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
   filteredFileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
   searchQuery: string;
   expandedNodes: string[];
   mountedDirectoryPath: string;
+  isGitRepository: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -22,6 +23,7 @@ const initialState: FileTreeState = {
   searchQuery: '',
   expandedNodes: [],
   mountedDirectoryPath: '',
+  isGitRepository: false,
   loading: true,
   error: null,
 };
@@ -101,8 +103,13 @@ export const fetchFileTree = createAsyncThunk(
     const data = await fetchData<{
       fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
       mountedDirectoryPath: string;
+      isGitRepository: boolean;
     }>('/api/filetree', 'json');
-    return { fileTree: data?.fileTree || [], mountedDirectoryPath: data?.mountedDirectoryPath };
+    return {
+      fileTree: data?.fileTree || [],
+      mountedDirectoryPath: data?.mountedDirectoryPath,
+      isGitRepository: data?.isGitRepository ?? false,
+    };
   }
 );
 
@@ -161,6 +168,7 @@ const fileTreeSlice = createSlice({
         state.loading = false;
         state.fileTree = action.payload.fileTree;
         state.mountedDirectoryPath = action.payload.mountedDirectoryPath;
+        state.isGitRepository = action.payload.isGitRepository;
         state.filteredFileTree = filterTree(action.payload.fileTree, state.searchQuery);
         state.expandedNodes = loadExpandedNodes(action.payload.mountedDirectoryPath);
       })

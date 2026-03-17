@@ -47,6 +47,7 @@ describe('MarkdownContent', () => {
       diff: defaultDiffState,
       fileTree: {
         loading: false,
+        isGitRepository: true,
       },
       history: {
         currentPath: '/',
@@ -73,6 +74,7 @@ describe('MarkdownContent', () => {
       diff: defaultDiffState,
       fileTree: {
         loading: false,
+        isGitRepository: true,
       },
       history: {
         currentPath: null,
@@ -114,6 +116,7 @@ describe('MarkdownContent', () => {
       diff: defaultDiffState,
       fileTree: {
         loading: false,
+        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -153,6 +156,7 @@ describe('MarkdownContent', () => {
       diff: defaultDiffState,
       fileTree: {
         loading: false,
+        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -190,6 +194,7 @@ describe('MarkdownContent', () => {
       diff: defaultDiffState,
       fileTree: {
         loading: false,
+        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -228,6 +233,7 @@ describe('MarkdownContent', () => {
       diff: defaultDiffState,
       fileTree: {
         loading: false,
+        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -269,6 +275,7 @@ describe('MarkdownContent', () => {
       diff: defaultDiffState,
       fileTree: {
         loading: false,
+        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',
@@ -320,6 +327,7 @@ describe('MarkdownContent', () => {
       diff: defaultDiffState,
       fileTree: {
         loading: false,
+        isGitRepository: true,
       },
       history: {
         currentPath: '/path/to/test.md',

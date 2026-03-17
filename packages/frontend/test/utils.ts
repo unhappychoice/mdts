@@ -27,6 +27,7 @@ export const createMockStore = (
       loading: false,
       error: null,
       searchQuery: '',
+      isGitRepository: true,
     },
     content: {
       content: '',

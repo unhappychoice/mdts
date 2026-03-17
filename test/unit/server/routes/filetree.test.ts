@@ -55,6 +55,7 @@ describe('filetree.ts', () => {
           { path: 'file1.md', status: ' ' },
         ],
         mountedDirectoryPath: mockDirectory,
+        isGitRepository: true,
       });
     });
 
@@ -69,6 +70,7 @@ describe('filetree.ts', () => {
       expect(response.body).toEqual({
         fileTree: [],
         mountedDirectoryPath: mockDirectory,
+        isGitRepository: true,
       });
     });
   });
@@ -102,6 +104,7 @@ describe('filetree.ts', () => {
           ]},
         ],
         mountedDirectoryPath: mockDirectory,
+        isGitRepository: true,
       });
     });
 
