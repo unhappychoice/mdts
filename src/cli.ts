@@ -11,7 +11,7 @@ const DEFAULT_DIRECTORY = '.';
 export class CLI {
   run(): Promise<void> {
     return this.requireOpen()
-      .then((open) => {
+      .then(async (open) => {
         const program = new Command();
 
         const packageJsonPath = path.join(__dirname, '..', 'package.json');
@@ -40,7 +40,14 @@ export class CLI {
             const context = options.glob
               ? resolveGlobPatterns(absoluteDirectory, options.glob)
               : { directory: absoluteDirectory };
-            const { port: actualPort } = await serve(context, port, host);
+            let actualPort: number;
+            try {
+              ({ port: actualPort } = await serve(context, port, host));
+            } catch (err) {
+              logger.error(`❌ Failed to start server: ${err instanceof Error ? err.message : err}`);
+              process.exitCode = 1;
+              return;
+            }
             const readmePath = path.join(context.directory, 'README.md');
             const initialPath = existsSync(readmePath) ? '/README.md' : '';
             const displayHost = (host === '0.0.0.0' || host === '::') ? 'localhost' : host;
@@ -52,7 +59,7 @@ export class CLI {
             }
           });
 
-        program.parse(process.argv);
+        await program.parseAsync(process.argv);
       });
   }
 
