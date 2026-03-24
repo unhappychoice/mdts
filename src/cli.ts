@@ -26,7 +26,7 @@ export class CLI {
           .option('--no-open', 'do not open the browser automatically')
           .option('-g, --glob <patterns...>', 'glob patterns to filter markdown files (e.g. "docs/*.md")')
           .argument('[directory]', 'directory to serve', DEFAULT_DIRECTORY)
-          .action((directory, options) => {
+          .action(async (directory, options) => {
             logger.setSilent(options.silent);
 
             logger.showLogo();
@@ -40,15 +40,15 @@ export class CLI {
             const context = options.glob
               ? resolveGlobPatterns(absoluteDirectory, options.glob)
               : { directory: absoluteDirectory };
-            serve(context, port, host);
+            const { port: actualPort } = await serve(context, port, host);
             const readmePath = path.join(context.directory, 'README.md');
             const initialPath = existsSync(readmePath) ? '/README.md' : '';
             const displayHost = (host === '0.0.0.0' || host === '::') ? 'localhost' : host;
             if (options.open) {
-              logger.log('CLI', `🌐 Opening browser at http://${displayHost}:${port}${initialPath}`);
-              open(`http://${displayHost}:${port}${initialPath}`);
+              logger.log('CLI', `🌐 Opening browser at http://${displayHost}:${actualPort}${initialPath}`);
+              open(`http://${displayHost}:${actualPort}${initialPath}`);
             } else {
-              logger.log('CLI', `🌐 Server running at http://${displayHost}:${port}${initialPath}`);
+              logger.log('CLI', `🌐 Server running at http://${displayHost}:${actualPort}${initialPath}`);
             }
           });
 

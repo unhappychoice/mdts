@@ -8,11 +8,16 @@ import { ServerContext } from '../../../src/server/context';
 jest.mock('express', () => {
   const mockUse = jest.fn();
   const mockGet = jest.fn();
-  const mockListen = jest.fn((port, host, callback) => {
-    if (callback) {
-      callback();
-    }
-    return { close: jest.fn() };
+  const mockListen = jest.fn(() => {
+    const mockServer = {
+      close: jest.fn(),
+      once: jest.fn((event: string, handler: (...args: unknown[]) => void) => {
+        if (event === 'listening') {
+          process.nextTick(() => handler());
+        }
+      }),
+    };
+    return mockServer;
   });
   const mockPost = jest.fn();
   const mockExpress = jest.fn(() => ({
@@ -305,11 +310,12 @@ describe('server.ts unit tests', () => {
   });
 
   describe('serve', () => {
-    it('should start a server and setup watcher', () => {
+    it('should start a server and setup watcher', async () => {
       const context: ServerContext = { directory: '/mock/directory' };
-      const server = serve(context, 3000, 'localhost');
-      expect(app.listen).toHaveBeenCalledWith(3000, 'localhost', expect.any(Function));
+      const { server, port } = await serve(context, 3000, 'localhost');
+      expect(app.listen).toHaveBeenCalledWith(3000, 'localhost');
       expect(setupWatcher).toHaveBeenCalledWith(context, server, 3000);
+      expect(port).toBe(3000);
     });
   });
 });

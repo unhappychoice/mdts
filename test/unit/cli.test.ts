@@ -25,7 +25,7 @@ jest.mock('open', () => ({ default: jest.fn(() => Promise.resolve()) }));
 
 // Mock the 'serve' function to prevent actual server startup
 jest.mock('../../src/server/server', () => ({
-  serve: jest.fn(),
+  serve: jest.fn((_context: unknown, port: number) => Promise.resolve({ server: {}, port })),
 }));
 
 jest.mock('../../src/utils/logger', () => ({
