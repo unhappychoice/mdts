@@ -69,6 +69,46 @@
         margin: 0 0 8px;
     }
 
+    .contains-task-list {
+        list-style: none;
+        padding-left: 4px;
+    }
+
+    .task-list-item {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+
+        input[type="checkbox"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            min-width: 16px;
+            border: 2px solid var(--markdown-border-color);
+            border-radius: 3px;
+            cursor: default;
+            position: relative;
+            top: 2px;
+
+            &:checked {
+                background-color: var(--markdown-link-color);
+                border-color: var(--markdown-link-color);
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: 3px;
+                    top: 0px;
+                    width: 5px;
+                    height: 9px;
+                    border: solid #fff;
+                    border-width: 0 2px 2px 0;
+                    transform: rotate(45deg);
+                }
+            }
+        }
+    }
+
     hr {
         margin: 48px 0;
         border: 0;
