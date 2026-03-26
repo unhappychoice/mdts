@@ -103,3 +103,7 @@ Experience mdts in action with real examples and interactive features.
 
 Found a bug? Have an idea? Want to send a PR?  
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for details — we'd love to have your help!
+
+## Author
+
+[@unhappychoice](https://unhappychoice.com)
