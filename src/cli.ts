@@ -21,7 +21,7 @@ export class CLI {
           .version(packageJson.version)
           .description('A zero-config CLI tool to preview local Markdown files in a browser')
           .option('-H, --host <host>', 'host to listen on', 'localhost')
-          .option('-p, --port <port>', 'port to serve on', String(DEFAULT_PORT))
+          .option('-p, --port <port>', 'port to serve on (use "auto" to find an available port)', String(DEFAULT_PORT))
           .option('-s, --silent', 'suppress server logs', false)
           .option('--no-open', 'do not open the browser automatically')
           .option('-g, --glob <patterns...>', 'glob patterns to filter markdown files (e.g. "docs/*.md")')
@@ -34,7 +34,8 @@ export class CLI {
             logger.log('Announcement', '✨ Like it? Star it on GitHub: https://github.com/unhappychoice/mdts');
 
             logger.log('CLI', '⚙  Options: ' + JSON.stringify(options));
-            const port = parseInt(options.port, 10);
+            const autoPort = options.port === 'auto';
+            const port = autoPort ? DEFAULT_PORT : parseInt(options.port, 10);
             const host = options.host;
             const absoluteDirectory = path.resolve(process.cwd(), directory);
             const context = options.glob
@@ -42,7 +43,7 @@ export class CLI {
               : { directory: absoluteDirectory };
             let actualPort: number;
             try {
-              ({ port: actualPort } = await serve(context, port, host));
+              ({ port: actualPort } = await serve(context, port, host, autoPort));
             } catch (err) {
               logger.error(`❌ Failed to start server: ${err instanceof Error ? err.message : err}`);
               process.exitCode = 1;

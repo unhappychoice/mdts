@@ -317,5 +317,51 @@ describe('server.ts unit tests', () => {
       expect(setupWatcher).toHaveBeenCalledWith(context, server, 3000);
       expect(port).toBe(3000);
     });
+
+    it('should reject on EADDRINUSE when autoPort is false', async () => {
+      const mockListen = app.listen as jest.Mock;
+      mockListen.mockImplementationOnce(() => {
+        const mockServer = {
+          close: jest.fn(),
+          once: jest.fn((event: string, handler: (...args: unknown[]) => void) => {
+            if (event === 'error') {
+              process.nextTick(() => handler({ code: 'EADDRINUSE' }));
+            }
+          }),
+        };
+        return mockServer;
+      });
+
+      const context: ServerContext = { directory: '/mock/directory' };
+      await expect(serve(context, 3000, 'localhost', false)).rejects.toEqual({ code: 'EADDRINUSE' });
+    });
+
+    it('should retry on EADDRINUSE and resolve with next port when autoPort is true', async () => {
+      const mockListen = app.listen as jest.Mock;
+      let callCount = 0;
+      mockListen.mockImplementation(() => {
+        callCount++;
+        const currentCall = callCount;
+        const mockServer = {
+          close: jest.fn(),
+          once: jest.fn((event: string, handler: (...args: unknown[]) => void) => {
+            if (event === 'error' && currentCall === 1) {
+              process.nextTick(() => handler({ code: 'EADDRINUSE' }));
+            } else if (event === 'listening' && currentCall === 2) {
+              process.nextTick(() => handler());
+            }
+          }),
+        };
+        return mockServer;
+      });
+
+      const context: ServerContext = { directory: '/mock/directory' };
+      const { port } = await serve(context, 3000, 'localhost', true);
+
+      expect(mockListen).toHaveBeenCalledTimes(2);
+      expect(mockListen).toHaveBeenNthCalledWith(1, 3000, 'localhost');
+      expect(mockListen).toHaveBeenNthCalledWith(2, 3001, 'localhost');
+      expect(port).toBe(3001);
+    });
   });
 });

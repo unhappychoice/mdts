@@ -15,6 +15,7 @@ export const serve = (
   context: ServerContext,
   port: number,
   host: string,
+  autoPort: boolean = false,
 ): Promise<{ server: import('http').Server; port: number }> => {
   const app = createApp(context);
 
@@ -37,7 +38,7 @@ export const serve = (
       });
 
       server.once('error', (err: NodeJS.ErrnoException) => {
-        if (err.code === 'EADDRINUSE' && retries > 0) {
+        if (err.code === 'EADDRINUSE' && autoPort && retries > 0) {
           logger.log('Server', `⚠️  Port ${currentPort} is in use, trying ${currentPort + 1}...`);
           resolve(tryListen(currentPort + 1, retries - 1));
         } else {
@@ -47,7 +48,7 @@ export const serve = (
     });
   };
 
-  return tryListen(port, MAX_PORT_RETRIES);
+  return tryListen(port, autoPort ? MAX_PORT_RETRIES : 0);
 };
 
 export const createApp = (
