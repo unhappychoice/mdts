@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.18.0
+
+### ✨ Features
+- change auto-fallback to opt-in via --port auto ([4f9efd7](https://github.com/unhappychoice/mdts/commit/4f9efd7)) ([#614](https://github.com/unhappychoice/mdts/pull/614))
+- auto-fallback to next available port when default port is in use ([5a3940c](https://github.com/unhappychoice/mdts/commit/5a3940c)) ([#614](https://github.com/unhappychoice/mdts/pull/614))
+
+### 🐛 Bug Fixes
+- use parseAsync and add try/catch for serve() rejection ([dc1f10c](https://github.com/unhappychoice/mdts/commit/dc1f10c)) ([#614](https://github.com/unhappychoice/mdts/pull/614))
+
+### 📝 Documentation
+- add author section with website link ([6c561d4](https://github.com/unhappychoice/mdts/commit/6c561d4))
+- update CHANGELOG.md for v0.17.0 ([5ec08fd](https://github.com/unhappychoice/mdts/commit/5ec08fd))
+
+### 👕 Code Style
+- add task list checkbox styles in markdown body ([58c855b](https://github.com/unhappychoice/mdts/commit/58c855b)) ([#616](https://github.com/unhappychoice/mdts/pull/616))
+
+### 🆙 Update Packages
+- Bump eslint-plugin-jest in /packages/frontend ([a28a6a0](https://github.com/unhappychoice/mdts/commit/a28a6a0)) ([#615](https://github.com/unhappychoice/mdts/pull/615))
+- Bump react-router-dom in /packages/frontend ([3ceeb4b](https://github.com/unhappychoice/mdts/commit/3ceeb4b)) ([#613](https://github.com/unhappychoice/mdts/pull/613))
+- Bump @typescript-eslint/parser from 8.57.1 to 8.57.2 ([9421903](https://github.com/unhappychoice/mdts/commit/9421903)) ([#612](https://github.com/unhappychoice/mdts/pull/612))
+- Bump @typescript-eslint/parser in /packages/frontend ([84ec54a](https://github.com/unhappychoice/mdts/commit/84ec54a)) ([#611](https://github.com/unhappychoice/mdts/pull/611))
+- Bump typescript-eslint from 8.57.1 to 8.57.2 ([f77cfee](https://github.com/unhappychoice/mdts/commit/f77cfee)) ([#609](https://github.com/unhappychoice/mdts/pull/609))
+- Bump typescript-eslint in /packages/frontend ([9e2b73e](https://github.com/unhappychoice/mdts/commit/9e2b73e)) ([#608](https://github.com/unhappychoice/mdts/pull/608))
+- Bump ws from 8.19.0 to 8.20.0 ([e06b869](https://github.com/unhappychoice/mdts/commit/e06b869)) ([#604](https://github.com/unhappychoice/mdts/pull/604))
+- Bump webpack-cli in /packages/frontend ([0fb7da0](https://github.com/unhappychoice/mdts/commit/0fb7da0)) ([#601](https://github.com/unhappychoice/mdts/pull/601))
+- Bump @babel/preset-env in /packages/frontend ([b70c376](https://github.com/unhappychoice/mdts/commit/b70c376)) ([#600](https://github.com/unhappychoice/mdts/pull/600))
+
+
 ## v0.17.0
 
 ### ✨ Features
