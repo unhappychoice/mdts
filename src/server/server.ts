@@ -10,19 +10,46 @@ import { setupWatcher } from './watcher';
 import { diffRouter, diffPrevRouter } from './routes/diff';
 import { plantumlRouter } from './routes/plantuml';
 
-export const serve = (context: ServerContext, port: number, host: string): import('http').Server => {
+const MAX_PORT_RETRIES = 10;
+
+export const serve = (
+  context: ServerContext,
+  port: number,
+  host: string,
+  autoPort: boolean = false,
+): Promise<{ server: import('http').Server; port: number }> => {
   const app = createApp(context);
-  const server = app.listen(port, host, () => {
-    logger.log('Server', `📁 Mounted directory: ${context.directory}`);
-    if (context.filePatterns) {
-      logger.log('Server', `📄 Watching ${context.filePatterns.length} files from glob patterns`);
-    }
-    logger.log('Server', `🚀 Server listening at http://${host}:${port}`);
-  });
 
-  setupWatcher(context, server, port);
+  type ServeResult = { server: import('http').Server; port: number };
+  const tryListen = (currentPort: number, retries: number): Promise<ServeResult> => {
+    return new Promise((resolve, reject) => {
+      const server = app.listen(currentPort, host);
 
-  return server;
+      server.once('listening', () => {
+        logger.log('Server', `📁 Mounted directory: ${context.directory}`);
+        if (context.filePatterns) {
+          logger.log('Server', `📄 Watching ${context.filePatterns.length} files from glob patterns`);
+        }
+        if (currentPort !== port) {
+          logger.log('Server', `⚠️  Port ${port} was in use, using ${currentPort} instead`);
+        }
+        logger.log('Server', `🚀 Server listening at http://${host}:${currentPort}`);
+        setupWatcher(context, server, currentPort);
+        resolve({ server, port: currentPort });
+      });
+
+      server.once('error', (err: NodeJS.ErrnoException) => {
+        if (err.code === 'EADDRINUSE' && autoPort && retries > 0) {
+          logger.log('Server', `⚠️  Port ${currentPort} is in use, trying ${currentPort + 1}...`);
+          resolve(tryListen(currentPort + 1, retries - 1));
+        } else {
+          reject(err);
+        }
+      });
+    });
+  };
+
+  return tryListen(port, autoPort ? MAX_PORT_RETRIES : 0);
 };
 
 export const createApp = (

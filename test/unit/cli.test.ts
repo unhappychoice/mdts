@@ -25,7 +25,7 @@ jest.mock('open', () => ({ default: jest.fn(() => Promise.resolve()) }));
 
 // Mock the 'serve' function to prevent actual server startup
 jest.mock('../../src/server/server', () => ({
-  serve: jest.fn(),
+  serve: jest.fn((_context: unknown, port: number) => Promise.resolve({ server: {}, port })),
 }));
 
 jest.mock('../../src/utils/logger', () => ({
@@ -73,7 +73,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', false);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -84,7 +84,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', false);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521');
       });
   });
@@ -95,7 +95,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 9000, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 9000, 'localhost', false);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });
@@ -106,7 +106,7 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 8521, 'localhost', false);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -117,8 +117,18 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 9000, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('./my-dir') }, 9000, 'localhost', false);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
+      });
+  });
+
+  it('should call serve with autoPort=true when --port auto is specified', () => {
+    setExistsSyncResult(false);
+    process.argv = ['node', 'cli.ts', '-p', 'auto', '.'];
+
+    return cli.run()
+      .then(() => {
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', true);
       });
   });
 
@@ -133,6 +143,7 @@ describe('cli', () => {
           { directory: path.resolve('./docs'), filePatterns: ['docs/guide.md'] },
           8521,
           'localhost',
+          false,
         );
       });
   });
@@ -154,7 +165,7 @@ describe('cli', () => {
     return cli.run()
       .then(() => {
         expect(resolveGlobPatterns).not.toHaveBeenCalled();
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost');
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', false);
       });
   });
 });

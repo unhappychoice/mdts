@@ -11,7 +11,7 @@ const DEFAULT_DIRECTORY = '.';
 export class CLI {
   run(): Promise<void> {
     return this.requireOpen()
-      .then((open) => {
+      .then(async (open) => {
         const program = new Command();
 
         const packageJsonPath = path.join(__dirname, '..', 'package.json');
@@ -21,12 +21,12 @@ export class CLI {
           .version(packageJson.version)
           .description('A zero-config CLI tool to preview local Markdown files in a browser')
           .option('-H, --host <host>', 'host to listen on', 'localhost')
-          .option('-p, --port <port>', 'port to serve on', String(DEFAULT_PORT))
+          .option('-p, --port <port>', 'port to serve on (use "auto" to find an available port)', String(DEFAULT_PORT))
           .option('-s, --silent', 'suppress server logs', false)
           .option('--no-open', 'do not open the browser automatically')
           .option('-g, --glob <patterns...>', 'glob patterns to filter markdown files (e.g. "docs/*.md")')
           .argument('[directory]', 'directory to serve', DEFAULT_DIRECTORY)
-          .action((directory, options) => {
+          .action(async (directory, options) => {
             logger.setSilent(options.silent);
 
             logger.showLogo();
@@ -34,25 +34,33 @@ export class CLI {
             logger.log('Announcement', '✨ Like it? Star it on GitHub: https://github.com/unhappychoice/mdts');
 
             logger.log('CLI', '⚙  Options: ' + JSON.stringify(options));
-            const port = parseInt(options.port, 10);
+            const autoPort = options.port === 'auto';
+            const port = autoPort ? DEFAULT_PORT : parseInt(options.port, 10);
             const host = options.host;
             const absoluteDirectory = path.resolve(process.cwd(), directory);
             const context = options.glob
               ? resolveGlobPatterns(absoluteDirectory, options.glob)
               : { directory: absoluteDirectory };
-            serve(context, port, host);
+            let actualPort: number;
+            try {
+              ({ port: actualPort } = await serve(context, port, host, autoPort));
+            } catch (err) {
+              logger.error(`❌ Failed to start server: ${err instanceof Error ? err.message : err}`);
+              process.exitCode = 1;
+              return;
+            }
             const readmePath = path.join(context.directory, 'README.md');
             const initialPath = existsSync(readmePath) ? '/README.md' : '';
             const displayHost = (host === '0.0.0.0' || host === '::') ? 'localhost' : host;
             if (options.open) {
-              logger.log('CLI', `🌐 Opening browser at http://${displayHost}:${port}${initialPath}`);
-              open(`http://${displayHost}:${port}${initialPath}`);
+              logger.log('CLI', `🌐 Opening browser at http://${displayHost}:${actualPort}${initialPath}`);
+              open(`http://${displayHost}:${actualPort}${initialPath}`);
             } else {
-              logger.log('CLI', `🌐 Server running at http://${displayHost}:${port}${initialPath}`);
+              logger.log('CLI', `🌐 Server running at http://${displayHost}:${actualPort}${initialPath}`);
             }
           });
 
-        program.parse(process.argv);
+        await program.parseAsync(process.argv);
       });
   }
 
