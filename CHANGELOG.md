@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.20.0
+
+### ✨ Features
+- add mobile responsive layout (#657) (#658) ([c0c06b3](https://github.com/unhappychoice/mdts/commit/c0c06b3))
+
+### 📝 Documentation
+- update CHANGELOG.md for v0.19.0 ([fc7cf21](https://github.com/unhappychoice/mdts/commit/fc7cf21))
+
+
 ## v0.19.0
 
 ### ✨ Features
