@@ -118,7 +118,7 @@ async function main(): Promise<void> {
     
     // Generate demo data for Netlify Functions
     log('Generating demo data...');
-    runCommand('npx ts-node scripts/generate-demo-data.ts', path.join(__dirname, '..'));
+    runCommand('npx ts-node --project scripts/tsconfig.json scripts/generate-demo-data.ts', path.join(__dirname, '..'));
     
     // Build the project
     log('Building TypeScript backend...');

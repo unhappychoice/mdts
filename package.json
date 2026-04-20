@@ -23,7 +23,7 @@
     "lint:frontend": "cd packages/frontend && npm run jest -- --selectProjects lint",
     "start": "npm run build && npm run build:frontend && node dist/index.js",
     "dev": "npm run build && npm run build:frontend && tsc --watch --preserveWatchOutput & cd packages/frontend && npm run build -- --watch & node dist/index.js",
-    "build:demo": "npx ts-node scripts/build-static.ts",
+    "build:demo": "npx ts-node --project scripts/tsconfig.json scripts/build-static.ts",
     "changelog": "bash scripts/generate-changelog.sh"
   },
   "repository": {
@@ -63,7 +63,7 @@
     "supertest": "^7.1.3",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.39.0"
   },
   "dependencies": {
