@@ -4,9 +4,9 @@ import { serve } from '../../src/server/server';
 import { resolveGlobPatterns } from '../../src/utils/glob';
 
 // Mock fs first, before any other imports that might use it
-let mockExistsSyncResult = false;
+let mockExistingFiles: string[] = [];
 jest.mock('fs', () => ({
-  existsSync: jest.fn(() => mockExistsSyncResult),
+  existsSync: jest.fn((p: string) => mockExistingFiles.some((name) => p.endsWith(name))),
   readFileSync: jest.fn(() => JSON.stringify({
     version: '0.0.0-test',
   })),
@@ -17,7 +17,10 @@ jest.mock('fs', () => ({
 
 // Helper to set the mock result for existsSync
 const setExistsSyncResult = (result: boolean) => {
-  mockExistsSyncResult = result;
+  mockExistingFiles = result ? ['README.md', 'index.md'] : [];
+};
+const setExistingFiles = (files: string[]) => {
+  mockExistingFiles = files;
 };
 
 // Mock the 'open' module
@@ -56,7 +59,7 @@ describe('cli', () => {
     originalArgv = process.argv;
     mockServe = serve as jest.Mock;
     // Reset the mock result for existsSync before each test
-    setExistsSyncResult(false); // Default to false for safety
+    setExistingFiles([]); // Default to empty for safety
     jest.clearAllMocks();
 
     jest.spyOn(cli, 'requireOpen')
@@ -86,6 +89,26 @@ describe('cli', () => {
       .then(() => {
         expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', false);
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521');
+      });
+  });
+
+  it('should fall back to index.md when README.md does not exist', () => {
+    setExistingFiles(['index.md']);
+    process.argv = ['node', 'cli.ts', '.'];
+
+    return cli.run()
+      .then(() => {
+        expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/index.md');
+      });
+  });
+
+  it('should prefer README.md over index.md when both exist', () => {
+    setExistingFiles(['README.md', 'index.md']);
+    process.argv = ['node', 'cli.ts', '.'];
+
+    return cli.run()
+      .then(() => {
+        expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
 
