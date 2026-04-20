@@ -49,8 +49,9 @@ export class CLI {
               process.exitCode = 1;
               return;
             }
-            const readmePath = path.join(context.directory, 'README.md');
-            const initialPath = existsSync(readmePath) ? '/README.md' : '';
+            const defaultPages = ['README.md', 'index.md'];
+            const defaultPage = defaultPages.find((name) => existsSync(path.join(context.directory, name)));
+            const initialPath = defaultPage ? `/${defaultPage}` : '';
             const displayHost = (host === '0.0.0.0' || host === '::') ? 'localhost' : host;
             if (options.open) {
               logger.log('CLI', `🌐 Opening browser at http://${displayHost}:${actualPort}${initialPath}`);
