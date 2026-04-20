@@ -239,7 +239,9 @@ exports[`Layout renders correctly 1`] = `
           </button>
         </div>
         <div
-          class="MuiBox-root css-kuuj3l"
+          class="MuiBox-root css-0"
+          mb="2"
+          px="2"
         >
           <div
             class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"
@@ -271,7 +273,7 @@ exports[`Layout renders correctly 1`] = `
             tabindex="0"
           >
             <div
-              class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
+              class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
             >
               <div
                 class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
@@ -297,7 +299,7 @@ exports[`Layout renders correctly 1`] = `
                     />
                   </svg>
                   <p
-                    class="MuiTypography-root MuiTypography-body2 css-iewwb3-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body2 css-1q85b70-MuiTypography-root"
                   >
                     test.md
                   </p>
@@ -315,7 +317,7 @@ exports[`Layout renders correctly 1`] = `
             tabindex="-1"
           >
             <div
-              class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
+              class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
             >
               <div
                 class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
@@ -412,7 +414,7 @@ exports[`Layout renders correctly 1`] = `
                 >
                   <div
                     aria-label="view mode tabs"
-                    class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
+                    class="MuiTabs-list css-hzcega-MuiTabs-list"
                     role="tablist"
                   >
                     <button

@@ -96,7 +96,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
         style="left: 100%;"
       />
       <span
-        class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary css-171ym8b-MuiSlider-thumb"
+        class="MuiSlider-thumb MuiSlider-thumb css-171ym8b-MuiSlider-thumb"
         data-index="0"
         style="left: 0%;"
       >
@@ -243,7 +243,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
       >
         <input
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
           id="fontFamily"
           type="text"
         />
@@ -376,7 +376,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
       >
         <input
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
           id="fontFamilyMonospace"
           type="text"
         />

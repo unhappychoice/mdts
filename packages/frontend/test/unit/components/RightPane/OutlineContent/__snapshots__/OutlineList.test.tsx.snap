@@ -9,7 +9,7 @@ exports[`OutlineList should render correctly 1`] = `
       class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1s7t0kb-MuiListItem-root"
     >
       <div
-        class="MuiListItemText-root MuiListItemText-dense css-1uq3lon-MuiListItemText-root"
+        class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
       >
         <span
           class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-2wbpcv-MuiTypography-root"
@@ -22,7 +22,7 @@ exports[`OutlineList should render correctly 1`] = `
       class="MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-1bz6dlg-MuiListItem-root"
     >
       <div
-        class="MuiListItemText-root MuiListItemText-dense css-1uq3lon-MuiListItemText-root"
+        class="MuiListItemText-root MuiListItemText-dense css-6qv7tz-MuiListItemText-root"
       >
         <span
           class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-2wbpcv-MuiTypography-root"

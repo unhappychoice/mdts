@@ -18,7 +18,7 @@ exports[`LayoutSettingsTab should render correctly 1`] = `
       <button
         aria-label="full"
         aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="0"
         type="button"
         value="full"
@@ -28,7 +28,7 @@ exports[`LayoutSettingsTab should render correctly 1`] = `
       <button
         aria-label="compact"
         aria-pressed="true"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-lastButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="0"
         type="button"
         value="compact"
@@ -56,11 +56,11 @@ exports[`LayoutSettingsTab should render correctly 1`] = `
             type="checkbox"
           />
           <span
-            class="MuiSwitch-thumb css-17jyosd-MuiSwitch-thumb"
+            class="MuiSwitch-thumb css-1mw77bv-MuiSwitch-thumb"
           />
         </span>
         <span
-          class="MuiSwitch-track css-i082sz-MuiSwitch-track"
+          class="MuiSwitch-track css-1e4q8vu-MuiSwitch-track"
         />
       </span>
       <span
@@ -70,7 +70,7 @@ exports[`LayoutSettingsTab should render correctly 1`] = `
       </span>
     </label>
     <span
-      class="MuiTypography-root MuiTypography-caption css-1qg2k5f-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-caption css-1jedjx8-MuiTypography-root"
     >
       Convert single line breaks to &lt;br&gt; elements
     </span>
