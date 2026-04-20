@@ -18,7 +18,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
       <button
         aria-label="dark"
         aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="0"
         type="button"
         value="dark"
@@ -28,7 +28,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
       <button
         aria-label="light"
         aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-middleButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="0"
         type="button"
         value="light"
@@ -38,7 +38,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
       <button
         aria-label="auto"
         aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-lastButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="0"
         type="button"
         value="auto"
@@ -57,7 +57,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
       <div
         aria-expanded="false"
         aria-haspopup="listbox"
-        class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-19marfc-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+        class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-19marfc-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
         role="combobox"
         tabindex="0"
       >
@@ -72,11 +72,12 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
         aria-hidden="true"
         aria-invalid="false"
         class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
+        id="_r_1_"
         tabindex="-1"
       />
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-1rfqz7c-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon css-1rfqz7c-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
         data-testid="ArrowDropDownIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -115,7 +116,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-labelledby="syntax-highlighter-theme-label syntaxHighlighterTheme"
-        class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-19marfc-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+        class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-19marfc-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
         id="syntaxHighlighterTheme"
         role="combobox"
         tabindex="0"
@@ -126,12 +127,13 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
         aria-hidden="true"
         aria-invalid="false"
         class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
+        id="_r_3_"
         tabindex="-1"
         value="auto"
       />
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-1rfqz7c-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon css-1rfqz7c-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
         data-testid="ArrowDropDownIcon"
         focusable="false"
         viewBox="0 0 24 24"
