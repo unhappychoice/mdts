@@ -1,11 +1,12 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import React, { useCallback, useState } from 'react';
+import useIsMobile from '../../hooks/useIsMobile';
+import { useSettingsForm } from '../../hooks/useSettingsForm';
 import ColorSchemeSettingsTab from './ColorSchemeSettingsTab';
 import FontSettingsTab from './FontSettingsTab';
 import LayoutSettingsTab from './LayoutSettingsTab';
 import TabPanel from './TabPanel';
-import { useSettingsForm } from '../../hooks/useSettingsForm';
 
 interface SettingsDialogProps {
   open: boolean;
@@ -14,6 +15,7 @@ interface SettingsDialogProps {
 
 const SettingsDialog: React.FC<SettingsDialogProps> = ({ open, onClose }) => {
   const theme = useTheme();
+  const isMobile = useIsMobile();
   const [selectedTab, setSelectedTab] = useState(0);
 
   const {
@@ -57,17 +59,28 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ open, onClose }) => {
   }, [setSelectedTab]);
 
   return (
-    <Dialog maxWidth='lg' open={open} onClose={onClose}>
+    <Dialog maxWidth='lg' open={open} onClose={onClose} fullScreen={isMobile}>
       <DialogTitle sx={{ pt: 2, pb: 2, borderBottom: '1px solid', borderColor: 'divider' }}>Appearance Settings</DialogTitle>
-      <DialogContent sx={{ width: 800, height: 600, p: 0 }} className="custom-scrollbar">
-        <Box sx={{ flexGrow: 1, display: 'flex', height: '100%' }}>
+      <DialogContent
+        sx={{
+          width: isMobile ? '100%' : 800,
+          height: isMobile ? '100%' : 600,
+          p: 0,
+        }}
+        className="custom-scrollbar"
+      >
+        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100%' }}>
           <Tabs
-            orientation="vertical"
+            orientation={isMobile ? 'horizontal' : 'vertical'}
             variant="scrollable"
             value={selectedTab}
             onChange={handleSelectTab}
-            aria-label="Vertical tabs"
-            sx={{
+            aria-label={isMobile ? 'Horizontal tabs' : 'Vertical tabs'}
+            sx={isMobile ? {
+              borderBottom: 1,
+              borderColor: 'divider',
+              flexShrink: 0,
+            } : {
               minWidth: 200,
               py: 4,
               borderRight: 1,

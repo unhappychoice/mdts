@@ -3,6 +3,7 @@ import { Box, Chip, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFrontmatter } from '../../../hooks/useFrontmatter';
+import useIsMobile from '../../../hooks/useIsMobile';
 import { useViewMode } from '../../../hooks/useViewMode';
 import { fetchContent } from '../../../store/slices/contentSlice';
 import { fetchDiff, fetchDiffPrev } from '../../../store/slices/diffSlice';
@@ -28,6 +29,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
 
   const { frontmatter, markdownContent } = useFrontmatter(content);
   const viewMode = useViewMode();
+  const isMobile = useIsMobile();
   const loading = contentLoading || fileTreeLoading;
 
   useEffect(() => {
@@ -76,9 +78,9 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
         minWidth: 0,
         minHeight: 'calc(100vh - 64px)',
         m: 0,
-        p: 4,
+        p: isMobile ? 2 : 4,
         bgcolor: 'background.paper',
-        ...(contentMode === 'compact' && {
+        ...(contentMode === 'compact' && !isMobile && {
           width: '800px',
           margin: '0 auto',
           borderRight: '1px solid',
@@ -89,8 +91,8 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
     >
       <BreadCrumb onDirectorySelect={onDirectorySelect} />
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-        <ArticleOutlined sx={{ mr: 2 }} fontSize="large" />
-        <Typography variant="h4" gutterBottom sx={{ mb: 0 }}>
+        <ArticleOutlined sx={{ mr: 2 }} fontSize={isMobile ? 'medium' : 'large'} />
+        <Typography variant={isMobile ? 'h5' : 'h4'} gutterBottom sx={{ mb: 0, wordBreak: 'break-word' }}>
           {displayFileName}
         </Typography>
       </Box>

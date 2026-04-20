@@ -6,7 +6,7 @@ exports[`Content renders correctly 1`] = `
     class="MuiBox-root css-jv7lyf"
   >
     <div
-      class="custom-scrollbar MuiBox-root css-ynu778"
+      class="custom-scrollbar MuiBox-root css-z5visb"
     >
       <div
         data-testid="mock-markdown-content"

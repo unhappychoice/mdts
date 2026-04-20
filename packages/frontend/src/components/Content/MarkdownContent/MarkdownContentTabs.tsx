@@ -2,6 +2,7 @@ import { Box, Tab, Tabs } from '@mui/material';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import useIsMobile from '../../../hooks/useIsMobile';
 import { ViewMode } from '../../../hooks/useViewMode';
 import { RootState } from '../../../store/store';
 
@@ -14,6 +15,7 @@ const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, has
   const [searchParams, setSearchParams] = useSearchParams();
   const { isGitRepository } = useSelector((state: RootState) => state.fileTree);
   const { diff } = useSelector((state: RootState) => state.diff);
+  const isMobile = useIsMobile();
 
   const handleChange = useCallback((_: React.SyntheticEvent | null, newValue: ViewMode) => {
     searchParams.set('tab', newValue);
@@ -27,14 +29,21 @@ const MarkdownContentTabs: React.FC<MarkdownContentTabsProps> = ({ viewMode, has
   return (
     <Box
       sx={{
-        paddingLeft: '24px',
-        marginLeft: '-32px',
-        marginRight: '-32px',
+        paddingLeft: isMobile ? '8px' : '24px',
+        marginLeft: isMobile ? '-16px' : '-32px',
+        marginRight: isMobile ? '-16px' : '-32px',
         borderBottom: 1,
         borderColor: 'divider',
       }}
     >
-      <Tabs value={viewMode} onChange={handleChange} aria-label="view mode tabs">
+      <Tabs
+        value={viewMode}
+        onChange={handleChange}
+        aria-label="view mode tabs"
+        variant={isMobile ? 'scrollable' : 'standard'}
+        scrollButtons={isMobile ? 'auto' : false}
+        allowScrollButtonsMobile
+      >
         <Tab value="preview" label="Preview" onClick={handleClick} />
         {hasFrontmatter && <Tab value="frontmatter" label="Frontmatter" />}
         <Tab value="raw" label="Raw" />

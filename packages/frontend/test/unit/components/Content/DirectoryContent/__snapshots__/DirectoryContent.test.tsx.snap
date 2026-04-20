@@ -28,7 +28,7 @@ exports[`DirectoryContent renders correctly with initial state 1`] = `
         />
       </svg>
       <h4
-        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-129bu66-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-lsowdo-MuiTypography-root"
       />
     </div>
     <hr
