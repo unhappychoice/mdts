@@ -1,5 +1,42 @@
 # Changelog
 
+## v0.19.0
+
+### ✨ Features
+- support index.md as default page fallback ([d58a9a2](https://github.com/unhappychoice/mdts/commit/d58a9a2)) ([#656](https://github.com/unhappychoice/mdts/pull/656))
+
+### 📝 Documentation
+- update CHANGELOG.md for v0.18.0 ([e14a257](https://github.com/unhappychoice/mdts/commit/e14a257))
+
+### 🆙 Update Packages
+- bump @mui/material, @mui/icons-material to v9 and x-tree-view to v9.0.2 (#655) ([5519553](https://github.com/unhappychoice/mdts/commit/5519553))
+- Bump @typescript-eslint/eslint-plugin from 8.58.1 to 8.58.2 in /packages/frontend (#651) ([63cfedd](https://github.com/unhappychoice/mdts/commit/63cfedd))
+- Bump typescript from 5.9.3 to 6.0.3 (#652) ([b975259](https://github.com/unhappychoice/mdts/commit/b975259))
+- Bump axios from 1.15.0 to 1.15.1 ([e806aa9](https://github.com/unhappychoice/mdts/commit/e806aa9)) ([#653](https://github.com/unhappychoice/mdts/pull/653))
+- Bump typescript-eslint from 8.58.1 to 8.58.2 ([6cd29f6](https://github.com/unhappychoice/mdts/commit/6cd29f6)) ([#650](https://github.com/unhappychoice/mdts/pull/650))
+- Bump @typescript-eslint/parser from 8.58.1 to 8.58.2 ([27dacb5](https://github.com/unhappychoice/mdts/commit/27dacb5)) ([#649](https://github.com/unhappychoice/mdts/pull/649))
+- Bump react-router-dom in /packages/frontend ([a01c54c](https://github.com/unhappychoice/mdts/commit/a01c54c)) ([#648](https://github.com/unhappychoice/mdts/pull/648))
+- Bump simple-git from 3.35.2 to 3.36.0 ([7948ac9](https://github.com/unhappychoice/mdts/commit/7948ac9)) ([#646](https://github.com/unhappychoice/mdts/pull/646))
+- Bump webpack in /packages/frontend ([5079795](https://github.com/unhappychoice/mdts/commit/5079795)) ([#644](https://github.com/unhappychoice/mdts/pull/644))
+- Bump webpack in /packages/frontend ([f8572e9](https://github.com/unhappychoice/mdts/commit/f8572e9)) ([#643](https://github.com/unhappychoice/mdts/pull/643))
+- Bump eslint-plugin-jest in /packages/frontend ([4a6494a](https://github.com/unhappychoice/mdts/commit/4a6494a)) ([#642](https://github.com/unhappychoice/mdts/pull/642))
+- Bump react-dom from 19.2.4 to 19.2.5 in /packages/frontend ([92f76ed](https://github.com/unhappychoice/mdts/commit/92f76ed)) ([#641](https://github.com/unhappychoice/mdts/pull/641))
+- Bump @eslint/compat in /packages/frontend ([779c241](https://github.com/unhappychoice/mdts/commit/779c241)) ([#640](https://github.com/unhappychoice/mdts/pull/640))
+- Bump axios from 1.14.0 to 1.15.0 ([d531d5d](https://github.com/unhappychoice/mdts/commit/d531d5d)) ([#639](https://github.com/unhappychoice/mdts/pull/639))
+- Bump typescript-eslint in /packages/frontend ([323f87c](https://github.com/unhappychoice/mdts/commit/323f87c)) ([#636](https://github.com/unhappychoice/mdts/pull/636))
+- Bump typescript-eslint from 8.58.0 to 8.58.1 ([3c9742a](https://github.com/unhappychoice/mdts/commit/3c9742a)) ([#635](https://github.com/unhappychoice/mdts/pull/635))
+- Bump @typescript-eslint/parser in /packages/frontend ([df9e944](https://github.com/unhappychoice/mdts/commit/df9e944)) ([#632](https://github.com/unhappychoice/mdts/pull/632))
+- Bump @typescript-eslint/parser from 8.58.0 to 8.58.1 ([4a3c57b](https://github.com/unhappychoice/mdts/commit/4a3c57b)) ([#631](https://github.com/unhappychoice/mdts/pull/631))
+- Bump simple-git from 3.33.0 to 3.35.2 ([e294b56](https://github.com/unhappychoice/mdts/commit/e294b56)) ([#630](https://github.com/unhappychoice/mdts/pull/630))
+- Bump @eslint/compat in /packages/frontend ([22e61ba](https://github.com/unhappychoice/mdts/commit/22e61ba)) ([#628](https://github.com/unhappychoice/mdts/pull/628))
+- Bump react-router-dom in /packages/frontend ([1c0ae27](https://github.com/unhappychoice/mdts/commit/1c0ae27)) ([#626](https://github.com/unhappychoice/mdts/pull/626))
+- Bump ts-jest from 29.4.6 to 29.4.9 ([5b8b9c9](https://github.com/unhappychoice/mdts/commit/5b8b9c9)) ([#624](https://github.com/unhappychoice/mdts/pull/624))
+- Bump mermaid from 11.13.0 to 11.14.0 in /packages/frontend ([0cf55d4](https://github.com/unhappychoice/mdts/commit/0cf55d4)) ([#625](https://github.com/unhappychoice/mdts/pull/625))
+- Bump typescript-eslint in /packages/frontend ([62f651c](https://github.com/unhappychoice/mdts/commit/62f651c)) ([#623](https://github.com/unhappychoice/mdts/pull/623))
+- Bump typescript-eslint from 8.57.2 to 8.58.0 ([54462ed](https://github.com/unhappychoice/mdts/commit/54462ed)) ([#620](https://github.com/unhappychoice/mdts/pull/620))
+- Bump axios from 1.13.6 to 1.14.0 ([d1a3562](https://github.com/unhappychoice/mdts/commit/d1a3562)) ([#617](https://github.com/unhappychoice/mdts/pull/617))
+
+
 ## v0.18.0
 
 ### ✨ Features
