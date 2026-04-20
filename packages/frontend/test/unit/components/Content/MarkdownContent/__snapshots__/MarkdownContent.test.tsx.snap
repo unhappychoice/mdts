@@ -31,7 +31,7 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
         />
       </svg>
       <h4
-        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-129bu66-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-lsowdo-MuiTypography-root"
       >
         🎉 Welcome to mdts!
       </h4>
@@ -40,7 +40,7 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
       class="MuiBox-root css-i3qfz4"
     >
       <div
-        class="MuiTabs-root css-jhczcq-MuiTabs-root"
+        class="MuiTabs-root css-1xkjjjh-MuiTabs-root"
       >
         <div
           class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"

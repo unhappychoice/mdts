@@ -6,6 +6,7 @@ import AppHeader from './components/AppHeader';
 import Content from './components/Content/Content';
 import FileTree from './components/LeftPane/FileTree';
 import Outline from './components/RightPane/Outline';
+import useIsMobile from './hooks/useIsMobile';
 import { toggleFileTree, toggleOutline, } from './store/slices/appSettingSlice';
 import { RootState } from './store/store';
 
@@ -16,10 +17,13 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ onSettingsClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const { fileTreeOpen, outlineOpen } = useSelector((state: RootState) => state.appSetting);
   const { currentPath, isDirectory } = useSelector((state: RootState) => state.history);
   const { fontFamily, fontFamilyMonospace } = useSelector((state: RootState) => state.config);
   const [scrollToId, setScrollToId] = useState<string | null>(null);
+  const [mobileFileTreeOpen, setMobileFileTreeOpen] = useState(false);
+  const [mobileOutlineOpen, setMobileOutlineOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.style.setProperty('--markdown-font-family', fontFamily);
@@ -29,13 +33,25 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick }) => {
     document.documentElement.style.setProperty('--markdown-monospace-font-family', fontFamilyMonospace);
   }, [fontFamilyMonospace]);
 
+  useEffect(() => {
+    if (!isMobile) {
+      setMobileFileTreeOpen(false);
+      setMobileOutlineOpen(false);
+    }
+  }, [isMobile]);
+
   const handleFileSelect = useCallback((path: string) => {
     navigate(`/${path}`);
   }, [navigate]);
 
   const handleToggleFileTree = useCallback(() => {
-    dispatch(toggleFileTree());
-  }, [dispatch, toggleFileTree]);
+    if (isMobile) {
+      setMobileFileTreeOpen((prev) => !prev);
+      setMobileOutlineOpen(false);
+    } else {
+      dispatch(toggleFileTree());
+    }
+  }, [dispatch, isMobile]);
 
   const handleDirectorySelect = useCallback((path: string) => {
     navigate(`/${path}`);
@@ -46,14 +62,24 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick }) => {
   }, []);
 
   const handleToggleOutline = useCallback(() => {
-    dispatch(toggleOutline());
-  }, [dispatch, toggleOutline]);
+    if (isMobile) {
+      setMobileOutlineOpen((prev) => !prev);
+      setMobileFileTreeOpen(false);
+    } else {
+      dispatch(toggleOutline());
+    }
+  }, [dispatch, isMobile]);
+
+  const fileTreeIsOpen = isMobile ? mobileFileTreeOpen : fileTreeOpen;
+  const outlineIsOpen = isMobile ? mobileOutlineOpen : outlineOpen;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <AppHeader
         handleFileSelect={handleFileSelect}
         onSettingsClick={onSettingsClick}
+        onToggleFileTree={handleToggleFileTree}
+        onToggleOutline={handleToggleOutline}
       />
       <Box
         component="main"
@@ -61,7 +87,7 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick }) => {
       >
         <FileTree
           onFileSelect={handleFileSelect}
-          isOpen={fileTreeOpen}
+          isOpen={fileTreeIsOpen}
           onToggle={handleToggleFileTree}
           selectedFilePath={currentPath}
         />
@@ -73,7 +99,7 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick }) => {
         <Outline
           filePath={isDirectory ? null : currentPath}
           onItemClick={handleOutlineItemClick}
-          isOpen={outlineOpen}
+          isOpen={outlineIsOpen}
           onToggle={handleToggleOutline}
         />
       </Box>

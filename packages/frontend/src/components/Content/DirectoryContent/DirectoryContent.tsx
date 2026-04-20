@@ -2,6 +2,7 @@ import { FolderOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Divider, Typography } from '@mui/material';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import useIsMobile from '../../../hooks/useIsMobile';
 import { selectFilteredFileTree } from '../../../store/slices/fileTreeSlice';
 import { RootState } from '../../../store/store';
 import ErrorView from '../../ErrorView';
@@ -17,6 +18,7 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
   const { currentPath } = useSelector((state: RootState) => state.history);
   const { contentMode } = useSelector((state: RootState) => state.appSetting);
   const { fileTree: fullFileTree, loading, error } = useSelector((state: RootState) => state.fileTree);
+  const isMobile = useIsMobile();
 
   const fileTree = selectFilteredFileTree(fullFileTree, currentPath);
 
@@ -38,9 +40,9 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
         width: '100%',
         minHeight: 'calc(100vh - 64px)',
         m: 0,
-        p: 4,
+        p: isMobile ? 2 : 4,
         bgcolor: 'background.paper',
-        ...(contentMode === 'compact' && {
+        ...(contentMode === 'compact' && !isMobile && {
           width: '800px',
           margin: '0 auto',
         })
@@ -48,12 +50,12 @@ const DirectoryContent: React.FC<DirectoryContentProps> = ({ onFileSelect, onDir
     >
       <BreadCrumb onDirectorySelect={onDirectorySelect} />
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-        <FolderOutlined sx={{ mr: 2 }} color="primary" fontSize="large" />
-        <Typography variant="h4" gutterBottom sx={{ mb: 0 }}>
+        <FolderOutlined sx={{ mr: 2 }} color="primary" fontSize={isMobile ? 'medium' : 'large'} />
+        <Typography variant={isMobile ? 'h5' : 'h4'} gutterBottom sx={{ mb: 0, wordBreak: 'break-word' }}>
           {currentPath}
         </Typography>
       </Box>
-      <Divider sx={{ paddingLeft: '24px', marginLeft: '-32px', marginRight: '-32px', borderBottom: 1, borderColor: 'divider' }} />
+      <Divider sx={{ paddingLeft: '24px', marginLeft: isMobile ? '-16px' : '-32px', marginRight: isMobile ? '-16px' : '-32px', borderBottom: 1, borderColor: 'divider' }} />
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
           <CircularProgress />

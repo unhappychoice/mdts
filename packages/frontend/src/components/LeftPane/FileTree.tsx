@@ -1,6 +1,7 @@
-import { Box, useTheme } from '@mui/material';
+import { Box, Drawer, useTheme } from '@mui/material';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useIsMobile from '../../hooks/useIsMobile';
 import {
   expandAllNodes,
   fetchFileTree,
@@ -23,6 +24,7 @@ interface FileTreeComponentProps {
 const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
   const dispatch = useDispatch<AppDispatch>();
   const theme = useTheme();
+  const isMobile = useIsMobile();
   const {
     fileTree,
     filteredFileTree,
@@ -85,41 +87,68 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
   }, [searchQuery, filteredFileTree, dispatch]);
 
   const overlay = theme.palette.mode === 'dark' ? 'rgba(16, 16, 16, 0.01)' : 'rgba(192, 192, 192, 0.01)';
+  const background = `linear-gradient(135deg, ${overlay} 0%, ${theme.palette.background.paper} 100%)`;
 
-  return (
-    <Box sx={{
-      width: isOpen ? '300px' : '66px',
-      background: `linear-gradient(135deg, ${overlay} 0%, ${theme.palette.background.paper} 100%)`,
-      py: 2,
-      borderRight: '1px solid',
-      borderColor: 'divider',
-      minHeight: '100%',
-      flexShrink: 0,
-    }}>
+  const handleFileSelectWithClose = useCallback((path: string) => {
+    onFileSelect(path);
+    if (isMobile) onToggle();
+  }, [onFileSelect, isMobile, onToggle]);
+
+  const panelContent = (
+    <>
       <FileTreeHeader
-        isOpen={isOpen}
+        isOpen={isMobile ? true : isOpen}
         onToggle={onToggle}
         onExpandAllClick={handleExpandAllClick}
         onCollapseAll={handleCollapseAll}
       />
-      {isOpen && (
+      {(isMobile || isOpen) && (
         <FileTreeSearch
           searchQuery={searchQuery}
           onSearchChange={handleSearchChange}
           onClearSearch={handleClearSearch}
         />
       )}
-      {isOpen && (
+      {(isMobile || isOpen) && (
         <FileTreeContent
           filteredFileTree={filteredFileTree}
           loading={loading}
           error={error}
           expandedNodes={expandedNodes}
-          onFileSelect={onFileSelect}
+          onFileSelect={isMobile ? handleFileSelectWithClose : onFileSelect}
           onExpandedItemsChange={handleExpandedItemsChange}
           dispatch={dispatch}
         />
       )}
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer
+        variant="temporary"
+        anchor="left"
+        open={isOpen}
+        onClose={onToggle}
+        ModalProps={{ keepMounted: true }}
+        slotProps={{ paper: { sx: { width: '280px', bgcolor: 'background.paper', py: 2, borderRight: '1px solid', borderColor: 'divider' } } }}
+      >
+        {panelContent}
+      </Drawer>
+    );
+  }
+
+  return (
+    <Box sx={{
+      width: isOpen ? '300px' : '66px',
+      background,
+      py: 2,
+      borderRight: '1px solid',
+      borderColor: 'divider',
+      minHeight: '100%',
+      flexShrink: 0,
+    }}>
+      {panelContent}
     </Box>
   );
 };

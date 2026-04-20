@@ -6,7 +6,7 @@ exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
     class="MuiBox-root css-i3qfz4"
   >
     <div
-      class="MuiTabs-root css-jhczcq-MuiTabs-root"
+      class="MuiTabs-root css-1xkjjjh-MuiTabs-root"
     >
       <div
         class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"

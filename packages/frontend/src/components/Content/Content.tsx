@@ -50,7 +50,9 @@ const Content: React.FC<ContentProps> = ({ onFileSelect, onDirectorySelect, scro
         className="custom-scrollbar"
         sx={{
           overflowY: 'scroll',
+          overflowX: 'auto',
           width: '100%',
+          minWidth: 0,
         }}
       >
         {currentPath && isDirectory ? (

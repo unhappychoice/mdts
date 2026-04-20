@@ -366,7 +366,7 @@ exports[`Layout renders correctly 1`] = `
         class="MuiBox-root css-jv7lyf"
       >
         <div
-          class="custom-scrollbar MuiBox-root css-ynu778"
+          class="custom-scrollbar MuiBox-root css-z5visb"
         >
           <div
             class="MuiBox-root css-1t4r39b"
@@ -397,7 +397,7 @@ exports[`Layout renders correctly 1`] = `
                 />
               </svg>
               <h4
-                class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-129bu66-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-lsowdo-MuiTypography-root"
               >
                 🎉 Welcome to mdts!
               </h4>
@@ -406,7 +406,7 @@ exports[`Layout renders correctly 1`] = `
               class="MuiBox-root css-i3qfz4"
             >
               <div
-                class="MuiTabs-root css-jhczcq-MuiTabs-root"
+                class="MuiTabs-root css-1xkjjjh-MuiTabs-root"
               >
                 <div
                   class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
