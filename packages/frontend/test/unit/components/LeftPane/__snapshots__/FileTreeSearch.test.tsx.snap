@@ -3,7 +3,9 @@
 exports[`FileTreeSearch renders correctly with a search query 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-kuuj3l"
+    class="MuiBox-root css-0"
+    mb="2"
+    px="2"
   >
     <div
       class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-adornedStart MuiInputBase-adornedEnd css-pe16f2-MuiInputBase-root"
@@ -39,7 +41,7 @@ exports[`FileTreeSearch renders correctly with a search query 1`] = `
       </div>
       <input
         aria-label="search files"
-        class="MuiInputBase-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-e77w8q-MuiInputBase-input"
+        class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
         placeholder="Search files..."
         type="text"
         value="test"
@@ -74,7 +76,9 @@ exports[`FileTreeSearch renders correctly with a search query 1`] = `
 exports[`FileTreeSearch renders correctly with empty search query 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-kuuj3l"
+    class="MuiBox-root css-0"
+    mb="2"
+    px="2"
   >
     <div
       class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-adornedStart css-pe16f2-MuiInputBase-root"
@@ -110,7 +114,7 @@ exports[`FileTreeSearch renders correctly with empty search query 1`] = `
       </div>
       <input
         aria-label="search files"
-        class="MuiInputBase-input MuiInputBase-inputAdornedStart css-e77w8q-MuiInputBase-input"
+        class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
         placeholder="Search files..."
         type="text"
         value=""

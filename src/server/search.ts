@@ -19,6 +19,13 @@ export class SearchEngine {
   private isIndexing: boolean = false;
   private maxFiles: number;
   private maxFileSize: number;
+  private queue: Promise<void> = Promise.resolve();
+
+  private async enqueue<T>(task: () => Promise<T>): Promise<T> {
+    const result = this.queue.then(task);
+    this.queue = result.then(() => {}).catch(() => {});
+    return result;
+  }
 
   constructor(private directory: string, options: { maxFiles?: number; maxFileSize?: number } = {}) {
     this.maxFiles = options.maxFiles ?? DEFAULT_MAX_FILES_TO_INDEX;
@@ -79,55 +86,64 @@ export class SearchEngine {
     logger.log('Search', '🔍 Indexing directory...');
     const start = Date.now();
     
-    try {
-      // Use async glob to prevent blocking the event loop during file discovery
-      const files = await glob('**/*.{md,markdown}', {
-        cwd: this.directory,
-        ignore: ['node_modules/**', '.git/**'],
-        absolute: false
-      });
+    return this.enqueue(async () => {
+      try {
+        // Use async glob to prevent blocking the event loop during file discovery
+        const files = await glob('**/*.{md,markdown}', {
+          cwd: this.directory,
+          ignore: ['node_modules/**', '.git/**'],
+          absolute: false
+        });
 
-      // Limit the number of files to prevent memory exhaustion in massive monorepos
-      const filesToProcess = files.slice(0, this.maxFiles);
-      if (files.length > this.maxFiles) {
-        logger.log('Search', `⚠️ Too many files (${files.length}). Capping index at ${this.maxFiles}.`);
-      }
+        // Limit the number of files to prevent memory exhaustion in massive monorepos
+        const filesToProcess = files.slice(0, this.maxFiles);
+        if (files.length > this.maxFiles) {
+          logger.log('Search', `⚠️ Too many files (${files.length}). Capping index at ${this.maxFiles}.`);
+        }
 
-      // Process files in chunks to avoid overwhelming file I/O and keep memory usage stable
-      const docs: SearchDocument[] = [];
-      const CHUNK_SIZE = 50;
-      
-      for (let i = 0; i < filesToProcess.length; i += CHUNK_SIZE) {
-        const chunk = filesToProcess.slice(i, i + CHUNK_SIZE);
-        const parsed = await Promise.all(chunk.map(filePath => this.parseFile(filePath)));
-        docs.push(...parsed.filter((doc): doc is SearchDocument => doc !== null));
-      }
+        // Process files in chunks to avoid overwhelming file I/O and keep memory usage stable
+        const docs: SearchDocument[] = [];
+        const CHUNK_SIZE = 50;
         
-      this.miniSearch.removeAll();
-      this.miniSearch.addAll(docs);
-      
-      await this.saveIndex();
-      
-      const duration = Date.now() - start;
-      logger.log('Search', `✅ Indexed ${docs.length} files in ${duration}ms`);
-    } catch (error) {
-      logger.error('Search', 'Failed to index directory:', error);
-    } finally {
-      this.isIndexing = false;
-    }
+        for (let i = 0; i < filesToProcess.length; i += CHUNK_SIZE) {
+          const chunk = filesToProcess.slice(i, i + CHUNK_SIZE);
+          const parsed = await Promise.all(chunk.map(filePath => this.parseFile(filePath)));
+          docs.push(...parsed.filter((doc): doc is SearchDocument => doc !== null));
+        }
+          
+        this.miniSearch.removeAll();
+        this.miniSearch.addAll(docs);
+        
+        await this.saveIndex();
+        
+        const duration = Date.now() - start;
+        logger.log('Search', `✅ Indexed ${docs.length} files in ${duration}ms`);
+      } catch (error) {
+        logger.error('Search', 'Failed to index directory:', error);
+      } finally {
+        this.isIndexing = false;
+      }
+    });
   }
 
   private async parseFile(relativeFilePath: string): Promise<SearchDocument | null> {
     try {
+      const canonicalDir = await fs.promises.realpath(this.directory);
       const absolutePath = path.join(this.directory, relativeFilePath);
+      const canonicalPath = await fs.promises.realpath(absolutePath);
+
+      const relative = path.relative(canonicalDir, canonicalPath);
+      if (relative.startsWith('..') || path.isAbsolute(relative)) {
+        return null;
+      }
       
       // Skip very large files to prevent OOM (Out Of Memory) issues
-      const stats = await fs.promises.stat(absolutePath);
+      const stats = await fs.promises.stat(canonicalPath);
       if (stats.size > this.maxFileSize) {
         return null;
       }
       
-      const content = await fs.promises.readFile(absolutePath, 'utf-8');
+      const content = await fs.promises.readFile(canonicalPath, 'utf-8');
       const { data, content: body } = matter(content);
       
       return {
@@ -142,18 +158,25 @@ export class SearchEngine {
   }
 
   public async updateFile(relativeFilePath: string): Promise<void> {
-    const doc = await this.parseFile(relativeFilePath);
-    if (doc) {
-      if (this.miniSearch.has(relativeFilePath)) {
-        this.miniSearch.replace(doc);
-      } else {
-        this.miniSearch.add(doc);
+    return this.enqueue(async () => {
+      this.isIndexing = true;
+      try {
+        const doc = await this.parseFile(relativeFilePath);
+        if (doc) {
+          if (this.miniSearch.has(relativeFilePath)) {
+            this.miniSearch.replace(doc);
+          } else {
+            this.miniSearch.add(doc);
+          }
+          this.saveIndexDebounced();
+        } else if (this.miniSearch.has(relativeFilePath)) {
+          this.miniSearch.remove({ id: relativeFilePath });
+          this.saveIndexDebounced();
+        }
+      } finally {
+        this.isIndexing = false;
       }
-      this.saveIndexDebounced();
-    } else if (this.miniSearch.has(relativeFilePath)) {
-      this.miniSearch.remove({ id: relativeFilePath });
-      this.saveIndexDebounced();
-    }
+    });
   }
 
   private saveTimeout: NodeJS.Timeout | null = null;
@@ -180,10 +203,53 @@ export class SearchEngine {
     for (let i = 0; i < results.length; i += CHUNK_SIZE) {
       const chunk = results.slice(i, i + CHUNK_SIZE);
       const partial = await Promise.all(chunk.map(async result => {
-        const absolutePath = path.resolve(this.directory, result.id as string);
-        
-        // Security check: ensure the file is within the mounted directory
-        if (!absolutePath.startsWith(path.resolve(this.directory))) {
+        try {
+          const canonicalDir = await fs.promises.realpath(this.directory);
+          const absolutePath = path.resolve(this.directory, result.id as string);
+          const canonicalPath = await fs.promises.realpath(absolutePath);
+          
+          // Security check: ensure the file is within the mounted directory
+          const relative = path.relative(canonicalDir, canonicalPath);
+          if (relative.startsWith('..') || path.isAbsolute(relative)) {
+            return {
+              id: result.id as string,
+              title: result.title as string,
+              path: result.path as string,
+              snippets: []
+            };
+          }
+
+          let snippets: SearchSnippet[] = [];
+          
+          try {
+            const content = await fs.promises.readFile(canonicalPath, 'utf-8');
+            const lines = content.split('\n');
+            const lowerQuery = query.toLowerCase();
+            
+            lines.forEach((line, index) => {
+              if (line.toLowerCase().includes(lowerQuery)) {
+                snippets.push({
+                  line: index + 1,
+                  text: line
+                });
+              }
+            });
+            
+            // Limit snippets per file
+            if (snippets.length > 5) {
+              snippets = snippets.slice(0, 5);
+            }
+          } catch {
+            // Fallback to empty snippets
+          }
+
+          return {
+            id: result.id as string,
+            title: result.title as string,
+            path: result.path as string,
+            snippets
+          };
+        } catch {
           return {
             id: result.id as string,
             title: result.title as string,
@@ -191,37 +257,6 @@ export class SearchEngine {
             snippets: []
           };
         }
-
-        let snippets: SearchSnippet[] = [];
-        
-        try {
-          const content = await fs.promises.readFile(absolutePath, 'utf-8');
-          const lines = content.split('\n');
-          const lowerQuery = query.toLowerCase();
-          
-          lines.forEach((line, index) => {
-            if (line.toLowerCase().includes(lowerQuery)) {
-              snippets.push({
-                line: index + 1,
-                text: line
-              });
-            }
-          });
-          
-          // Limit snippets per file
-          if (snippets.length > 5) {
-            snippets = snippets.slice(0, 5);
-          }
-        } catch {
-          // Fallback to empty snippets
-        }
-
-        return {
-          id: result.id as string,
-          title: result.title as string,
-          path: result.path as string,
-          snippets
-        };
       }));
       searchResults.push(...partial);
     }

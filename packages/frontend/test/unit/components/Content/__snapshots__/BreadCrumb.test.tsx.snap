@@ -13,7 +13,7 @@ exports[`BreadCrumb renders breadcrumbs for a directory path 1`] = `
         class="MuiBreadcrumbs-li"
       >
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-drt9hv-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1ghx3tx-MuiTypography-root-MuiLink-root"
           href="#"
         >
           folder1
@@ -29,7 +29,7 @@ exports[`BreadCrumb renders breadcrumbs for a directory path 1`] = `
         class="MuiBreadcrumbs-li"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 css-14ja1gv-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-1px98du-MuiTypography-root"
         >
           subfolder
         </p>
@@ -52,7 +52,7 @@ exports[`BreadCrumb renders breadcrumbs for a file path 1`] = `
         class="MuiBreadcrumbs-li"
       >
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-drt9hv-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1ghx3tx-MuiTypography-root-MuiLink-root"
           href="#"
         >
           folder1
@@ -68,7 +68,7 @@ exports[`BreadCrumb renders breadcrumbs for a file path 1`] = `
         class="MuiBreadcrumbs-li"
       >
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-drt9hv-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1ghx3tx-MuiTypography-root-MuiLink-root"
           href="#"
         >
           subfolder
@@ -84,7 +84,7 @@ exports[`BreadCrumb renders breadcrumbs for a file path 1`] = `
         class="MuiBreadcrumbs-li"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 css-14ja1gv-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-1px98du-MuiTypography-root"
         >
           file.md
         </p>

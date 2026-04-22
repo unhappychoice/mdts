@@ -150,6 +150,36 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
               <table {...props}>{children}</table>
             </div>
           ),
+          p: ({ node, children, ...props }) => (
+            <p data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</p>
+          ),
+          h1: ({ node, children, ...props }) => (
+            <h1 data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</h1>
+          ),
+          h2: ({ node, children, ...props }) => (
+            <h2 data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</h2>
+          ),
+          h3: ({ node, children, ...props }) => (
+            <h3 data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</h3>
+          ),
+          h4: ({ node, children, ...props }) => (
+            <h4 data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</h4>
+          ),
+          h5: ({ node, children, ...props }) => (
+            <h5 data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</h5>
+          ),
+          h6: ({ node, children, ...props }) => (
+            <h6 data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</h6>
+          ),
+          li: ({ node, children, ...props }) => (
+            <li data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</li>
+          ),
+          blockquote: ({ node, children, ...props }) => (
+            <blockquote data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</blockquote>
+          ),
+          pre: ({ node, children, ...props }) => (
+            <pre data-line={(node?.position?.start.line || 0) + lineOffset} {...props}>{children}</pre>
+          ),
         }}
       >
         {content}

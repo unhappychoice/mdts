@@ -1,17 +1,22 @@
 import { SearchEngine } from '../../../src/server/search';
 import * as fs from 'fs';
 
-jest.mock('fs', () => ({
-  existsSync: jest.fn(),
-  readFileSync: jest.fn(),
-  statSync: jest.fn(),
-  writeFileSync: jest.fn(),
-  promises: {
-    readFile: jest.fn(),
-    stat: jest.fn(),
-    writeFile: jest.fn().mockResolvedValue(undefined),
-  },
-}));
+jest.mock('fs', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const path = require('path');
+  return {
+    existsSync: jest.fn(),
+    readFileSync: jest.fn(),
+    statSync: jest.fn(),
+    writeFileSync: jest.fn(),
+    promises: {
+      readFile: jest.fn(),
+      stat: jest.fn(),
+      writeFile: jest.fn().mockResolvedValue(undefined),
+      realpath: jest.fn().mockImplementation((p: string) => Promise.resolve(path.resolve(p))),
+    },
+  };
+});
 
 jest.mock('glob', () => ({
   glob: jest.fn().mockResolvedValue(['file1.md', 'file2.md', 'large.md']),
@@ -92,5 +97,84 @@ describe('SearchEngine', () => {
 
     const results = await engine.search('evil');
     expect(results[0].snippets).toHaveLength(0);
+  });
+
+  it('should prevent symlink escape in search snippets', async () => {
+    engine = new SearchEngine(mockDirectory);
+    // Directly add a document with a symlink path
+    // @ts-expect-error: accessing private member for testing
+    const miniSearch = engine.miniSearch;
+    miniSearch.add({
+      id: 'symlink.md',
+      title: 'Symlink',
+      content: 'evil content',
+      path: 'symlink.md'
+    });
+
+    // Mock realpath for symlink.md to resolve to a path outside the mockDirectory
+    (fs.promises.realpath as jest.Mock).mockImplementation((p: string) => {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const resolved = require('path').resolve(p);
+      if (resolved.endsWith('symlink.md')) {
+        return Promise.resolve('/secret.txt');
+      }
+      return Promise.resolve(resolved);
+    });
+
+    const results = await engine.search('evil');
+    expect(results[0].snippets).toHaveLength(0);
+  });
+
+  it('should prevent symlink escape in parseFile', async () => {
+    engine = new SearchEngine(mockDirectory);
+    
+    // Mock realpath for symlink.md to resolve to a path outside the mockDirectory
+    (fs.promises.realpath as jest.Mock).mockImplementation((p: string) => {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const resolved = require('path').resolve(p);
+      if (resolved.endsWith('symlink.md')) {
+        return Promise.resolve('/secret.txt');
+      }
+      return Promise.resolve(resolved);
+    });
+
+    // @ts-expect-error: accessing private member for testing
+    const result = await engine.parseFile('symlink.md');
+    expect(result).toBeNull();
+  });
+
+  it('should serialize indexDirectory and updateFile calls', async () => {
+    engine = new SearchEngine(mockDirectory);
+    
+    let resolveGlob: (val: string[]) => void = () => {};
+    const globPromise = new Promise<string[]>((resolve) => {
+      resolveGlob = resolve;
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const globModule = require('glob');
+    (globModule.glob as jest.Mock).mockReturnValue(globPromise);
+
+    // Start indexing
+    const indexPromise = engine.indexDirectory();
+    
+    // It should be indexing now
+    // @ts-expect-error: accessing private member for testing
+    expect(engine.isIndexing).toBe(true);
+
+    // Call updateFile while indexing is in progress
+    const updatePromise = engine.updateFile('file2.md');
+
+    // Resolve glob to let indexing proceed
+    resolveGlob(['file1.md']);
+
+    await Promise.all([indexPromise, updatePromise]);
+
+    // After both are done, isIndexing should be false
+    // @ts-expect-error: accessing private member for testing
+    expect(engine.isIndexing).toBe(false);
+
+    // Restore glob mock
+    (globModule.glob as jest.Mock).mockResolvedValue(['file1.md', 'file2.md', 'large.md']);
   });
 });

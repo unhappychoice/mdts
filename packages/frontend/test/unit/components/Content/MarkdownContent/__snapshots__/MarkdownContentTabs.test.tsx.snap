@@ -14,7 +14,7 @@ exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
       >
         <div
           aria-label="view mode tabs"
-          class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
+          class="MuiTabs-list css-hzcega-MuiTabs-list"
           role="tablist"
         >
           <button

@@ -139,6 +139,10 @@ const ResultItem: React.FC<ResultItemProps> = ({ result, searchQuery, onFileSele
 };
 
 const ContentSearchResults: React.FC<ContentSearchResultsProps> = ({ results = [], onFileSelect, searchQuery }) => {
+  if (!searchQuery.trim()) {
+    return null;
+  }
+
   if (results.length === 0) {
     return (
       <Box px={2} py={1}>

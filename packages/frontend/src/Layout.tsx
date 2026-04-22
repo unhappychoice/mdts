@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
 import Content from './components/Content/Content';
 import FileTree from './components/LeftPane/FileTree';
@@ -18,6 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const location = useLocation();
   const { fileTreeOpen, outlineOpen } = useSelector((state: RootState) => state.appSetting);
   const { currentPath, isDirectory } = useSelector((state: RootState) => state.history);
   const { fontFamily, fontFamilyMonospace } = useSelector((state: RootState) => state.config);

@@ -17,7 +17,7 @@ exports[`ErrorView renders snapshot correctly with 404 error 1`] = `
       />
     </svg>
     <h5
-      class="MuiTypography-root MuiTypography-h5 css-1sojvhz-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-h5 css-2gq52s-MuiTypography-root"
     >
       Not Found
     </h5>
@@ -42,7 +42,7 @@ exports[`ErrorView renders snapshot correctly with an error 1`] = `
       />
     </svg>
     <h5
-      class="MuiTypography-root MuiTypography-h5 css-1sojvhz-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-h5 css-2gq52s-MuiTypography-root"
     >
       Error: Test error message
     </h5>

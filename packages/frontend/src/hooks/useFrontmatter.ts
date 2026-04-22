@@ -15,11 +15,21 @@ export const useFrontmatter = (content: string | null): FrontmatterResult => {
     try {
       const { data, content: mdContent } = matter(content);
       
-      // Calculate how many lines of frontmatter were removed
-      // We find the index of the markdown content in the original string
-      // and count the number of newlines before it.
-      const index = content.indexOf(mdContent);
-      const linesBefore = index !== -1 ? content.substring(0, index).split('\n').length - 1 : 0;
+      // Calculate how many lines of frontmatter were removed by locating the closing '---' delimiter.
+      let linesBefore = 0;
+      if (content.trimStart().startsWith('---')) {
+        const lines = content.split('\n');
+        let delimiterCount = 0;
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i].trim() === '---') {
+            delimiterCount++;
+            if (delimiterCount === 2) {
+              linesBefore = i + 1;
+              break;
+            }
+          }
+        }
+      }
       
       return { frontmatter: data, markdownContent: mdContent, lineOffset: linesBefore };
     } catch (e) {

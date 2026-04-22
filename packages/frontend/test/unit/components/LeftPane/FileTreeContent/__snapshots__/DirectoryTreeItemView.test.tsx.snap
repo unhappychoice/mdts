@@ -19,7 +19,7 @@ exports[`DirectoryTreeItemView should render correctly 1`] = `
       tabindex="0"
     >
       <div
-        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
+        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
       >
         <div
           class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
