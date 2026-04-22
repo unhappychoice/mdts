@@ -11,6 +11,7 @@ interface MarkdownContentViewProps {
   content: string | null;
   markdownContent: string;
   frontmatter: Record<string, unknown>;
+  lineOffset: number;
 }
 
 const LoadingView: React.FC = () => (
@@ -28,7 +29,7 @@ const EmptyDiffView: React.FC<{ message: string }> = ({ message }) => (
 );
 
 const MarkdownContentView: React.FC<MarkdownContentViewProps> = (
-  { loading, viewMode, markdownContent, frontmatter, content }
+  { loading, viewMode, markdownContent, frontmatter, content, lineOffset }
 ) => {
   const { currentPath } = useSelector((state: RootState) => state.history);
   const { enableBreaks } = useSelector((state: RootState) => state.config);
@@ -42,7 +43,14 @@ const MarkdownContentView: React.FC<MarkdownContentViewProps> = (
 
   switch (viewMode) {
     case 'preview':
-      return <MarkdownRenderer content={markdownContent} selectedFilePath={currentPath} enableBreaks={enableBreaks} />;
+      return (
+        <MarkdownRenderer 
+          content={markdownContent} 
+          selectedFilePath={currentPath} 
+          enableBreaks={enableBreaks} 
+          lineOffset={lineOffset}
+        />
+      );
     case 'frontmatter':
       return (
         <Box sx={{ my: 4 }}>
