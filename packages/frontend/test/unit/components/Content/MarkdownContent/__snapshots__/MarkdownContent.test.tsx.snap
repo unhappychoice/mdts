@@ -48,7 +48,7 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
         >
           <div
             aria-label="view mode tabs"
-            class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
+            class="MuiTabs-list css-hzcega-MuiTabs-list"
             role="tablist"
           >
             <button

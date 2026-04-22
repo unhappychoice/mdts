@@ -55,19 +55,27 @@ const attachTreeReloadHandlers = (context: ServerContext, watcher: FSWatcher, ws
   const { searchEngine, directory } = context;
   
   watcher.on('add', (filePath) => {
-    logger.log('Livereload', `🌲 File added: ${filePath}, reloading tree...`);
-    searchEngine?.updateFile(path.relative(directory, filePath));
+    const relativePath = path.relative(directory, filePath);
+    logger.log('Livereload', `🌲 File added: ${relativePath}, reloading tree...`);
+    searchEngine?.updateFile(relativePath);
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });
   });
 
   watcher.on('unlink', (filePath) => {
-    logger.log('Livereload', `🌲 File removed: ${filePath}, reloading tree...`);
-    searchEngine?.updateFile(path.relative(directory, filePath));
+    const relativePath = path.relative(directory, filePath);
+    logger.log('Livereload', `🌲 File removed: ${relativePath}, reloading tree...`);
+    searchEngine?.updateFile(relativePath);
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });
+  });
+
+  watcher.on('change', (filePath) => {
+    const relativePath = path.relative(directory, filePath);
+    logger.log('Livereload', `🌲 File changed: ${relativePath}, updating search index...`);
+    searchEngine?.updateFile(relativePath);
   });
 };
 
@@ -146,8 +154,9 @@ const setupContentWatcher = (ws: WebSocket, context: ServerContext, filePath: st
 
     contentWatcher = chokidar.watch(path.join(directory, currentWatchedFile), { ignoreInitial: true });
     contentWatcher.on('change', (changedFilePath) => {
-      logger.log('Livereload', `🔃 File changed: ${changedFilePath}, reloading content...`);
-      searchEngine?.updateFile(path.relative(directory, changedFilePath));
+      const relativePath = path.relative(directory, changedFilePath);
+      logger.log('Livereload', `🔃 File changed: ${relativePath}, reloading content...`);
+      searchEngine?.updateFile(relativePath);
       ws.send(JSON.stringify({ type: 'reload-content' }));
     });
     contentWatcher.on('error', (e) => {

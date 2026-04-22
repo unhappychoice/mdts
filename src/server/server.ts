@@ -43,7 +43,7 @@ export const serve = async (
           logger.log('Server', `⚠️  Port ${port} was in use, using ${currentPort} instead`);
         }
         logger.log('Server', `🚀 Server listening at http://${host}:${currentPort}`);
-        setupWatcher(context, server, currentPort);
+        setupWatcher(context as ServerContext, server, currentPort);
         resolve({ server, port: currentPort });
       });
 
@@ -111,8 +111,8 @@ export const createApp = (
     const filePath = path.join(directory, normalizedPath);
 
     // Security check: Ensure the resolved path is within the designated directory
-    // This prevents path traversal attacks (e.g., accessing files outside 'directory')
-    if (!filePath.startsWith(directory)) {
+    const relative = path.relative(path.resolve(directory), path.resolve(filePath));
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
       logger.error(`🚫 Attempted path traversal: ${filePath}`);
       return res.status(403).send('Forbidden');
     }

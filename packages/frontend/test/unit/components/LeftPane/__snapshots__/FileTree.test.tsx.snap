@@ -73,7 +73,9 @@ exports[`FileTree renders correctly 1`] = `
       </button>
     </div>
     <div
-      class="MuiBox-root css-kuuj3l"
+      class="MuiBox-root css-0"
+      mb="2"
+      px="2"
     >
       <div
         class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-adornedStart css-pe16f2-MuiInputBase-root"
@@ -109,7 +111,7 @@ exports[`FileTree renders correctly 1`] = `
         </div>
         <input
           aria-label="search files"
-          class="MuiInputBase-input MuiInputBase-inputAdornedStart css-e77w8q-MuiInputBase-input"
+          class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
           placeholder="Search files..."
           type="text"
           value=""
@@ -137,7 +139,7 @@ exports[`FileTree renders correctly 1`] = `
           tabindex="0"
         >
           <div
-            class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
+            class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
           >
             <div
               class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
@@ -163,7 +165,7 @@ exports[`FileTree renders correctly 1`] = `
                   />
                 </svg>
                 <p
-                  class="MuiTypography-root MuiTypography-body2 css-iewwb3-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body2 css-1q85b70-MuiTypography-root"
                 >
                   file3.js
                 </p>
@@ -181,7 +183,7 @@ exports[`FileTree renders correctly 1`] = `
           tabindex="-1"
         >
           <div
-            class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
+            class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
           >
             <div
               class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"

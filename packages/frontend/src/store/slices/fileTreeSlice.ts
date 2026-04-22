@@ -7,6 +7,11 @@ export interface FileTreeItem {
   status: string;
 }
 
+export interface SearchSnippet {
+  line: number;
+  text: string;
+}
+
 export interface FileTreeState {
   fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
   filteredFileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];

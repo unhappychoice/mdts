@@ -20,7 +20,7 @@ exports[`FileTreeView should render correctly 1`] = `
       tabindex="0"
     >
       <div
-        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
+        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
       >
         <div
           class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
@@ -46,12 +46,12 @@ exports[`FileTreeView should render correctly 1`] = `
               />
             </svg>
             <p
-              class="MuiTypography-root MuiTypography-body2 css-7o9xsw-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 css-111lq6o-MuiTypography-root"
             >
               file1.md
             </p>
             <p
-              class="MuiTypography-root MuiTypography-body2 css-17gssqf-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 css-1x57gtx-MuiTypography-root"
             >
               added
             </p>
@@ -69,7 +69,7 @@ exports[`FileTreeView should render correctly 1`] = `
       tabindex="-1"
     >
       <div
-        class="MuiTreeItem-content MuiSimpleTreeView-itemContent Mui-expanded css-cn2zdx-MuiTreeItem-content"
+        class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
         data-expanded=""
       >
         <div
@@ -132,7 +132,7 @@ exports[`FileTreeView should render correctly 1`] = `
               tabindex="-1"
             >
               <div
-                class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-cn2zdx-MuiTreeItem-content"
+                class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
               >
                 <div
                   class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
@@ -158,12 +158,12 @@ exports[`FileTreeView should render correctly 1`] = `
                       />
                     </svg>
                     <p
-                      class="MuiTypography-root MuiTypography-body2 css-1fqsg4f-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body2 css-13acwao-MuiTypography-root"
                     >
                       file2.md
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body2 css-1afdyvc-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body2 css-5d1li-MuiTypography-root"
                     >
                       modified
                     </p>
