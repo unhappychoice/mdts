@@ -19,7 +19,7 @@ export const setupWatcher = (context: ServerContext, server: http.Server, port: 
 
   wss.on('connection', (ws) => {
     logger.log('Livereload', '🤝 Livereload Client connected');
-    ws.on('message', (message) => handleWebSocketMessage(ws, context.directory, message.toString()));
+    ws.on('message', (message) => handleWebSocketMessage(ws, context, message.toString()));
     ws.on('close', () => handleWebSocketClose(wss));
     ws.on('error', (e) => logger.error('🚫 Error on WebSocket client:', e));
   });
@@ -27,15 +27,15 @@ export const setupWatcher = (context: ServerContext, server: http.Server, port: 
   if (context.filePatterns) {
     setupFilePatternWatcher(context, wss);
   } else {
-    setupDirectoryWatcher(context.directory, wss);
+    setupDirectoryWatcher(context, wss);
   }
 };
 
-const handleWebSocketMessage = (ws: WebSocket, directory: string, message: string): void => {
+const handleWebSocketMessage = (ws: WebSocket, context: ServerContext, message: string): void => {
   try {
     const data = JSON.parse(message);
     if (data.type === 'watch-file' && typeof data.filePath === 'string') {
-      setupContentWatcher(ws, directory, data.filePath);
+      setupContentWatcher(ws, context, data.filePath);
     }
   } catch (e) {
     logger.error('🚫 Error parsing WebSocket message:', e);
@@ -51,9 +51,12 @@ const handleWebSocketClose = (wss: WebSocketServer): void => {
   }
 };
 
-const attachTreeReloadHandlers = (watcher: FSWatcher, wss: WebSocketServer): void => {
+const attachTreeReloadHandlers = (context: ServerContext, watcher: FSWatcher, wss: WebSocketServer): void => {
+  const { searchEngine, directory } = context;
+  
   watcher.on('add', (filePath) => {
     logger.log('Livereload', `🌲 File added: ${filePath}, reloading tree...`);
+    searchEngine?.updateFile(path.relative(directory, filePath));
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });
@@ -61,13 +64,15 @@ const attachTreeReloadHandlers = (watcher: FSWatcher, wss: WebSocketServer): voi
 
   watcher.on('unlink', (filePath) => {
     logger.log('Livereload', `🌲 File removed: ${filePath}, reloading tree...`);
+    searchEngine?.updateFile(path.relative(directory, filePath));
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({ type: 'reload-tree' }));
     });
   });
 };
 
-const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatcher | null => {
+const setupDirectoryWatcher = (context: ServerContext, wss: WebSocketServer): FSWatcher | null => {
+  const { directory } = context;
   try {
     const watcher = chokidar.watch(directory, {
       ignored: (watchedFilePath: string, stats?: fs.Stats) => {
@@ -78,15 +83,13 @@ const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatch
         if (stats) {
           return !stats.isDirectory() && !watchedFilePath.endsWith('.md') && !watchedFilePath.endsWith('.markdown');
         } else {
-          // If stats is undefined, it's a directory that hasn't been scanned yet.
-          // We want to traverse directories, so don't ignore.
           return false;
         }
       },
       ignoreInitial: true,
     });
 
-    attachTreeReloadHandlers(watcher, wss);
+    attachTreeReloadHandlers(context, watcher, wss);
 
     watcher.on('error', (error) => {
       watcher.unwatch(directory);
@@ -116,7 +119,7 @@ const setupFilePatternWatcher = (context: ServerContext, wss: WebSocketServer): 
     const absolutePaths = filePatterns.map(f => path.join(directory, f));
     const watcher = chokidar.watch(absolutePaths, { ignoreInitial: true });
 
-    attachTreeReloadHandlers(watcher, wss);
+    attachTreeReloadHandlers(context, watcher, wss);
 
     watcher.on('error', (error) => {
       watcher.close()
@@ -133,7 +136,8 @@ const setupFilePatternWatcher = (context: ServerContext, wss: WebSocketServer): 
   }
 };
 
-const setupContentWatcher = (ws: WebSocket, directory: string, filePath: string): void => {
+const setupContentWatcher = (ws: WebSocket, context: ServerContext, filePath: string): void => {
+  const { directory, searchEngine } = context;
   if (filePath !== currentWatchedFile) {
     logger.log('Livereload', `👀 Watching file: ${filePath}`);
     currentWatchedFile = filePath;
@@ -142,7 +146,8 @@ const setupContentWatcher = (ws: WebSocket, directory: string, filePath: string)
 
     contentWatcher = chokidar.watch(path.join(directory, currentWatchedFile), { ignoreInitial: true });
     contentWatcher.on('change', (changedFilePath) => {
-      logger.log('Livereload', `🔃 File changed: ${changedFilePath.replace(`${directory}/`, '')}, reloading content...`);
+      logger.log('Livereload', `🔃 File changed: ${changedFilePath}, reloading content...`);
+      searchEngine?.updateFile(path.relative(directory, changedFilePath));
       ws.send(JSON.stringify({ type: 'reload-content' }));
     });
     contentWatcher.on('error', (e) => {

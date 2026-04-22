@@ -27,7 +27,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   const { loading: fileTreeLoading, isGitRepository } = useSelector((state: RootState) => state.fileTree);
   const { fontFamily } = useSelector((state: RootState) => state.config);
 
-  const { frontmatter, markdownContent } = useFrontmatter(content);
+  const { frontmatter, markdownContent, lineOffset } = useFrontmatter(content);
   const viewMode = useViewMode();
   const isMobile = useIsMobile();
   const loading = contentLoading || fileTreeLoading;
@@ -118,6 +118,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
           content={content}
           frontmatter={frontmatter}
           markdownContent={markdownContent}
+          lineOffset={lineOffset}
         />
       </Box>
     </Box>
