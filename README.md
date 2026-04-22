@@ -69,6 +69,8 @@ npx mdts [directory] [options]
 | ------------------- | ---------------------------------------------------- | ------------------------------ |
 | `[directory]`       | Directory to serve (default `.`)                     | `./docs`                       |
 | `--glob`, `-g`      | Glob patterns to filter markdown files               | `-g 'docs/*.md' 'specs/*.md'` |
+| `--search-max-files`| Max files to index for search (default `5000`)       | `--search-max-files 10000`     |
+| `--search-max-size` | Max file size to index for search in MB (default `5`)| `--search-max-size 10`         |
 | `--host`, `-H`      | Host to listen on (default `localhost`)              | `0.0.0.0`                      |
 | `--port`, `-p`      | Port to serve on (default `8521`)                    | `8000`                         |
 | `--silent`, `-s`    | Suppress server logs (default `false`)               |                                |
@@ -87,6 +89,9 @@ npx mdts ./docs
 
 # Filter with glob patterns (only matching files are shown)
 npx mdts ./project -g 'docs/**/*.md' 'README.md'
+
+# Adjust search indexing for large repositories
+npx mdts ./monorepo --search-max-files 10000 --search-max-size 20
 
 # Combine options
 npx mdts ./monorepo -g 'packages/*/README.md' --port 3000 --no-open

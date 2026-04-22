@@ -1,4 +1,4 @@
-type LogTag = 'CLI' | 'Server' | 'Livereload' | 'Announcement';
+type LogTag = 'CLI' | 'Server' | 'Livereload' | 'Announcement' | 'Search';
 
 class Logger {
   private silent = false;
@@ -59,6 +59,8 @@ class Logger {
           return chalk.bgBlue.black;
         case 'Announcement':
           return chalk.bgYellow.black;
+        case 'Search':
+          return chalk.bgMagenta.black;
         default:
           return chalk.bgWhite.black;
       }
