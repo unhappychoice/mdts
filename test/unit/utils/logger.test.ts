@@ -1,4 +1,8 @@
 const flushAsyncWork = () => new Promise<void>((resolve) => setImmediate(resolve));
+const stripAnsi = (message: string) => {
+  const escape = String.fromCharCode(27);
+  return message.replace(new RegExp(`${escape}\\[[0-9;]*m`, 'g'), '');
+};
 
 const loadLogger = () => {
   jest.unmock('../../../src/utils/logger');
@@ -53,7 +57,7 @@ describe('logger', () => {
     logger.log(tag as never, 'plain message');
     await flushAsyncWork();
 
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(`${prefix} plain message`));
+    expect(stripAnsi(logSpy.mock.calls[0][0] as string)).toContain(`${prefix} plain message`);
   });
 
   it('formats URLs as clickable links and forwards extra arguments', async () => {
