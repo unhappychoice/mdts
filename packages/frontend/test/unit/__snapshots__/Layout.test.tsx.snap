@@ -5,500 +5,69 @@ exports[`Layout renders correctly 1`] = `
   <div
     class="MuiBox-root css-s92abg"
   >
-    <header
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-83mobe-MuiPaper-root-MuiAppBar-root"
-      style="--Paper-shadow: none;"
-    >
-      <div
-        class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-1ygil4i-MuiToolbar-root"
+    <div>
+      <button>
+        header-file-select
+      </button>
+      <button>
+        settings
+      </button>
+      <button
+        aria-label="toggle file tree"
       >
-        <div
-          class="MuiBox-root css-1xvvp3o"
-        >
-          <button
-            aria-label="Top page"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-1vqxir3-MuiButtonBase-root-MuiIconButton-root"
-            data-mui-internal-clone-element="true"
-            tabindex="0"
-            type="button"
-          >
-            <div
-              style="height: 56px; margin-top: -8px; margin-left: -16px;"
-            >
-              <svg
-                style="width: auto; height: 100%;"
-                viewBox="0 0 180 100"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <defs>
-                  <lineargradient
-                    id="grad"
-                    x1="0"
-                    x2="1"
-                    y1="0"
-                    y2="1"
-                  >
-                    <stop
-                      offset="0%"
-                      stop-color="#1976d2"
-                    />
-                    <stop
-                      offset="100%"
-                      stop-color="#1976d2"
-                    />
-                  </lineargradient>
-                  <style>
-                    
-            .logo-text {
-              font-family: 'Segoe UI', 'Arial', sans-serif;
-              font-size: 42px;
-              font-weight: 700;
-              fill: url(#grad);
-              letter-spacing: 2px;
-            }
-            .logo-icon {
-              fill: url(#grad);
-            }
-          
-                  </style>
-                </defs>
-                <g
-                  class="logo-icon"
-                  transform="translate(10, 20)"
-                >
-                  <path
-                    d="M5 25 L15 45"
-                    stroke="url(#grad)"
-                    stroke-width="2"
-                  />
-                  <path
-                    d="M25 25 L15 45"
-                    stroke="url(#grad)"
-                    stroke-width="2"
-                  />
-                  <rect
-                    height="10"
-                    rx="2"
-                    width="10"
-                    x="0"
-                    y="20"
-                  />
-                  <rect
-                    height="10"
-                    rx="2"
-                    width="10"
-                    x="20"
-                    y="20"
-                  />
-                  <rect
-                    height="10"
-                    rx="2"
-                    width="10"
-                    x="10"
-                    y="40"
-                  />
-                </g>
-                <text
-                  class="logo-text"
-                  x="60"
-                  y="70"
-                >
-                  mdts
-                </text>
-              </svg>
-            </div>
-          </button>
-        </div>
-        <button
-          aria-label="Settings"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-v8k5r1-MuiButtonBase-root-MuiIconButton-root"
-          data-mui-internal-clone-element="true"
-          tabindex="0"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-            data-testid="SettingsIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6"
-            />
-          </svg>
-        </button>
-        <a
-          aria-label="GitHub Repository"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-v8k5r1-MuiButtonBase-root-MuiIconButton-root"
-          data-mui-internal-clone-element="true"
-          href="https://github.com/unhappychoice/mdts"
-          rel="noopener"
-          tabindex="0"
-          target="_blank"
-        >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-            data-testid="GitHubIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2 2 0 01.64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 010-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 010 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0012 1.27"
-            />
-          </svg>
-        </a>
-        <div
-          class="MuiBox-root css-gcae57"
-        >
-          <a
-            aria-label="Changelog"
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
-            data-mui-internal-clone-element="true"
-            href="https://github.com/unhappychoice/mdts/blob/main/CHANGELOG.md"
-            rel="noopener"
-            target="_blank"
-          >
-            v
-          </a>
-        </div>
-      </div>
-    </header>
+        toggle file tree
+      </button>
+      <button
+        aria-label="toggle outline"
+      >
+        toggle outline
+      </button>
+    </div>
     <main
       class="MuiBox-root css-1b2sp54"
     >
-      <div
-        class="MuiBox-root css-9681nh"
-      >
+      <div>
         <div
-          class="MuiBox-root css-xonpca"
+          data-testid="file-tree-open"
         >
-          <div
-            class="MuiBox-root css-1g3qtqm"
-          >
-            <h6
-              class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-1b6r7r0-MuiTypography-root"
-            >
-              File Tree
-            </h6>
-            <button
-              aria-label="expand all"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
-              tabindex="0"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="UnfoldMoreIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15z"
-                />
-              </svg>
-            </button>
-            <button
-              aria-label="collapse all"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
-              tabindex="0"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="UnfoldLessIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7.41 18.59 8.83 20 12 16.83 15.17 20l1.41-1.41L12 14zm9.18-13.18L15.17 4 12 7.17 8.83 4 7.41 5.41 12 10z"
-                />
-              </svg>
-            </button>
-          </div>
-          <button
-            aria-label="toggle file tree"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nyqon6-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="ChevronLeftIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
-              />
-            </svg>
-          </button>
+          true
         </div>
         <div
-          class="MuiBox-root css-0"
-          mb="2"
-          px="2"
+          data-testid="selected-file-path"
         >
-          <div
-            class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"
-          >
-            <input
-              aria-label="search files"
-              class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
-              placeholder="Search files..."
-              type="text"
-              value=""
-            />
-          </div>
+          docs/readme.md
         </div>
-        <ul
-          aria-multiselectable="false"
-          class="custom-scrollbar MuiSimpleTreeView-root css-5c3a1o-MuiSimpleTreeView-root"
-          defaultcollapseicon="[object Object]"
-          defaultexpandicon="[object Object]"
-          id="mui-tree-view-1"
-          role="tree"
-          style="--TreeView-itemChildrenIndentation: 12px;"
-        >
-          <li
-            aria-checked="false"
-            class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
-            id="mui-tree-view-1-test.md"
-            role="treeitem"
-            style="--TreeView-itemDepth: 0;"
-            tabindex="0"
-          >
-            <div
-              class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
-            >
-              <div
-                class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
-              />
-              <div
-                class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
-              >
-                <div
-                  class="MuiBox-root css-70qvj9"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-eep7r1-MuiSvgIcon-root"
-                    data-testid="ArticleOutlinedIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
-                    />
-                    <path
-                      d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
-                    />
-                  </svg>
-                  <p
-                    class="MuiTypography-root MuiTypography-body2 css-1q85b70-MuiTypography-root"
-                  >
-                    test.md
-                  </p>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li
-            aria-checked="false"
-            aria-expanded="false"
-            class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
-            id="mui-tree-view-1-folder"
-            role="treeitem"
-            style="--TreeView-itemDepth: 0;"
-            tabindex="-1"
-          >
-            <div
-              class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
-            >
-              <div
-                class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                  data-testid="TreeViewExpandIconIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
-                  />
-                </svg>
-              </div>
-              <div
-                class="MuiTreeItem-label MuiSimpleTreeView-itemLabel css-1yq7dn0-MuiTreeItem-label"
-              >
-                <div
-                  class="MuiBox-root css-70qvj9"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-muidwl-MuiSvgIcon-root"
-                    data-testid="FolderOutlinedIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="m9.17 6 2 2H20v10H4V6zM10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8z"
-                    />
-                  </svg>
-                  <p
-                    class="MuiTypography-root MuiTypography-body2 css-1jo9ady-MuiTypography-root"
-                  >
-                    folder
-                  </p>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
+        <button>
+          tree-file-select
+        </button>
       </div>
-      <div
-        class="MuiBox-root css-jv7lyf"
-      >
+      <div>
         <div
-          class="custom-scrollbar MuiBox-root css-z5visb"
+          data-testid="content-scroll-id"
         >
-          <div
-            class="MuiBox-root css-1t4r39b"
-          >
-            <nav
-              aria-label="breadcrumb"
-              class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1eq4jhp-MuiTypography-root-MuiBreadcrumbs-root"
-            >
-              <ol
-                class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
-              />
-            </nav>
-            <div
-              class="MuiBox-root css-1ol10sz"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-1oa9u9i-MuiSvgIcon-root"
-                data-testid="ArticleOutlinedIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
-                />
-                <path
-                  d="M14 17H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
-                />
-              </svg>
-              <h4
-                class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-lsowdo-MuiTypography-root"
-              >
-                🎉 Welcome to mdts!
-              </h4>
-            </div>
-            <div
-              class="MuiBox-root css-i3qfz4"
-            >
-              <div
-                class="MuiTabs-root css-1xkjjjh-MuiTabs-root"
-              >
-                <div
-                  class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
-                  style="overflow: hidden; margin-bottom: 0px;"
-                >
-                  <div
-                    aria-label="view mode tabs"
-                    class="MuiTabs-list css-hzcega-MuiTabs-list"
-                    role="tablist"
-                  >
-                    <button
-                      aria-selected="true"
-                      class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-mobu7h-MuiButtonBase-root-MuiTab-root"
-                      role="tab"
-                      tabindex="0"
-                      type="button"
-                    >
-                      Preview
-                    </button>
-                    <button
-                      aria-selected="false"
-                      class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
-                      role="tab"
-                      tabindex="-1"
-                      type="button"
-                    >
-                      Raw
-                    </button>
-                    <button
-                      aria-selected="false"
-                      class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
-                      role="tab"
-                      tabindex="-1"
-                      type="button"
-                    >
-                      Last Commit
-                    </button>
-                  </div>
-                  <span
-                    class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
-                    style="left: 0px; width: 0px;"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="MuiBox-root css-hk7m0v"
-            >
-              <div
-                class="markdown-body MuiBox-root css-1yyviwt"
-              >
-                <div
-                  data-testid="mock-react-markdown"
-                />
-              </div>
-            </div>
-          </div>
+          null
         </div>
+        <button>
+          content-file-select
+        </button>
+        <button>
+          content-directory-select
+        </button>
       </div>
-      <div
-        class="MuiBox-root css-fm7iwp"
-      >
+      <div>
         <div
-          class="MuiBox-root css-mzwsmu"
+          data-testid="outline-file-path"
         >
-          <button
-            aria-label="toggle outline"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nyqon6-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="ChevronRightIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
-              />
-            </svg>
-          </button>
-          <h6
-            class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-onjnbs-MuiTypography-root"
-          >
-            Outline
-          </h6>
+          docs/readme.md
         </div>
-        <ul
-          class="MuiList-root MuiList-padding MuiList-dense custom-scrollbar css-18l7s16-MuiList-root"
-        />
+        <div
+          data-testid="outline-open"
+        >
+          true
+        </div>
+        <button>
+          outline-item-click
+        </button>
       </div>
     </main>
   </div>
