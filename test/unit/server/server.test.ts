@@ -4,6 +4,7 @@ import { createApp, serve } from '../../../src/server/server';
 import { setupWatcher } from '../../../src/server/watcher';
 import { getConfig, saveConfig } from '../../../src/server/config';
 import { ServerContext } from '../../../src/server/context';
+import { logger } from '../../../src/utils/logger';
 
 jest.mock('express', () => {
   const mockUse = jest.fn();
@@ -316,6 +317,20 @@ describe('server.ts unit tests', () => {
       expect(app.listen).toHaveBeenCalledWith(3000, 'localhost');
       expect(setupWatcher).toHaveBeenCalledWith(context, server, 3000);
       expect(port).toBe(3000);
+    });
+
+    it('should log watched file count when file patterns are provided', async () => {
+      const context: ServerContext = {
+        directory: '/mock/directory',
+        filePatterns: ['README.md', 'docs/guide.md'],
+      };
+
+      await serve(context, 3000, 'localhost');
+
+      expect(logger.log).toHaveBeenCalledWith(
+        'Server',
+        '📄 Watching 2 files from glob patterns',
+      );
     });
 
     it('should reject on EADDRINUSE when autoPort is false', async () => {
