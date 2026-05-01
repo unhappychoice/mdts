@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import MarkdownIt from 'markdown-it';
 import path from 'path';
 import { outlineRouter } from '../../../../src/server/routes/outline';
+import { logger } from '../../../../src/utils/logger';
 
 // Mock the fs module
 jest.mock('fs', () => {
@@ -24,6 +25,11 @@ jest.mock('markdown-it', () => {
     }),
   }));
 });
+jest.mock('../../../../src/utils/logger', () => ({
+  logger: {
+    error: jest.fn(),
+  },
+}));
 describe('outline.ts', () => {
   beforeEach(() => {
     const mockedFs = fs as jest.Mocked<typeof import('fs')>;
@@ -31,6 +37,7 @@ describe('outline.ts', () => {
     mockedFs.existsSync.mockReset();
     mockedFs.existsSync.mockReturnValue(true);
     (MarkdownIt as jest.Mock).mockClear();
+    jest.mocked(logger.error).mockReset();
   });
 
   describe('outlineRouter', () => {
@@ -88,6 +95,20 @@ describe('outline.ts', () => {
       expect(response.text).toBe('[]');
 
       consoleErrorSpy.mockRestore();
+    });
+
+    it('should return 500 when outline generation fails', async () => {
+      const error = new Error('Failed to read markdown');
+      const mockedFs = fs as jest.Mocked<typeof import('fs')>;
+      mockedFs.readFileSync.mockImplementationOnce(() => {
+        throw error;
+      });
+
+      const response = await request(app).get('/api/outline?filePath=broken.md');
+
+      expect(response.statusCode).toBe(500);
+      expect(response.text).toBe('Error getting outline.');
+      expect(logger.error).toHaveBeenCalledWith('Error getting outline for broken.md:', error);
     });
   });
 });
