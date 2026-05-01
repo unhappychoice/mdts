@@ -55,7 +55,8 @@ describe('watcher.ts unit tests', () => {
 
     mockDirectoryWatcher = {
       on: jest.fn().mockReturnThis(),
-      close: jest.fn(),
+      close: jest.fn().mockResolvedValue(undefined),
+      unwatch: jest.fn(),
     } as unknown as FSWatcher;
     (chokidar.watch as jest.Mock).mockReturnValue(mockDirectoryWatcher);
 
@@ -197,6 +198,11 @@ describe('watcher.ts unit tests', () => {
       expect(chokidar.watch).not.toHaveBeenCalled();
     });
 
+    it('should log error if WebSocket message payload is invalid JSON', () => {
+      onClientMessage('{invalid-json');
+      expect(logger.error).toHaveBeenCalledWith('🚫 Error parsing WebSocket message:', expect.any(Error));
+    });
+
     it('should log error if content watcher encounters an error', () => {
       (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
       onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file.md' }));
@@ -245,6 +251,23 @@ describe('watcher.ts unit tests', () => {
 
       expect(logger.error).toHaveBeenCalledWith('🚫 Error watching directory:', expect.any(Error));
       expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
+    });
+
+    it('should close directory watcher and log EMFILE guidance on watcher error event', async () => {
+      const onErrorCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'error')[1];
+      const error = Object.assign(new Error('Too many open files'), { code: 'EMFILE' });
+
+      onErrorCallback(error);
+      await Promise.resolve();
+
+      expect(mockDirectoryWatcher.unwatch).toHaveBeenCalledWith('/mock/directory');
+      expect(mockDirectoryWatcher.close).toHaveBeenCalled();
+      expect(logger.log).toHaveBeenCalledWith('Livereload', 'Directory watcher closed');
+      expect(logger.error).toHaveBeenCalledWith('🚫 Error watching directory:', error);
+      expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
+      expect(logger.error).toHaveBeenCalledWith(
+        'This error is likely caused by too many open files. Try increasing the ulimit.',
+      );
     });
   });
 
