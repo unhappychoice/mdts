@@ -219,4 +219,11 @@ describe('cli', () => {
         expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', false);
       });
   });
+
+  it('should resolve open module in requireOpen', async () => {
+    const anotherCli = new CLI();
+    const openModule = await import('open');
+
+    await expect(anotherCli.requireOpen()).resolves.toBe(openModule.default);
+  });
 });
