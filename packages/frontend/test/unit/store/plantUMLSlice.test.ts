@@ -7,6 +7,15 @@ import plantUMLReducer, {
 
 global.fetch = jest.fn();
 
+const hashDiagram = (diagram: string): string => {
+  return Math.abs(
+    Array.from(diagram).reduce((hash, char) => {
+      const nextHash = (hash << 5) - hash + char.charCodeAt(0);
+      return nextHash & nextHash;
+    }, 0),
+  ).toString(36);
+};
+
 const createTestStore = (initialState = {}) => {
   return configureStore({
     reducer: {
@@ -57,15 +66,7 @@ describe('plantUMLSlice', () => {
     it('should return cached SVG if available', async () => {
       const diagram = '@startuml\nA --> B\n@enduml';
       const cachedSvg = '<svg>cached</svg>';
-      
-      // Calculate the actual hash for the diagram
-      let hash = 0;
-      for (let i = 0; i < diagram.length; i++) {
-        const char = diagram.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash;
-      }
-      const expectedHash = Math.abs(hash).toString(36);
+      const expectedHash = hashDiagram(diagram);
       
       const store = createTestStore({
         svgCache: { [expectedHash]: cachedSvg },
@@ -78,6 +79,37 @@ describe('plantUMLSlice', () => {
         hash: expectedHash,
         svg: cachedSvg,
       });
+    });
+
+    it('should fetch SVG successfully and cache it', async () => {
+      const diagram = '@startuml\nA --> B\n@enduml';
+      const svg = '<svg>generated</svg>';
+      const expectedHash = hashDiagram(diagram);
+
+      (global.fetch as jest.Mock).mockResolvedValueOnce({
+        ok: true,
+        text: jest.fn().mockResolvedValue(svg),
+      });
+
+      const store = createTestStore();
+      const result = await store.dispatch(generatePlantUMLSvg(diagram));
+      const state = store.getState().plantUML;
+
+      expect(global.fetch).toHaveBeenCalledWith('/api/plantuml/svg', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ diagram }),
+      });
+      expect(result.type).toBe('plantUML/generateSvg/fulfilled');
+      expect(result.payload).toEqual({
+        hash: expectedHash,
+        svg,
+      });
+      expect(state.svgCache[expectedHash]).toBe(svg);
+      expect(state.loading[expectedHash]).toBe(false);
+      expect(state.errors[expectedHash]).toBe(null);
     });
 
     it('should handle fetch failure', async () => {
