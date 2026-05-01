@@ -147,6 +147,19 @@ describe('fileTreeSlice', () => {
     expect(store.getState().fileTree.mountedDirectoryPath).toEqual('/new/path');
   });
 
+  it('should remove the oldest expanded node cache when recent paths exceed the limit', () => {
+    const paths = Array.from({ length: 11 }, (_, index) => `/test/path-${index + 1}`);
+
+    paths.forEach((path, index) => {
+      store.dispatch(setMountedDirectoryPath(path));
+      store.dispatch(setExpandedNodes([`node-${index + 1}`]));
+    });
+
+    expect(localStorage.getItem('mdts_expanded_nodes_/test/path-1')).toBeNull();
+    expect(localStorage.getItem('mdts_expanded_nodes_/test/path-11')).toEqual(JSON.stringify(['node-11']));
+    expect(localStorage.getItem('mdts_recent_paths')).toEqual(JSON.stringify(paths.slice(1).reverse()));
+  });
+
   describe('fetchFileTree async thunk', () => {
     it('should handle pending state', () => {
       store.dispatch(fetchFileTree.pending('requestId', undefined));
