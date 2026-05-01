@@ -2,6 +2,7 @@ import express from 'express';
 import request from 'supertest';
 import { PassThrough } from 'stream';
 import { plantumlRouter } from '../../../../src/server/routes/plantuml';
+import { logger } from '../../../../src/utils/logger';
 
 const createPlantumlModule = (svg: string) => ({
   generate: jest.fn(() => {
@@ -10,6 +11,19 @@ const createPlantumlModule = (svg: string) => ({
 
     inputStream.on('finish', () => {
       outputStream.end(svg);
+    });
+
+    return { in: inputStream, out: outputStream };
+  }),
+});
+
+const createFailingPlantumlModule = (error: Error) => ({
+  generate: jest.fn(() => {
+    const inputStream = new PassThrough();
+    const outputStream = new PassThrough();
+
+    inputStream.on('finish', () => {
+      outputStream.emit('error', error);
     });
 
     return { in: inputStream, out: outputStream };
@@ -58,6 +72,26 @@ describe('plantuml.ts', () => {
       const svgBody = Buffer.isBuffer(payload) ? payload.toString() : payload;
       expect(svgBody).toBe('<svg>diagram</svg>');
       expect(plantumlModule.generate).toHaveBeenCalledWith({ format: 'svg' });
+    });
+
+    it('should return 500 when SVG generation fails', async () => {
+      const error = new Error('generation failed');
+      const errorSpy = jest.spyOn(logger, 'error').mockImplementation(() => {});
+
+      plantumlModule = createFailingPlantumlModule(error);
+      app = express();
+      app.use(express.json());
+      app.use('/api/plantuml', plantumlRouter(plantumlModule));
+
+      const response = await request(app)
+        .post('/api/plantuml/svg')
+        .send({ diagram: '@startuml\nA --> B\n@enduml' });
+
+      expect(response.statusCode).toBe(500);
+      expect(response.text).toBe('Error generating PlantUML diagram.');
+      expect(errorSpy).toHaveBeenCalledWith('Error generating PlantUML diagram:', error);
+
+      errorSpy.mockRestore();
     });
   });
 });
