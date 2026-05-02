@@ -46,6 +46,7 @@ describe('useWebSocket', () => {
     mockWebSocket.close.mockClear();
     mockWebSocket.onmessage = jest.fn(); // Reset onmessage for each test
     mockWebSocket.onopen = jest.fn(); // Reset onopen for each test
+    mockWebSocket.onclose = jest.fn(); // Reset onclose for each test
     mockWebSocket.onerror = jest.fn(); // Reset onerror for each test
   });
 
@@ -127,6 +128,14 @@ describe('useWebSocket', () => {
     mockWebSocket.onerror(errorEvent);
     expect(consoleErrorSpy).toHaveBeenCalledWith('WebSocket error:', errorEvent);
     consoleErrorSpy.mockRestore();
+  });
+
+  test('should log when WebSocket closes', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    render(<TestComponent currentPath="/test.md" />);
+    mockWebSocket.onclose();
+    expect(consoleLogSpy).toHaveBeenCalledWith('WebSocket disconnected');
+    consoleLogSpy.mockRestore();
   });
 
   test('should send watch-file message when currentPath changes', () => {

@@ -2,6 +2,7 @@ import { CLI } from '../../src/cli';
 import path from 'path';
 import { serve } from '../../src/server/server';
 import { resolveGlobPatterns } from '../../src/utils/glob';
+import { logger } from '../../src/utils/logger';
 
 // Mock fs first, before any other imports that might use it
 let mockExistingFiles: string[] = [];
@@ -53,11 +54,13 @@ describe('cli', () => {
   let originalArgv: string[];
   const mockOpen = jest.fn();
   let mockServe: jest.Mock;
+  const mockLogger = logger as jest.Mocked<typeof logger>;
 
   beforeEach(() => {
     cli = new CLI();
     originalArgv = process.argv;
     mockServe = serve as jest.Mock;
+    process.exitCode = undefined;
     // Reset the mock result for existsSync before each test
     setExistingFiles([]); // Default to empty for safety
     jest.clearAllMocks();
@@ -155,6 +158,31 @@ describe('cli', () => {
       });
   });
 
+  it('should log the server URL without opening the browser when --no-open is specified', () => {
+    setExistsSyncResult(false);
+    process.argv = ['node', 'cli.ts', '--no-open', '--host', '0.0.0.0', '.'];
+
+    return cli.run()
+      .then(() => {
+        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, '0.0.0.0', false);
+        expect(mockLogger.log).toHaveBeenCalledWith('CLI', '🌐 Server running at http://localhost:8521');
+        expect(mockOpen).not.toHaveBeenCalled();
+      });
+  });
+
+  it('should log an error and set exitCode when serve fails', () => {
+    setExistsSyncResult(false);
+    mockServe.mockRejectedValueOnce(new Error('boom'));
+    process.argv = ['node', 'cli.ts', '.'];
+
+    return cli.run()
+      .then(() => {
+        expect(mockLogger.error).toHaveBeenCalledWith('❌ Failed to start server: boom');
+        expect(process.exitCode).toBe(1);
+        expect(mockOpen).not.toHaveBeenCalled();
+      });
+  });
+
   it('should call resolveGlobPatterns when --glob option is provided', () => {
     setExistsSyncResult(false);
     process.argv = ['node', 'cli.ts', './docs', '--glob', '*.md'];
@@ -190,5 +218,12 @@ describe('cli', () => {
         expect(resolveGlobPatterns).not.toHaveBeenCalled();
         expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, 'localhost', false);
       });
+  });
+
+  it('should resolve open module in requireOpen', async () => {
+    const anotherCli = new CLI();
+    const openModule = await import('open');
+
+    await expect(anotherCli.requireOpen()).resolves.toBe(openModule.default);
   });
 });

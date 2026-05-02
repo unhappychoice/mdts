@@ -17,8 +17,8 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
     >
       <button
         aria-label="dark"
-        aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        aria-pressed="true"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="0"
         type="button"
         value="dark"
@@ -61,12 +61,22 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
         role="combobox"
         tabindex="0"
       >
-        <span
-          aria-hidden="true"
-          class="notranslate"
+        <div
+          class="MuiBox-root css-7pf6at"
         >
-          ​
-        </span>
+          <div
+            class="MuiBox-root css-157xh8y"
+          >
+            <div
+              class="MuiBox-root css-dergdt"
+            />
+          </div>
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-2wbpcv-MuiTypography-root"
+          >
+            Default
+          </p>
+        </div>
       </div>
       <input
         aria-hidden="true"
@@ -74,6 +84,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
         class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
         id="_r_1_"
         tabindex="-1"
+        value="default"
       />
       <svg
         aria-hidden="true"

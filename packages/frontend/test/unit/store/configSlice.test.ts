@@ -80,4 +80,34 @@ describe('configSlice', () => {
     expect(store.getState().config.fontFamily).toEqual('TestFontAfterSave');
     expect(store.getState().config.fontSize).toEqual(18);
   });
+
+  it('should log and reject when saving config to backend fails', async () => {
+    const error = new Error('network error');
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    (global.fetch as jest.MockedFunction<typeof fetch>).mockRejectedValueOnce(error);
+
+    const action = await store.dispatch(
+      saveConfigToBackend({
+        fontFamily: 'SavedFont',
+        fontFamilyMonospace: 'SavedMono',
+        fontSize: 18,
+        theme: 'default',
+        syntaxHighlighterTheme: 'auto',
+        enableBreaks: false,
+      }),
+    );
+
+    expect(action.type).toEqual('config/saveConfigToBackend/rejected');
+    expect(action.error.message).toEqual('network error');
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to save settings:', error);
+    expect(api.fetchData).not.toHaveBeenCalled();
+    expect(store.getState().config).toEqual({
+      fontFamily: 'Roboto',
+      fontFamilyMonospace: 'monospace',
+      fontSize: 14,
+      theme: 'default',
+      syntaxHighlighterTheme: 'auto',
+      enableBreaks: false,
+    });
+  });
 });

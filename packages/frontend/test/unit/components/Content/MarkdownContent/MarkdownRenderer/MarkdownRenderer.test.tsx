@@ -26,18 +26,6 @@ jest.mock('../../../../../../src/components/Content/MarkdownContent/MarkdownRend
 jest.mock('react-markdown', () => {
   const React = jest.requireActual('react');
   const ActualReactMarkdown = jest.requireActual('react-markdown').default;
-
-  
-  const MockCode = (props: React.ComponentProps<'pre'>) => {
-    if (props.className && props.className.includes('language-mermaid')) {
-      return <div data-testid="mock-mermaid-chart">{props.children}</div>;
-    }
-    return (
-      <pre data-testid="mock-syntax-highlighter" className={props.className}>
-        <code data-testid="mock-syntax-highlighter-code">{props.children}</code>
-      </pre>
-    );
-  };
   const MockH1 = (props: React.ComponentProps<'h1'>) => <h1 data-testid="mock-h1" {...props}>{props.children}</h1>;
   const MockP = (props: React.ComponentProps<'p'>) => <p data-testid="mock-p" {...props}>{props.children}</p>;
 
@@ -51,11 +39,50 @@ jest.mock('react-markdown', () => {
     }) => {
       const finalComponents = {
         ...components,
-        
-        code: MockCode,
         h1: MockH1,
         p: MockP,
       };
+
+      if (children === '__CODE__' && finalComponents.code) {
+        return (
+          <div data-testid="mock-react-markdown-root">
+            {finalComponents.code({
+              inline: false,
+              className: 'language-javascript',
+              children: 'console.log("Hello");',
+            } as React.ComponentProps<'code'>)}
+          </div>
+        );
+      }
+
+      if (children === '__MERMAID__' && finalComponents.code) {
+        return (
+          <div data-testid="mock-react-markdown-root">
+            {finalComponents.code({
+              inline: false,
+              className: 'language-mermaid',
+              children: 'graph TD; A-->B;',
+            } as React.ComponentProps<'code'>)}
+          </div>
+        );
+      }
+
+      if (children === '__TABLE__' && finalComponents.table) {
+        return (
+          <div data-testid="mock-react-markdown-root">
+            {finalComponents.table({
+              children: (
+                <tbody>
+                  <tr>
+                    <td>mdts</td>
+                  </tr>
+                </tbody>
+              ),
+            } as React.ComponentProps<'table'>)}
+          </div>
+        );
+      }
+
       return (
         <div data-testid="mock-react-markdown-root">
           <ActualReactMarkdown components={finalComponents} remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins}>
@@ -69,27 +96,34 @@ jest.mock('react-markdown', () => {
 
 // Mock SyntaxHighlighter
 jest.mock('react-syntax-highlighter', () => ({
-  Prism: {
-    SyntaxHighlighter: ({
-      children,
-      language,
-      ...props
-    }: {
-      children: React.ReactNode;
-      language: string;
-      [key: string]: unknown;
-    }) => (
-      <pre data-testid="mock-syntax-highlighter" className={`language-${language}`} {...props}>
-        <code data-testid="mock-syntax-highlighter-code">{children}</code>
-      </pre>
-    ),
-  },
+  PrismAsyncLight: (props: {
+    children: React.ReactNode;
+    language: string;
+    className?: string;
+    customStyle?: unknown;
+    showLineNumbers?: boolean;
+    codeTagProps?: unknown;
+    PreTag?: unknown;
+    [key: string]: unknown;
+  }) => (
+    <pre
+      data-testid="mock-syntax-highlighter"
+      className={props.className}
+      data-language={props.language}
+    >
+      <code data-testid="mock-syntax-highlighter-code">{props.children}</code>
+    </pre>
+  ),
   nightOwl: {},
   prism: {},
 }));
 
 
-const renderWithProviders = (content: string, selectedFilePath: string | null = null) => {
+const renderWithProviders = (
+  content: string,
+  selectedFilePath: string | null = null,
+  enableBreaks = false
+) => {
   const theme = createTheme({
     palette: {
       mode: 'light',
@@ -122,7 +156,11 @@ const renderWithProviders = (content: string, selectedFilePath: string | null = 
     <Provider store={store}>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <MarkdownRenderer content={content} selectedFilePath={selectedFilePath} />
+          <MarkdownRenderer
+            content={content}
+            selectedFilePath={selectedFilePath}
+            enableBreaks={enableBreaks}
+          />
         </ThemeProvider>
       </BrowserRouter>
     </Provider>
@@ -146,15 +184,15 @@ describe('MarkdownRenderer', () => {
   });
 
   it('renders code blocks with syntax highlighting', () => {
-    const content = '```javascript\nconsole.log("Hello");\n```';
+    const content = '__CODE__';
     renderWithProviders(content);
     expect(screen.getByTestId('mock-syntax-highlighter')).toBeInTheDocument();
     expect(screen.getByTestId('mock-syntax-highlighter-code')).toHaveTextContent('console.log("Hello");');
-    expect(screen.getByTestId('mock-syntax-highlighter')).toHaveClass('language-javascript');
+    expect(screen.getByTestId('mock-syntax-highlighter')).toHaveAttribute('data-language', 'javascript');
   });
 
   it('renders mermaid diagrams for mermaid code blocks', () => {
-    const content = '```mermaid\ngraph TD; A-->B;\n```';
+    const content = '__MERMAID__';
     renderWithProviders(content);
     expect(screen.getByTestId('mock-mermaid-chart')).toBeInTheDocument();
     expect(screen.getByTestId('mock-mermaid-chart')).toHaveTextContent('graph TD; A-->B;');
@@ -203,5 +241,18 @@ describe('MarkdownRenderer', () => {
     renderWithProviders(content, '/path/to/current.md');
     const link = screen.getByTestId('markdown-link');
     expect(link).toHaveAttribute('href', '#section');
+  });
+
+  it('renders single line breaks as breaks when enabled', () => {
+    const { container } = renderWithProviders('First line\nSecond line', null, true);
+    expect(container.querySelector('br')).toBeInTheDocument();
+  });
+
+  it('wraps markdown tables in a table wrapper', () => {
+    const content = '__TABLE__';
+    const { container } = renderWithProviders(content);
+    expect(container.querySelector('.table-wrapper')).toBeInTheDocument();
+    expect(screen.getByRole('table')).toBeInTheDocument();
+    expect(screen.getByText('mdts')).toBeInTheDocument();
   });
 });

@@ -7,8 +7,8 @@ import { createMockStore } from '../utils';
 
 jest.mock('@mui/material', () => ({
   ...jest.requireActual('@mui/material'),
-  CssBaseline: () => null, // Mock CssBaseline to render nothing
-  AppBar: ({ children, ...props }: { children: React.ReactNode }) => <div {...props}>{children}</div>, // Mock AppBar
+  CssBaseline: () => null,
+  AppBar: ({ children, ...props }: { children: React.ReactNode }) => <div {...props}>{children}</div>,
 }));
 
 jest.mock('@mui/x-tree-view', () => ({
@@ -20,11 +20,9 @@ jest.mock('@mui/x-tree-view', () => ({
   ),
 }));
 
-// Mock the useFileTree hook
 jest.mock('../../src/api', () => ({
   fetchData: jest.fn(() => Promise.resolve([])),
 }));
-
 
 describe('App', () => {
   let store;
@@ -43,6 +41,7 @@ describe('App', () => {
         </Provider>
       );
     });
+
     expect(screen.getByRole('main')).toBeInTheDocument();
   });
 });

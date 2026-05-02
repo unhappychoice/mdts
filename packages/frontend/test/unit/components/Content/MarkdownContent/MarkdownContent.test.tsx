@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import MarkdownContent from '../../../../../src/components/Content/MarkdownContent/MarkdownContent';
@@ -358,5 +358,65 @@ describe('MarkdownContent', () => {
 
     await screen.findByText('Test Heading');
     expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
+  });
+
+  test('renders tag and category chips and fetches previous diff in diff-prev mode', async () => {
+    const contentWithMetadata = [
+      '---',
+      'title: Release Notes',
+      'tags:',
+      '  - alpha',
+      '  - beta',
+      'categories:',
+      '  - docs',
+      '  - guides',
+      '---',
+      '# Markdown Content',
+    ].join('\n');
+
+    store = mockStore({
+      content: {
+        content: contentWithMetadata,
+        loading: false,
+        error: null,
+      },
+      diff: defaultDiffState,
+      fileTree: {
+        loading: false,
+        isGitRepository: true,
+      },
+      history: {
+        currentPath: '/path/to/test.md',
+        isDirectory: false,
+      },
+      appSetting: {
+        contentMode: 'compact',
+      },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      }
+    });
+
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/?tab=diff-prev']}>
+            <MarkdownContent scrollToId={null} />
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    expect(screen.getByRole('heading', { name: 'Release Notes' })).toBeInTheDocument();
+    ['alpha', 'beta', 'docs', 'guides'].forEach((value) => {
+      expect(screen.getByText(value)).toBeInTheDocument();
+    });
+    expect(store.getActions()).toEqual([
+      { type: 'content/fetchContent', payload: '/path/to/test.md' },
+      { type: 'diff/fetchDiff', payload: '/path/to/test.md' },
+      { type: 'diff/fetchDiffPrev', payload: '/path/to/test.md' },
+    ]);
   });
 });
