@@ -1,5 +1,72 @@
 # Changelog
 
+## v0.20.1
+
+### 🐛 Bug Fixes
+- normalize file tree paths to POSIX separators (#691) ([8a7bb12](https://github.com/unhappychoice/mdts/commit/8a7bb12))
+
+### 📝 Documentation
+- update CHANGELOG.md for v0.20.0 ([9db13aa](https://github.com/unhappychoice/mdts/commit/9db13aa))
+
+### 🆙 Update Packages
+- Bump @babel/preset-env in /packages/frontend (#689) ([ec6d253](https://github.com/unhappychoice/mdts/commit/ec6d253))
+- Bump react-router-dom in /packages/frontend (#690) ([c2db4a6](https://github.com/unhappychoice/mdts/commit/c2db4a6))
+- Bump typescript-eslint from 8.59.1 to 8.59.2 (#683) ([ec50746](https://github.com/unhappychoice/mdts/commit/ec50746))
+- Bump axios from 1.15.2 to 1.16.0 (#681) ([2bee4f6](https://github.com/unhappychoice/mdts/commit/2bee4f6))
+- Bump @typescript-eslint/eslint-plugin (#685) ([1635443](https://github.com/unhappychoice/mdts/commit/1635443))
+- Bump @typescript-eslint/parser from 8.59.1 to 8.59.2 (#686) ([0342151](https://github.com/unhappychoice/mdts/commit/0342151))
+- Bump typescript-eslint in /packages/frontend (#687) ([20ac655](https://github.com/unhappychoice/mdts/commit/20ac655))
+- Bump @typescript-eslint/parser in /packages/frontend (#688) ([1b79051](https://github.com/unhappychoice/mdts/commit/1b79051))
+- Bump @babel/preset-env in /packages/frontend (#678) ([fd8e448](https://github.com/unhappychoice/mdts/commit/fd8e448))
+- Bump @mui/x-tree-view in /packages/frontend (#676) ([f763d6e](https://github.com/unhappychoice/mdts/commit/f763d6e))
+- Bump @typescript-eslint/parser in /packages/frontend (#675) ([0e56f3d](https://github.com/unhappychoice/mdts/commit/0e56f3d))
+- Bump @typescript-eslint/parser from 8.59.0 to 8.59.1 (#674) ([8ea489f](https://github.com/unhappychoice/mdts/commit/8ea489f))
+- Bump typescript-eslint from 8.59.0 to 8.59.1 (#672) ([bb8f54c](https://github.com/unhappychoice/mdts/commit/bb8f54c))
+- Bump typescript-eslint in /packages/frontend (#670) ([2f1e7fa](https://github.com/unhappychoice/mdts/commit/2f1e7fa))
+- Bump react-router-dom in /packages/frontend (#668) ([87ba99b](https://github.com/unhappychoice/mdts/commit/87ba99b))
+- Bump webpack in /packages/frontend (#669) ([6eeeb69](https://github.com/unhappychoice/mdts/commit/6eeeb69))
+- Bump axios from 1.15.1 to 1.15.2 (#667) ([266beca](https://github.com/unhappychoice/mdts/commit/266beca))
+- Bump eslint-plugin-react-hooks in /packages/frontend (#665) ([2b57129](https://github.com/unhappychoice/mdts/commit/2b57129))
+- Bump @typescript-eslint/parser from 8.58.2 to 8.59.0 (#659) ([614867d](https://github.com/unhappychoice/mdts/commit/614867d))
+- Bump typescript-eslint in /packages/frontend (#660) ([1d5dd15](https://github.com/unhappychoice/mdts/commit/1d5dd15))
+- Bump typescript-eslint from 8.58.2 to 8.59.0 (#663) ([ea022cc](https://github.com/unhappychoice/mdts/commit/ea022cc))
+- Bump html-webpack-plugin in /packages/frontend (#666) ([e2f12b4](https://github.com/unhappychoice/mdts/commit/e2f12b4))
+
+### 💚 CI/Test
+- use --no-open flag in CLI e2e instead of dummy open shim ([c9ab001](https://github.com/unhappychoice/mdts/commit/c9ab001)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for index ([079b59d](https://github.com/unhappychoice/mdts/commit/079b59d)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for server ([ede5eca](https://github.com/unhappychoice/mdts/commit/ede5eca)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for CLI ([c1d4cde](https://github.com/unhappychoice/mdts/commit/c1d4cde)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for outlineRouter ([070bac5](https://github.com/unhappychoice/mdts/commit/070bac5)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for watcher ([6a01337](https://github.com/unhappychoice/mdts/commit/6a01337)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for CLI and logger ([a513983](https://github.com/unhappychoice/mdts/commit/a513983)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for plantumlRouter ([1cefdf4](https://github.com/unhappychoice/mdts/commit/1cefdf4)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for logger ([513b02f](https://github.com/unhappychoice/mdts/commit/513b02f)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for FileTree ([39713e5](https://github.com/unhappychoice/mdts/commit/39713e5)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for fileTreeSlice ([4ce6e0e](https://github.com/unhappychoice/mdts/commit/4ce6e0e)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for MarkdownCode ([6342f28](https://github.com/unhappychoice/mdts/commit/6342f28)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for MarkdownContent ([217ffb9](https://github.com/unhappychoice/mdts/commit/217ffb9)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for plantUMLSlice ([90d1e38](https://github.com/unhappychoice/mdts/commit/90d1e38)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for useWebSocket ([d726752](https://github.com/unhappychoice/mdts/commit/d726752)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for App ([438fa62](https://github.com/unhappychoice/mdts/commit/438fa62)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for configSlice ([25e57eb](https://github.com/unhappychoice/mdts/commit/25e57eb)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for useSettingsForm ([a8aba5d](https://github.com/unhappychoice/mdts/commit/a8aba5d)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for ColorSchemeSettingsTab ([0753598](https://github.com/unhappychoice/mdts/commit/0753598)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for useTheme ([2a19d40](https://github.com/unhappychoice/mdts/commit/2a19d40)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for Layout ([8f05632](https://github.com/unhappychoice/mdts/commit/8f05632)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for MarkdownRenderer ([1ba5930](https://github.com/unhappychoice/mdts/commit/1ba5930)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for useSyntaxHighlighterTheme ([9aac283](https://github.com/unhappychoice/mdts/commit/9aac283)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for Outline ([7d413cf](https://github.com/unhappychoice/mdts/commit/7d413cf)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for FileTreeContent ([d55153d](https://github.com/unhappychoice/mdts/commit/d55153d)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for layout settings tab ([2b3bd0c](https://github.com/unhappychoice/mdts/commit/2b3bd0c)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for frontend index ([09af977](https://github.com/unhappychoice/mdts/commit/09af977)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for store app settings ([af38d90](https://github.com/unhappychoice/mdts/commit/af38d90)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+- improve test coverage for fetchData ([5a314d5](https://github.com/unhappychoice/mdts/commit/5a314d5)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+
+### 🛠️ Chores
+- remove accidentally committed .codex file ([6c10611](https://github.com/unhappychoice/mdts/commit/6c10611)) ([#679](https://github.com/unhappychoice/mdts/pull/679))
+
+
 ## v0.20.0
 
 ### ✨ Features
