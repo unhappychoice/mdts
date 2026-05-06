@@ -1,5 +1,6 @@
 import express from 'express';
 import fs from 'fs';
+import path from 'path';
 import request from 'supertest';
 import { fileTreeRouter } from '../../../../src/server/routes/filetree';
 
@@ -112,6 +113,42 @@ describe('filetree.ts', () => {
       const response = await request(app).get('/api/filetree');
       expect(response.statusCode).toBe(200);
       expect(fs.readdirSync).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('path separator normalization (Windows compatibility)', () => {
+    let app: express.Application;
+    const mockDirectory = '/mock/base/dir';
+    const originalSep = path.sep;
+
+    beforeEach(() => {
+      // Simulate Windows path separator
+      Object.defineProperty(path, 'sep', { value: '\\', configurable: true });
+      app = express();
+      app.use('/api/filetree', fileTreeRouter({
+        directory: mockDirectory,
+        filePatterns: ['internal\\Benchmark\\plan.md', 'docs\\guide.md'],
+      }));
+    });
+
+    afterEach(() => {
+      Object.defineProperty(path, 'sep', { value: originalSep, configurable: true });
+    });
+
+    it('should normalize backslash separators to forward slashes in file paths', async () => {
+      const response = await request(app).get('/api/filetree');
+      expect(response.statusCode).toBe(200);
+      const flattenPaths = (
+        tree: unknown[],
+      ): string[] => tree.flatMap(item => {
+        if (item && typeof item === 'object' && 'path' in item) return [(item as { path: string }).path];
+        const value = Object.values(item as object)[0] as unknown[];
+        return flattenPaths(value);
+      });
+      const paths = flattenPaths(response.body.fileTree);
+      paths.forEach(p => expect(p).not.toContain('\\'));
+      expect(paths).toContain('internal/Benchmark/plan.md');
+      expect(paths).toContain('docs/guide.md');
     });
   });
 });
