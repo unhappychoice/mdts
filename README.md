@@ -3,6 +3,14 @@
 </h1>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/mdts"><img src="https://img.shields.io/npm/v/mdts.svg?style=flat-square&color=1e3a8a" alt="npm"></a>
+  <a href="https://github.com/unhappychoice/mdts/releases"><img src="https://img.shields.io/github/v/release/unhappychoice/mdts?style=flat-square&color=0f172a&label=release" alt="release"></a>
+  <a href="https://github.com/unhappychoice/mdts/actions/workflows/test.yml"><img src="https://img.shields.io/github/actions/workflow/status/unhappychoice/mdts/test.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
+  <a href="https://codecov.io/gh/unhappychoice/mdts"><img src="https://img.shields.io/codecov/c/github/unhappychoice/mdts?style=flat-square" alt="codecov"></a>
+  <a href="https://github.com/unhappychoice/mdts/blob/main/LICENSE.md"><img src="https://img.shields.io/npm/l/mdts.svg?style=flat-square" alt="license"></a>
+</p>
+
+<p align="center">
   (<strong>M</strong>)ark(<strong>d</strong>)own (<strong>T</strong>)ree (<strong>S</strong>)erver
   <br>
   A zero-config CLI tool to preview your local Markdown files in a browser.
