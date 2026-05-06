@@ -47,6 +47,7 @@ jobs:
           git push --tags
 
       - name: Update CHANGELOG
+        id: changelog
         run: |
           VERSION_TAG=$(git describe --tags --abbrev=0)
           ENTRY=$(bash scripts/generate-changelog.sh "$VERSION_TAG")
@@ -60,6 +61,22 @@ jobs:
           git add CHANGELOG.md
           git commit -m "docs: update CHANGELOG.md for ${VERSION_TAG}"
           git push
+          echo "version_tag=${VERSION_TAG}" >> "$GITHUB_OUTPUT"
+          # Strip the leading "## vX.Y.Z" header line so the release body starts with the section content
+          BODY=$(printf '%s\n' "$ENTRY" | tail -n +2)
+          {
+            echo 'body<<__CHANGELOG_EOF__'
+            echo "$BODY"
+            echo '__CHANGELOG_EOF__'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.changelog.outputs.version_tag }}" \
+            --title "${{ steps.changelog.outputs.version_tag }}" \
+            --notes "${{ steps.changelog.outputs.body }}"
 
       - name: Build project
         run: npm run build
