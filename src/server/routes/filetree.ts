@@ -9,6 +9,8 @@ import { resolveGlobPatterns } from '../../utils/glob';
 type FileTreeItem = { path: string, status: string, isDirectory?: boolean } | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
 
+const toPosixPath = (p: string): string => p.split(path.sep).join('/');
+
 export const fileTreeRouter = (context: ServerContext): Router => {
   const { directory } = context;
   const router = Router();
@@ -72,8 +74,9 @@ const buildFileTreeFromPatterns = (
   sorted.forEach(filePath => {
     const dirPath = path.dirname(filePath);
     const targetTree = dirPath === '.' ? root : getOrCreateDir(dirPath);
-    const status = getGitStatus(filePath, gitStatus);
-    targetTree.push({ path: filePath, status });
+    const posixPath = toPosixPath(filePath);
+    const status = getGitStatus(posixPath, gitStatus);
+    targetTree.push({ path: posixPath, status });
   });
 
   return root;
@@ -108,8 +111,9 @@ const getFileTree = async (
         tree.push({ [entry.name]: subTree });
       }
     } else if (entry.name.endsWith('.md') || entry.name.endsWith('.markdown')) {
-      const status = getGitStatus(entryPath, gitStatus);
-      tree.push({ path: entryPath, status });
+      const posixPath = toPosixPath(entryPath);
+      const status = getGitStatus(posixPath, gitStatus);
+      tree.push({ path: posixPath, status });
     }
   }
   return tree;
