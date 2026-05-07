@@ -126,7 +126,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
       <div
         aria-expanded="false"
         aria-haspopup="listbox"
-        aria-labelledby="syntax-highlighter-theme-label syntaxHighlighterTheme"
+        aria-labelledby="syntax-highlighter-theme-label"
         class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-19marfc-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
         id="syntaxHighlighterTheme"
         role="combobox"

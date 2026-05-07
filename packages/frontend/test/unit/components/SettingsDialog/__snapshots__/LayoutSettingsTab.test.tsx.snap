@@ -60,7 +60,7 @@ exports[`LayoutSettingsTab should render correctly 1`] = `
           />
         </span>
         <span
-          class="MuiSwitch-track css-1e4q8vu-MuiSwitch-track"
+          class="MuiSwitch-track css-e02s9l-MuiSwitch-track"
         />
       </span>
       <span
