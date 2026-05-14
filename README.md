@@ -127,5 +127,7 @@ If you find this project useful, please consider:
 - 💼 [Share on LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A//github.com/unhappychoice/mdts)
 - 📘 [Share on Facebook](https://www.facebook.com/sharer/sharer.php?u=https%3A//github.com/unhappychoice/mdts)
 - 🟧 [Submit to Hacker News](https://news.ycombinator.com/submitlink?u=https%3A//github.com/unhappychoice/mdts&t=mdts%3A%20a%20zero-config%20local%20markdown%20preview%20server.%20%60npx%20mdts%60%20and%20you%27re%20done%20%F0%9F%93%9D)
+- 💬 Drop it into your Discord server or developer chat
+- ✍️ Write about it on your blog or in a newsletter
 
 Every bit of support helps. Thanks!
