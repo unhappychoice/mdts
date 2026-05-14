@@ -121,9 +121,9 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for details — we'd love to have your 
 If you find this project useful, please consider:
 
 - ⭐️ [Star on GitHub](https://github.com/unhappychoice/mdts)
-- 🐦 [Share on X](https://x.com/intent/post?text=mdts%3A%20a%20zero-config%20local%20markdown%20preview%20server.%20%60npx%20mdts%60%20and%20you%27re%20done%20%F0%9F%93%9D&url=https%3A//github.com/unhappychoice/mdts&hashtags=mdts)
-- 🦋 [Share on Bluesky](https://bsky.app/intent/compose?text=mdts%3A%20a%20zero-config%20local%20markdown%20preview%20server.%20%60npx%20mdts%60%20and%20you%27re%20done%20%F0%9F%93%9D%20%23mdts%20https%3A//github.com/unhappychoice/mdts)
-- 🧵 [Share on Threads](https://www.threads.net/intent/post?text=mdts%3A%20a%20zero-config%20local%20markdown%20preview%20server.%20%60npx%20mdts%60%20and%20you%27re%20done%20%F0%9F%93%9D%20%23mdts%20https%3A//github.com/unhappychoice/mdts)
+- 🐦 [Share on X](https://x.com/intent/post?text=mdts%3A%20a%20zero-config%20local%20markdown%20preview%20server.%20%60npx%20mdts%60%20and%20you%27re%20done%20%F0%9F%93%9D&url=https%3A//github.com/unhappychoice/mdts&hashtags=mdts,markdown,devtools,npm)
+- 🦋 [Share on Bluesky](https://bsky.app/intent/compose?text=mdts%3A%20a%20zero-config%20local%20markdown%20preview%20server.%20%60npx%20mdts%60%20and%20you%27re%20done%20%F0%9F%93%9D%20%23mdts%20%23markdown%20%23devtools%20%23npm%20https%3A//github.com/unhappychoice/mdts)
+- 🧵 [Share on Threads](https://www.threads.net/intent/post?text=mdts%3A%20a%20zero-config%20local%20markdown%20preview%20server.%20%60npx%20mdts%60%20and%20you%27re%20done%20%F0%9F%93%9D%20%23mdts%20%23markdown%20%23devtools%20%23npm%20https%3A//github.com/unhappychoice/mdts)
 - 💼 [Share on LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A//github.com/unhappychoice/mdts)
 - 📘 [Share on Facebook](https://www.facebook.com/sharer/sharer.php?u=https%3A//github.com/unhappychoice/mdts)
 - 🟧 [Submit to Hacker News](https://news.ycombinator.com/submitlink?u=https%3A//github.com/unhappychoice/mdts&t=mdts%3A%20a%20zero-config%20local%20markdown%20preview%20server.%20%60npx%20mdts%60%20and%20you%27re%20done%20%F0%9F%93%9D)
