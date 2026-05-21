@@ -41,4 +41,19 @@ describe('useFrontmatter', () => {
     expect(result.current.frontmatter).toEqual({ tags: ['tag1', 'tag2'], numbers: [1, 2, 3] });
     expect(result.current.markdownContent).toBe('Markdown');
   });
+
+  test('should calculate correct lineOffset when there is a blank line after frontmatter', () => {
+    // Line 1: ---
+    // Line 2: title: Test
+    // Line 3: ---
+    // Line 4: (empty)
+    // Line 5: # Header
+    const content = '---\ntitle: Test\n---\n\n# Header';
+    const { result } = renderHook(() => useFrontmatter(content));
+    
+    // gray-matter should return mdContent starting with the newline at line 4
+    // So lines 1-3 are removed. lineOffset should be 3.
+    expect(result.current.lineOffset).toBe(3);
+    expect(result.current.markdownContent).toBe('\n# Header');
+  });
 });

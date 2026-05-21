@@ -79,7 +79,12 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(expect.objectContaining({ directory: path.resolve('.') }), 8521, 'localhost', false);
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ directory: path.resolve('.') }),
+          8521,
+          'localhost',
+          false,
+        );
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -90,7 +95,12 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(expect.objectContaining({ directory: path.resolve('.') }), 8521, 'localhost', false);
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ directory: path.resolve('.') }),
+          8521,
+          'localhost',
+          false,
+        );
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521');
       });
   });
@@ -121,7 +131,12 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(expect.objectContaining({ directory: path.resolve('.') }), 9000, 'localhost', false);
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ directory: path.resolve('.') }),
+          9000,
+          'localhost',
+          false,
+        );
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });
@@ -132,7 +147,12 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(expect.objectContaining({ directory: path.resolve('./my-dir') }), 8521, 'localhost', false);
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ directory: path.resolve('./my-dir') }),
+          8521,
+          'localhost',
+          false,
+        );
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:8521/README.md');
       });
   });
@@ -143,7 +163,12 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(expect.objectContaining({ directory: path.resolve('./my-dir') }), 9000, 'localhost', false);
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ directory: path.resolve('./my-dir') }),
+          9000,
+          'localhost',
+          false,
+        );
         expect(mockOpen).toHaveBeenCalledWith('http://localhost:9000/README.md');
       });
   });
@@ -154,7 +179,12 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith(expect.objectContaining({ directory: path.resolve('.') }), 8521, 'localhost', true);
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ directory: path.resolve('.') }),
+          8521,
+          'localhost',
+          true,
+        );
       });
   });
 
@@ -164,7 +194,12 @@ describe('cli', () => {
 
     return cli.run()
       .then(() => {
-        expect(mockServe).toHaveBeenCalledWith({ directory: path.resolve('.') }, 8521, '0.0.0.0', false);
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ directory: path.resolve('.') }),
+          8521,
+          '0.0.0.0',
+          false,
+        );
         expect(mockLogger.log).toHaveBeenCalledWith('CLI', '🌐 Server running at http://localhost:8521');
         expect(mockOpen).not.toHaveBeenCalled();
       });
@@ -191,7 +226,10 @@ describe('cli', () => {
       .then(() => {
         expect(resolveGlobPatterns).toHaveBeenCalledWith(path.resolve('./docs'), ['*.md']);
         expect(mockServe).toHaveBeenCalledWith(
-          expect.objectContaining({ directory: path.resolve('./docs'), filePatterns: ['docs/guide.md'] }),
+          expect.objectContaining({ 
+            directory: path.resolve('./docs'), 
+            filePatterns: ['docs/guide.md'] 
+          }),
           8521,
           'localhost',
           false,
@@ -216,7 +254,48 @@ describe('cli', () => {
     return cli.run()
       .then(() => {
         expect(resolveGlobPatterns).not.toHaveBeenCalled();
-        expect(mockServe).toHaveBeenCalledWith(expect.objectContaining({ directory: path.resolve('.') }), 8521, 'localhost', false);
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ directory: path.resolve('.') }),
+          8521,
+          'localhost',
+          false,
+        );
+      });
+  });
+
+  it('should parse valid search options', () => {
+    setExistsSyncResult(false);
+    process.argv = ['node', 'cli.ts', '--search-max-files', '1000', '--search-max-size', '10', '.'];
+
+    return cli.run()
+      .then(() => {
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ 
+            searchMaxFiles: 1000, 
+            searchMaxFileSize: 10 * 1024 * 1024 
+          }), 
+          8521, 
+          'localhost', 
+          false
+        );
+      });
+  });
+
+  it('should validate and default search options if invalid or negative', () => {
+    setExistsSyncResult(false);
+    process.argv = ['node', 'cli.ts', '--search-max-files', 'invalid', '--search-max-size', '-10', '.'];
+
+    return cli.run()
+      .then(() => {
+        expect(mockServe).toHaveBeenCalledWith(
+          expect.objectContaining({ 
+            searchMaxFiles: undefined, 
+            searchMaxFileSize: undefined 
+          }), 
+          8521, 
+          'localhost', 
+          false
+        );
       });
   });
 

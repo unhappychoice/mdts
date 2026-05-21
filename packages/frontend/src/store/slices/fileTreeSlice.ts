@@ -1,22 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchData } from '../../api';
+import { ContentSearchResult } from '../../../../../src/shared/searchTypes';
 
 export interface FileTreeItem {
   path: string;
   status: string;
-}
-
-export interface SearchSnippet {
-  line: number;
-  text: string;
-}
-
-export interface ContentSearchResult {
-  id: string;
-  title: string;
-  path: string;
-  score: number;
-  snippets: SearchSnippet[];
 }
 
 export interface FileTreeState {
@@ -133,7 +121,7 @@ export const fetchFileTree = createAsyncThunk(
 export const fetchContentSearchResults = createAsyncThunk(
   'fileTree/fetchContentSearchResults',
   async (query: string) => {
-    if (!query) return [];
+    if (!query || query.trim() === '') return [];
     const data = await fetchData<ContentSearchResult[]>(`/api/search?q=${encodeURIComponent(query)}`, 'json');
     return data || [];
   }
@@ -146,6 +134,8 @@ const fileTreeSlice = createSlice({
     setSearchQuery: (state, action: { payload: string }) => {
       state.searchQuery = action.payload;
       if (state.searchMode === 'filename') {
+        // Only refresh the file tree filter when in filename search mode.
+        // Content search results are handled separately by the fetchContentSearchResults thunk.
         state.filteredFileTree = filterTree(state.fileTree, action.payload);
       }
     },
@@ -213,6 +203,8 @@ const fileTreeSlice = createSlice({
         state.error = action.error.message || 'Failed to fetch file tree';
       })
       .addCase(fetchContentSearchResults.fulfilled, (state, action) => {
+        if (state.searchMode !== 'content') return;
+        if (action.meta.arg !== state.searchQuery) return;
         state.contentSearchResults = action.payload;
       });
   },

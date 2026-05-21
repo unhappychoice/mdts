@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Box, IconButton, InputAdornment, InputBase, Tooltip } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -17,15 +17,15 @@ const FileTreeSearch: React.FC<FileTreeSearchProps> = ({ searchQuery, onSearchCh
   const dispatch = useDispatch();
   const searchMode = useSelector((state: RootState) => state.fileTree.searchMode);
 
-  const toggleSearchMode = () => {
+  const toggleSearchMode = useCallback(() => {
     dispatch(setSearchMode(searchMode === 'filename' ? 'content' : 'filename'));
-  };
+  }, [dispatch, searchMode]);
 
   return (
     <Box mb={2} px={2}>
       <InputBase
-        placeholder={searchMode === 'filename' ? "Search files..." : "Search content..."}
-        inputProps={{ 'aria-label': 'search files' }}
+        placeholder={searchMode === 'filename' ? 'Search files...' : 'Search content...'}
+        inputProps={{ 'aria-label': searchMode === 'filename' ? 'search files' : 'search content' }}
         sx={{
           flex: 1,
           width: '100%',
@@ -40,8 +40,12 @@ const FileTreeSearch: React.FC<FileTreeSearchProps> = ({ searchQuery, onSearchCh
         onChange={onSearchChange}
         startAdornment={
           <InputAdornment position="start">
-            <Tooltip title={searchMode === 'filename' ? "Filename Search (click to switch to Content)" : "Content Search (click to switch to Filename)"}>
-              <IconButton size="small" onClick={toggleSearchMode}>
+            <Tooltip title={searchMode === 'filename' ? 'Filename Search (click to switch to Content)' : 'Content Search (click to switch to Filename)'}>
+              <IconButton 
+                size="small" 
+                onClick={toggleSearchMode}
+                aria-label={searchMode === 'filename' ? 'switch to content search' : 'switch to filename search'}
+              >
                 {searchMode === 'filename' ? (
                   <DescriptionIcon sx={{ fontSize: '1rem' }} />
                 ) : (

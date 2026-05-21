@@ -7,22 +7,11 @@ import matter from 'gray-matter';
 import { glob } from 'glob';
 import { logger } from '../utils/logger';
 
+import { SearchDocument, ContentSearchResult, SearchSnippet } from '../shared/searchTypes';
+
 // Default performance limits to keep the search engine responsive and memory-efficient
 const DEFAULT_MAX_FILES_TO_INDEX = 5000;
 const DEFAULT_MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
-
-export interface SearchSnippet {
-  line: number;
-  text: string;
-}
-
-export interface SearchResult {
-  id: string;
-  title: string;
-  path: string;
-  score: number;
-  snippets: SearchSnippet[];
-}
 
 export class SearchEngine {
   private miniSearch: MiniSearch;
@@ -35,9 +24,13 @@ export class SearchEngine {
     this.maxFiles = options.maxFiles ?? DEFAULT_MAX_FILES_TO_INDEX;
     this.maxFileSize = options.maxFileSize ?? DEFAULT_MAX_FILE_SIZE_BYTES;
 
-    // We hash the directory path to create a unique cache file for each project
-    // without polluting the source directory itself.
-    const hash = crypto.createHash('md5').update(path.resolve(directory)).digest('hex');
+    // We hash the directory path and indexing options to create a unique cache file
+    // that invalidates if the limits change.
+    const hash = crypto.createHash('md5')
+      .update(path.resolve(directory))
+      .update(String(this.maxFiles))
+      .update(String(this.maxFileSize))
+      .digest('hex');
     this.indexPath = path.join(os.tmpdir(), `mdts-search-${hash}.json`);
     
     this.miniSearch = new MiniSearch({
@@ -45,7 +38,6 @@ export class SearchEngine {
       storeFields: ['title', 'path'], // Fields to return in results
       searchOptions: {
         boost: { title: 2 },
-        fuzzy: 0.2,
         prefix: true
       }
     });
@@ -54,7 +46,7 @@ export class SearchEngine {
   public async initialize(): Promise<void> {
     if (fs.existsSync(this.indexPath)) {
       try {
-        const json = fs.readFileSync(this.indexPath, 'utf-8');
+        const json = await fs.promises.readFile(this.indexPath, 'utf-8');
         this.miniSearch = MiniSearch.loadJSON(json, {
           fields: ['title', 'content'],
           storeFields: ['title', 'path']
@@ -101,15 +93,20 @@ export class SearchEngine {
         logger.log('Search', `⚠️ Too many files (${files.length}). Capping index at ${this.maxFiles}.`);
       }
 
-      // Process files in batches to keep memory usage stable
-      const docs = filesToProcess
-        .map(filePath => this.parseFile(filePath))
-        .filter((doc): doc is NonNullable<ReturnType<typeof SearchEngine.prototype.parseFile>> => doc !== null);
+      // Process files in chunks to avoid overwhelming file I/O and keep memory usage stable
+      const docs: SearchDocument[] = [];
+      const CHUNK_SIZE = 50;
+      
+      for (let i = 0; i < filesToProcess.length; i += CHUNK_SIZE) {
+        const chunk = filesToProcess.slice(i, i + CHUNK_SIZE);
+        const parsed = await Promise.all(chunk.map(filePath => this.parseFile(filePath)));
+        docs.push(...parsed.filter((doc): doc is SearchDocument => doc !== null));
+      }
         
       this.miniSearch.removeAll();
       this.miniSearch.addAll(docs);
       
-      this.saveIndex();
+      await this.saveIndex();
       
       const duration = Date.now() - start;
       logger.log('Search', `✅ Indexed ${docs.length} files in ${duration}ms`);
@@ -120,18 +117,17 @@ export class SearchEngine {
     }
   }
 
-  private parseFile(relativeFilePath: string) {
+  private async parseFile(relativeFilePath: string): Promise<SearchDocument | null> {
     try {
       const absolutePath = path.join(this.directory, relativeFilePath);
-      if (!fs.existsSync(absolutePath)) return null;
       
       // Skip very large files to prevent OOM (Out Of Memory) issues
-      const stats = fs.statSync(absolutePath);
+      const stats = await fs.promises.stat(absolutePath);
       if (stats.size > this.maxFileSize) {
         return null;
       }
       
-      const content = fs.readFileSync(absolutePath, 'utf-8');
+      const content = await fs.promises.readFile(absolutePath, 'utf-8');
       const { data, content: body } = matter(content);
       
       return {
@@ -145,8 +141,8 @@ export class SearchEngine {
     }
   }
 
-  public updateFile(relativeFilePath: string): void {
-    const doc = this.parseFile(relativeFilePath);
+  public async updateFile(relativeFilePath: string): Promise<void> {
+    const doc = await this.parseFile(relativeFilePath);
     if (doc) {
       if (this.miniSearch.has(relativeFilePath)) {
         this.miniSearch.replace(doc);
@@ -166,25 +162,40 @@ export class SearchEngine {
     this.saveTimeout = setTimeout(() => this.saveIndex(), 5000);
   }
 
-  private saveIndex() {
+  private async saveIndex() {
     try {
       const json = JSON.stringify(this.miniSearch);
-      fs.writeFileSync(this.indexPath, json);
+      await fs.promises.writeFile(this.indexPath, json);
     } catch (error) {
       logger.error('Search', 'Failed to save search index:', error);
     }
   }
 
-  public search(query: string): SearchResult[] {
+  public async search(query: string): Promise<ContentSearchResult[]> {
     const results = this.miniSearch.search(query);
+    const searchResults: ContentSearchResult[] = [];
     
-    return results.map(result => {
-      const absolutePath = path.join(this.directory, result.id as string);
-      let snippets: SearchSnippet[] = [];
-      
-      try {
-        if (fs.existsSync(absolutePath)) {
-          const content = fs.readFileSync(absolutePath, 'utf-8');
+    // Process results in chunks to avoid overwhelming file I/O
+    const CHUNK_SIZE = 32;
+    for (let i = 0; i < results.length; i += CHUNK_SIZE) {
+      const chunk = results.slice(i, i + CHUNK_SIZE);
+      const partial = await Promise.all(chunk.map(async result => {
+        const absolutePath = path.resolve(this.directory, result.id as string);
+        
+        // Security check: ensure the file is within the mounted directory
+        if (!absolutePath.startsWith(path.resolve(this.directory))) {
+          return {
+            id: result.id as string,
+            title: result.title as string,
+            path: result.path as string,
+            snippets: []
+          };
+        }
+
+        let snippets: SearchSnippet[] = [];
+        
+        try {
+          const content = await fs.promises.readFile(absolutePath, 'utf-8');
           const lines = content.split('\n');
           const lowerQuery = query.toLowerCase();
           
@@ -201,18 +212,20 @@ export class SearchEngine {
           if (snippets.length > 5) {
             snippets = snippets.slice(0, 5);
           }
+        } catch {
+          // Fallback to empty snippets
         }
-      } catch {
-        // Fallback to empty snippets
-      }
 
-      return {
-        id: result.id as string,
-        title: result.title as string,
-        path: result.path as string,
-        score: result.score,
-        snippets
-      };
-    });
+        return {
+          id: result.id as string,
+          title: result.title as string,
+          path: result.path as string,
+          snippets
+        };
+      }));
+      searchResults.push(...partial);
+    }
+
+    return searchResults;
   }
 }
