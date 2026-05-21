@@ -16,8 +16,10 @@ export const useFrontmatter = (content: string | null): FrontmatterResult => {
       const { data, content: mdContent } = matter(content);
       
       // Calculate how many lines of frontmatter were removed
-      const offset = content.indexOf(mdContent);
-      const linesBefore = content.substring(0, offset).split('\n').length - 1;
+      // We find the index of the markdown content in the original string
+      // and count the number of newlines before it.
+      const index = content.indexOf(mdContent);
+      const linesBefore = index !== -1 ? content.substring(0, index).split('\n').length - 1 : 0;
       
       return { frontmatter: data, markdownContent: mdContent, lineOffset: linesBefore };
     } catch (e) {

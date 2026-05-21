@@ -65,6 +65,7 @@ describe('FileTree mobile behavior', () => {
         loading: false,
         error: null,
         searchQuery: '',
+        searchMode: 'filename',
         expandedNodes: [],
         mountedDirectoryPath: '',
       },
