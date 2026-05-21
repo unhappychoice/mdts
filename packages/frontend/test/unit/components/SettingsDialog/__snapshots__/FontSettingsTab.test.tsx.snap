@@ -14,10 +14,10 @@ exports[`FontSettingsTab should render correctly 1`] = `
       class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeSmall css-x7n0q8-MuiSlider-root"
     >
       <span
-        class="MuiSlider-rail css-vr7j9o-MuiSlider-rail"
+        class="MuiSlider-rail css-1lmi6fw-MuiSlider-rail"
       />
       <span
-        class="MuiSlider-track css-ijht1x-MuiSlider-track"
+        class="MuiSlider-track css-1iqz70e-MuiSlider-track"
         style="left: 0%; width: 0%;"
       />
       <span
@@ -96,7 +96,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
         style="left: 100%;"
       />
       <span
-        class="MuiSlider-thumb MuiSlider-thumb css-1n6bc4q-MuiSlider-thumb"
+        class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary css-171ym8b-MuiSlider-thumb"
         data-index="0"
         style="left: 0%;"
       >
@@ -243,7 +243,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
       >
         <input
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
           id="fontFamily"
           type="text"
         />
@@ -376,7 +376,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
       >
         <input
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-111x7or-MuiInputBase-input-MuiOutlinedInput-input"
           id="fontFamilyMonospace"
           type="text"
         />

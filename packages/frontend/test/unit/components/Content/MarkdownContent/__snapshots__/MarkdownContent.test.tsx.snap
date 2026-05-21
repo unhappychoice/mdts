@@ -48,7 +48,7 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
         >
           <div
             aria-label="view mode tabs"
-            class="MuiTabs-list css-hzcega-MuiTabs-list"
+            class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
             role="tablist"
           >
             <button
@@ -90,7 +90,7 @@ exports[`MarkdownContent renders welcome message when no file is selected 1`] = 
       class="MuiBox-root css-hk7m0v"
     >
       <div
-        class="markdown-body MuiBox-root css-1yyviwt"
+        class="markdown-body MuiBox-root css-h3fbz8"
       >
         <div
           data-testid="mock-react-markdown"

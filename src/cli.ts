@@ -45,10 +45,17 @@ export class CLI {
               ? resolveGlobPatterns(absoluteDirectory, options.glob)
               : { directory: absoluteDirectory };
 
+            const parsePositiveInt = (value: string, defaultValue?: number): number | undefined => {
+              const parsed = parseInt(value, 10);
+              return !isNaN(parsed) && parsed > 0 ? parsed : defaultValue;
+            };
+
             const context = {
               ...baseContext,
-              searchMaxFiles: parseInt(options.searchMaxFiles, 10),
-              searchMaxFileSize: parseInt(options.searchMaxSize, 10) * 1024 * 1024
+              searchMaxFiles: parsePositiveInt(options.searchMaxFiles),
+              searchMaxFileSize: parsePositiveInt(options.searchMaxSize)
+                ? parsePositiveInt(options.searchMaxSize)! * 1024 * 1024
+                : undefined
             };
 
             let actualPort: number;

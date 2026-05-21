@@ -9,6 +9,7 @@ import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
 import { diffRouter, diffPrevRouter } from './routes/diff';
 import { plantumlRouter } from './routes/plantuml';
+import { searchRouter } from './routes/search';
 import { SearchEngine } from './search';
 
 const MAX_PORT_RETRIES = 10;
@@ -42,7 +43,7 @@ export const serve = async (
           logger.log('Server', `⚠️  Port ${port} was in use, using ${currentPort} instead`);
         }
         logger.log('Server', `🚀 Server listening at http://${host}:${currentPort}`);
-        setupWatcher(context as ServerContext, server, currentPort);
+        setupWatcher(context, server, currentPort);
         resolve({ server, port: currentPort });
       });
 
@@ -64,7 +65,7 @@ export const createApp = (
   context: ServerContext,
   currentLocation: string = __dirname,
 ): express.Express => {
-  const { directory, searchEngine } = context;
+  const { directory } = context;
   const app = express();
 
   // JSON middleware - must be before routes that need it
@@ -80,31 +81,7 @@ export const createApp = (
   app.use('/api/diff-prev', diffPrevRouter(context));
   app.use('/api/diff', diffRouter(context));
   app.use('/api/plantuml', plantumlRouter());
-  
-  app.get('/api/search', (req, res) => {
-    /**
-     * SECURITY NOTE: This endpoint allows full-text search over the indexed directory.
-     * 
-     * Design Intent:
-     * - This is a local development tool. By default, it should only be accessible via localhost.
-     * - Exposing this server to a public network (e.g., via a tunnel or public IP) carries risks.
-     * 
-     * Risks of Public Exposure:
-     * 1. Data Scraping: An attacker could brute-force common words to extract sensitive content.
-     * 2. Resource Exhaustion: Rapid-fire search queries can consume significant CPU/Memory.
-     * 
-     * Recommendations for Public Use:
-     * - Implementation of a Rate Limiter (e.g., express-rate-limit).
-     * - Implementation of Authentication (e.g., API keys or OAuth).
-     * - Ensuring the server binds strictly to 127.0.0.1.
-     */
-    const query = req.query.q as string;
-    if (!query || !searchEngine) {
-      return res.json([]);
-    }
-    const results = searchEngine.search(query);
-    res.json(results);
-  });
+  app.use('/api/search', searchRouter(context));
 
   app.get('/api/config', (req, res) => {
     res.json(getConfig());

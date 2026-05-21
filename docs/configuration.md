@@ -200,7 +200,7 @@ While not currently supported, custom CSS injection may be added in future versi
 ### Plugin System (Future)  
 A plugin system for extending markdown rendering capabilities is under consideration for future releases.
 
-### Performance Tuning
+## Performance Tuning
 
 ### Search Indexing Optimization
 - Use `--search-max-files` and `--search-max-size` to balance search coverage vs. memory usage.
@@ -226,6 +226,14 @@ npx mdts
 # Network accessible (use carefully)
 npx mdts --host 0.0.0.0
 ```
+
+### Full-Text Search
+The `/api/search` endpoint allows full-text search over the indexed directory.
+- **Design Intent**: This is a local development tool and should primarily be accessed via `localhost`.
+- **Risks of Public Exposure**:
+    - **Data Scraping**: Attackers could extract sensitive content by brute-forcing search queries.
+    - **Resource Exhaustion**: Rapid search queries can consume significant CPU/Memory.
+- **Public Use Recommendations**: If exposing mdts to a network, implement rate limiting and authentication at the infrastructure level.
 
 ### File Access
 - mdts can only access files within the mounted directory
