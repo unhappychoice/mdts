@@ -2,7 +2,9 @@
 
 exports[`Mermaid should initialize mermaid with correct theme based on light mode 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    class="mermaid-wrapper css-1c8xupo"
+  >
     <svg
       data-testid="mermaid-svg"
     >

@@ -20,7 +20,9 @@ exports[`MarkdownCode should render inline code correctly 1`] = `
 
 exports[`MarkdownCode should render mermaid chart correctly 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    class="mermaid-wrapper css-1c8xupo"
+  >
     <svg />
   </div>
 </DocumentFragment>
