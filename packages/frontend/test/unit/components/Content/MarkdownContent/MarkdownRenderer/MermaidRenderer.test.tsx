@@ -12,6 +12,28 @@ jest.mock('mermaid', () => ({
   }),
 }));
 
+// Mock react-redux
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn((selector) => {
+    // Provide a minimal mock state that satisfies the fontFamily selector
+    const mockState = {
+      config: {
+        fontFamily: 'MockFont, sans-serif',
+      },
+    };
+    return selector(mockState);
+  }),
+}));
+
+// Mock document.fonts.ready for font loading
+Object.defineProperty(document, 'fonts', {
+  value: {
+    ready: Promise.resolve(),
+  },
+  writable: true,
+});
+
 const renderWithTheme = async (component: React.ReactElement, themeMode: 'light' | 'dark' = 'light') => {
   const theme = createTheme({
     palette: {
@@ -46,6 +68,11 @@ describe('Mermaid', () => {
       startOnLoad: false,
       theme: 'neutral',
       securityLevel: 'loose',
+      fontFamily: 'MockFont, sans-serif',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+      },
     });
   });
 
@@ -55,6 +82,11 @@ describe('Mermaid', () => {
       startOnLoad: false,
       theme: 'dark',
       securityLevel: 'loose',
+      fontFamily: 'MockFont, sans-serif',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+      },
     });
   });
 
