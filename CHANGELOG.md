@@ -1,5 +1,50 @@
 # Changelog
 
+## v0.20.2
+
+### 🐛 Bug Fixes
+- resolve mermaid label text clipping caused by global CSS pollution ([1dd7418](https://github.com/unhappychoice/mdts/commit/1dd7418)) ([#735](https://github.com/unhappychoice/mdts/pull/735))
+
+### 📝 Documentation
+- add Discord and blog mentions to Support section ([0111420](https://github.com/unhappychoice/mdts/commit/0111420)) ([#716](https://github.com/unhappychoice/mdts/pull/716))
+- add general hashtags to share links ([6666654](https://github.com/unhappychoice/mdts/commit/6666654)) ([#716](https://github.com/unhappychoice/mdts/pull/716))
+- add Support section with star and share links to README ([47a7bdc](https://github.com/unhappychoice/mdts/commit/47a7bdc)) ([#716](https://github.com/unhappychoice/mdts/pull/716))
+- add status badges to README (#692) ([9331273](https://github.com/unhappychoice/mdts/commit/9331273))
+- update CHANGELOG.md for v0.20.1 ([79f8c96](https://github.com/unhappychoice/mdts/commit/79f8c96))
+
+### 🆙 Update Packages
+- Bump ts-jest from 29.4.10 to 29.4.11 ([19ebae8](https://github.com/unhappychoice/mdts/commit/19ebae8)) ([#734](https://github.com/unhappychoice/mdts/pull/734))
+- Bump webpack in /packages/frontend ([d023ba0](https://github.com/unhappychoice/mdts/commit/d023ba0)) ([#733](https://github.com/unhappychoice/mdts/pull/733))
+- Bump webpack in /packages/frontend ([9f9c0e4](https://github.com/unhappychoice/mdts/commit/9f9c0e4)) ([#732](https://github.com/unhappychoice/mdts/pull/732))
+- Bump ts-jest from 29.4.9 to 29.4.10 ([aa5ac36](https://github.com/unhappychoice/mdts/commit/aa5ac36)) ([#729](https://github.com/unhappychoice/mdts/pull/729))
+- Bump @typescript-eslint/parser in /packages/frontend ([6012a9c](https://github.com/unhappychoice/mdts/commit/6012a9c)) ([#727](https://github.com/unhappychoice/mdts/pull/727))
+- Bump @typescript-eslint/parser from 8.59.3 to 8.59.4 ([c38a29a](https://github.com/unhappychoice/mdts/commit/c38a29a)) ([#726](https://github.com/unhappychoice/mdts/pull/726))
+- Bump typescript-eslint in /packages/frontend ([127350a](https://github.com/unhappychoice/mdts/commit/127350a)) ([#725](https://github.com/unhappychoice/mdts/pull/725))
+- Bump typescript-eslint from 8.59.3 to 8.59.4 ([eafdb6c](https://github.com/unhappychoice/mdts/commit/eafdb6c)) ([#724](https://github.com/unhappychoice/mdts/pull/724))
+- Bump @reduxjs/toolkit in /packages/frontend ([18b6626](https://github.com/unhappychoice/mdts/commit/18b6626)) ([#722](https://github.com/unhappychoice/mdts/pull/722))
+- Bump react-redux from 9.2.0 to 9.3.0 in /packages/frontend ([699cbd1](https://github.com/unhappychoice/mdts/commit/699cbd1)) ([#721](https://github.com/unhappychoice/mdts/pull/721))
+- Bump react-router-dom in /packages/frontend ([f182ff3](https://github.com/unhappychoice/mdts/commit/f182ff3)) ([#719](https://github.com/unhappychoice/mdts/pull/719))
+- Bump axios from 1.16.0 to 1.16.1 ([c03ec5f](https://github.com/unhappychoice/mdts/commit/c03ec5f)) ([#718](https://github.com/unhappychoice/mdts/pull/718))
+- Bump ws from 8.20.0 to 8.20.1 ([eedb03a](https://github.com/unhappychoice/mdts/commit/eedb03a)) ([#715](https://github.com/unhappychoice/mdts/pull/715))
+- Bump @typescript-eslint/parser in /packages/frontend ([5fe216b](https://github.com/unhappychoice/mdts/commit/5fe216b)) ([#714](https://github.com/unhappychoice/mdts/pull/714))
+- Bump typescript-eslint in /packages/frontend ([b3b054c](https://github.com/unhappychoice/mdts/commit/b3b054c)) ([#712](https://github.com/unhappychoice/mdts/pull/712))
+- Bump typescript-eslint from 8.59.2 to 8.59.3 ([14e00b4](https://github.com/unhappychoice/mdts/commit/14e00b4)) ([#709](https://github.com/unhappychoice/mdts/pull/709))
+- Bump mermaid from 11.14.0 to 11.15.0 in /packages/frontend ([8f97ac4](https://github.com/unhappychoice/mdts/commit/8f97ac4)) ([#708](https://github.com/unhappychoice/mdts/pull/708))
+- Bump jest-environment-jsdom in /packages/frontend ([0e9aa22](https://github.com/unhappychoice/mdts/commit/0e9aa22)) ([#707](https://github.com/unhappychoice/mdts/pull/707))
+- Bump jest from 30.4.0 to 30.4.2 ([d208e8b](https://github.com/unhappychoice/mdts/commit/d208e8b)) ([#706](https://github.com/unhappychoice/mdts/pull/706))
+- Bump @mui/x-tree-view in /packages/frontend ([dd68525](https://github.com/unhappychoice/mdts/commit/dd68525)) ([#705](https://github.com/unhappychoice/mdts/pull/705))
+- Bump jest from 30.3.0 to 30.4.2 in /packages/frontend ([73dd3de](https://github.com/unhappychoice/mdts/commit/73dd3de)) ([#704](https://github.com/unhappychoice/mdts/pull/704))
+- Bump jest-util from 30.3.0 to 30.4.1 ([e83f2b4](https://github.com/unhappychoice/mdts/commit/e83f2b4)) ([#699](https://github.com/unhappychoice/mdts/pull/699))
+- Bump jest-environment-jsdom in /packages/frontend ([0c9d9c7](https://github.com/unhappychoice/mdts/commit/0c9d9c7)) ([#703](https://github.com/unhappychoice/mdts/pull/703))
+- Bump jest from 30.3.0 to 30.4.0 ([1f9460e](https://github.com/unhappychoice/mdts/commit/1f9460e)) ([#701](https://github.com/unhappychoice/mdts/pull/701))
+- Bump @eslint/compat in /packages/frontend ([c102977](https://github.com/unhappychoice/mdts/commit/c102977)) ([#700](https://github.com/unhappychoice/mdts/pull/700))
+- bump @mui/material and @mui/icons-material to 9.0.1 ([d187457](https://github.com/unhappychoice/mdts/commit/d187457)) ([#698](https://github.com/unhappychoice/mdts/pull/698))
+- Bump react-dom from 19.2.5 to 19.2.6 in /packages/frontend (#697) ([0aa3cd3](https://github.com/unhappychoice/mdts/commit/0aa3cd3))
+
+### 🛠️ Chores
+- create GitHub Release after npm version bump (#693) ([d7371b2](https://github.com/unhappychoice/mdts/commit/d7371b2))
+
+
 ## v0.20.1
 
 ### 🐛 Bug Fixes
