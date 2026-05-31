@@ -46,6 +46,8 @@ import {
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { SYNTAX_HIGHLIGHTER_THEMES } from '../constants';
 
+type SyntaxHighlighterThemeMeta = typeof SYNTAX_HIGHLIGHTER_THEMES[number];
+
 export const resolveSyntaxHighlighterThemeValue = (syntaxHighlighterTheme: string, mode: 'light' | 'dark'): string => {
   if (syntaxHighlighterTheme === 'auto') {
     return mode === 'dark' ? 'atomDark' : 'vs';
@@ -53,7 +55,7 @@ export const resolveSyntaxHighlighterThemeValue = (syntaxHighlighterTheme: strin
   return syntaxHighlighterTheme;
 };
 
-export const useSyntaxHighlighterThemeMeta = (syntaxHighlighterTheme: string): typeof SYNTAX_HIGHLIGHTER_THEMES[number] => {
+export const useSyntaxHighlighterThemeMeta = (syntaxHighlighterTheme: string): SyntaxHighlighterThemeMeta => {
   const theme = useTheme();
   const resolved = resolveSyntaxHighlighterThemeValue(syntaxHighlighterTheme, theme.palette.mode);
   return SYNTAX_HIGHLIGHTER_THEMES.find(t => t.value === resolved)
