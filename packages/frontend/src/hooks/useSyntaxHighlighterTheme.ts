@@ -53,7 +53,7 @@ export const resolveSyntaxHighlighterThemeValue = (syntaxHighlighterTheme: strin
   return syntaxHighlighterTheme;
 };
 
-export const useSyntaxHighlighterThemeMeta = (syntaxHighlighterTheme: string) => {
+export const useSyntaxHighlighterThemeMeta = (syntaxHighlighterTheme: string): typeof SYNTAX_HIGHLIGHTER_THEMES[number] => {
   const theme = useTheme();
   const resolved = resolveSyntaxHighlighterThemeValue(syntaxHighlighterTheme, theme.palette.mode);
   return SYNTAX_HIGHLIGHTER_THEMES.find(t => t.value === resolved)
