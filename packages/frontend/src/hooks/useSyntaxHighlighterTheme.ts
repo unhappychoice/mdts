@@ -44,6 +44,23 @@ import {
   xonokai,
   zTouch
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { SYNTAX_HIGHLIGHTER_THEMES } from '../constants';
+
+type SyntaxHighlighterThemeMeta = typeof SYNTAX_HIGHLIGHTER_THEMES[number];
+
+export const resolveSyntaxHighlighterThemeValue = (syntaxHighlighterTheme: string, mode: 'light' | 'dark'): string => {
+  if (syntaxHighlighterTheme === 'auto') {
+    return mode === 'dark' ? 'atomDark' : 'vs';
+  }
+  return syntaxHighlighterTheme;
+};
+
+export const useSyntaxHighlighterThemeMeta = (syntaxHighlighterTheme: string): SyntaxHighlighterThemeMeta => {
+  const theme = useTheme();
+  const resolved = resolveSyntaxHighlighterThemeValue(syntaxHighlighterTheme, theme.palette.mode);
+  return SYNTAX_HIGHLIGHTER_THEMES.find(t => t.value === resolved)
+    ?? SYNTAX_HIGHLIGHTER_THEMES.find(t => t.value === 'atomDark')!;
+};
 
 export const useSyntaxHighlighterTheme = (syntaxHighlighterTheme: string): object => {
   const theme = useTheme();
@@ -94,12 +111,6 @@ export const useSyntaxHighlighterTheme = (syntaxHighlighterTheme: string): objec
     zTouch,
   };
 
-  const getSyntaxHighlighterTheme = () => {
-    if (syntaxHighlighterTheme === 'auto') {
-      return theme.palette.mode === 'dark' ? atomDark : vs;
-    }
-    return themeMap[syntaxHighlighterTheme] || atomDark;
-  };
-
-  return getSyntaxHighlighterTheme();
+  const resolved = resolveSyntaxHighlighterThemeValue(syntaxHighlighterTheme, theme.palette.mode);
+  return themeMap[resolved] || atomDark;
 };
