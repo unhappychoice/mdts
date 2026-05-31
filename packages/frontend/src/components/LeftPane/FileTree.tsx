@@ -7,15 +7,17 @@ import {
   fetchFileTree,
   FileTreeItem,
   setExpandedNodes,
-  setSearchQuery
+  setSearchQuery,
+  fetchContentSearchResults
 } from '../../store/slices/fileTreeSlice';
 import { AppDispatch, RootState } from '../../store/store';
 import FileTreeContent from './FileTreeContent/FileTreeContent';
 import FileTreeHeader from './FileTreeHeader';
 import FileTreeSearch from './FileTreeSearch';
+import ContentSearchResults from './ContentSearchResults';
 
 interface FileTreeComponentProps {
-  onFileSelect: (path: string) => void;
+  onFileSelect: (path: string, line?: number) => void;
   isOpen: boolean;
   onToggle: () => void;
   selectedFilePath: string | null;
@@ -31,6 +33,8 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
     loading,
     error,
     searchQuery,
+    searchMode,
+    contentSearchResults,
     expandedNodes
   } = useSelector((state: RootState) => state.fileTree);
 
@@ -58,8 +62,18 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
     dispatch(setExpandedNodes(itemIds));
   }, [dispatch]);
 
+  // Trigger content search
   useEffect(() => {
-    if (!searchQuery) return;
+    if (searchMode === 'content') {
+      const timeoutId = setTimeout(() => {
+        dispatch(fetchContentSearchResults(searchQuery));
+      }, 300); // 300ms debounce
+      return () => clearTimeout(timeoutId);
+    }
+  }, [searchQuery, searchMode, dispatch]);
+
+  useEffect(() => {
+    if (!searchQuery || searchMode !== 'filename') return;
 
     const newExpanded: string[] = [];
 
@@ -84,7 +98,7 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
     }
 
     dispatch(setExpandedNodes(newExpanded));
-  }, [searchQuery, filteredFileTree, dispatch]);
+  }, [searchQuery, searchMode, filteredFileTree, dispatch]);
 
   const overlay = theme.palette.mode === 'dark' ? 'rgba(16, 16, 16, 0.01)' : 'rgba(192, 192, 192, 0.01)';
   const background = `linear-gradient(135deg, ${overlay} 0%, ${theme.palette.background.paper} 100%)`;
@@ -110,15 +124,25 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
         />
       )}
       {(isMobile || isOpen) && (
-        <FileTreeContent
-          filteredFileTree={filteredFileTree}
-          loading={loading}
-          error={error}
-          expandedNodes={expandedNodes}
-          onFileSelect={isMobile ? handleFileSelectWithClose : onFileSelect}
-          onExpandedItemsChange={handleExpandedItemsChange}
-          dispatch={dispatch}
-        />
+        <Box sx={{ flex: 1, overflowY: 'auto' }}>
+          {searchMode === 'filename' ? (
+            <FileTreeContent
+              filteredFileTree={filteredFileTree}
+              loading={loading}
+              error={error}
+              expandedNodes={expandedNodes}
+              onFileSelect={isMobile ? handleFileSelectWithClose : onFileSelect}
+              onExpandedItemsChange={handleExpandedItemsChange}
+              dispatch={dispatch}
+            />
+          ) : (
+            <ContentSearchResults
+              results={contentSearchResults}
+              onFileSelect={isMobile ? handleFileSelectWithClose : onFileSelect}
+              searchQuery={searchQuery}
+            />
+          )}
+        </Box>
       )}
     </>
   );
@@ -147,6 +171,7 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
       borderColor: 'divider',
       minHeight: '100%',
       flexShrink: 0,
+      overflowX: 'hidden',
     }}>
       {panelContent}
     </Box>
@@ -154,4 +179,3 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
 };
 
 export default FileTree;
-

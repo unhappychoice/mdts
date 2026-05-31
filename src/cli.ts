@@ -25,6 +25,8 @@ export class CLI {
           .option('-s, --silent', 'suppress server logs', false)
           .option('--no-open', 'do not open the browser automatically')
           .option('-g, --glob <patterns...>', 'glob patterns to filter markdown files (e.g. "docs/*.md")')
+          .option('--search-max-files <number>', 'maximum number of files to index for search', '5000')
+          .option('--search-max-size <megabytes>', 'maximum size of a file to index for search in MB', '5')
           .argument('[directory]', 'directory to serve', DEFAULT_DIRECTORY)
           .action(async (directory, options) => {
             logger.setSilent(options.silent);
@@ -38,9 +40,24 @@ export class CLI {
             const port = autoPort ? DEFAULT_PORT : parseInt(options.port, 10);
             const host = options.host;
             const absoluteDirectory = path.resolve(process.cwd(), directory);
-            const context = options.glob
+            
+            const baseContext = options.glob
               ? resolveGlobPatterns(absoluteDirectory, options.glob)
               : { directory: absoluteDirectory };
+
+            const parsePositiveInt = (value: string, defaultValue?: number): number | undefined => {
+              const parsed = parseInt(value, 10);
+              return !isNaN(parsed) && parsed > 0 ? parsed : defaultValue;
+            };
+
+            const context = {
+              ...baseContext,
+              searchMaxFiles: parsePositiveInt(options.searchMaxFiles),
+              searchMaxFileSize: parsePositiveInt(options.searchMaxSize)
+                ? parsePositiveInt(options.searchMaxSize)! * 1024 * 1024
+                : undefined
+            };
+
             let actualPort: number;
             try {
               ({ port: actualPort } = await serve(context, port, host, autoPort));

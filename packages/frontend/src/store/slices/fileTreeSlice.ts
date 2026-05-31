@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchData } from '../../api';
+import { ContentSearchResult } from '../../../../../src/shared/searchTypes';
 
 export interface FileTreeItem {
   path: string;
@@ -10,6 +11,8 @@ export interface FileTreeState {
   fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
   filteredFileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
   searchQuery: string;
+  searchMode: 'filename' | 'content';
+  contentSearchResults: ContentSearchResult[];
   expandedNodes: string[];
   mountedDirectoryPath: string;
   isGitRepository: boolean;
@@ -21,6 +24,8 @@ const initialState: FileTreeState = {
   fileTree: [],
   filteredFileTree: [],
   searchQuery: '',
+  searchMode: 'filename',
+  contentSearchResults: [],
   expandedNodes: [],
   mountedDirectoryPath: '',
   isGitRepository: false,
@@ -113,13 +118,34 @@ export const fetchFileTree = createAsyncThunk(
   }
 );
 
+export const fetchContentSearchResults = createAsyncThunk(
+  'fileTree/fetchContentSearchResults',
+  async (query: string) => {
+    if (!query || query.trim() === '') return [];
+    const data = await fetchData<ContentSearchResult[]>(`/api/search?q=${encodeURIComponent(query)}`, 'json');
+    return data || [];
+  }
+);
+
 const fileTreeSlice = createSlice({
   name: 'fileTree',
   initialState,
   reducers: {
     setSearchQuery: (state, action: { payload: string }) => {
       state.searchQuery = action.payload;
-      state.filteredFileTree = filterTree(state.fileTree, action.payload);
+      if (state.searchMode === 'filename') {
+        // Only refresh the file tree filter when in filename search mode.
+        // Content search results are handled separately by the fetchContentSearchResults thunk.
+        state.filteredFileTree = filterTree(state.fileTree, action.payload);
+      }
+    },
+    setSearchMode: (state, action: { payload: 'filename' | 'content' }) => {
+      state.searchMode = action.payload;
+      if (action.payload === 'filename') {
+        state.filteredFileTree = filterTree(state.fileTree, state.searchQuery);
+      } else {
+        state.contentSearchResults = [];
+      }
     },
     toggleNode: (state, action: { payload: string }) => {
       const path = action.payload;
@@ -175,6 +201,11 @@ const fileTreeSlice = createSlice({
       .addCase(fetchFileTree.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch file tree';
+      })
+      .addCase(fetchContentSearchResults.fulfilled, (state, action) => {
+        if (state.searchMode !== 'content') return;
+        if (action.meta.arg !== state.searchQuery) return;
+        state.contentSearchResults = action.payload;
       });
   },
 });
@@ -250,6 +281,7 @@ export const selectFilteredFileTree = (
 
 export const {
   setSearchQuery,
+  setSearchMode,
   toggleNode,
   setExpandedNodes,
   expandAllNodes,
