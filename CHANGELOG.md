@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.20.3
+
+### 🐛 Bug Fixes
+- keep useSyntaxHighlighterThemeMeta signature under max-len ([bebffd2](https://github.com/unhappychoice/mdts/commit/bebffd2)) ([#752](https://github.com/unhappychoice/mdts/pull/752))
+- add explicit return type to useSyntaxHighlighterThemeMeta ([30f3c54](https://github.com/unhappychoice/mdts/commit/30f3c54)) ([#752](https://github.com/unhappychoice/mdts/pull/752))
+- make inline code readable under default 'auto' syntax theme ([10ec183](https://github.com/unhappychoice/mdts/commit/10ec183)) ([#752](https://github.com/unhappychoice/mdts/pull/752))
+
+### 📝 Documentation
+- update CHANGELOG.md for v0.20.2 ([734c59a](https://github.com/unhappychoice/mdts/commit/734c59a))
+
+### 🆙 Update Packages
+- Bump react-router-dom in /packages/frontend ([2c16879](https://github.com/unhappychoice/mdts/commit/2c16879)) ([#751](https://github.com/unhappychoice/mdts/pull/751))
+- Bump @babel/preset-react in /packages/frontend ([4d9ed68](https://github.com/unhappychoice/mdts/commit/4d9ed68)) ([#750](https://github.com/unhappychoice/mdts/pull/750))
+- Bump @babel/preset-typescript in /packages/frontend ([b8d3137](https://github.com/unhappychoice/mdts/commit/b8d3137)) ([#748](https://github.com/unhappychoice/mdts/pull/748))
+- Bump typescript-eslint in /packages/frontend ([8faf4ae](https://github.com/unhappychoice/mdts/commit/8faf4ae)) ([#747](https://github.com/unhappychoice/mdts/pull/747))
+- Bump webpack-cli in /packages/frontend ([327a28d](https://github.com/unhappychoice/mdts/commit/327a28d)) ([#746](https://github.com/unhappychoice/mdts/pull/746))
+- Bump @babel/core in /packages/frontend ([817c843](https://github.com/unhappychoice/mdts/commit/817c843)) ([#742](https://github.com/unhappychoice/mdts/pull/742))
+- Bump @typescript-eslint/parser from 8.59.4 to 8.60.0 ([933d586](https://github.com/unhappychoice/mdts/commit/933d586)) ([#744](https://github.com/unhappychoice/mdts/pull/744))
+- Bump typescript-eslint from 8.59.4 to 8.60.0 ([6c41b46](https://github.com/unhappychoice/mdts/commit/6c41b46)) ([#743](https://github.com/unhappychoice/mdts/pull/743))
+- Bump webpack in /packages/frontend ([af7f0bf](https://github.com/unhappychoice/mdts/commit/af7f0bf)) ([#741](https://github.com/unhappychoice/mdts/pull/741))
+- Bump @babel/preset-env in /packages/frontend ([6d50076](https://github.com/unhappychoice/mdts/commit/6d50076)) ([#739](https://github.com/unhappychoice/mdts/pull/739))
+- Bump @babel/core in /packages/frontend ([ab97271](https://github.com/unhappychoice/mdts/commit/ab97271)) ([#738](https://github.com/unhappychoice/mdts/pull/738))
+- Bump ws from 8.20.1 to 8.21.0 ([7ef938f](https://github.com/unhappychoice/mdts/commit/7ef938f)) ([#737](https://github.com/unhappychoice/mdts/pull/737))
+- Bump markdown-it from 14.1.1 to 14.2.0 ([f4a102c](https://github.com/unhappychoice/mdts/commit/f4a102c)) ([#736](https://github.com/unhappychoice/mdts/pull/736))
+
+
 ## v0.20.2
 
 ### 🐛 Bug Fixes
