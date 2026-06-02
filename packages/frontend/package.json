@@ -25,7 +25,7 @@
     "buffer": "^6.0.3",
     "gray-matter": "^4.0.3",
     "mermaid": "^11.15.0",
-    "react": "^19.1.1",
+    "react": "^19.2.7",
     "react-dom": "^19.2.6",
     "react-markdown": "^10.1.0",
     "react-redux": "^9.3.0",
