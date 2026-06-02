@@ -49,3 +49,8 @@ This improves startup performance and keeps the UI uncluttered.
 
 `mdts` features a simple, clean interface designed to minimize distractions.  
 This allows users to focus on reading and understanding content, making it ideal for deep study or review sessions.
+
+## 7. Tool Integrations
+
+`mdts` can be launched from desktop launchers, project scripts, editor tasks, and coding-agent hooks.
+See [Integration Recipes](integrations.md) for examples using Raycast, Claude Code hooks, npm scripts, shell aliases, and VS Code tasks.

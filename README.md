@@ -99,6 +99,7 @@ Experience mdts in action with real examples and interactive features.
 
 ### 📖 Documentation
 - [Use Cases](docs/usecases.md)
+- [Integration Recipes](docs/integrations.md)
 - [Markdown Features](docs/markdown_features.md)  
 - [Frontend Features](docs/frontend_features.md)
 - [Advanced Configuration](docs/configuration.md)
