@@ -1,6 +1,6 @@
-import { ArticleOutlined } from '@mui/icons-material';
-import { Box, Chip, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import { ArticleOutlined, EditOutlined } from '@mui/icons-material';
+import { Box, Chip, IconButton, Tooltip, Typography } from '@mui/material';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFrontmatter } from '../../../hooks/useFrontmatter';
 import useIsMobile from '../../../hooks/useIsMobile';
@@ -66,6 +66,22 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
         : '🎉 Welcome to mdts!';
 
   const hasFrontmatter = Object.keys(frontmatter).length > 0;
+  const handleOpenInEditor = useCallback(async () => {
+    if (!currentPath) return;
+
+    try {
+      const response = await fetch('/api/open-editor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filePath: currentPath }),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to open editor: ${response.status}`);
+      }
+    } catch (openEditorError) {
+      console.error(openEditorError);
+    }
+  }, [currentPath]);
 
   if (error) {
     return <ErrorView error={error} />;
@@ -95,6 +111,18 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
         <Typography variant={isMobile ? 'h5' : 'h4'} gutterBottom sx={{ mb: 0, wordBreak: 'break-word' }}>
           {displayFileName}
         </Typography>
+        {currentPath && (
+          <Tooltip title="Open in editor">
+            <IconButton
+              aria-label="open in editor"
+              onClick={handleOpenInEditor}
+              size={isMobile ? 'small' : 'medium'}
+              sx={{ ml: 1 }}
+            >
+              <EditOutlined />
+            </IconButton>
+          </Tooltip>
+        )}
       </Box>
       {frontmatter.tags && Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0 && (
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
