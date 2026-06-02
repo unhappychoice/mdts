@@ -12,14 +12,40 @@ interface FileTreeItemViewProps {
 
 export const FileTreeItemView: React.FC<FileTreeItemViewProps> = ({ fileItem, onFileSelect, getStatusColor }) => {
   const fileName = fileItem.path.split('/').pop();
-  const handleClick = useCallback(() => onFileSelect(fileItem.path), [fileItem, onFileSelect]);
+  const href = `/${fileItem.path.split('/').map(encodeURIComponent).join('/')}`;
+  const handleClick = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.defaultPrevented ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    onFileSelect(fileItem.path);
+  }, [fileItem, onFileSelect]);
 
   return (
     <TreeItem
       key={fileItem.path}
       itemId={fileItem.path}
       label={
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box
+          component="a"
+          href={href}
+          onClick={handleClick}
+          sx={{
+            alignItems: 'center',
+            color: 'inherit',
+            display: 'flex',
+            minWidth: 0,
+            textDecoration: 'none',
+          }}
+        >
           <ArticleOutlined sx={{ mr: 1, fontSize: 'small' }} />
           <Typography variant="body2" sx={{ fontSize: '0.875rem', color: getStatusColor(fileItem.status) }}>
             {fileName}
@@ -31,7 +57,6 @@ export const FileTreeItemView: React.FC<FileTreeItemViewProps> = ({ fileItem, on
           )}
         </Box>
       }
-      onClick={handleClick}
     />
   );
 };
