@@ -27,7 +27,7 @@ It does not support static HTML export. For static site generation, use tools li
 
 ## ❓ Can I use it to view a single Markdown file?
 
-Yes. While `mdts` is designed for directories with multiple Markdown files, you can also point it to a directory with just one `.md` file and it will be displayed in the viewer.
+Yes. While `mdts` is designed for directories with multiple Markdown files, you can also point it to a directory with just one `.md`, `.markdown`, or `.mdc` file and it will be displayed in the viewer.
 
 ## ❓ Does it support live reload on file changes?
 
@@ -86,9 +86,10 @@ Patterns follow standard glob syntax (powered by the [`glob`](https://www.npmjs.
 
 - `*.md` — all `.md` files in the root
 - `docs/**/*.md` — all `.md` files recursively under `docs/`
+- `.cursor/**/*.mdc` — Cursor MDC rule files inside a dot directory
 - `packages/*/README.md` — `README.md` in each direct subdirectory of `packages/`
 
-Only files ending in `.md` or `.markdown` are included, even if the pattern matches other files.
+Only files ending in `.md`, `.markdown`, or `.mdc` are included, even if the pattern matches other files. Dot directories such as `.claude/`, `.cursor/`, and `.cursor-rules/` can be browsed unless they are explicitly excluded.
 
 ## ❓ How is this different from tools like `grip`, `markserv`, or `md-fileserver`?
 

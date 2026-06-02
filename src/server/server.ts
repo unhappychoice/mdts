@@ -9,6 +9,7 @@ import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
 import { diffRouter, diffPrevRouter } from './routes/diff';
 import { plantumlRouter } from './routes/plantuml';
+import { hasSupportedMarkdownExtension } from '../utils/markdown';
 
 const MAX_PORT_RETRIES = 10;
 
@@ -127,8 +128,7 @@ export const createApp = (
 
     if (
       isDirectory ||
-      req.path.toLowerCase().endsWith('.md') ||
-      req.path.toLowerCase().endsWith('.markdown')
+      hasSupportedMarkdownExtension(req.path)
     ) {
       return res.sendFile('index.html', { root: path.join(currentLocation, '../frontend') });
     } else {

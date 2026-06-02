@@ -151,9 +151,12 @@ npx mdts ./monorepo -g 'packages/*/README.md' 'docs/*.md'
 
 # Meeting notes from a specific year
 npx mdts ./notes -g '2026/**/*.md'
+
+# Agent rule files in dot directories
+npx mdts . -g '.claude/**/*.md' '.cursor/**/*.mdc'
 ```
 
-When `--glob` is not provided, all markdown files in the directory are shown as before.
+When `--glob` is not provided, all supported markdown files in the directory are shown as before. This includes `.md`, `.markdown`, and `.mdc` files, including files inside dot directories that are not explicitly excluded.
 
 ### Programmatic Usage
 You can also use mdts as a Node.js module:

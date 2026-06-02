@@ -218,6 +218,22 @@ describe('server.ts unit tests', () => {
       );
     });
 
+    it('should serve index.html for mdc paths', async () => {
+      const mockSendFile = jest.fn();
+      const req = { path: '.cursor/rules/project.mdc' } as Request;
+      const res = { sendFile: mockSendFile } as unknown as Response;
+
+      const catchAllRoute = (app.get as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response) => void]) => call[0] === '*splat',
+      )[1];
+      await catchAllRoute(req, res);
+
+      expect(mockSendFile).toHaveBeenCalledWith(
+        expect.stringContaining('index.html'),
+        expect.any(Object),
+      );
+    });
+
     it('should serve index.html for directory paths', async () => {
       (fs.statSync as jest.Mock).mockReturnValue({
         isDirectory: jest.fn().mockReturnValue(true),

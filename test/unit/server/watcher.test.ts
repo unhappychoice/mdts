@@ -292,6 +292,7 @@ describe('watcher.ts unit tests', () => {
       (fs.statSync as jest.Mock).mockReturnValue({ isDirectory: () => false });
       expect(ignoredFn('test.md')).toBe(false);
       expect(ignoredFn('test.markdown')).toBe(false);
+      expect(ignoredFn('test.mdc')).toBe(false);
     });
 
     it('should ignore non-markdown files', () => {

@@ -45,7 +45,7 @@ lsof -i :8521
 **Problem:** Files appear as plain text instead of rendered markdown.
 
 **Solution:**
-- Ensure files have `.md` extension
+- Ensure files have a supported markdown extension: `.md`, `.markdown`, or `.mdc`
 - Check file encoding (should be UTF-8)
 - Verify file permissions are readable
 
@@ -148,7 +148,8 @@ npx mdts --host 192.168.1.100
 **Solution:**
 - Verify patterns match actual files: run `find . -path '<pattern>'` or `ls <pattern>` (simple patterns only) in the target directory
 - Patterns are relative to the directory argument, not to your current working directory
-- Ensure matched files end in `.md` or `.markdown` — other extensions are filtered out
+- Ensure matched files end in `.md`, `.markdown`, or `.mdc` — other extensions are filtered out
+- Quote dot-directory patterns such as `'.cursor/**/*.mdc'` so your shell does not expand or skip them unexpectedly
 - Quote patterns in your shell to prevent premature expansion: `-g '**/*.md'`
 
 ### ❌ Shell expands glob before mdts receives it

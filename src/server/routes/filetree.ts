@@ -5,6 +5,7 @@ import simpleGit, { SimpleGit, StatusResult, FileStatusResult } from 'simple-git
 import { EXCLUDED_DIRECTORIES } from '../../constants';
 import { ServerContext } from '../context';
 import { resolveGlobPatterns } from '../../utils/glob';
+import { hasSupportedMarkdownExtension } from '../../utils/markdown';
 
 type FileTreeItem = { path: string, status: string, isDirectory?: boolean } | { [key: string]: FileTree };
 type FileTree = FileTreeItem[];
@@ -36,7 +37,9 @@ const isDotFileOrDirectory = (entryName: string): boolean => {
 };
 
 const shouldIncludeEntry = (entry: Dirent): boolean => {
-  return !isDotFileOrDirectory(entry.name) && !EXCLUDED_DIRECTORIES.includes(entry.name);
+  if (EXCLUDED_DIRECTORIES.includes(entry.name)) return false;
+  if (!isDotFileOrDirectory(entry.name)) return true;
+  return entry.isDirectory();
 };
 
 const buildFileTreeFromPatterns = (
@@ -110,7 +113,7 @@ const getFileTree = async (
       if (subTree.length > 0) {
         tree.push({ [entry.name]: subTree });
       }
-    } else if (entry.name.endsWith('.md') || entry.name.endsWith('.markdown')) {
+    } else if (hasSupportedMarkdownExtension(entry.name)) {
       const posixPath = toPosixPath(entryPath);
       const status = getGitStatus(posixPath, gitStatus);
       tree.push({ path: posixPath, status });

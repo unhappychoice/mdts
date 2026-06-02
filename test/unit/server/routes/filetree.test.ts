@@ -74,6 +74,35 @@ describe('filetree.ts', () => {
         isGitRepository: true,
       });
     });
+
+    it('should include agent rule dot directories and .mdc files', async () => {
+      (fs.readdirSync as jest.Mock)
+        .mockReturnValueOnce([
+          mockDirent('.claude', true),
+          mockDirent('.codex', true),
+          mockDirent('.cursor-rules', true),
+          mockDirent('.git', true),
+          mockDirent('project.mdc', false),
+        ])
+        .mockReturnValueOnce([
+          mockDirent('CLAUDE.md', false),
+        ])
+        .mockReturnValueOnce([
+          mockDirent('instructions.md', false),
+        ])
+        .mockReturnValueOnce([
+          mockDirent('rules.mdc', false),
+        ]);
+
+      const response = await request(app).get('/api/filetree');
+      expect(response.statusCode).toBe(200);
+      expect(response.body.fileTree).toEqual([
+        { '.claude': [{ path: '.claude/CLAUDE.md', status: ' ' }] },
+        { '.codex': [{ path: '.codex/instructions.md', status: ' ' }] },
+        { '.cursor-rules': [{ path: '.cursor-rules/rules.mdc', status: ' ' }] },
+        { path: 'project.mdc', status: ' ' },
+      ]);
+    });
   });
 
   describe('fileTreeRouter with file patterns', () => {

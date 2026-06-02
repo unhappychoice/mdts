@@ -1,4 +1,5 @@
 import { resolveGlobPatterns } from '../../../src/utils/glob';
+import { globSync } from 'glob';
 
 jest.mock('glob', () => ({
   globSync: jest.fn((pattern: string) => {
@@ -6,6 +7,7 @@ jest.mock('glob', () => ({
       'docs/*.md': ['docs/guide.md', 'docs/api.md'],
       '**/*.md': ['docs/guide.md', 'docs/api.md', 'src/readme.txt'],
       'notes/*.markdown': ['notes/todo.markdown'],
+      '.cursor/**/*.mdc': ['.cursor/rules/project.mdc'],
       'empty/*.md': [],
       'overlap/*.md': ['overlap/a.md', 'overlap/b.md'],
       'overlap/a.md': ['overlap/a.md'],
@@ -29,6 +31,16 @@ describe('resolveGlobPatterns', () => {
   it('should support .markdown extension', () => {
     const result = resolveGlobPatterns('/mock/project', ['notes/*.markdown']);
     expect(result.filePatterns).toEqual(['notes/todo.markdown']);
+  });
+
+  it('should support .mdc extension', () => {
+    const result = resolveGlobPatterns('/mock/project', ['.cursor/**/*.mdc']);
+    expect(result.filePatterns).toEqual(['.cursor/rules/project.mdc']);
+  });
+
+  it('should include dot directories when resolving glob patterns', () => {
+    resolveGlobPatterns('/mock/project', ['.cursor/**/*.mdc']);
+    expect(globSync).toHaveBeenCalledWith('.cursor/**/*.mdc', { cwd: '/mock/project', dot: true });
   });
 
   it('should merge results from multiple patterns', () => {

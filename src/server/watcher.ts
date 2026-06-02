@@ -6,6 +6,7 @@ import { WebSocket, WebSocketServer } from 'ws';
 import { logger } from '../utils/logger';
 import { EXCLUDED_DIRECTORIES } from '../constants';
 import { ServerContext } from './context';
+import { hasSupportedMarkdownExtension } from '../utils/markdown';
 
 let contentWatcher: FSWatcher | null = null;
 let currentWatchedFile: string | null = null;
@@ -76,7 +77,7 @@ const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatch
         }
 
         if (stats) {
-          return !stats.isDirectory() && !watchedFilePath.endsWith('.md') && !watchedFilePath.endsWith('.markdown');
+          return !stats.isDirectory() && !hasSupportedMarkdownExtension(watchedFilePath);
         } else {
           // If stats is undefined, it's a directory that hasn't been scanned yet.
           // We want to traverse directories, so don't ignore.
