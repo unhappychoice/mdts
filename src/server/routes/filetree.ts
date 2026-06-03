@@ -36,8 +36,13 @@ const isDotFileOrDirectory = (entryName: string): boolean => {
   return entryName.startsWith('.');
 };
 
+const isExcludedDirectory = (entryName: string): boolean => {
+  const normalizedName = entryName.replace(/^\.+/, '');
+  return EXCLUDED_DIRECTORIES.includes(entryName) || EXCLUDED_DIRECTORIES.includes(normalizedName);
+};
+
 const shouldIncludeEntry = (entry: Dirent): boolean => {
-  if (EXCLUDED_DIRECTORIES.includes(entry.name)) return false;
+  if (entry.isDirectory() && isExcludedDirectory(entry.name)) return false;
   if (!isDotFileOrDirectory(entry.name)) return true;
   return entry.isDirectory();
 };
@@ -121,4 +126,3 @@ const getFileTree = async (
   }
   return tree;
 };
-

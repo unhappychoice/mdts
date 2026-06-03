@@ -81,7 +81,9 @@ describe('filetree.ts', () => {
           mockDirent('.claude', true),
           mockDirent('.codex', true),
           mockDirent('.cursor-rules', true),
+          mockDirent('.cache', true),
           mockDirent('.git', true),
+          mockDirent('.venv', true),
           mockDirent('project.mdc', false),
         ])
         .mockReturnValueOnce([
