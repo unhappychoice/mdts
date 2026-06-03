@@ -8,6 +8,7 @@ import { outlineRouter } from './routes/outline';
 import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
 import { diffRouter, diffPrevRouter } from './routes/diff';
+import { exportRouter } from './routes/export';
 import { plantumlRouter } from './routes/plantuml';
 
 const MAX_PORT_RETRIES = 10;
@@ -71,6 +72,7 @@ export const createApp = (
   app.use('/api/outline', outlineRouter(directory));
   app.use('/api/diff-prev', diffPrevRouter(context));
   app.use('/api/diff', diffRouter(context));
+  app.use('/api/export', exportRouter(context));
   app.use('/api/plantuml', plantumlRouter());
   app.get('/api/config', (req, res) => {
     res.json(getConfig());
@@ -148,4 +150,3 @@ export const createApp = (
 
   return app;
 };
-

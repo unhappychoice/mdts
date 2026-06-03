@@ -145,6 +145,15 @@ describe('MarkdownContent', () => {
       );
     });
 
+    expect(screen.getByLabelText('export as html')).toHaveAttribute(
+      'href',
+      '/api/export/html?filePath=%2Fpath%2Fto%2Ftest.md',
+    );
+    expect(screen.getByLabelText('print or save as pdf')).toHaveAttribute(
+      'href',
+      '/api/export/print?filePath=%2Fpath%2Fto%2Ftest.md',
+    );
+    expect(screen.getByLabelText('print or save as pdf')).toHaveAttribute('target', '_blank');
     fireEvent.click(screen.getByRole('tab', { name: /raw/i }));
     expect(screen.getByTestId('mock-react-markdown')).toBeInTheDocument();
   });

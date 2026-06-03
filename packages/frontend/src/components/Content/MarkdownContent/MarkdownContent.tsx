@@ -1,5 +1,5 @@
-import { ArticleOutlined } from '@mui/icons-material';
-import { Box, Chip, Typography } from '@mui/material';
+import { ArticleOutlined, DownloadOutlined, PrintOutlined } from '@mui/icons-material';
+import { Box, Chip, IconButton, Tooltip, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFrontmatter } from '../../../hooks/useFrontmatter';
@@ -66,6 +66,12 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
         : '🎉 Welcome to mdts!';
 
   const hasFrontmatter = Object.keys(frontmatter).length > 0;
+  const exportHtmlUrl = currentPath
+    ? `/api/export/html?filePath=${encodeURIComponent(currentPath)}`
+    : null;
+  const printUrl = currentPath
+    ? `/api/export/print?filePath=${encodeURIComponent(currentPath)}`
+    : null;
 
   if (error) {
     return <ErrorView error={error} />;
@@ -95,6 +101,33 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
         <Typography variant={isMobile ? 'h5' : 'h4'} gutterBottom sx={{ mb: 0, wordBreak: 'break-word' }}>
           {displayFileName}
         </Typography>
+        {exportHtmlUrl && (
+          <Tooltip title="Export as HTML">
+            <IconButton
+              aria-label="export as html"
+              component="a"
+              href={exportHtmlUrl}
+              size={isMobile ? 'small' : 'medium'}
+              sx={{ ml: 1 }}
+            >
+              <DownloadOutlined />
+            </IconButton>
+          </Tooltip>
+        )}
+        {printUrl && (
+          <Tooltip title="Print or save as PDF">
+            <IconButton
+              aria-label="print or save as pdf"
+              component="a"
+              href={printUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+              size={isMobile ? 'small' : 'medium'}
+            >
+              <PrintOutlined />
+            </IconButton>
+          </Tooltip>
+        )}
       </Box>
       {frontmatter.tags && Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0 && (
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
