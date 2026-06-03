@@ -83,7 +83,7 @@ exports[`FileTree renders correctly 1`] = `
         <input
           aria-label="search files"
           class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
-          placeholder="Search files..."
+          placeholder="Search files and content..."
           type="text"
           value=""
         />

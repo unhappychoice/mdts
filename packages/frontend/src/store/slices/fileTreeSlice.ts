@@ -6,10 +6,19 @@ export interface FileTreeItem {
   status: string;
 }
 
+export interface ContentSearchResult {
+  path: string;
+  line: number;
+  preview: string;
+}
+
 export interface FileTreeState {
   fileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
   filteredFileTree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[];
   searchQuery: string;
+  contentSearchResults: ContentSearchResult[];
+  contentSearchLoading: boolean;
+  contentSearchError: string | null;
   expandedNodes: string[];
   mountedDirectoryPath: string;
   isGitRepository: boolean;
@@ -21,6 +30,9 @@ const initialState: FileTreeState = {
   fileTree: [],
   filteredFileTree: [],
   searchQuery: '',
+  contentSearchResults: [],
+  contentSearchLoading: false,
+  contentSearchError: null,
   expandedNodes: [],
   mountedDirectoryPath: '',
   isGitRepository: false,
@@ -113,6 +125,20 @@ export const fetchFileTree = createAsyncThunk(
   }
 );
 
+export const fetchContentSearchResults = createAsyncThunk(
+  'fileTree/fetchContentSearchResults',
+  async (query: string) => {
+    const trimmedQuery = query.trim();
+    if (!trimmedQuery) return [];
+
+    const data = await fetchData<{ results: ContentSearchResult[] }>(
+      `/api/search?q=${encodeURIComponent(trimmedQuery)}`,
+      'json',
+    );
+    return data?.results || [];
+  }
+);
+
 const fileTreeSlice = createSlice({
   name: 'fileTree',
   initialState,
@@ -157,6 +183,11 @@ const fileTreeSlice = createSlice({
     setMountedDirectoryPath: (state, action: { payload: string }) => {
       state.mountedDirectoryPath = action.payload;
     },
+    clearContentSearchResults: (state) => {
+      state.contentSearchResults = [];
+      state.contentSearchLoading = false;
+      state.contentSearchError = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -175,6 +206,20 @@ const fileTreeSlice = createSlice({
       .addCase(fetchFileTree.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch file tree';
+      })
+      .addCase(fetchContentSearchResults.pending, (state) => {
+        state.contentSearchLoading = true;
+        state.contentSearchError = null;
+      })
+      .addCase(fetchContentSearchResults.fulfilled, (state, action) => {
+        state.contentSearchLoading = false;
+        if (action.meta.arg.trim() === state.searchQuery.trim()) {
+          state.contentSearchResults = action.payload;
+        }
+      })
+      .addCase(fetchContentSearchResults.rejected, (state, action) => {
+        state.contentSearchLoading = false;
+        state.contentSearchError = action.error.message || 'Failed to search content';
       });
   },
 });
@@ -249,6 +294,7 @@ export const selectFilteredFileTree = (
 };
 
 export const {
+  clearContentSearchResults,
   setSearchQuery,
   toggleNode,
   setExpandedNodes,

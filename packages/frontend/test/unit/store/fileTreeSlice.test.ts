@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import fileTreeReducer, {
+  clearContentSearchResults,
   expandAllNodes,
+  fetchContentSearchResults,
   fetchFileTree,
   selectFilteredFileTree,
   setExpandedNodes,
@@ -44,6 +46,9 @@ describe('fileTreeSlice', () => {
     expect(store.getState().fileTree.fileTree).toEqual([]);
     expect(store.getState().fileTree.filteredFileTree).toEqual([]);
     expect(store.getState().fileTree.searchQuery).toEqual('');
+    expect(store.getState().fileTree.contentSearchResults).toEqual([]);
+    expect(store.getState().fileTree.contentSearchLoading).toBe(false);
+    expect(store.getState().fileTree.contentSearchError).toBeNull();
     expect(store.getState().fileTree.expandedNodes).toEqual([]);
     expect(store.getState().fileTree.mountedDirectoryPath).toEqual('');
     expect(store.getState().fileTree.loading).toBe(true);
@@ -147,6 +152,19 @@ describe('fileTreeSlice', () => {
     expect(store.getState().fileTree.mountedDirectoryPath).toEqual('/new/path');
   });
 
+  it('should handle clearContentSearchResults', () => {
+    store.dispatch(fetchContentSearchResults.pending('requestId', 'mdts'));
+    store.dispatch(fetchContentSearchResults.fulfilled([
+      { path: 'README.md', line: 1, preview: 'mdts' },
+    ], 'requestId', 'mdts'));
+
+    store.dispatch(clearContentSearchResults());
+
+    expect(store.getState().fileTree.contentSearchResults).toEqual([]);
+    expect(store.getState().fileTree.contentSearchLoading).toBe(false);
+    expect(store.getState().fileTree.contentSearchError).toBeNull();
+  });
+
   it('should remove the oldest expanded node cache when recent paths exceed the limit', () => {
     const paths = Array.from({ length: 11 }, (_, index) => `/test/path-${index + 1}`);
 
@@ -226,6 +244,58 @@ describe('fileTreeSlice', () => {
 
       expect(store.getState().fileTree.loading).toBe(false);
       expect(store.getState().fileTree.error).toEqual(errorMessage);
+    });
+  });
+
+  describe('fetchContentSearchResults async thunk', () => {
+    it('should call the search API with the encoded query', async () => {
+      const results = [{ path: 'README.md', line: 2, preview: 'hello world' }];
+      (fetchData as jest.Mock).mockResolvedValueOnce({ results });
+
+      await store.dispatch(fetchContentSearchResults('hello world'));
+
+      expect(fetchData).toHaveBeenCalledWith('/api/search?q=hello%20world', 'json');
+    });
+
+    it('should not call the API for blank queries', async () => {
+      await store.dispatch(fetchContentSearchResults('   '));
+
+      expect(fetchData).not.toHaveBeenCalled();
+    });
+
+    it('should store results for the current search query', () => {
+      store.dispatch(setSearchQuery('mdts'));
+      store.dispatch(fetchContentSearchResults.pending('requestId', 'mdts'));
+      expect(store.getState().fileTree.contentSearchLoading).toBe(true);
+
+      store.dispatch(fetchContentSearchResults.fulfilled([
+        { path: 'README.md', line: 1, preview: 'mdts' },
+      ], 'requestId', 'mdts'));
+
+      expect(store.getState().fileTree.contentSearchLoading).toBe(false);
+      expect(store.getState().fileTree.contentSearchResults).toEqual([
+        { path: 'README.md', line: 1, preview: 'mdts' },
+      ]);
+    });
+
+    it('should ignore stale search results', () => {
+      store.dispatch(setSearchQuery('current'));
+      store.dispatch(fetchContentSearchResults.fulfilled([
+        { path: 'old.md', line: 1, preview: 'old' },
+      ], 'requestId', 'old'));
+
+      expect(store.getState().fileTree.contentSearchResults).toEqual([]);
+    });
+
+    it('should handle rejected content search state', () => {
+      store.dispatch(fetchContentSearchResults.rejected(
+        new Error('Search failed'),
+        'requestId',
+        'mdts',
+      ));
+
+      expect(store.getState().fileTree.contentSearchLoading).toBe(false);
+      expect(store.getState().fileTree.contentSearchError).toEqual('Search failed');
     });
   });
 

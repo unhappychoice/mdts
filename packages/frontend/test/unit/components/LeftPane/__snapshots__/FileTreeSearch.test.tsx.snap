@@ -13,7 +13,7 @@ exports[`FileTreeSearch renders correctly with a search query 1`] = `
       <input
         aria-label="search files"
         class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
-        placeholder="Search files..."
+        placeholder="Search files and content..."
         type="text"
         value="test"
       />
@@ -57,7 +57,7 @@ exports[`FileTreeSearch renders correctly with empty search query 1`] = `
       <input
         aria-label="search files"
         class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
-        placeholder="Search files..."
+        placeholder="Search files and content..."
         type="text"
         value=""
       />

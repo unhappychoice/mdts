@@ -12,7 +12,7 @@ const FileTreeSearch: React.FC<FileTreeSearchProps> = ({ searchQuery, onSearchCh
   return (
     <Box mb={2} px={2}>
       <InputBase
-        placeholder="Search files..."
+        placeholder="Search files and content..."
         inputProps={{ 'aria-label': 'search files' }}
         sx={{
           flex: 1,

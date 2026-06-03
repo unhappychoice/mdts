@@ -4,7 +4,14 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import FileTree from '../../../../src/components/LeftPane/FileTree';
-import { fetchFileTree, setSearchQuery, expandAllNodes, setExpandedNodes } from '../../../../src/store/slices/fileTreeSlice';
+import {
+  clearContentSearchResults,
+  expandAllNodes,
+  fetchContentSearchResults,
+  fetchFileTree,
+  setExpandedNodes,
+  setSearchQuery,
+} from '../../../../src/store/slices/fileTreeSlice';
 
 const mockStore = configureStore([thunk]);
 
@@ -13,6 +20,8 @@ jest.mock('../../../../src/store/slices/fileTreeSlice', () => ({
   fetchFileTree: Object.assign(jest.fn(() => ({ type: 'fileTree/fetchFileTree/pending' })), {
     fulfilled: jest.fn((payload) => ({ type: 'fileTree/fetchFileTree/fulfilled', payload })),
   }),
+  fetchContentSearchResults: jest.fn((payload) => ({ type: 'fileTree/fetchContentSearchResults/pending', payload })),
+  clearContentSearchResults: jest.fn(() => ({ type: 'fileTree/clearContentSearchResults' })),
   expandAllNodes: jest.fn((payload) => ({ type: 'fileTree/expandAllNodes', payload })),
   setExpandedNodes: jest.fn((payload) => ({ type: 'fileTree/setExpandedNodes', payload })),
   setFilteredFileTree: jest.fn((payload) => ({ type: 'fileTree/setFilteredFileTree', payload }))
@@ -33,6 +42,9 @@ describe('FileTree', () => {
       loading: false,
       error: null,
       searchQuery: '',
+      contentSearchResults: [],
+      contentSearchLoading: false,
+      contentSearchError: null,
       expandedNodes: [],
       mountedDirectoryPath: '',
     },
@@ -68,7 +80,7 @@ describe('FileTree', () => {
       </Provider>
     );
 
-    const searchInput = screen.getByPlaceholderText('Search files...');
+    const searchInput = screen.getByPlaceholderText('Search files and content...');
     fireEvent.change(searchInput, { target: { value: 'file' } });
 
     expect(store.dispatch).toHaveBeenCalledWith(setSearchQuery('file'));
@@ -94,6 +106,31 @@ describe('FileTree', () => {
     fireEvent.click(clearButton);
 
     expect(store.dispatch).toHaveBeenCalledWith(setSearchQuery(''));
+    expect(store.dispatch).toHaveBeenCalledWith(clearContentSearchResults());
+  });
+
+  test('dispatches content search after search query debounce', async () => {
+    jest.useFakeTimers();
+    store = mockStore({
+      fileTree: {
+        ...initialState.fileTree,
+        searchQuery: 'markdown',
+      },
+    });
+    jest.spyOn(store, 'dispatch');
+
+    render(
+      <Provider store={store}>
+        <FileTree onFileSelect={jest.fn()} isOpen={true} onToggle={jest.fn()} selectedFilePath={null} />
+      </Provider>
+    );
+
+    act(() => {
+      jest.advanceTimersByTime(250);
+    });
+
+    expect(store.dispatch).toHaveBeenCalledWith(fetchContentSearchResults('markdown'));
+    jest.useRealTimers();
   });
 
   test('dispatches expandAllNodes when expand all button is clicked', () => {

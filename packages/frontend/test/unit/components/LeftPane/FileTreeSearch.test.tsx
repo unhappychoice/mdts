@@ -8,7 +8,7 @@ describe('FileTreeSearch', () => {
       <FileTreeSearch searchQuery="" onSearchChange={jest.fn()} onClearSearch={jest.fn()} />
     );
     expect(asFragment()).toMatchSnapshot();
-    expect(screen.getByPlaceholderText('Search files...')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search files and content...')).toBeInTheDocument();
     expect(screen.queryByLabelText('clear search')).not.toBeInTheDocument();
   });
 
@@ -26,7 +26,7 @@ describe('FileTreeSearch', () => {
     render(
       <FileTreeSearch searchQuery="" onSearchChange={onSearchChangeMock} onClearSearch={jest.fn()} />
     );
-    fireEvent.change(screen.getByPlaceholderText('Search files...'), { target: { value: 'new query' } });
+    fireEvent.change(screen.getByPlaceholderText('Search files and content...'), { target: { value: 'new query' } });
     expect(onSearchChangeMock).toHaveBeenCalledWith(expect.any(Object));
   });
 
