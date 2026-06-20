@@ -2,10 +2,9 @@ const globals = require("globals");
 const pluginJs = require("@eslint/js");
 const stylistic = require('@stylistic/eslint-plugin');
 const tseslint = require("typescript-eslint");
-const pluginReactConfig = require("eslint-plugin-react/configs/recommended.js");
+const reactPlugin = require("@eslint-react/eslint-plugin");
 const hooksPlugin = require("eslint-plugin-react-hooks");
 const jestPlugin = require("eslint-plugin-jest");
-const jsxA11yPlugin = require("eslint-plugin-jsx-a11y");
 
 module.exports = tseslint.config(
   {
@@ -13,13 +12,12 @@ module.exports = tseslint.config(
     extends: [
       pluginJs.configs.recommended,
       ...tseslint.configs.recommended,
-      pluginReactConfig,
+      reactPlugin.configs.recommended,
     ],
     plugins: {
       '@stylistic': stylistic,
       "react-hooks": hooksPlugin,
       jest: jestPlugin,
-"jsx-a11y": jsxA11yPlugin,
     },
     languageOptions: {
       parser: tseslint.parser,
@@ -43,15 +41,10 @@ module.exports = tseslint.config(
       '@stylistic/linebreak-style': ['error', 'unix'],
       '@stylistic/max-len': ['error', { code: 120, ignoreComments: true, ignoreStrings: true }],
       '@stylistic/quotes': ['error', 'single'],
-      'react/jsx-no-bind': 'error',
+      '@eslint-react/no-nested-component-definitions': 'error',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       '@stylistic/semi': ['error', 'always'],
-    },
-    settings: {
-      react: {
-        version: "detect",
-      },
     },
   },
 );
