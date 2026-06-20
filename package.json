@@ -44,6 +44,7 @@
   },
   "homepage": "https://mdts.unhappychoice.com",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.2.3",
     "@types/aws-lambda": "^8.10.152",
     "@types/commander": "^2.12.0",
