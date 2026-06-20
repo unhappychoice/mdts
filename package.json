@@ -83,7 +83,7 @@
   },
   "overrides": {
     "jest-runner-eslint": {
-      "eslint": "^9.32.0"
+      "eslint": "^10.5.0"
     }
   }
 }
