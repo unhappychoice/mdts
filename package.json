@@ -44,6 +44,7 @@
   },
   "homepage": "https://mdts.unhappychoice.com",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.2.3",
     "@types/aws-lambda": "^8.10.152",
     "@types/commander": "^2.12.0",
@@ -55,7 +56,7 @@
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
     "axios": "^1.10.0",
-    "eslint": "^9.32.0",
+    "eslint": "^10.5.0",
     "jest": "^30.0.4",
     "jest-runner-eslint": "^2.3.0",
     "jest-util": "^30.2.0",
@@ -83,7 +84,7 @@
   },
   "overrides": {
     "jest-runner-eslint": {
-      "eslint": "^9.32.0"
+      "eslint": "^10.5.0"
     }
   }
 }
