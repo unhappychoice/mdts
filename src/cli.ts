@@ -1,4 +1,4 @@
-import { Command } from 'commander';
+import type { Command } from 'commander' with { 'resolution-mode': 'import' };
 import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 import { serve } from './server/server';
@@ -12,7 +12,8 @@ export class CLI {
   run(): Promise<void> {
     return this.requireOpen()
       .then(async (open) => {
-        const program = new Command();
+        const { Command } = await this.requireCommander();
+        const program: Command = new Command();
 
         const packageJsonPath = path.join(__dirname, '..', 'package.json');
         const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
@@ -67,5 +68,9 @@ export class CLI {
 
   requireOpen(): Promise<(file: string) => void> {
     return import('open').then((module) => module.default);
+  }
+
+  requireCommander(): Promise<typeof import('commander', { with: { 'resolution-mode': 'import' } })> {
+    return import('commander');
   }
 }
