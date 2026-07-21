@@ -68,7 +68,7 @@
     "jest-environment-jsdom": "^30.4.1",
     "jest-runner-eslint": "^2.3.0",
     "style-loader": "^4.0.0",
-    "typescript-eslint": "^8.64.0",
+    "typescript-eslint": "^8.65.0",
     "webpack": "^5.108.4",
     "webpack-cli": "^7.2.1"
   },
