@@ -4,7 +4,13 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import FileTree from '../../../../src/components/LeftPane/FileTree';
-import { fetchFileTree, setSearchQuery, expandAllNodes, setExpandedNodes } from '../../../../src/store/slices/fileTreeSlice';
+import {
+  ensureExpandedNodes,
+  expandAllNodes,
+  fetchFileTree,
+  setExpandedNodes,
+  setSearchQuery,
+} from '../../../../src/store/slices/fileTreeSlice';
 
 const mockStore = configureStore([thunk]);
 
@@ -15,6 +21,7 @@ jest.mock('../../../../src/store/slices/fileTreeSlice', () => ({
   }),
   expandAllNodes: jest.fn((payload) => ({ type: 'fileTree/expandAllNodes', payload })),
   setExpandedNodes: jest.fn((payload) => ({ type: 'fileTree/setExpandedNodes', payload })),
+  ensureExpandedNodes: jest.fn((payload) => ({ type: 'fileTree/ensureExpandedNodes', payload })),
   setFilteredFileTree: jest.fn((payload) => ({ type: 'fileTree/setFilteredFileTree', payload }))
 }));
 
@@ -39,6 +46,7 @@ describe('FileTree', () => {
   };
 
   beforeEach(() => {
+    jest.clearAllMocks();
     store = mockStore(initialState);
     jest.spyOn(store, 'dispatch');
   });
@@ -183,5 +191,45 @@ describe('FileTree', () => {
         payload: [],
       });
     });
+  });
+
+  test('expands ancestor folders for the selected file path', () => {
+    render(
+      <Provider store={store}>
+        <FileTree
+          onFileSelect={jest.fn()}
+          isOpen={true}
+          onToggle={jest.fn()}
+          selectedFilePath="folder1/nested/file1.md"
+        />
+      </Provider>
+    );
+
+    expect(store.dispatch).toHaveBeenCalledWith(
+      ensureExpandedNodes(['folder1', 'folder1/nested'])
+    );
+  });
+
+  test('does not expand ancestors while the file tree is loading', () => {
+    store = mockStore({
+      fileTree: {
+        ...initialState.fileTree,
+        loading: true,
+      },
+    });
+    jest.spyOn(store, 'dispatch');
+
+    render(
+      <Provider store={store}>
+        <FileTree
+          onFileSelect={jest.fn()}
+          isOpen={true}
+          onToggle={jest.fn()}
+          selectedFilePath="folder1/file1.md"
+        />
+      </Provider>
+    );
+
+    expect(ensureExpandedNodes).not.toHaveBeenCalled();
   });
 });

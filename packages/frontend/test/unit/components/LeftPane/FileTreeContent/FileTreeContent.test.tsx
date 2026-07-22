@@ -44,6 +44,7 @@ describe('FileTreeContent', () => {
         loading={true}
         error={null}
         expandedNodes={[]}
+        selectedFilePath={null}
         onFileSelect={jest.fn()}
         onExpandedItemsChange={jest.fn()}
       />
@@ -58,6 +59,7 @@ describe('FileTreeContent', () => {
         loading={false}
         error="Failed to load tree"
         expandedNodes={[]}
+        selectedFilePath={null}
         onFileSelect={jest.fn()}
         onExpandedItemsChange={jest.fn()}
       />
@@ -72,6 +74,7 @@ describe('FileTreeContent', () => {
         loading={false}
         error={null}
         expandedNodes={['folder1']}
+        selectedFilePath={null}
         onFileSelect={jest.fn()}
         onExpandedItemsChange={jest.fn()}
       />
@@ -88,6 +91,7 @@ describe('FileTreeContent', () => {
         loading={true}
         error={null}
         expandedNodes={['folder1']}
+        selectedFilePath={null}
         onFileSelect={jest.fn()}
         onExpandedItemsChange={jest.fn()}
       />
@@ -104,6 +108,7 @@ describe('FileTreeContent', () => {
           loading={false}
           error={null}
           expandedNodes={[]}
+          selectedFilePath={null}
           onFileSelect={jest.fn()}
           onExpandedItemsChange={jest.fn()}
         />
@@ -131,6 +136,7 @@ describe('FileTreeContent', () => {
         loading={false}
         error={null}
         expandedNodes={[]}
+        selectedFilePath={null}
         onFileSelect={onFileSelectMock}
         onExpandedItemsChange={jest.fn()}
       />
@@ -147,6 +153,7 @@ describe('FileTreeContent', () => {
         loading={false}
         error={null}
         expandedNodes={[]}
+        selectedFilePath={null}
         onFileSelect={jest.fn()}
         onExpandedItemsChange={onExpandedItemsChangeMock}
       />
