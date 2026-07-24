@@ -8,8 +8,37 @@ exports[`FileTreeSearch renders correctly with a search query 1`] = `
     px="2"
   >
     <div
-      class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-adornedEnd css-pe16f2-MuiInputBase-root"
+      class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-adornedStart MuiInputBase-adornedEnd css-pe16f2-MuiInputBase-root"
     >
+      <div
+        class="MuiInputAdornment-root MuiInputAdornment-positionStart css-1nowbqt-MuiInputAdornment-root"
+      >
+        <span
+          aria-hidden="true"
+          class="notranslate"
+        >
+          ​
+        </span>
+        <button
+          aria-label="switch to content search"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+          data-mui-internal-clone-element="true"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1wdc28j-MuiSvgIcon-root"
+            data-testid="DescriptionIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8zm2 16H8v-2h8zm0-4H8v-2h8zm-3-5V3.5L18.5 9z"
+            />
+          </svg>
+        </button>
+      </div>
       <input
         aria-label="search files"
         class="MuiInputBase-input css-e77w8q-MuiInputBase-input"
@@ -52,8 +81,37 @@ exports[`FileTreeSearch renders correctly with empty search query 1`] = `
     px="2"
   >
     <div
-      class="MuiInputBase-root MuiInputBase-colorPrimary css-pe16f2-MuiInputBase-root"
+      class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-adornedStart css-pe16f2-MuiInputBase-root"
     >
+      <div
+        class="MuiInputAdornment-root MuiInputAdornment-positionStart css-1nowbqt-MuiInputAdornment-root"
+      >
+        <span
+          aria-hidden="true"
+          class="notranslate"
+        >
+          ​
+        </span>
+        <button
+          aria-label="switch to content search"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+          data-mui-internal-clone-element="true"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1wdc28j-MuiSvgIcon-root"
+            data-testid="DescriptionIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8zm2 16H8v-2h8zm0-4H8v-2h8zm-3-5V3.5L18.5 9z"
+            />
+          </svg>
+        </button>
+      </div>
       <input
         aria-label="search files"
         class="MuiInputBase-input css-e77w8q-MuiInputBase-input"

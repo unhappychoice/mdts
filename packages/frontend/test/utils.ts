@@ -27,6 +27,10 @@ export const createMockStore = (
       loading: false,
       error: null,
       searchQuery: '',
+      searchMode: 'filename',
+      contentSearchResults: [],
+      expandedNodes: [],
+      mountedDirectoryPath: '',
       isGitRepository: true,
     },
     content: {
