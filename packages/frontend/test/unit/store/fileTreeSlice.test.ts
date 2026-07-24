@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import fileTreeReducer, {
+  ensureExpandedNodes,
   expandAllNodes,
   fetchFileTree,
+  getAncestorPaths,
   selectFilteredFileTree,
   setExpandedNodes,
   setMountedDirectoryPath,
@@ -123,6 +125,42 @@ describe('fileTreeSlice', () => {
     store.dispatch(setExpandedNodes(['node1', 'node2']));
     expect(store.getState().fileTree.expandedNodes).toEqual(['node1', 'node2']);
     expect(localStorage.getItem('mdts_expanded_nodes_/test/path')).toEqual(JSON.stringify(['node1', 'node2']));
+  });
+
+  it('should handle ensureExpandedNodes by merging missing paths only', () => {
+    store.dispatch(setMountedDirectoryPath('/test/path'));
+    store.dispatch(setExpandedNodes(['dir1']));
+    store.dispatch(ensureExpandedNodes(['dir1', 'dir1/dir2', 'dir1/dir2/dir3']));
+
+    expect(store.getState().fileTree.expandedNodes).toEqual([
+      'dir1',
+      'dir1/dir2',
+      'dir1/dir2/dir3',
+    ]);
+    expect(localStorage.getItem('mdts_expanded_nodes_/test/path')).toEqual(JSON.stringify([
+      'dir1',
+      'dir1/dir2',
+      'dir1/dir2/dir3',
+    ]));
+  });
+
+  it('should not rewrite storage when ensureExpandedNodes has no missing paths', () => {
+    store.dispatch(setMountedDirectoryPath('/test/path'));
+    store.dispatch(setExpandedNodes(['dir1', 'dir1/dir2']));
+    const setItemSpy = jest.spyOn(localStorage, 'setItem');
+    setItemSpy.mockClear();
+
+    store.dispatch(ensureExpandedNodes(['dir1', 'dir1/dir2']));
+
+    expect(store.getState().fileTree.expandedNodes).toEqual(['dir1', 'dir1/dir2']);
+    expect(setItemSpy).not.toHaveBeenCalled();
+    setItemSpy.mockRestore();
+  });
+
+  it('should derive ancestor paths for nested files', () => {
+    expect(getAncestorPaths('file.md')).toEqual([]);
+    expect(getAncestorPaths('dir1/file.md')).toEqual(['dir1']);
+    expect(getAncestorPaths('dir1/dir2/file.md')).toEqual(['dir1', 'dir1/dir2']);
   });
 
   it('should handle expandAllNodes', () => {

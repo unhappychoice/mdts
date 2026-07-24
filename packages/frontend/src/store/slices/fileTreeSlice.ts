@@ -68,6 +68,18 @@ const loadExpandedNodes = (path: string): string[] => {
   }
 };
 
+/** Parent directory paths that must be expanded for `path` to be visible in the tree. */
+export const getAncestorPaths = (path: string): string[] => {
+  const segments = path.split('/').filter(Boolean);
+  if (segments.length <= 1) return [];
+
+  const ancestors: string[] = [];
+  for (let i = 1; i < segments.length; i += 1) {
+    ancestors.push(segments.slice(0, i).join('/'));
+  }
+  return ancestors;
+};
+
 const filterTree = (
   tree: (FileTreeItem | { [key: string]: (FileTreeItem | object)[] })[],
   searchQuery: string
@@ -132,6 +144,12 @@ const fileTreeSlice = createSlice({
     },
     setExpandedNodes: (state, action: { payload: string[] }) => {
       state.expandedNodes = action.payload;
+      saveExpandedNodes(state.mountedDirectoryPath, state.expandedNodes);
+    },
+    ensureExpandedNodes: (state, action: { payload: string[] }) => {
+      const missing = action.payload.filter((path) => !state.expandedNodes.includes(path));
+      if (missing.length === 0) return;
+      state.expandedNodes = [...state.expandedNodes, ...missing];
       saveExpandedNodes(state.mountedDirectoryPath, state.expandedNodes);
     },
     expandAllNodes: (
@@ -252,6 +270,7 @@ export const {
   setSearchQuery,
   toggleNode,
   setExpandedNodes,
+  ensureExpandedNodes,
   expandAllNodes,
   setMountedDirectoryPath,
 } = fileTreeSlice.actions;
