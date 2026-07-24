@@ -4,6 +4,7 @@ import path from 'path';
 import simpleGit, { SimpleGit, StatusResult, FileStatusResult } from 'simple-git';
 import { EXCLUDED_DIRECTORIES } from '../../constants';
 import { ServerContext } from '../context';
+import { logger } from '../../utils/logger';
 import { resolveGlobPatterns } from '../../utils/glob';
 
 type FileTreeItem = { path: string, status: string, isDirectory?: boolean } | { [key: string]: FileTree };
@@ -37,6 +38,20 @@ const isDotFileOrDirectory = (entryName: string): boolean => {
 
 const shouldIncludeEntry = (entry: Dirent): boolean => {
   return !isDotFileOrDirectory(entry.name) && !EXCLUDED_DIRECTORIES.includes(entry.name);
+};
+
+// Errors that mean "this directory can't be enumerated" — skip it and keep going
+// rather than failing the whole file tree. EACCES/EPERM cover permission denials;
+// ENOENT/ENOTDIR cover races where the entry vanishes or isn't a directory.
+const UNREADABLE_DIRECTORY_ERROR_CODES = ['EACCES', 'EPERM', 'ENOENT', 'ENOTDIR'];
+
+const isUnreadableDirectoryError = (error: unknown): boolean => {
+  return Boolean(
+    error &&
+      typeof error === 'object' &&
+      'code' in error &&
+      UNREADABLE_DIRECTORY_ERROR_CODES.includes((error as NodeJS.ErrnoException).code as string),
+  );
 };
 
 const buildFileTreeFromPatterns = (
@@ -95,10 +110,16 @@ const getFileTree = async (
   gitStatus: StatusResult | null
 ): Promise<FileTree> => {
   const fullPath = path.join(baseDirectory, currentRelativePath);
-  const entriesInDir = fs.readdirSync(
-    fullPath,
-    { withFileTypes: true }
-  );
+  let entriesInDir: Dirent[];
+  try {
+    entriesInDir = fs.readdirSync(fullPath, { withFileTypes: true });
+  } catch (error) {
+    if (isUnreadableDirectoryError(error)) {
+      logger.log('Server', `🔒 Skipping inaccessible directory: ${currentRelativePath || fullPath}`);
+      return [];
+    }
+    throw error;
+  }
   const entries = entriesInDir.filter(shouldIncludeEntry);
 
   const tree: FileTree = [];
