@@ -4,6 +4,8 @@ import path from 'path';
 import simpleGit, { SimpleGit, StatusResult, FileStatusResult } from 'simple-git';
 import { EXCLUDED_DIRECTORIES } from '../../constants';
 import { ServerContext } from '../context';
+import { logger } from '../../utils/logger';
+import { isUnreadableDirectoryError } from '../../utils/errors';
 import { resolveGlobPatterns } from '../../utils/glob';
 
 type FileTreeItem = { path: string, status: string, isDirectory?: boolean } | { [key: string]: FileTree };
@@ -95,10 +97,16 @@ const getFileTree = async (
   gitStatus: StatusResult | null
 ): Promise<FileTree> => {
   const fullPath = path.join(baseDirectory, currentRelativePath);
-  const entriesInDir = fs.readdirSync(
-    fullPath,
-    { withFileTypes: true }
-  );
+  let entriesInDir: Dirent[];
+  try {
+    entriesInDir = fs.readdirSync(fullPath, { withFileTypes: true });
+  } catch (error) {
+    if (isUnreadableDirectoryError(error)) {
+      logger.log('Server', `🔒 Skipping inaccessible directory: ${currentRelativePath || fullPath}`);
+      return [];
+    }
+    throw error;
+  }
   const entries = entriesInDir.filter(shouldIncludeEntry);
 
   const tree: FileTree = [];

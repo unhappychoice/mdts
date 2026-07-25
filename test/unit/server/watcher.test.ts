@@ -269,6 +269,26 @@ describe('watcher.ts unit tests', () => {
         'This error is likely caused by too many open files. Try increasing the ulimit.',
       );
     });
+
+    it('should log a friendly message and keep watching on permission error (EACCES)', async () => {
+      const onErrorCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'error')[1];
+      const error = Object.assign(new Error('permission denied'), {
+        code: 'EACCES',
+        path: '/mock/directory/secret',
+      });
+
+      onErrorCallback(error);
+      await Promise.resolve();
+
+      // Permission errors are non-fatal: do not tear down the watcher.
+      expect(mockDirectoryWatcher.unwatch).not.toHaveBeenCalled();
+      expect(mockDirectoryWatcher.close).not.toHaveBeenCalled();
+      expect(logger.log).toHaveBeenCalledWith(
+        'Livereload',
+        '🔒 Can\'t watch "secret" (permission denied); live-reload skipped for it, others still watched.',
+      );
+      expect(logger.error).not.toHaveBeenCalled();
+    });
   });
 
   describe('chokidar ignored option', () => {
@@ -401,6 +421,31 @@ describe('watcher.ts unit tests', () => {
 
       expect(logger.error).toHaveBeenCalledWith('🚫 Error watching files:', expect.any(Error));
       expect(logger.error).toHaveBeenCalledWith('Livereload will be disabled');
+    });
+
+    it('should log a friendly message and keep watching on permission error (EACCES)', async () => {
+      setupWatcher(
+        { directory: '/mock/directory', filePatterns: ['a.md'] },
+        mockServer,
+        3000,
+      );
+
+      const onErrorCallback = (mockPatternWatcher.on as jest.Mock).mock.calls
+        .find(call => call[0] === 'error')[1];
+      const error = Object.assign(new Error('permission denied'), {
+        code: 'EACCES',
+        path: '/mock/directory/a.md',
+      });
+
+      onErrorCallback(error);
+      await Promise.resolve();
+
+      expect(mockPatternWatcher.close).not.toHaveBeenCalled();
+      expect(logger.log).toHaveBeenCalledWith(
+        'Livereload',
+        '🔒 Can\'t watch "a.md" (permission denied); live-reload skipped for it, others still watched.',
+      );
+      expect(logger.error).not.toHaveBeenCalled();
     });
   });
 });

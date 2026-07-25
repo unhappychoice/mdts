@@ -4,6 +4,7 @@ import * as http from 'http';
 import path from 'path';
 import { WebSocket, WebSocketServer } from 'ws';
 import { logger } from '../utils/logger';
+import { isPermissionError } from '../utils/errors';
 import { EXCLUDED_DIRECTORIES } from '../constants';
 import { ServerContext } from './context';
 
@@ -67,6 +68,22 @@ const attachTreeReloadHandlers = (watcher: FSWatcher, wss: WebSocketServer): voi
   });
 };
 
+const logSkippedWatchTarget = (error: unknown, directory: string): void => {
+  const target = describeWatchTarget(error, directory);
+  logger.log(
+    'Livereload',
+    `🔒 Can't watch "${target}" (permission denied); live-reload skipped for it, others still watched.`,
+  );
+};
+
+const describeWatchTarget = (error: unknown, directory: string): string => {
+  const errorPath = (error as NodeJS.ErrnoException)?.path;
+  if (typeof errorPath !== 'string') return 'a path';
+  return errorPath.startsWith(`${directory}/`)
+    ? errorPath.slice(directory.length + 1)
+    : errorPath;
+};
+
 const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatcher | null => {
   try {
     const watcher = chokidar.watch(directory, {
@@ -89,6 +106,8 @@ const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatch
     attachTreeReloadHandlers(watcher, wss);
 
     watcher.on('error', (error) => {
+      if (isPermissionError(error)) return logSkippedWatchTarget(error, directory);
+
       watcher.unwatch(directory);
       watcher.close()
         .then(() => logger.log('Livereload', 'Directory watcher closed'));
@@ -119,6 +138,8 @@ const setupFilePatternWatcher = (context: ServerContext, wss: WebSocketServer): 
     attachTreeReloadHandlers(watcher, wss);
 
     watcher.on('error', (error) => {
+      if (isPermissionError(error)) return logSkippedWatchTarget(error, directory);
+
       watcher.close()
         .then(() => logger.log('Livereload', 'File pattern watcher closed'));
       logger.error('🚫 Error watching files:', error);

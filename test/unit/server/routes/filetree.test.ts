@@ -74,6 +74,27 @@ describe('filetree.ts', () => {
         isGitRepository: true,
       });
     });
+
+    it('should skip inaccessible directories (EACCES) and still return the rest of the tree', async () => {
+      (fs.readdirSync as jest.Mock)
+        .mockReturnValueOnce([ // For root: an unreadable dir + a readable markdown file
+          mockDirent('inaccessible', true),
+          mockDirent('file1.md', false),
+        ])
+        .mockImplementationOnce(() => { // For inaccessible: permission denied
+          const error = new Error('permission denied') as NodeJS.ErrnoException;
+          error.code = 'EACCES';
+          throw error;
+        });
+
+      const response = await request(app).get('/api/filetree');
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        fileTree: [{ path: 'file1.md', status: ' ' }],
+        mountedDirectoryPath: mockDirectory,
+        isGitRepository: true,
+      });
+    });
   });
 
   describe('fileTreeRouter with file patterns', () => {
