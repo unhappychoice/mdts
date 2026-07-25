@@ -3,9 +3,11 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useIsMobile from '../../hooks/useIsMobile';
 import {
+  ensureExpandedNodes,
   expandAllNodes,
   fetchFileTree,
   FileTreeItem,
+  getAncestorPaths,
   setExpandedNodes,
   setSearchQuery
 } from '../../store/slices/fileTreeSlice';
@@ -21,7 +23,12 @@ interface FileTreeComponentProps {
   selectedFilePath: string | null;
 }
 
-const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onToggle }) => {
+const FileTree: React.FC<FileTreeComponentProps> = ({
+  onFileSelect,
+  isOpen,
+  onToggle,
+  selectedFilePath,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const theme = useTheme();
   const isMobile = useIsMobile();
@@ -37,6 +44,16 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
   useEffect(() => {
     dispatch(fetchFileTree());
   }, [dispatch]);
+
+  // Reveal the current document in the tree: expand ancestors when path changes or tree finishes loading.
+  useEffect(() => {
+    if (!selectedFilePath || loading) return;
+
+    const ancestors = getAncestorPaths(selectedFilePath);
+    if (ancestors.length > 0) {
+      dispatch(ensureExpandedNodes(ancestors));
+    }
+  }, [selectedFilePath, loading, dispatch]);
 
   const handleSearchChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchQuery(event.target.value));
@@ -115,9 +132,9 @@ const FileTree: React.FC<FileTreeComponentProps> = ({ onFileSelect, isOpen, onTo
           loading={loading}
           error={error}
           expandedNodes={expandedNodes}
+          selectedFilePath={selectedFilePath}
           onFileSelect={isMobile ? handleFileSelectWithClose : onFileSelect}
           onExpandedItemsChange={handleExpandedItemsChange}
-          dispatch={dispatch}
         />
       )}
     </>

@@ -17,7 +17,7 @@ exports[`FileTreeView should render correctly 1`] = `
       id="mui-tree-view-1-file1.md"
       role="treeitem"
       style="--TreeView-itemDepth: 0;"
-      tabindex="0"
+      tabindex="-1"
     >
       <div
         class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
@@ -60,7 +60,7 @@ exports[`FileTreeView should render correctly 1`] = `
       </div>
     </li>
     <li
-      aria-checked="false"
+      aria-checked="mixed"
       aria-expanded="true"
       class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
       id="mui-tree-view-1-dir1"
@@ -124,15 +124,16 @@ exports[`FileTreeView should render correctly 1`] = `
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <li
-              aria-checked="false"
+              aria-checked="true"
               class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
               id="mui-tree-view-1-dir1/file2.md"
               role="treeitem"
               style="--TreeView-itemDepth: 1;"
-              tabindex="-1"
+              tabindex="0"
             >
               <div
                 class="MuiTreeItem-content MuiSimpleTreeView-itemContent css-lz1n60-MuiTreeItem-content"
+                data-selected=""
               >
                 <div
                   class="MuiTreeItem-iconContainer MuiSimpleTreeView-itemIconContainer css-bt3rqe-MuiTreeItem-iconContainer"

@@ -10,6 +10,7 @@ interface FileTreeContentProps {
   loading: boolean;
   error: string | null;
   expandedNodes: string[];
+  selectedFilePath: string | null;
   onFileSelect: (path: string) => void;
   onExpandedItemsChange: (event: React.SyntheticEvent, itemIds: string[]) => void;
 }
@@ -19,6 +20,7 @@ const FileTreeContent: React.FC<FileTreeContentProps> = ({
   loading,
   error,
   expandedNodes,
+  selectedFilePath,
   onFileSelect,
   onExpandedItemsChange,
 }) => {
@@ -43,6 +45,7 @@ const FileTreeContent: React.FC<FileTreeContentProps> = ({
     <FileTreeView
       filteredFileTree={filteredFileTree}
       expandedNodes={expandedNodes}
+      selectedFilePath={selectedFilePath}
       onFileSelect={onFileSelect}
       onExpandedItemsChange={onExpandedItemsChange}
       getStatusColor={getStatusColor}
