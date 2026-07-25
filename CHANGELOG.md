@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.20.5
+
+### ✨ Features
+- auto-focus current file in the left file tree ([d9e8329](https://github.com/unhappychoice/mdts/commit/d9e8329)) ([#849](https://github.com/unhappychoice/mdts/pull/849))
+
+### 🐛 Bug Fixes
+- keep livereload alive on permission errors ([1953b77](https://github.com/unhappychoice/mdts/commit/1953b77)) ([#856](https://github.com/unhappychoice/mdts/pull/856))
+- skip inaccessible directories in the file tree ([bc1d572](https://github.com/unhappychoice/mdts/commit/bc1d572)) ([#856](https://github.com/unhappychoice/mdts/pull/856))
+
+### 📝 Documentation
+- update CHANGELOG.md for v0.20.4 ([3a52526](https://github.com/unhappychoice/mdts/commit/3a52526))
+
+### ♻️ Refactor
+- extract shared errno predicates into utils ([7e33313](https://github.com/unhappychoice/mdts/commit/7e33313)) ([#856](https://github.com/unhappychoice/mdts/pull/856))
+
+
 ## v0.20.4
 
 ### 🐛 Bug Fixes
