@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.20.6
+
+### 🐛 Bug Fixes
+- style h6 and drop unused markdown CSS variables ([c0fd12b](https://github.com/unhappychoice/mdts/commit/c0fd12b)) ([#861](https://github.com/unhappychoice/mdts/pull/861))
+
+### 📝 Documentation
+- update CHANGELOG.md for v0.20.5 ([1c22012](https://github.com/unhappychoice/mdts/commit/1c22012))
+
+
 ## v0.20.5
 
 ### ✨ Features
