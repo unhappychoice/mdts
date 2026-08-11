@@ -29,7 +29,7 @@ exports[`LayoutSettingsTab should render correctly 1`] = `
         aria-label="compact"
         aria-pressed="true"
         class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-lastButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
-        tabindex="0"
+        tabindex="-1"
         type="button"
         value="compact"
       >
