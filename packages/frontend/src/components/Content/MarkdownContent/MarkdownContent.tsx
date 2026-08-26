@@ -2,6 +2,7 @@ import { ArticleOutlined } from '@mui/icons-material';
 import { Box, Chip, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useCompactContentWidth from '../../../hooks/useCompactContentWidth';
 import { useFrontmatter } from '../../../hooks/useFrontmatter';
 import useIsMobile from '../../../hooks/useIsMobile';
 import { useViewMode } from '../../../hooks/useViewMode';
@@ -31,6 +32,11 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   const viewMode = useViewMode();
   const isMobile = useIsMobile();
   const loading = contentLoading || fileTreeLoading;
+  const compactEnabled = contentMode === 'compact' && !isMobile;
+  const { ref: contentRef, width: compactWidth } = useCompactContentWidth(
+    compactEnabled,
+    `${currentPath}:${viewMode}:${content}`
+  );
 
   useEffect(() => {
     dispatch(fetchContent(currentPath));
@@ -73,6 +79,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
 
   return (
     <Box
+      ref={contentRef}
       sx={{
         width: '100%',
         minWidth: 0,
@@ -80,8 +87,8 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
         m: 0,
         p: isMobile ? 2 : 4,
         bgcolor: 'background.paper',
-        ...(contentMode === 'compact' && !isMobile && {
-          width: '800px',
+        ...(compactEnabled && {
+          width: `${compactWidth}px`,
           margin: '0 auto',
           borderRight: '1px solid',
           borderLeft: '1px solid',

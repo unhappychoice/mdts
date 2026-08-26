@@ -58,7 +58,7 @@ The UI is divided into three panels—file tree, document view, and outline—ma
 `mdts` provides an advanced settings dialog (accessible via the gear icon) with three main configuration tabs:
 
 ### 🎨 Layout Settings
-- **Content Width**: Toggle between `compact` (centered, focused reading) and `full-width` (spans entire screen) layouts
+- **Content Width**: Toggle between `compact` (centered, focused reading; expands to use leftover screen space when tables or other wide content would otherwise scroll) and `full-width` (spans entire screen) layouts
 - **Responsive Design**: Automatically adjusts to different screen sizes
 
 ### 🌈 Color Scheme Settings  
