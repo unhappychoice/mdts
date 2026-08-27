@@ -43,6 +43,14 @@ describe('Server E2E Tests', () => {
     expect(res.text).toContain('# Hello E2E');
   });
 
+  it('GET /api/markdown/.hidden/readme.md should return markdown from a dot-directory', async () => {
+    const res = await request(app).get('/api/markdown/.hidden/readme.md');
+    expect(res.statusCode).toEqual(200);
+    expect(res.headers['content-type']).toMatch(/markdown|plain|octet-stream/);
+    expect(res.text).toContain('# Hidden directory markdown');
+    expect(res.text).not.toContain('<title>mdts - Markdown file viewer</title>');
+  });
+
   it('GET /api/outline should return the outline for a markdown file', async () => {
     const res = await request(app).get('/api/outline?filePath=test.md');
     expect(res.statusCode).toEqual(200);

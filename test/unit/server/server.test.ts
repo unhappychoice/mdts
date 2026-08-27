@@ -79,6 +79,11 @@ describe('server.ts unit tests', () => {
       expect(app.use).toHaveBeenCalledWith(expect.any(Function)); // for express.static
     });
 
+    it('should allow serving markdown files from dot-directories', () => {
+      const express = jest.requireMock('express');
+      expect(express.static).toHaveBeenCalledWith('/mock/directory', { dotfiles: 'allow' });
+    });
+
     it('should define /api/filetree and /api/outline routes', () => {
       expect(app.use).toHaveBeenCalledWith('/api/filetree', expect.objectContaining({ get: expect.any(Function) }));
       expect(app.use).toHaveBeenCalledWith('/api/outline', expect.objectContaining({ get: expect.any(Function) }));
