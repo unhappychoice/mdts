@@ -33,7 +33,10 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   const loading = contentLoading || fileTreeLoading;
 
   useEffect(() => {
-    dispatch(fetchContent(currentPath));
+    const request = dispatch(fetchContent(currentPath));
+    return () => {
+      request?.abort?.();
+    };
   }, [dispatch, currentPath]);
 
   useEffect(() => {

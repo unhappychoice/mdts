@@ -10,6 +10,7 @@ describe('contentSlice', () => {
     loading: true,
     error: null,
     scrollPosition: 0,
+    latestRequestId: null,
   };
 
   it('should return the initial state', () => {
@@ -23,6 +24,7 @@ describe('contentSlice', () => {
         ...initialState,
         loading: true,
         content: '',
+        latestRequestId: 'requestId',
       });
     });
 
@@ -36,6 +38,7 @@ describe('contentSlice', () => {
         ...initialState,
         loading: false,
         content: 'old content',
+        latestRequestId: 'requestId',
       });
     });
   });
@@ -45,11 +48,13 @@ describe('contentSlice', () => {
       ...initialState,
       content: 'old content',
       loading: true,
+      latestRequestId: 'requestId',
     };
     expect(contentReducer(previousState, fetchContent.fulfilled('new content', 'requestId', null))).toEqual({
       ...initialState,
       content: 'new content',
       loading: false,
+      latestRequestId: 'requestId',
     });
   });
 
@@ -58,6 +63,7 @@ describe('contentSlice', () => {
       ...initialState,
       content: 'old content',
       loading: true,
+      latestRequestId: 'requestId',
     };
     const error = new Error('Failed to fetch');
     expect(contentReducer(previousState, fetchContent.rejected(error, 'requestId', null))).toEqual({
@@ -65,7 +71,21 @@ describe('contentSlice', () => {
       content: 'old content',
       loading: false,
       error: 'Failed to fetch',
+      latestRequestId: 'requestId',
     });
+  });
+
+  it('should ignore stale fetchContent.fulfilled results', () => {
+    const previousState = {
+      ...initialState,
+      content: 'current file',
+      loading: false,
+      latestRequestId: 'newer-request',
+    };
+    expect(contentReducer(
+      previousState,
+      fetchContent.fulfilled('# Welcome to mdts! 🚀', 'older-request', null),
+    )).toEqual(previousState);
   });
 
   it('should handle setScrollPosition', () => {

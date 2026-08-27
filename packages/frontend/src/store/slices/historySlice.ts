@@ -6,10 +6,21 @@ interface HistoryState {
   isDirectory: boolean;
 }
 
-const initialState: HistoryState = {
-  currentPath: null,
-  isDirectory: false,
+export const parseHistoryFromPathname = (pathname: string): HistoryState => {
+  const path = pathname.substring(1);
+  if (path === '') {
+    return { currentPath: null, isDirectory: false };
+  }
+
+  const fileExtensions = ['.md', '.markdown'];
+  const isFile = fileExtensions.some((ext) => path.toLowerCase().endsWith(ext));
+
+  return { currentPath: decodeURIComponent(path), isDirectory: !isFile };
 };
+
+const initialState: HistoryState = typeof window === 'undefined'
+  ? { currentPath: null, isDirectory: false }
+  : parseHistoryFromPathname(window.location.pathname);
 
 const historySlice = createSlice({
   name: 'history',
@@ -28,20 +39,8 @@ const historySlice = createSlice({
 export const { setHistory } = historySlice.actions;
 
 export const updateHistoryFromLocation = (pathname: string) => (dispatch: AppDispatch): void => {
-  const getPathFromUrl = () => {
-    const path = pathname.substring(1);
-    if (path === '') return { path: null, isDirectory: false };
-
-    const fileExtensions = ['.md', '.markdown'];
-    const isFile = fileExtensions.some((ext) =>
-      path.toLowerCase().endsWith(ext)
-    );
-
-    return { path: decodeURIComponent(path), isDirectory: !isFile };
-  };
-
-  const { path, isDirectory } = getPathFromUrl();
-  dispatch(setHistory({ path, isDirectory }));
+  const { currentPath, isDirectory } = parseHistoryFromPathname(pathname);
+  dispatch(setHistory({ path: currentPath, isDirectory }));
 };
 
 export default historySlice.reducer;

@@ -10,6 +10,7 @@ describe('outlineSlice', () => {
       outline: [],
       loading: true,
       error: null,
+      latestRequestId: null,
     });
   });
 
@@ -23,6 +24,7 @@ describe('outlineSlice', () => {
       outline: [{ id: '1', content: 'old outline', level: 1 }],
       loading: true,
       error: null,
+      latestRequestId: 'requestId',
     });
   });
 
@@ -31,12 +33,14 @@ describe('outlineSlice', () => {
       outline: [{ id: '1', content: 'old outline', level: 1 }],
       loading: true,
       error: null,
+      latestRequestId: 'requestId',
     };
     const newOutline = [{ id: '2', content: 'new outline', level: 1 }];
     expect(outlineReducer(previousState, fetchOutline.fulfilled(newOutline, 'requestId', null))).toEqual({
       outline: newOutline,
       loading: false,
       error: null,
+      latestRequestId: 'requestId',
     });
   });
 
@@ -45,12 +49,14 @@ describe('outlineSlice', () => {
       outline: [{ id: '1', content: 'old outline', level: 1 }],
       loading: true,
       error: null,
+      latestRequestId: 'requestId',
     };
     const error = new Error('Failed to fetch');
     expect(outlineReducer(previousState, fetchOutline.rejected(error, 'requestId', null))).toEqual({
       outline: [{ id: '1', content: 'old outline', level: 1 }],
       loading: false,
       error: 'Failed to fetch',
+      latestRequestId: 'requestId',
     });
   });
 });

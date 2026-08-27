@@ -21,7 +21,10 @@ const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onTogg
   const { outline, loading, error } = useSelector((state: RootState) => state.outline);
 
   useEffect(() => {
-    dispatch(fetchOutline(filePath));
+    const request = dispatch(fetchOutline(filePath));
+    return () => {
+      request?.abort?.();
+    };
   }, [dispatch, filePath]);
 
   const handleItemClickWithClose = useCallback((id: string) => {

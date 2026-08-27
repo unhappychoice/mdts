@@ -1,6 +1,10 @@
-export const fetchData = async <T>(url: string, responseType: 'json' | 'text'): Promise<T | null> => {
+export const fetchData = async <T>(
+  url: string,
+  responseType: 'json' | 'text',
+  signal?: AbortSignal,
+): Promise<T | null> => {
   try {
-    const response = await fetch(url);
+    const response = signal ? await fetch(url, { signal }) : await fetch(url);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
