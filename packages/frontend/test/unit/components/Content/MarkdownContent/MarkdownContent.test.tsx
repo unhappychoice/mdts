@@ -8,22 +8,30 @@ import MarkdownContent from '../../../../../src/components/Content/MarkdownConte
 
 const mockStore = configureStore([thunk]);
 
-jest.mock('../../../../../src/store/slices/contentSlice', () => ({
-  ...jest.requireActual('../../../../../src/store/slices/contentSlice'),
-  fetchContent: jest.fn((path) => (dispatch) => {
-    dispatch({ type: 'content/fetchContent', payload: path });
-  }),
-}));
+jest.mock('../../../../../src/store/slices/contentSlice', () => {
+  const createAbortableThunk = (type: string) => (path: string | null) => (dispatch: (action: unknown) => void) => {
+    dispatch({ type, payload: path });
+    return { abort: jest.fn() };
+  };
 
-jest.mock('../../../../../src/store/slices/diffSlice', () => ({
-  ...jest.requireActual('../../../../../src/store/slices/diffSlice'),
-  fetchDiff: jest.fn((path) => (dispatch) => {
-    dispatch({ type: 'diff/fetchDiff', payload: path });
-  }),
-  fetchDiffPrev: jest.fn((path) => (dispatch) => {
-    dispatch({ type: 'diff/fetchDiffPrev', payload: path });
-  }),
-}));
+  return {
+    ...jest.requireActual('../../../../../src/store/slices/contentSlice'),
+    fetchContent: jest.fn(createAbortableThunk('content/fetchContent')),
+  };
+});
+
+jest.mock('../../../../../src/store/slices/diffSlice', () => {
+  const createAbortableThunk = (type: string) => (path: string | null) => (dispatch: (action: unknown) => void) => {
+    dispatch({ type, payload: path });
+    return { abort: jest.fn() };
+  };
+
+  return {
+    ...jest.requireActual('../../../../../src/store/slices/diffSlice'),
+    fetchDiff: jest.fn(createAbortableThunk('diff/fetchDiff')),
+    fetchDiffPrev: jest.fn(createAbortableThunk('diff/fetchDiffPrev')),
+  };
+});
 
 const defaultDiffState = {
   diff: '',
@@ -106,6 +114,47 @@ describe('MarkdownContent', () => {
     expect(store.getActions()).toEqual([
       { type: 'content/fetchContent', payload: null },
       { type: 'diff/fetchDiff', payload: null },
+    ]);
+  });
+
+  test('does not fetch diffs when the directory is not a git repository', async () => {
+    store = mockStore({
+      content: {
+        content: '# Test Markdown',
+        loading: false,
+        error: null,
+      },
+      diff: defaultDiffState,
+      fileTree: {
+        loading: false,
+        isGitRepository: false,
+      },
+      history: {
+        currentPath: '/path/to/test.md',
+        isDirectory: false,
+      },
+      appSetting: {
+        contentMode: 'compact',
+      },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      },
+    });
+
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <BrowserRouter>
+            <MarkdownContent scrollToId={null} />
+          </BrowserRouter>
+        </Provider>
+      );
+    });
+
+    expect(store.getActions()).toEqual([
+      { type: 'content/fetchContent', payload: '/path/to/test.md' },
     ]);
   });
 

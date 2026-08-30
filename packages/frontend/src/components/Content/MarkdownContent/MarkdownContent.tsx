@@ -33,19 +33,30 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ scrollToId, onDirecto
   const loading = contentLoading || fileTreeLoading;
 
   useEffect(() => {
-    dispatch(fetchContent(currentPath));
+    const request = dispatch(fetchContent(currentPath));
+    return () => {
+      request.abort();
+    };
   }, [dispatch, currentPath]);
 
   useEffect(() => {
-    if (isGitRepository) {
-      dispatch(fetchDiff(currentPath));
+    if (!isGitRepository) {
+      return;
     }
+    const request = dispatch(fetchDiff(currentPath));
+    return () => {
+      request.abort();
+    };
   }, [dispatch, currentPath, isGitRepository]);
 
   useEffect(() => {
-    if (viewMode === 'diff-prev') {
-      dispatch(fetchDiffPrev(currentPath));
+    if (viewMode !== 'diff-prev') {
+      return;
     }
+    const request = dispatch(fetchDiffPrev(currentPath));
+    return () => {
+      request.abort();
+    };
   }, [dispatch, currentPath, viewMode]);
 
   useEffect(() => {

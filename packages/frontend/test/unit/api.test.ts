@@ -29,7 +29,7 @@ describe('fetchData', () => {
     mockFetch.mockResolvedValueOnce(createResponse({ json: payload }));
 
     await expect(fetchData<typeof payload>('/api/config', 'json')).resolves.toEqual(payload);
-    expect(mockFetch).toHaveBeenCalledWith('/api/config');
+    expect(mockFetch).toHaveBeenCalledWith('/api/config', { signal: undefined });
   });
 
   it('returns text when responseType is text', async () => {
@@ -58,5 +58,15 @@ describe('fetchData', () => {
 
     await expect(fetchData('/api/config', 'json')).rejects.toThrow(error);
     expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching from /api/config:', error);
+  });
+
+  it('rethrows abort errors without logging', async () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const abortError = new DOMException('Aborted', 'AbortError');
+
+    mockFetch.mockRejectedValueOnce(abortError);
+
+    await expect(fetchData('/api/config', 'json')).rejects.toBe(abortError);
+    expect(consoleErrorSpy).not.toHaveBeenCalled();
   });
 });

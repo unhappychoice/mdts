@@ -1,5 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import historyReducer, { setHistory, updateHistoryFromLocation } from '../../../src/store/slices/historySlice';
+import historyReducer, {
+  parseHistoryFromPathname,
+  setHistory,
+  updateHistoryFromLocation,
+} from '../../../src/store/slices/historySlice';
 
 describe('historySlice', () => {
   let store: ReturnType<typeof configureStore>;
@@ -15,6 +19,54 @@ describe('historySlice', () => {
   it('should return the initial state', () => {
     expect(store.getState().history.currentPath).toBeNull();
     expect(store.getState().history.isDirectory).toBe(false);
+  });
+
+  describe('parseHistoryFromPathname', () => {
+    it('returns an empty history for the root path', () => {
+      expect(parseHistoryFromPathname('/')).toEqual({
+        currentPath: null,
+        isDirectory: false,
+      });
+    });
+
+    it('treats a markdown file as a file', () => {
+      expect(parseHistoryFromPathname('/a.md')).toEqual({
+        currentPath: 'a.md',
+        isDirectory: false,
+      });
+    });
+
+    it('treats a path without a markdown extension as a directory', () => {
+      expect(parseHistoryFromPathname('/dir')).toEqual({
+        currentPath: 'dir',
+        isDirectory: true,
+      });
+    });
+
+    it('decodes encoded path segments', () => {
+      expect(parseHistoryFromPathname('/docs/my%20file.md')).toEqual({
+        currentPath: 'docs/my file.md',
+        isDirectory: false,
+      });
+    });
+
+    it('classifies an encoded markdown extension as a file', () => {
+      expect(parseHistoryFromPathname('/docs/readme%2Emd')).toEqual({
+        currentPath: 'docs/readme.md',
+        isDirectory: false,
+      });
+    });
+
+    it('falls back to the raw path when decoding fails', () => {
+      expect(parseHistoryFromPathname('/%')).toEqual({
+        currentPath: '%',
+        isDirectory: true,
+      });
+      expect(parseHistoryFromPathname('/%E0%A4%A')).toEqual({
+        currentPath: '%E0%A4%A',
+        isDirectory: true,
+      });
+    });
   });
 
   it('should handle setHistory', () => {
