@@ -56,6 +56,7 @@ jest.mock('../../src/store/slices/fileTreeSlice', () => ({
 }));
 
 jest.mock('../../src/store/slices/historySlice', () => ({
+  ...jest.requireActual('../../src/store/slices/historySlice'),
   updateHistoryFromLocation: jest.fn((pathname: string) => ({
     type: 'history/updateHistoryFromLocation/mock',
     payload: pathname,
