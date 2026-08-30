@@ -117,6 +117,47 @@ describe('MarkdownContent', () => {
     ]);
   });
 
+  test('does not fetch diffs when the directory is not a git repository', async () => {
+    store = mockStore({
+      content: {
+        content: '# Test Markdown',
+        loading: false,
+        error: null,
+      },
+      diff: defaultDiffState,
+      fileTree: {
+        loading: false,
+        isGitRepository: false,
+      },
+      history: {
+        currentPath: '/path/to/test.md',
+        isDirectory: false,
+      },
+      appSetting: {
+        contentMode: 'compact',
+      },
+      config: {
+        fontFamily: 'Roboto',
+        fontFamilyMonospace: 'monospace',
+        fontSize: 14,
+      },
+    });
+
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <BrowserRouter>
+            <MarkdownContent scrollToId={null} />
+          </BrowserRouter>
+        </Provider>
+      );
+    });
+
+    expect(store.getActions()).toEqual([
+      { type: 'content/fetchContent', payload: '/path/to/test.md' },
+    ]);
+  });
+
   test('renders file content when a file is selected', async () => {
     store = mockStore({
       content: {
