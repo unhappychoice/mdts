@@ -4,7 +4,7 @@ import diffReducer from './slices/diffSlice';
 import fileTreeReducer from './slices/fileTreeSlice';
 import outlineReducer from './slices/outlineSlice';
 import appSettingReducer, { saveAppSetting } from './slices/appSettingSlice';
-import historyReducer from './slices/historySlice';
+import historyReducer, { parseHistoryFromPathname } from './slices/historySlice';
 import configReducer from './slices/configSlice';
 import plantUMLReducer from './slices/plantUMLSlice';
 
@@ -60,7 +60,10 @@ export const store = configureStore({
     config: configReducer,
     plantUML: plantUMLReducer,
   },
-  preloadedState: loadState(),
+  preloadedState: {
+    ...loadState(),
+    history: parseHistoryFromPathname(window.location.pathname),
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });

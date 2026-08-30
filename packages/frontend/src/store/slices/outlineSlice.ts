@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchData } from '../../api';
+import { isStaleRequest } from '../isStaleRequest';
 
 export type OutlineItem = {
   id: string;
@@ -44,14 +45,14 @@ const outlineSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchOutline.fulfilled, (state, action) => {
-        if (state.latestRequestId !== action.meta.requestId) {
+        if (isStaleRequest(state, action)) {
           return;
         }
         state.loading = false;
         state.outline = action.payload;
       })
       .addCase(fetchOutline.rejected, (state, action) => {
-        if (state.latestRequestId !== action.meta.requestId || action.meta.aborted) {
+        if (isStaleRequest(state, action)) {
           return;
         }
         state.loading = false;

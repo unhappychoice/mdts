@@ -8,22 +8,30 @@ import MarkdownContent from '../../../../../src/components/Content/MarkdownConte
 
 const mockStore = configureStore([thunk]);
 
-jest.mock('../../../../../src/store/slices/contentSlice', () => ({
-  ...jest.requireActual('../../../../../src/store/slices/contentSlice'),
-  fetchContent: jest.fn((path) => (dispatch) => {
-    dispatch({ type: 'content/fetchContent', payload: path });
-  }),
-}));
+jest.mock('../../../../../src/store/slices/contentSlice', () => {
+  const createAbortableThunk = (type: string) => (path: string | null) => (dispatch: (action: unknown) => void) => {
+    dispatch({ type, payload: path });
+    return { abort: jest.fn() };
+  };
 
-jest.mock('../../../../../src/store/slices/diffSlice', () => ({
-  ...jest.requireActual('../../../../../src/store/slices/diffSlice'),
-  fetchDiff: jest.fn((path) => (dispatch) => {
-    dispatch({ type: 'diff/fetchDiff', payload: path });
-  }),
-  fetchDiffPrev: jest.fn((path) => (dispatch) => {
-    dispatch({ type: 'diff/fetchDiffPrev', payload: path });
-  }),
-}));
+  return {
+    ...jest.requireActual('../../../../../src/store/slices/contentSlice'),
+    fetchContent: jest.fn(createAbortableThunk('content/fetchContent')),
+  };
+});
+
+jest.mock('../../../../../src/store/slices/diffSlice', () => {
+  const createAbortableThunk = (type: string) => (path: string | null) => (dispatch: (action: unknown) => void) => {
+    dispatch({ type, payload: path });
+    return { abort: jest.fn() };
+  };
+
+  return {
+    ...jest.requireActual('../../../../../src/store/slices/diffSlice'),
+    fetchDiff: jest.fn(createAbortableThunk('diff/fetchDiff')),
+    fetchDiffPrev: jest.fn(createAbortableThunk('diff/fetchDiffPrev')),
+  };
+});
 
 const defaultDiffState = {
   diff: '',

@@ -23,7 +23,7 @@ const Outline: React.FC<OutlineProps> = ({ filePath, onItemClick, isOpen, onTogg
   useEffect(() => {
     const request = dispatch(fetchOutline(filePath));
     return () => {
-      request?.abort?.();
+      request.abort();
     };
   }, [dispatch, filePath]);
 

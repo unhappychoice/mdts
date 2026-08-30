@@ -4,7 +4,7 @@ export const fetchData = async <T>(
   signal?: AbortSignal,
 ): Promise<T | null> => {
   try {
-    const response = signal ? await fetch(url, { signal }) : await fetch(url);
+    const response = await fetch(url, { signal });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -14,6 +14,9 @@ export const fetchData = async <T>(
       return await response.text() as T;
     }
   } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw error;
+    }
     console.error(`Error fetching from ${url}:`, error);
     throw error;
   }

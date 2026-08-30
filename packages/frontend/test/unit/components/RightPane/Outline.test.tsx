@@ -22,6 +22,12 @@ jest.mock('../../../../src/hooks/useIsMobile', () => ({
 describe('Outline', () => {
   let store;
 
+  const createStore = (state: { outline: { outline: unknown[]; loading: boolean; error: string | null } }) => {
+    const nextStore = mockStore(state);
+    nextStore.dispatch = jest.fn(() => ({ abort: jest.fn() }));
+    return nextStore;
+  };
+
   const renderOutline = (props = {}) => render(
     <Provider store={store}>
       <Outline filePath="/test.md" onItemClick={jest.fn()} isOpen={true} onToggle={jest.fn()} {...props} />
@@ -30,14 +36,13 @@ describe('Outline', () => {
 
   beforeEach(() => {
     (useIsMobile as jest.Mock).mockReturnValue(false);
-    store = mockStore({
+    store = createStore({
       outline: {
         outline: [{ id: 'title', content: 'Title', level: 1 }],
         loading: false,
         error: null,
       },
     });
-    store.dispatch = jest.fn();
   });
 
   test('renders correctly', async () => {
@@ -72,7 +77,7 @@ describe('Outline', () => {
   });
 
   test('displays loading spinner when outline is loading', () => {
-    store = mockStore({
+    store = createStore({
       outline: {
         outline: [],
         loading: true,
@@ -86,7 +91,7 @@ describe('Outline', () => {
   });
 
   test('displays error message when there is an error', () => {
-    store = mockStore({
+    store = createStore({
       outline: {
         outline: [],
         loading: false,

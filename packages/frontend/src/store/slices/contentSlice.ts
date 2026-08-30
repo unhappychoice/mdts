@@ -1,6 +1,6 @@
-
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { fetchData } from '../../api';
+import { isStaleRequest } from '../isStaleRequest';
 
 interface ContentState {
   content: string;
@@ -21,7 +21,7 @@ const initialState: ContentState = {
 const encodePath = (path: string): string =>
   path.split('/').map(encodeURIComponent).join('/');
 
-export const markdownApiUrl = (path: string | null): string => (
+const markdownApiUrl = (path: string | null): string => (
   path
     ? `/api/markdown/${encodePath(path)}`
     : '/api/markdown/mdts-welcome-markdown.md'
@@ -53,14 +53,14 @@ const contentSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchContent.fulfilled, (state, action) => {
-        if (state.latestRequestId !== action.meta.requestId) {
+        if (isStaleRequest(state, action)) {
           return;
         }
         state.loading = false;
         state.content = action.payload;
       })
       .addCase(fetchContent.rejected, (state, action) => {
-        if (state.latestRequestId !== action.meta.requestId || action.meta.aborted) {
+        if (isStaleRequest(state, action)) {
           return;
         }
         state.loading = false;

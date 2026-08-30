@@ -33,6 +33,8 @@ export const createMockStore = (
       content: '',
       loading: false,
       error: null,
+      scrollPosition: 0,
+      latestRequestId: null,
     },
     diff: {
       diff: '',
@@ -41,11 +43,14 @@ export const createMockStore = (
       diffPrevLoading: false,
       diffError: null,
       diffPrevError: null,
+      latestDiffRequestId: null,
+      latestDiffPrevRequestId: null,
     },
     outline: {
       outline: [],
       loading: false,
       error: null,
+      latestRequestId: null,
     },
     history: {
       currentPath: null,

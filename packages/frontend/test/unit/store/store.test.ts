@@ -44,6 +44,18 @@ describe('store', () => {
     jest.restoreAllMocks();
     localStorage.clear();
     document.body.removeAttribute('data-theme');
+    window.history.replaceState({}, '', '/');
+  });
+
+  it('seeds history from a deep-link URL so the first content fetch is not welcome', async () => {
+    window.history.replaceState({}, '', '/audit-review.md');
+
+    const { store } = await importStoreModule();
+
+    expect(store.getState().history).toEqual({
+      currentPath: 'audit-review.md',
+      isDirectory: false,
+    });
   });
 
   it('uses the default app setting when localStorage is empty', async () => {
