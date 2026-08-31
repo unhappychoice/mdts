@@ -106,6 +106,12 @@ export const createApp = (
       return res.status(403).send('Forbidden');
     }
 
+    // /api/markdown is only used to fetch markdown. Keep that contract so
+    // enabling dotfiles below cannot expose .env, .git/config, and similar.
+    if (!/\.(md|markdown)$/i.test(normalizedPath)) {
+      return res.status(404).send('File not found');
+    }
+
     if (!fs.existsSync(filePath)) {
       logger.error(`🚫 File not found: ${filePath}`);
       return res.status(404).send('File not found');

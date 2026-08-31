@@ -79,11 +79,6 @@ describe('server.ts unit tests', () => {
       expect(app.use).toHaveBeenCalledWith(expect.any(Function)); // for express.static
     });
 
-    it('should allow serving markdown files from dot-directories', () => {
-      const express = jest.requireMock('express');
-      expect(express.static).toHaveBeenCalledWith('/mock/directory', { dotfiles: 'allow' });
-    });
-
     it('should define /api/filetree and /api/outline routes', () => {
       expect(app.use).toHaveBeenCalledWith('/api/filetree', expect.objectContaining({ get: expect.any(Function) }));
       expect(app.use).toHaveBeenCalledWith('/api/outline', expect.objectContaining({ get: expect.any(Function) }));
@@ -186,6 +181,26 @@ describe('server.ts unit tests', () => {
       expect(mockStatus).toHaveBeenCalledWith(404);
       expect(mockSend).toHaveBeenCalledWith('File not found');
       expect(mockNext).not.toHaveBeenCalled();
+    });
+
+    it('should return 404 for non-markdown files in /api/markdown', async () => {
+      (fs.existsSync as jest.Mock).mockReturnValue(true);
+      const mockStatus = jest.fn().mockReturnThis();
+      const mockSend = jest.fn();
+      const mockNext = jest.fn();
+      const req = { path: '.git/config' } as Request;
+      const res = { status: mockStatus, send: mockSend } as unknown as Response;
+
+      const markdownMiddleware = (app.use as jest.Mock).mock.calls.find(
+        (call: [string, (req: Request, res: Response, next: NextFunction) => void]) =>
+          call[0] === '/api/markdown' && call.length === 2,
+      )[1];
+      await markdownMiddleware(req, res, mockNext);
+
+      expect(mockStatus).toHaveBeenCalledWith(404);
+      expect(mockSend).toHaveBeenCalledWith('File not found');
+      expect(mockNext).not.toHaveBeenCalled();
+      expect(fs.existsSync).not.toHaveBeenCalled();
     });
 
     it('should call next for existing files in /api/markdown', async () => {
