@@ -106,13 +106,21 @@ export const createApp = (
       return res.status(403).send('Forbidden');
     }
 
+    // /api/markdown is only used to fetch markdown. Keep that contract so
+    // enabling dotfiles below cannot expose .env, .git/config, and similar.
+    if (!/\.(md|markdown)$/i.test(normalizedPath)) {
+      return res.status(404).send('File not found');
+    }
+
     if (!fs.existsSync(filePath)) {
       logger.error(`🚫 File not found: ${filePath}`);
       return res.status(404).send('File not found');
     }
     next();
   });
-  app.use('/api/markdown', express.static(directory));
+  // Default express.static ignores dot-segments, so /.hidden/file.md would
+  // fall through to the SPA catch-all and return index.html as "markdown".
+  app.use('/api/markdown', express.static(directory, { dotfiles: 'allow' }));
 
   // Catch-all route to serve index.html for any other requests
   app.get('*splat', async (req, res) => {
