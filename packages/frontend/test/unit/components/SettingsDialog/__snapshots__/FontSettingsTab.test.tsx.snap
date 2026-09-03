@@ -96,7 +96,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
         style="left: 100%;"
       />
       <span
-        class="MuiSlider-thumb MuiSlider-thumb css-1n6bc4q-MuiSlider-thumb"
+        class="MuiSlider-thumb MuiSlider-thumb css-398ij6-MuiSlider-thumb"
         data-index="0"
         style="left: 0%;"
       >
@@ -111,7 +111,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
           max="24"
           min="10"
           step="1"
-          style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
+          style="border: 0px; clip-path: inset(50%); height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
           type="range"
           value="10"
         />
@@ -146,7 +146,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
       >
         <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1q72ply-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
+          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1tpgjhd-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
         >
           <input
             class="PrivateSwitchBase-input css-gjsmck-MuiSwitchBase-root"
@@ -191,7 +191,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
       >
         <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1q72ply-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
+          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1tpgjhd-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
         >
           <input
             class="PrivateSwitchBase-input css-gjsmck-MuiSwitchBase-root"
@@ -279,7 +279,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
       >
         <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1q72ply-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
+          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1tpgjhd-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
         >
           <input
             class="PrivateSwitchBase-input css-gjsmck-MuiSwitchBase-root"
@@ -324,7 +324,7 @@ exports[`FontSettingsTab should render correctly 1`] = `
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
       >
         <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1q72ply-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
+          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall MuiRadio-root MuiRadio-colorPrimary MuiRadio-sizeSmall css-1tpgjhd-MuiButtonBase-root-MuiSwitchBase-root-MuiRadio-root"
         >
           <input
             class="PrivateSwitchBase-input css-gjsmck-MuiSwitchBase-root"

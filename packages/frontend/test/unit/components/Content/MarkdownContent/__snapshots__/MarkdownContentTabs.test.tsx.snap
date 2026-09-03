@@ -19,7 +19,7 @@ exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
         >
           <button
             aria-selected="true"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-mobu7h-MuiButtonBase-root-MuiTab-root"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-r8v7co-MuiButtonBase-root-MuiTab-root"
             role="tab"
             tabindex="0"
             type="button"
@@ -28,7 +28,7 @@ exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
           </button>
           <button
             aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-r8v7co-MuiButtonBase-root-MuiTab-root"
             role="tab"
             tabindex="-1"
             type="button"
@@ -37,7 +37,7 @@ exports[`MarkdownContentTabs renders preview and raw tabs by default 1`] = `
           </button>
           <button
             aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-mobu7h-MuiButtonBase-root-MuiTab-root"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-r8v7co-MuiButtonBase-root-MuiTab-root"
             role="tab"
             tabindex="-1"
             type="button"

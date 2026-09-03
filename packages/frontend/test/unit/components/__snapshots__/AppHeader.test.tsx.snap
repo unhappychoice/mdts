@@ -14,7 +14,7 @@ exports[`AppHeader renders correctly 1`] = `
       >
         <button
           aria-label="Top page"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-1vqxir3-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-1w0p6kw-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"
@@ -108,7 +108,7 @@ exports[`AppHeader renders correctly 1`] = `
       </div>
       <button
         aria-label="Settings"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-v8k5r1-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-1din4kw-MuiButtonBase-root-MuiIconButton-root"
         data-mui-internal-clone-element="true"
         tabindex="0"
         type="button"
@@ -127,7 +127,7 @@ exports[`AppHeader renders correctly 1`] = `
       </button>
       <a
         aria-label="GitHub Repository"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-v8k5r1-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-1din4kw-MuiButtonBase-root-MuiIconButton-root"
         data-mui-internal-clone-element="true"
         href="https://github.com/unhappychoice/mdts"
         rel="noopener"

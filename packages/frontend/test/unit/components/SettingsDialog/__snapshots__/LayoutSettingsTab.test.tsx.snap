@@ -18,7 +18,7 @@ exports[`LayoutSettingsTab should render correctly 1`] = `
       <button
         aria-label="full"
         aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="0"
         type="button"
         value="full"
@@ -28,7 +28,7 @@ exports[`LayoutSettingsTab should render correctly 1`] = `
       <button
         aria-label="compact"
         aria-pressed="true"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-lastButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-lastButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="-1"
         type="button"
         value="compact"
@@ -48,7 +48,7 @@ exports[`LayoutSettingsTab should render correctly 1`] = `
         class="MuiSwitch-root MuiSwitch-sizeSmall css-fzgmul-MuiSwitch-root"
       >
         <span
-          class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-1c6expc-MuiButtonBase-root-MuiSwitchBase-root-MuiSwitch-switchBase"
+          class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-1vhsptr-MuiButtonBase-root-MuiSwitchBase-root-MuiSwitch-switchBase"
         >
           <input
             class="PrivateSwitchBase-input MuiSwitch-input css-gjsmck-MuiSwitchBase-root"
