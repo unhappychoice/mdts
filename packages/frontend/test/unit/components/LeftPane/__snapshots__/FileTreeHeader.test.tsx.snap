@@ -7,7 +7,7 @@ exports[`FileTreeHeader renders correctly when closed 1`] = `
   >
     <button
       aria-label="toggle file tree"
-      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-130mf42-MuiButtonBase-root-MuiIconButton-root"
+      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1myvn3n-MuiButtonBase-root-MuiIconButton-root"
       tabindex="0"
       type="button"
     >
@@ -42,7 +42,7 @@ exports[`FileTreeHeader renders correctly when open 1`] = `
       </h6>
       <button
         aria-label="expand all"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
@@ -60,7 +60,7 @@ exports[`FileTreeHeader renders correctly when open 1`] = `
       </button>
       <button
         aria-label="collapse all"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
@@ -79,7 +79,7 @@ exports[`FileTreeHeader renders correctly when open 1`] = `
     </div>
     <button
       aria-label="toggle file tree"
-      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nyqon6-MuiButtonBase-root-MuiIconButton-root"
+      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1afdov1-MuiButtonBase-root-MuiIconButton-root"
       tabindex="0"
       type="button"
     >

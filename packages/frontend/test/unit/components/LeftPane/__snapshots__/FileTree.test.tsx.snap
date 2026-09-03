@@ -18,7 +18,7 @@ exports[`FileTree renders correctly 1`] = `
         </h6>
         <button
           aria-label="expand all"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
@@ -36,7 +36,7 @@ exports[`FileTree renders correctly 1`] = `
         </button>
         <button
           aria-label="collapse all"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
@@ -55,7 +55,7 @@ exports[`FileTree renders correctly 1`] = `
       </div>
       <button
         aria-label="toggle file tree"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nyqon6-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1afdov1-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >

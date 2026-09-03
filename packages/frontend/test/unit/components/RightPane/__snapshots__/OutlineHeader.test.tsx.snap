@@ -7,7 +7,7 @@ exports[`OutlineHeader renders correctly when closed 1`] = `
   >
     <button
       aria-label="toggle outline"
-      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-130mf42-MuiButtonBase-root-MuiIconButton-root"
+      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1myvn3n-MuiButtonBase-root-MuiIconButton-root"
       tabindex="0"
       type="button"
     >
@@ -34,7 +34,7 @@ exports[`OutlineHeader renders correctly when open 1`] = `
   >
     <button
       aria-label="toggle outline"
-      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nyqon6-MuiButtonBase-root-MuiIconButton-root"
+      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1afdov1-MuiButtonBase-root-MuiIconButton-root"
       tabindex="0"
       type="button"
     >

@@ -18,7 +18,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
       <button
         aria-label="dark"
         aria-pressed="true"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root Mui-selected MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-firstButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="0"
         type="button"
         value="dark"
@@ -28,7 +28,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
       <button
         aria-label="light"
         aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-middleButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-middleButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="-1"
         type="button"
         value="light"
@@ -38,7 +38,7 @@ exports[`ColorSchemeSettingsTab should render correctly 1`] = `
       <button
         aria-label="auto"
         aria-pressed="false"
-        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-lastButton css-zhjb61-MuiButtonBase-root-MuiToggleButton-root"
+        class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButton-root MuiToggleButton-fullWidth MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-lastButton css-dc1ptf-MuiButtonBase-root-MuiToggleButton-root"
         tabindex="-1"
         type="button"
         value="auto"
