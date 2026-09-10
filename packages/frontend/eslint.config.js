@@ -1,12 +1,11 @@
 const globals = require("globals");
+const { fixupConfigRules } = require("@eslint/compat");
 const pluginJs = require("@eslint/js");
 const stylistic = require('@stylistic/eslint-plugin');
 const tseslint = require("typescript-eslint");
 const pluginReactConfig = require("eslint-plugin-react/configs/recommended.js");
 const hooksPlugin = require("eslint-plugin-react-hooks");
 const jestPlugin = require("eslint-plugin-jest");
-const importPlugin = require("eslint-plugin-import");
-const jsxA11yPlugin = require("eslint-plugin-jsx-a11y");
 
 module.exports = tseslint.config(
   {
@@ -14,14 +13,13 @@ module.exports = tseslint.config(
     extends: [
       pluginJs.configs.recommended,
       ...tseslint.configs.recommended,
-      pluginReactConfig,
+      // eslint-plugin-react still calls context.getFilename(), removed in ESLint 10.
+      ...fixupConfigRules(pluginReactConfig),
     ],
     plugins: {
       '@stylistic': stylistic,
       "react-hooks": hooksPlugin,
       jest: jestPlugin,
-      import: importPlugin,
-      "jsx-a11y": jsxA11yPlugin,
     },
     languageOptions: {
       parser: tseslint.parser,
