@@ -33,3 +33,6 @@ global.fetch = jest.fn((url) => {
 import { TextEncoder, TextDecoder } from 'util';
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
+
+// Polyfill scrollIntoView, which jsdom does not implement
+Element.prototype.scrollIntoView = jest.fn();
