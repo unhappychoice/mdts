@@ -5,7 +5,7 @@ exports[`DirectoryTreeItemView should render correctly 1`] = `
   <ul
     aria-multiselectable="false"
     class="MuiSimpleTreeView-root css-1o8c9x7-MuiSimpleTreeView-root"
-    id="mui-tree-view-1"
+    id="_r_0_"
     role="tree"
     style="--TreeView-itemChildrenIndentation: 12px;"
   >
@@ -13,7 +13,7 @@ exports[`DirectoryTreeItemView should render correctly 1`] = `
       aria-checked="false"
       aria-expanded="false"
       class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
-      id="mui-tree-view-1-/test-path"
+      id="_r_0_-/test-path"
       role="treeitem"
       style="--TreeView-itemDepth: 0;"
       tabindex="0"
