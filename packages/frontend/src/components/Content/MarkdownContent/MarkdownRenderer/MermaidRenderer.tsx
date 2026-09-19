@@ -61,6 +61,11 @@ const MermaidRenderer: React.FC<MermaidProps> = ({ chart }) => {
         mermaid.initialize({
           startOnLoad: false,
           theme: theme.palette.mode === 'dark' ? 'dark' : 'neutral',
+          // Mermaid 12 switched the defaults to look: 'neo' and layout: 'elk'.
+          // Pin the previous defaults so diagrams keep rendering as before, and
+          // so the container CSS above keeps matching what mermaid measures.
+          look: 'classic',
+          layout: 'dagre',
           securityLevel: 'loose',
           fontFamily: fontFamily || 'inherit',
           flowchart: {
