@@ -67,6 +67,8 @@ describe('Mermaid', () => {
     expect(mermaid.initialize).toHaveBeenCalledWith({
       startOnLoad: false,
       theme: 'neutral',
+      look: 'classic',
+      layout: 'dagre',
       securityLevel: 'loose',
       fontFamily: 'MockFont, sans-serif',
       flowchart: {
@@ -81,6 +83,8 @@ describe('Mermaid', () => {
     expect(mermaid.initialize).toHaveBeenCalledWith({
       startOnLoad: false,
       theme: 'dark',
+      look: 'classic',
+      layout: 'dagre',
       securityLevel: 'loose',
       fontFamily: 'MockFont, sans-serif',
       flowchart: {
