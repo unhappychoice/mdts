@@ -78,6 +78,7 @@
     },
     "eslint-plugin-react": {
       "eslint": "^10.10.0"
-    }
+    },
+    "lodash-es": "^4.18.1"
   }
 }
