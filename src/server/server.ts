@@ -24,8 +24,12 @@ export const serve = async (
     maxFiles: context.searchMaxFiles,
     maxFileSize: context.searchMaxFileSize,
   });
-  await searchEngine.initialize();
-  context.searchEngine = searchEngine;
+  try {
+    await searchEngine.initialize();
+    context.searchEngine = searchEngine;
+  } catch (error) {
+    logger.error('Search', 'Search initialization failed; continuing without search indexing', error);
+  }
 
   const app = createApp(context);
 
@@ -43,7 +47,7 @@ export const serve = async (
           logger.log('Server', `⚠️  Port ${port} was in use, using ${currentPort} instead`);
         }
         logger.log('Server', `🚀 Server listening at http://${host}:${currentPort}`);
-        setupWatcher(context as ServerContext, server, currentPort);
+        setupWatcher(context, server, currentPort);
         resolve({ server, port: currentPort });
       });
 

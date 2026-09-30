@@ -90,7 +90,7 @@ describe('FileTree mobile behavior', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'select file' }));
 
-    expect(onFileSelect).toHaveBeenCalledWith('/docs/readme.md');
+    expect(onFileSelect).toHaveBeenCalledWith('/docs/readme.md', undefined);
     expect(onToggle).toHaveBeenCalledTimes(1);
   });
 });

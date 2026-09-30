@@ -81,7 +81,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
         let targetElement: HTMLElement | null = null;
         
         let closestLine = -1;
-        elements.forEach((el) => {
+        for (const el of elements) {
           const elLine = parseInt(el.getAttribute('data-line') || '0', 10);
           // The lineNum from hash is the absolute line in the file.
           // data-line is already offset by lineOffset.
@@ -91,13 +91,13 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
             closestLine = elLine;
             targetElement = el;
           }
-        });
+        }
 
         if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          targetElement.classList.add('highlight-line-active');
+          (targetElement as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
+          (targetElement as HTMLElement).classList.add('highlight-line-active');
           
-          const currentTarget = targetElement;
+          const currentTarget = targetElement as HTMLElement;
           highlightTimer = setTimeout(() => {
             if (!isCanceled) {
               currentTarget.classList.remove('highlight-line-active');
