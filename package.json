@@ -79,7 +79,7 @@
     "open": "^11.0.0",
     "plantuml": "^0.0.2",
     "plantuml-encoder": "^1.4.0",
-    "simple-git": "^3.28.0",
+    "simple-git": "^4.0.2",
     "ws": "^8.18.3"
   },
   "overrides": {
