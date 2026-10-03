@@ -4,6 +4,7 @@ import * as http from 'http';
 import path from 'path';
 import { WebSocket, WebSocketServer } from 'ws';
 import { setupWatcher } from '../../../src/server/watcher';
+import { SearchEngine } from '../../../src/server/search';
 import { logger } from '../../../src/utils/logger';
 
 // Mock chokidar
@@ -243,14 +244,17 @@ describe('watcher.ts unit tests', () => {
     });
 
     it('should update search index on file change', () => {
-      const mockSearchEngine = { updateFile: jest.fn() };
+      const mockSearchEngine = { updateFile: jest.fn() } as unknown as SearchEngine;
       jest.clearAllMocks();
-      setupWatcher({ directory: '/mock/directory', searchEngine: mockSearchEngine as any }, mockServer, 3000);
+      setupWatcher({ directory: '/mock/directory', searchEngine: mockSearchEngine }, mockServer, 3000);
       
       const onChangeCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'change')[1];
       onChangeCallback('/mock/directory/changed-file.md');
 
-      expect(logger.log).toHaveBeenCalledWith('Livereload', '🌲 File changed: changed-file.md, updating search index...');
+      expect(logger.log).toHaveBeenCalledWith(
+        'Livereload',
+        '🌲 File changed: changed-file.md, updating search index...',
+      );
       expect(mockSearchEngine.updateFile).toHaveBeenCalledWith('changed-file.md');
     });
 

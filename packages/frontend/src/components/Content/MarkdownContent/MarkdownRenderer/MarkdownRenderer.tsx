@@ -15,6 +15,7 @@ import MarkdownLink from './MarkdownLink';
 import 'rehype-github-alerts/styling/css/index.css';
 import 'katex/dist/katex.css';
 import { visit } from 'unist-util-visit';
+import type { PluggableList } from 'unified';
 
 interface MarkdownRendererProps {
   content: string;
@@ -23,16 +24,26 @@ interface MarkdownRendererProps {
   lineOffset?: number;
 }
 
+interface RehypeElementNode {
+  position?: {
+    start: {
+      line: number;
+    };
+  };
+  properties?: Record<string, unknown>;
+}
+
 /**
  * Custom rehype plugin to add data-line attribute to all elements
  * based on their source position and the provided lineOffset.
  */
 const rehypeLineNumbers = (lineOffset: number) => {
-  return (tree: any) => {
-    visit(tree, 'element', (node: any) => {
-      if (node.position) {
-        node.properties = node.properties || {};
-        node.properties['data-line'] = node.position.start.line + lineOffset;
+  return (tree: unknown) => {
+    visit(tree as never, 'element', (node: unknown) => {
+      const element = node as RehypeElementNode;
+      if (element.position) {
+        element.properties = element.properties || {};
+        element.properties['data-line'] = element.position.start.line + lineOffset;
       }
     });
   };
@@ -136,7 +147,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     >
       <ReactMarkdown
         remarkPlugins={remarkPlugins}
-        rehypePlugins={rehypePlugins as any}
+        rehypePlugins={rehypePlugins as unknown as PluggableList}
         components={{
           a: ({ href, children }) =>
             <MarkdownLink href={href} selectedFilePath={selectedFilePath}>{children}</MarkdownLink>,

@@ -21,7 +21,7 @@ exports[`FileTreeSearch renders correctly with a search query 1`] = `
         </span>
         <button
           aria-label="switch to content search"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"
@@ -94,7 +94,7 @@ exports[`FileTreeSearch renders correctly with empty search query 1`] = `
         </span>
         <button
           aria-label="switch to content search"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"

@@ -18,7 +18,7 @@ exports[`FileTree renders correctly 1`] = `
         </h6>
         <button
           aria-label="expand all"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
@@ -36,7 +36,7 @@ exports[`FileTree renders correctly 1`] = `
         </button>
         <button
           aria-label="collapse all"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
@@ -55,7 +55,7 @@ exports[`FileTree renders correctly 1`] = `
       </div>
       <button
         aria-label="toggle file tree"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nyqon6-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1afdov1-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
@@ -91,7 +91,7 @@ exports[`FileTree renders correctly 1`] = `
           </span>
           <button
             aria-label="switch to content search"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pdlxrj-MuiButtonBase-root-MuiIconButton-root"
             data-mui-internal-clone-element="true"
             tabindex="0"
             type="button"
@@ -126,14 +126,14 @@ exports[`FileTree renders correctly 1`] = `
         class="custom-scrollbar MuiSimpleTreeView-root css-5c3a1o-MuiSimpleTreeView-root"
         defaultcollapseicon="[object Object]"
         defaultexpandicon="[object Object]"
-        id="mui-tree-view-1"
+        id="_r_5_"
         role="tree"
         style="--TreeView-itemChildrenIndentation: 12px;"
       >
         <li
           aria-checked="false"
           class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
-          id="mui-tree-view-1-file3.js"
+          id="_r_5_-file3.js"
           role="treeitem"
           style="--TreeView-itemDepth: 0;"
           tabindex="0"
@@ -177,7 +177,7 @@ exports[`FileTree renders correctly 1`] = `
           aria-checked="false"
           aria-expanded="false"
           class="MuiTreeItem-root MuiSimpleTreeView-root css-jq3mgl-MuiTreeItem-root"
-          id="mui-tree-view-1-folder1"
+          id="_r_5_-folder1"
           role="treeitem"
           style="--TreeView-itemDepth: 0;"
           tabindex="-1"
