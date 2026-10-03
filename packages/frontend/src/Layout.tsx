@@ -40,8 +40,9 @@ const Layout: React.FC<LayoutProps> = ({ onSettingsClick }) => {
     }
   }, [isMobile]);
 
-  const handleFileSelect = useCallback((path: string) => {
-    navigate(`/${path}`);
+  const handleFileSelect = useCallback((path: string, line?: number) => {
+    const hash = line ? `#L${line}` : '';
+    navigate(`/${path}${hash}`);
   }, [navigate]);
 
   const handleToggleFileTree = useCallback(() => {

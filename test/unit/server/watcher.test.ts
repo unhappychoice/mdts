@@ -4,6 +4,7 @@ import * as http from 'http';
 import path from 'path';
 import { WebSocket, WebSocketServer } from 'ws';
 import { setupWatcher } from '../../../src/server/watcher';
+import { SearchEngine } from '../../../src/server/search';
 import { logger } from '../../../src/utils/logger';
 
 // Mock chokidar
@@ -169,9 +170,9 @@ describe('watcher.ts unit tests', () => {
       expect(mockContentWatcher.on).toHaveBeenCalledWith('error', expect.any(Function));
 
       const onChangeCallback = (mockContentWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'change')[1];
-      onChangeCallback('/mock/file.md');
+      onChangeCallback('/mock/directory/file.md');
 
-      expect(logger.log).toHaveBeenCalledWith('Livereload', '🔃 File changed: /mock/file.md, reloading content...');
+      expect(logger.log).toHaveBeenCalledWith('Livereload', '🔃 File changed: file.md, reloading content...');
       expect(mockClient.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-content' }));
     });
 
@@ -225,7 +226,7 @@ describe('watcher.ts unit tests', () => {
       mockWss.clients.add(client);
 
       const onAddCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'add')[1];
-      onAddCallback('new-file.md');
+      onAddCallback('/mock/directory/new-file.md');
 
       expect(logger.log).toHaveBeenCalledWith('Livereload', '🌲 File added: new-file.md, reloading tree...');
       expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
@@ -236,10 +237,25 @@ describe('watcher.ts unit tests', () => {
       mockWss.clients.add(client);
 
       const onUnlinkCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'unlink')[1];
-      onUnlinkCallback('deleted-file.md');
+      onUnlinkCallback('/mock/directory/deleted-file.md');
 
       expect(logger.log).toHaveBeenCalledWith('Livereload', '🌲 File removed: deleted-file.md, reloading tree...');
       expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
+    });
+
+    it('should update search index on file change', () => {
+      const mockSearchEngine = { updateFile: jest.fn() } as unknown as SearchEngine;
+      jest.clearAllMocks();
+      setupWatcher({ directory: '/mock/directory', searchEngine: mockSearchEngine }, mockServer, 3000);
+      
+      const onChangeCallback = (mockDirectoryWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'change')[1];
+      onChangeCallback('/mock/directory/changed-file.md');
+
+      expect(logger.log).toHaveBeenCalledWith(
+        'Livereload',
+        '🌲 File changed: changed-file.md, updating search index...',
+      );
+      expect(mockSearchEngine.updateFile).toHaveBeenCalledWith('changed-file.md');
     });
 
     it('should handle chokidar watch error for directory watcher', () => {
@@ -367,7 +383,7 @@ describe('watcher.ts unit tests', () => {
 
       expect(logger.log).toHaveBeenCalledWith(
         'Livereload',
-        '🌲 File added: /mock/directory/a.md, reloading tree...',
+        '🌲 File added: a.md, reloading tree...',
       );
       expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
     });
@@ -388,7 +404,7 @@ describe('watcher.ts unit tests', () => {
 
       expect(logger.log).toHaveBeenCalledWith(
         'Livereload',
-        '🌲 File removed: /mock/directory/a.md, reloading tree...',
+        '🌲 File removed: a.md, reloading tree...',
       );
       expect(client.send).toHaveBeenCalledWith(JSON.stringify({ type: 'reload-tree' }));
     });
