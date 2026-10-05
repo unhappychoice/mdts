@@ -40,6 +40,7 @@ describe('FileTree', () => {
       loading: false,
       error: null,
       searchQuery: '',
+      searchMode: 'filename',
       expandedNodes: [],
       mountedDirectoryPath: '',
     },

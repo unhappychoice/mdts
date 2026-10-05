@@ -65,6 +65,7 @@ describe('FileTree mobile behavior', () => {
         loading: false,
         error: null,
         searchQuery: '',
+        searchMode: 'filename',
         expandedNodes: [],
         mountedDirectoryPath: '',
       },
@@ -89,7 +90,7 @@ describe('FileTree mobile behavior', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'select file' }));
 
-    expect(onFileSelect).toHaveBeenCalledWith('/docs/readme.md');
+    expect(onFileSelect).toHaveBeenCalledWith('/docs/readme.md', undefined);
     expect(onToggle).toHaveBeenCalledTimes(1);
   });
 });
