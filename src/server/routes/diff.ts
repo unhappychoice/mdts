@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import simpleGit, { SimpleGit } from 'simple-git';
+import { simpleGit, SimpleGit } from 'simple-git';
 import { ServerContext } from '../context';
 
 const extractFilePath = (params: Record<string, unknown>): string => {

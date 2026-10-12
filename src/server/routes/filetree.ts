@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import fs, { Dirent } from 'fs';
 import path from 'path';
-import simpleGit, { SimpleGit, StatusResult, FileStatusResult } from 'simple-git';
+import { simpleGit, SimpleGit, StatusResult, FileStatusResult } from 'simple-git';
 import { EXCLUDED_DIRECTORIES } from '../../constants';
 import { ServerContext } from '../context';
 import { logger } from '../../utils/logger';

@@ -11,4 +11,4 @@ const simpleGit = jest.fn(() => ({
   checkIsRepo: jest.fn(() => Promise.resolve(true)),
 }));
 
-export default simpleGit;
+export { simpleGit };

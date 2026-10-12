@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'supertest';
-import simpleGit from 'simple-git';
+import { simpleGit } from 'simple-git';
 import { diffRouter, diffPrevRouter } from '../../../../src/server/routes/diff';
 
 jest.mock('simple-git');
