@@ -9,15 +9,28 @@ import { getConfig, saveConfig } from './config';
 import { setupWatcher } from './watcher';
 import { diffRouter, diffPrevRouter } from './routes/diff';
 import { plantumlRouter } from './routes/plantuml';
+import { searchRouter } from './routes/search';
+import { SearchEngine } from './search';
 
 const MAX_PORT_RETRIES = 10;
 
-export const serve = (
+export const serve = async (
   context: ServerContext,
   port: number,
   host: string,
   autoPort: boolean = false,
 ): Promise<{ server: import('http').Server; port: number }> => {
+  const searchEngine = new SearchEngine(context.directory, {
+    maxFiles: context.searchMaxFiles,
+    maxFileSize: context.searchMaxFileSize,
+  });
+  try {
+    await searchEngine.initialize();
+    context.searchEngine = searchEngine;
+  } catch (error) {
+    logger.error('Search', 'Search initialization failed; continuing without search indexing', error);
+  }
+
   const app = createApp(context);
 
   type ServeResult = { server: import('http').Server; port: number };
@@ -72,6 +85,8 @@ export const createApp = (
   app.use('/api/diff-prev', diffPrevRouter(context));
   app.use('/api/diff', diffRouter(context));
   app.use('/api/plantuml', plantumlRouter());
+  app.use('/api/search', searchRouter(context));
+
   app.get('/api/config', (req, res) => {
     res.json(getConfig());
   });
@@ -100,8 +115,8 @@ export const createApp = (
     const filePath = path.join(directory, normalizedPath);
 
     // Security check: Ensure the resolved path is within the designated directory
-    // This prevents path traversal attacks (e.g., accessing files outside 'directory')
-    if (!filePath.startsWith(directory)) {
+    const relative = path.relative(path.resolve(directory), path.resolve(filePath));
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
       logger.error(`🚫 Attempted path traversal: ${filePath}`);
       return res.status(403).send('Forbidden');
     }
@@ -156,4 +171,3 @@ export const createApp = (
 
   return app;
 };
-
