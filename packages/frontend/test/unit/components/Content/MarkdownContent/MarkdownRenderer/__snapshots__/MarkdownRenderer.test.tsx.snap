@@ -3,12 +3,13 @@
 exports[`MarkdownRenderer renders markdown content correctly 1`] = `
 <DocumentFragment>
   <div
-    class="markdown-body MuiBox-root css-1yyviwt"
+    class="markdown-body MuiBox-root css-h3fbz8"
   >
     <div
       data-testid="mock-react-markdown-root"
     >
       <h1
+        data-line="1"
         data-testid="mock-h1"
         id="hello-world"
         node="[object Object]"
@@ -18,6 +19,7 @@ exports[`MarkdownRenderer renders markdown content correctly 1`] = `
       
 
       <p
+        data-line="3"
         data-testid="mock-p"
         node="[object Object]"
       >

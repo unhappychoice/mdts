@@ -155,6 +155,17 @@ npx mdts ./notes -g '2026/**/*.md'
 
 When `--glob` is not provided, all markdown files in the directory are shown as before.
 
+### Search Indexing Limits
+Use these options to adjust how `mdts` indexes your files for full-text search. This is particularly useful for large monorepos or projects with very large markdown files.
+
+```bash
+# Increase the number of indexed files (default: 5000)
+npx mdts ./large-repo --search-max-files 10000
+
+# Increase the maximum file size to index (default: 5MB)
+npx mdts ./docs --search-max-size 10
+```
+
 ### Programmatic Usage
 You can also use mdts as a Node.js module:
 
@@ -191,6 +202,10 @@ A plugin system for extending markdown rendering capabilities is under considera
 
 ## Performance Tuning
 
+### Search Indexing Optimization
+- Use `--search-max-files` and `--search-max-size` to balance search coverage vs. memory usage.
+- The default limits (5,000 files / 5MB per file) are designed to prevent crashes in large directories while providing comprehensive coverage for most users.
+
 ### Directory Optimization
 - Point mdts to specific subdirectories rather than large root directories
 - Use `.gitignore` patterns to exclude unnecessary files
@@ -211,6 +226,14 @@ npx mdts
 # Network accessible (use carefully)
 npx mdts --host 0.0.0.0
 ```
+
+### Full-Text Search
+The `/api/search` endpoint allows full-text search over the indexed directory.
+- **Design Intent**: This is a local development tool and should primarily be accessed via `localhost`.
+- **Risks of Public Exposure**:
+    - **Data Scraping**: Attackers could extract sensitive content by brute-forcing search queries.
+    - **Resource Exhaustion**: Rapid search queries can consume significant CPU/Memory.
+- **Public Use Recommendations**: If exposing mdts to a network, implement rate limiting and authentication at the infrastructure level.
 
 ### File Access
 - mdts can only access files within the mounted directory
