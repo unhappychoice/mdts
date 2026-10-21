@@ -84,6 +84,28 @@ DIR=$(osascript -e 'tell application "Finder" to set theFolder to POSIX path of 
 Use that as `DIR` instead of `${1:-$HOME/notes}`, with `@raycast.mode silent` and
 no `@raycast.argument1`.
 
+### Deeplinks
+
+Raycast can run the script command from anywhere with the `raycast://` URL
+scheme, for example from a Shortcut, a Stream Deck or a shell script:
+
+```
+raycast://script-commands/raycast-mdts-preview?arguments=%2FUsers%2Fyou%2Fnotes
+```
+
+The slug after `script-commands/` is the script file name without `.sh`. Each
+argument is one `arguments` query parameter, URL-encoded (a path like
+`/Users/you/notes` becomes `%2FUsers%2Fyou%2Fnotes`). Without the query string
+the command uses its default folder. Raycast asks for confirmation the first
+time a deeplink runs a command; choosing **Always Open Command** skips that for
+the future. The **Copy Deeplink** action in the command's action panel writes
+the URL for you, so the slug does not have to be typed by hand. The format is
+documented at
+[developers.raycast.com/information/lifecycle/deeplinks](https://developers.raycast.com/information/lifecycle/deeplinks).
+
+mdts itself has no custom URL scheme: it is a local web server, and the deeplink
+above belongs to Raycast, not to mdts.
+
 ## Claude Code hooks
 
 Claude Code can run a hook after every file write. The hook below starts mdts on
