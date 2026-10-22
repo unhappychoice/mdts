@@ -44,12 +44,30 @@ case "$path" in
   *) exit 0 ;;
 esac
 
+dir=$(cd "$(dirname "$path")" && pwd)
 PORT="${MDTS_PORT:-8521}"
 MDTS_CMD="${MDTS_CMD:-npx --yes mdts}"
 
-# mdts live-reloads, so one server per session is enough.
-if (exec 3<>"/dev/tcp/127.0.0.1/${PORT}") 2>/dev/null; then
+port_open() { (exec 3<>"/dev/tcp/localhost/${1}") 2>/dev/null; }
+
+# mdts live-reloads, so one server per session and directory is enough. Ask the
+# running server which folder it serves before reusing it.
+if port_open "$PORT"; then
+  served=$(curl -fsS "http://localhost:${PORT}/api/filetree" 2>/dev/null | node -e '
+    let raw = "";
+    process.stdin.on("data", (chunk) => (raw += chunk));
+    process.stdin.on("end", () => {
+      try {
+        process.stdout.write(JSON.parse(raw).mountedDirectoryPath ?? "");
+      } catch {}
+    });
+  ')
+  served=${served//\\//}
+  if [ "$served" = "$dir" ]; then
+    exit 0
+  fi
+  echo "mdts on port ${PORT} serves ${served:-another folder}; set MDTS_PORT for ${dir}" >&2
   exit 0
 fi
 
-nohup $MDTS_CMD "$(dirname "$path")" --port "$PORT" --no-open --silent >/dev/null 2>&1 &
+nohup $MDTS_CMD "$dir" --port "$PORT" --no-open --silent >/dev/null 2>&1 &

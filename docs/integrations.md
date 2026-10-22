@@ -47,15 +47,18 @@ Script Commands**. Raycast reads the `@raycast.*` comments in the header.
 # @raycast.mode silent
 # @raycast.icon 📝
 # @raycast.description Serve a Markdown folder with mdts and open it
-# @raycast.argument1 { "type": "text", "placeholder": "Folder (default: ~/notes)" }
+# @raycast.argument1 { "type": "text", "placeholder": "Folder (default: ~/notes)", "optional": true }
 
 set -euo pipefail
 
 DIR="${1:-$HOME/notes}"
 PORT="${MDTS_PORT:-8521}"
 MDTS_CMD="${MDTS_CMD:-npx --yes mdts}"
+LOG="${TMPDIR:-/tmp}/mdts-preview.log"
 
-if (exec 3<>"/dev/tcp/127.0.0.1/${PORT}") 2>/dev/null; then
+port_open() { (exec 3<>"/dev/tcp/localhost/${1}") 2>/dev/null; }
+
+if port_open "$PORT"; then
   open "http://localhost:${PORT}"
   exit 0
 fi
@@ -65,14 +68,28 @@ if [ ! -d "$DIR" ]; then
   exit 1
 fi
 
-nohup $MDTS_CMD "$DIR" --port "$PORT" --no-open --silent >/dev/null 2>&1 &
-for _ in $(seq 1 20); do
-  (exec 3<>"/dev/tcp/127.0.0.1/${PORT}") 2>/dev/null && break
+nohup $MDTS_CMD "$DIR" --port "$PORT" --no-open --silent >"$LOG" 2>&1 &
+
+ready=0
+for _ in $(seq 1 40); do
+  if port_open "$PORT"; then
+    ready=1
+    break
+  fi
   sleep 0.25
 done
 
+if [ "$ready" -ne 1 ]; then
+  echo "mdts did not start on port ${PORT}; see $LOG" >&2
+  exit 1
+fi
+
 open "http://localhost:${PORT}"
 ```
+
+`"optional": true` in the argument metadata is what makes the empty field fall
+back to `~/notes`; Raycast otherwise requires an argument before running the
+command.
 
 A second command that serves the folder of the front Finder window needs no
 argument:
@@ -140,15 +157,38 @@ case "$path" in
   *) exit 0 ;;
 esac
 
+dir=$(cd "$(dirname "$path")" && pwd)
 PORT="${MDTS_PORT:-8521}"
 MDTS_CMD="${MDTS_CMD:-npx --yes mdts}"
 
-if (exec 3<>"/dev/tcp/127.0.0.1/${PORT}") 2>/dev/null; then
+port_open() { (exec 3<>"/dev/tcp/localhost/${1}") 2>/dev/null; }
+
+if port_open "$PORT"; then
+  served=$(curl -fsS "http://localhost:${PORT}/api/filetree" 2>/dev/null | node -e '
+    let raw = "";
+    process.stdin.on("data", (chunk) => (raw += chunk));
+    process.stdin.on("end", () => {
+      try {
+        process.stdout.write(JSON.parse(raw).mountedDirectoryPath ?? "");
+      } catch {}
+    });
+  ')
+  served=${served//\\//}
+  if [ "$served" = "$dir" ]; then
+    exit 0
+  fi
+  echo "mdts on port ${PORT} serves ${served:-another folder}; set MDTS_PORT for ${dir}" >&2
   exit 0
 fi
 
-nohup $MDTS_CMD "$(dirname "$path")" --port "$PORT" --no-open --silent >/dev/null 2>&1 &
+nohup $MDTS_CMD "$dir" --port "$PORT" --no-open --silent >/dev/null 2>&1 &
 ```
+
+The `curl` to `/api/filetree` asks the running server which folder it mounted. If
+a later write targets another folder, the hook does not reuse that server; it
+prints the folder the server does serve and asks for a different `MDTS_PORT`
+(see [Running several projects at once](#running-several-projects-at-once)),
+rather than silently doing nothing.
 
 Register it in `.claude/settings.json` (project) or `~/.claude/settings.json`
 (user):
@@ -184,7 +224,7 @@ with mdts**:
     {
       "label": "Preview Markdown with mdts",
       "type": "shell",
-      "command": "npx --yes mdts ${workspaceFolder} --no-open",
+      "command": "npx --yes mdts \"${workspaceFolder}\" --no-open",
       "isBackground": true,
       "problemMatcher": []
     }
@@ -204,13 +244,27 @@ mdts-preview() {
   local dir="${1:-.}"
   local port="${MDTS_PORT:-8521}"
 
-  if (exec 3<>"/dev/tcp/127.0.0.1/${port}") 2>/dev/null; then
+  if (exec 3<>"/dev/tcp/localhost/${port}") 2>/dev/null; then
     open "http://localhost:${port}" 2>/dev/null || xdg-open "http://localhost:${port}"
     return 0
   fi
 
   ( cd "$dir" && npx --yes mdts . --port "$port" --no-open --silent >/dev/null 2>&1 & )
-  sleep 1
+
+  local ready=0
+  for _ in $(seq 1 40); do
+    if (exec 3<>"/dev/tcp/localhost/${port}") 2>/dev/null; then
+      ready=1
+      break
+    fi
+    sleep 0.25
+  done
+
+  if [ "$ready" -ne 1 ]; then
+    echo "mdts did not start on port ${port}" >&2
+    return 1
+  fi
+
   open "http://localhost:${port}" 2>/dev/null || xdg-open "http://localhost:${port}"
 }
 ```
@@ -244,6 +298,10 @@ Each instance owns one port:
 npx mdts ~/notes --port 8521 --no-open
 npx mdts ~/work/api-docs --port 8522 --no-open
 ```
+
+Run them in two terminals: both commands stay in the foreground and keep
+serving. In one terminal, append `&` to the first command (or use another port
+with `--port auto`) before starting the second.
 
 `--port auto` is useful in scripts that do not know whether 8521 is free: mdts
 picks the next available port, and the startup log prints the URL it chose.

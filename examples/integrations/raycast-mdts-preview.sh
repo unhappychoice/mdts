@@ -12,16 +12,19 @@
 # @raycast.mode silent
 # @raycast.icon 📝
 # @raycast.description Serve a Markdown folder with mdts and open it
-# @raycast.argument1 { "type": "text", "placeholder": "Folder (default: ~/notes)" }
+# @raycast.argument1 { "type": "text", "placeholder": "Folder (default: ~/notes)", "optional": true }
 
 set -euo pipefail
 
 DIR="${1:-$HOME/notes}"
 PORT="${MDTS_PORT:-8521}"
 MDTS_CMD="${MDTS_CMD:-npx --yes mdts}"
+LOG="${TMPDIR:-/tmp}/mdts-preview.log"
+
+port_open() { (exec 3<>"/dev/tcp/localhost/${1}") 2>/dev/null; }
 
 # Reuse a running server instead of starting a second one on the same port.
-if (exec 3<>"/dev/tcp/127.0.0.1/${PORT}") 2>/dev/null; then
+if port_open "$PORT"; then
   open "http://localhost:${PORT}"
   exit 0
 fi
@@ -31,10 +34,20 @@ if [ ! -d "$DIR" ]; then
   exit 1
 fi
 
-nohup $MDTS_CMD "$DIR" --port "$PORT" --no-open --silent >/dev/null 2>&1 &
-for _ in $(seq 1 20); do
-  (exec 3<>"/dev/tcp/127.0.0.1/${PORT}") 2>/dev/null && break
+nohup $MDTS_CMD "$DIR" --port "$PORT" --no-open --silent >"$LOG" 2>&1 &
+
+ready=0
+for _ in $(seq 1 40); do
+  if port_open "$PORT"; then
+    ready=1
+    break
+  fi
   sleep 0.25
 done
+
+if [ "$ready" -ne 1 ]; then
+  echo "mdts did not start on port ${PORT}; see $LOG" >&2
+  exit 1
+fi
 
 open "http://localhost:${PORT}"
