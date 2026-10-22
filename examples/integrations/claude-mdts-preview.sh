@@ -50,10 +50,10 @@ MDTS_CMD="${MDTS_CMD:-npx --yes mdts}"
 
 port_open() { (exec 3<>"/dev/tcp/localhost/${1}") 2>/dev/null; }
 
-# mdts live-reloads, so one server per session and directory is enough. Ask the
-# running server which folder it serves before reusing it.
-if port_open "$PORT"; then
-  served=$(curl -fsS "http://localhost:${PORT}/api/filetree" 2>/dev/null | node -e '
+# Ask the server on $PORT which folder it mounted, with a hard timeout so a
+# stalled or foreign listener cannot hold the synchronous hook.
+mounted_folder() {
+  curl -fsS --max-time 2 "http://localhost:${1}/api/filetree" 2>/dev/null | node -e '
     let raw = "";
     process.stdin.on("data", (chunk) => (raw += chunk));
     process.stdin.on("end", () => {
@@ -61,12 +61,19 @@ if port_open "$PORT"; then
         process.stdout.write(JSON.parse(raw).mountedDirectoryPath ?? "");
       } catch {}
     });
-  ')
+  '
+}
+
+if port_open "$PORT"; then
+  served=$(mounted_folder "$PORT")
   served=${served//\\//}
   if [ "$served" = "$dir" ]; then
     exit 0
   fi
-  echo "mdts on port ${PORT} serves ${served:-another folder}; set MDTS_PORT for ${dir}" >&2
+  # Claude Code does not surface stderr from a successful hook, so return the
+  # guidance as a systemMessage instead.
+  printf '{"systemMessage":"mdts on port %s serves %s; set MDTS_PORT for %s"}\n' \
+    "$PORT" "${served:-another service}" "$dir"
   exit 0
 fi
 

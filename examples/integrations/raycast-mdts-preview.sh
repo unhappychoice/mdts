@@ -23,10 +23,30 @@ LOG="${TMPDIR:-/tmp}/mdts-preview.log"
 
 port_open() { (exec 3<>"/dev/tcp/localhost/${1}") 2>/dev/null; }
 
-# Reuse a running server instead of starting a second one on the same port.
+# Ask the server on $PORT which folder it mounted. Empty when the port does not
+# answer with mdts's file tree.
+mounted_folder() {
+  curl -fsS --max-time 2 "http://localhost:${1}/api/filetree" 2>/dev/null | node -e '
+    let raw = "";
+    process.stdin.on("data", (chunk) => (raw += chunk));
+    process.stdin.on("end", () => {
+      try {
+        process.stdout.write(JSON.parse(raw).mountedDirectoryPath ?? "");
+      } catch {}
+    });
+  '
+}
+
 if port_open "$PORT"; then
-  open "http://localhost:${PORT}"
-  exit 0
+  want=$(cd "$DIR" 2>/dev/null && pwd) || want=""
+  served=$(mounted_folder "$PORT")
+  served=${served//\\//}
+  if [ -n "$want" ] && [ "$served" = "$want" ]; then
+    open "http://localhost:${PORT}"
+    exit 0
+  fi
+  echo "Port ${PORT} already serves ${served:-another service}; set MDTS_PORT for ${DIR}" >&2
+  exit 1
 fi
 
 if [ ! -d "$DIR" ]; then

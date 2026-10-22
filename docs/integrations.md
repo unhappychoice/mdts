@@ -58,9 +58,30 @@ LOG="${TMPDIR:-/tmp}/mdts-preview.log"
 
 port_open() { (exec 3<>"/dev/tcp/localhost/${1}") 2>/dev/null; }
 
+# Ask the server on $PORT which folder it mounted. Empty when the port does not
+# answer with mdts's file tree.
+mounted_folder() {
+  curl -fsS --max-time 2 "http://localhost:${1}/api/filetree" 2>/dev/null | node -e '
+    let raw = "";
+    process.stdin.on("data", (chunk) => (raw += chunk));
+    process.stdin.on("end", () => {
+      try {
+        process.stdout.write(JSON.parse(raw).mountedDirectoryPath ?? "");
+      } catch {}
+    });
+  '
+}
+
 if port_open "$PORT"; then
-  open "http://localhost:${PORT}"
-  exit 0
+  want=$(cd "$DIR" 2>/dev/null && pwd) || want=""
+  served=$(mounted_folder "$PORT")
+  served=${served//\\//}
+  if [ -n "$want" ] && [ "$served" = "$want" ]; then
+    open "http://localhost:${PORT}"
+    exit 0
+  fi
+  echo "Port ${PORT} already serves ${served:-another service}; set MDTS_PORT for ${DIR}" >&2
+  exit 1
 fi
 
 if [ ! -d "$DIR" ]; then
@@ -163,8 +184,10 @@ MDTS_CMD="${MDTS_CMD:-npx --yes mdts}"
 
 port_open() { (exec 3<>"/dev/tcp/localhost/${1}") 2>/dev/null; }
 
-if port_open "$PORT"; then
-  served=$(curl -fsS "http://localhost:${PORT}/api/filetree" 2>/dev/null | node -e '
+# Ask the server on $PORT which folder it mounted, with a hard timeout so a
+# stalled or foreign listener cannot hold the synchronous hook.
+mounted_folder() {
+  curl -fsS --max-time 2 "http://localhost:${1}/api/filetree" 2>/dev/null | node -e '
     let raw = "";
     process.stdin.on("data", (chunk) => (raw += chunk));
     process.stdin.on("end", () => {
@@ -172,22 +195,30 @@ if port_open "$PORT"; then
         process.stdout.write(JSON.parse(raw).mountedDirectoryPath ?? "");
       } catch {}
     });
-  ')
+  '
+}
+
+if port_open "$PORT"; then
+  served=$(mounted_folder "$PORT")
   served=${served//\\//}
   if [ "$served" = "$dir" ]; then
     exit 0
   fi
-  echo "mdts on port ${PORT} serves ${served:-another folder}; set MDTS_PORT for ${dir}" >&2
+  # Claude Code does not surface stderr from a successful hook, so return the
+  # guidance as a systemMessage instead.
+  printf '{"systemMessage":"mdts on port %s serves %s; set MDTS_PORT for %s"}\n' \
+    "$PORT" "${served:-another service}" "$dir"
   exit 0
 fi
 
 nohup $MDTS_CMD "$dir" --port "$PORT" --no-open --silent >/dev/null 2>&1 &
 ```
 
-The `curl` to `/api/filetree` asks the running server which folder it mounted. If
-a later write targets another folder, the hook does not reuse that server; it
-prints the folder the server does serve and asks for a different `MDTS_PORT`
-(see [Running several projects at once](#running-several-projects-at-once)),
+The `curl` asks the running server which folder it mounted, with a two-second
+cap: a stalled or foreign listener cannot hold the hook. If a later write
+targets another folder, the hook does not reuse that server; it returns a
+`systemMessage` naming the folder the server does serve and asks for a different
+`MDTS_PORT` (see [Running several projects at once](#running-several-projects-at-once)),
 rather than silently doing nothing.
 
 Register it in `.claude/settings.json` (project) or `~/.claude/settings.json`
@@ -237,15 +268,17 @@ browser to open as part of the task, at the cost of a second tab on every run.
 
 ## Shell aliases and functions
 
-For zsh or bash, a function that starts the server once and reuses it:
+For zsh or bash, a function that starts the server once and reuses it. The port
+check uses `curl` instead of bash's `/dev/tcp`, which zsh does not provide:
 
 ```bash
 mdts-preview() {
   local dir="${1:-.}"
   local port="${MDTS_PORT:-8521}"
+  local url="http://localhost:${port}"
 
-  if (exec 3<>"/dev/tcp/localhost/${port}") 2>/dev/null; then
-    open "http://localhost:${port}" 2>/dev/null || xdg-open "http://localhost:${port}"
+  if curl -fsS --max-time 1 "${url}/api/filetree" >/dev/null 2>&1; then
+    open "$url" 2>/dev/null || xdg-open "$url"
     return 0
   fi
 
@@ -253,7 +286,7 @@ mdts-preview() {
 
   local ready=0
   for _ in $(seq 1 40); do
-    if (exec 3<>"/dev/tcp/localhost/${port}") 2>/dev/null; then
+    if curl -fsS --max-time 1 "${url}/api/filetree" >/dev/null 2>&1; then
       ready=1
       break
     fi
@@ -265,7 +298,7 @@ mdts-preview() {
     return 1
   fi
 
-  open "http://localhost:${port}" 2>/dev/null || xdg-open "http://localhost:${port}"
+  open "$url" 2>/dev/null || xdg-open "$url"
 }
 ```
 
