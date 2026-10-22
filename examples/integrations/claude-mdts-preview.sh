@@ -71,9 +71,10 @@ if port_open "$PORT"; then
     exit 0
   fi
   # Claude Code does not surface stderr from a successful hook, so return the
-  # guidance as a systemMessage instead.
-  printf '{"systemMessage":"mdts on port %s serves %s; set MDTS_PORT for %s"}\n' \
-    "$PORT" "${served:-another service}" "$dir"
+  # guidance as a systemMessage instead. JSON-encode it: paths may contain
+  # quotes or backslashes.
+  node -e 'process.stdout.write(JSON.stringify({ systemMessage: process.argv[1] }) + "\n")' \
+    "mdts on port ${PORT} serves ${served:-another service}; set MDTS_PORT for ${dir}"
   exit 0
 fi
 

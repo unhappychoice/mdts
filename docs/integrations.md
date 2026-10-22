@@ -205,9 +205,10 @@ if port_open "$PORT"; then
     exit 0
   fi
   # Claude Code does not surface stderr from a successful hook, so return the
-  # guidance as a systemMessage instead.
-  printf '{"systemMessage":"mdts on port %s serves %s; set MDTS_PORT for %s"}\n' \
-    "$PORT" "${served:-another service}" "$dir"
+  # guidance as a systemMessage instead. JSON-encode it: paths may contain
+  # quotes or backslashes.
+  node -e 'process.stdout.write(JSON.stringify({ systemMessage: process.argv[1] }) + "\n")' \
+    "mdts on port ${PORT} serves ${served:-another service}; set MDTS_PORT for ${dir}"
   exit 0
 fi
 
@@ -276,8 +277,26 @@ mdts-preview() {
   local dir="${1:-.}"
   local port="${MDTS_PORT:-8521}"
   local url="http://localhost:${port}"
+  local want served
 
-  if curl -fsS --max-time 1 "${url}/api/filetree" >/dev/null 2>&1; then
+  want=$(cd "$dir" 2>/dev/null && pwd) || { echo "Not a folder: $dir" >&2; return 1; }
+
+  served=$(curl -fsS --max-time 1 "${url}/api/filetree" 2>/dev/null | node -e '
+    let raw = "";
+    process.stdin.on("data", (chunk) => (raw += chunk));
+    process.stdin.on("end", () => {
+      try {
+        process.stdout.write(JSON.parse(raw).mountedDirectoryPath ?? "");
+      } catch {}
+    });
+  ')
+  served=${served//\\//}
+
+  if [ -n "$served" ]; then
+    if [ "$served" != "$want" ]; then
+      echo "Port ${port} already serves ${served}; set MDTS_PORT for ${dir}" >&2
+      return 1
+    fi
     open "$url" 2>/dev/null || xdg-open "$url"
     return 0
   fi
