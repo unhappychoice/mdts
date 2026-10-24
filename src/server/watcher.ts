@@ -1,4 +1,4 @@
-import chokidar, { FSWatcher } from 'chokidar';
+import { FSWatcher, watch } from 'chokidar';
 import * as fs from 'fs';
 import * as http from 'http';
 import path from 'path';
@@ -86,7 +86,7 @@ const describeWatchTarget = (error: unknown, directory: string): string => {
 
 const setupDirectoryWatcher = (directory: string, wss: WebSocketServer): FSWatcher | null => {
   try {
-    const watcher = chokidar.watch(directory, {
+    const watcher = watch(directory, {
       ignored: (watchedFilePath: string, stats?: fs.Stats) => {
         if (EXCLUDED_DIRECTORIES.some(p => watchedFilePath.includes(`/${p}`))) {
           return true;
@@ -133,7 +133,7 @@ const setupFilePatternWatcher = (context: ServerContext, wss: WebSocketServer): 
 
   try {
     const absolutePaths = filePatterns.map(f => path.join(directory, f));
-    const watcher = chokidar.watch(absolutePaths, { ignoreInitial: true });
+    const watcher = watch(absolutePaths, { ignoreInitial: true });
 
     attachTreeReloadHandlers(watcher, wss);
 
@@ -161,7 +161,7 @@ const setupContentWatcher = (ws: WebSocket, directory: string, filePath: string)
 
     contentWatcher?.close(); // Close existing content watcher if any
 
-    contentWatcher = chokidar.watch(path.join(directory, currentWatchedFile), { ignoreInitial: true });
+    contentWatcher = watch(path.join(directory, currentWatchedFile), { ignoreInitial: true });
     contentWatcher.on('change', (changedFilePath) => {
       logger.log('Livereload', `🔃 File changed: ${changedFilePath.replace(`${directory}/`, '')}, reloading content...`);
       ws.send(JSON.stringify({ type: 'reload-content' }));

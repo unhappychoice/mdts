@@ -5,6 +5,9 @@
   "description": "A markdown preview server.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=22.22"
+  },
   "bin": {
     "mdts": "./bin/mdts"
   },
@@ -69,7 +72,7 @@
   },
   "dependencies": {
     "chalk": "^6.0.0",
-    "chokidar": "^4.0.3",
+    "chokidar": "^6.0.0",
     "commander": "^15.0.0",
     "express": "^5.1.0",
     "github-slugger": "^2.0.0",
