@@ -44,8 +44,7 @@ case "$path" in
   *) exit 0 ;;
 esac
 
-# -P: the server reports the physical path, so compare like for like.
-dir=$(cd "$(dirname "$path")" && pwd -P)
+dir=$(cd "$(dirname "$path")" && pwd)
 PORT="${MDTS_PORT:-8521}"
 MDTS_CMD="${MDTS_CMD:-npx --yes mdts}"
 
