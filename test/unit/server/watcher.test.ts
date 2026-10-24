@@ -1,4 +1,4 @@
-import chokidar, { type FSWatcher } from 'chokidar';
+import { type FSWatcher, watch } from 'chokidar';
 import * as fs from 'fs';
 import * as http from 'http';
 import path from 'path';
@@ -58,7 +58,7 @@ describe('watcher.ts unit tests', () => {
       close: jest.fn().mockResolvedValue(undefined),
       unwatch: jest.fn(),
     } as unknown as FSWatcher;
-    (chokidar.watch as jest.Mock).mockReturnValue(mockDirectoryWatcher);
+    (watch as jest.Mock).mockReturnValue(mockDirectoryWatcher);
 
     mockContentWatcher = {
       on: jest.fn().mockReturnThis(),
@@ -96,7 +96,7 @@ describe('watcher.ts unit tests', () => {
   it('should setup WebSocketServer and directory watcher', () => {
     setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
     expect(WebSocketServer).toHaveBeenCalledWith({ server: mockServer });
-    expect(chokidar.watch).toHaveBeenCalledWith('/mock/directory', expect.any(Object));
+    expect(watch).toHaveBeenCalledWith('/mock/directory', expect.any(Object));
   });
 
   it('should log when WebSocket server is listening', () => {
@@ -122,7 +122,7 @@ describe('watcher.ts unit tests', () => {
 
     it('should log when Livereload Client closed and close content watcher if no other clients', () => {
       // Ensure content watcher is set up before closing
-      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
+      (watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
       onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/initial.md' }));
 
       // Simulate the client being removed from the set on close
@@ -135,7 +135,7 @@ describe('watcher.ts unit tests', () => {
 
     it('should not close content watcher if other clients exist', () => {
       // Ensure content watcher is set up before closing
-      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
+      (watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
       onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/initial.md' }));
 
       const anotherClient = new WebSocket('');
@@ -151,18 +151,18 @@ describe('watcher.ts unit tests', () => {
     });
 
     it('should handle watch-file message and setup content watcher', () => {
-      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher); // For content watcher
+      (watch as jest.Mock).mockReturnValueOnce(mockContentWatcher); // For content watcher
       onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file.md' }));
 
       expect(logger.log).toHaveBeenCalledWith('Livereload', '👀 Watching file: /mock/file.md');
-      expect(chokidar.watch)
+      expect(watch)
         .toHaveBeenCalledWith(path.join('/mock/directory', '/mock/file.md'), { ignoreInitial: true });
       expect(mockContentWatcher.on).toHaveBeenCalledWith('change', expect.any(Function));
       expect(mockContentWatcher.on).toHaveBeenCalledWith('error', expect.any(Function));
     });
 
     it('should send reload-content message when watched file changes', () => {
-      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
+      (watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
       onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file2.md' }));
 
       expect(mockContentWatcher.on).toHaveBeenCalledWith('change', expect.any(Function));
@@ -179,7 +179,7 @@ describe('watcher.ts unit tests', () => {
       const firstContentWatcher = { on: jest.fn(), close: jest.fn() } as unknown as FSWatcher;
       const secondContentWatcher = { on: jest.fn(), close: jest.fn() } as unknown as FSWatcher;
 
-      (chokidar.watch as jest.Mock)
+      (watch as jest.Mock)
         .mockReturnValueOnce(firstContentWatcher) // First call for content watcher
         .mockReturnValueOnce(secondContentWatcher); // Second call for content watcher
 
@@ -193,9 +193,9 @@ describe('watcher.ts unit tests', () => {
 
     it('should not call setupContentWatcher if watch-file message has invalid filePath type', () => {
       // Clear previous calls to chokidar.watch to accurately test this scenario
-      (chokidar.watch as jest.Mock).mockClear();
+      (watch as jest.Mock).mockClear();
       onClientMessage(JSON.stringify({ type: 'watch-file', filePath: 123 })); // Invalid filePath
-      expect(chokidar.watch).not.toHaveBeenCalled();
+      expect(watch).not.toHaveBeenCalled();
     });
 
     it('should log error if WebSocket message payload is invalid JSON', () => {
@@ -204,7 +204,7 @@ describe('watcher.ts unit tests', () => {
     });
 
     it('should log error if content watcher encounters an error', () => {
-      (chokidar.watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
+      (watch as jest.Mock).mockReturnValueOnce(mockContentWatcher);
       onClientMessage(JSON.stringify({ type: 'watch-file', filePath: '/mock/file.md' }));
 
       const onErrorCallback = (mockContentWatcher.on as jest.Mock).mock.calls.find(call => call[0] === 'error')[1];
@@ -243,7 +243,7 @@ describe('watcher.ts unit tests', () => {
     });
 
     it('should handle chokidar watch error for directory watcher', () => {
-      (chokidar.watch as jest.Mock).mockImplementationOnce(() => {
+      (watch as jest.Mock).mockImplementationOnce(() => {
         throw new Error('Directory watch error');
       });
 
@@ -296,7 +296,7 @@ describe('watcher.ts unit tests', () => {
 
     beforeEach(() => {
       setupWatcher({ directory: '/mock/directory' }, mockServer, 3000);
-      ignoredFn = (chokidar.watch as jest.Mock).mock.calls.find(call => call[0] === '/mock/directory')[1].ignored;
+      ignoredFn = (watch as jest.Mock).mock.calls.find(call => call[0] === '/mock/directory')[1].ignored;
     });
 
     it('should ignore files in node_modules', () => {
@@ -335,7 +335,7 @@ describe('watcher.ts unit tests', () => {
         on: jest.fn().mockReturnThis(),
         close: jest.fn().mockResolvedValue(undefined),
       } as unknown as FSWatcher;
-      (chokidar.watch as jest.Mock).mockReturnValue(mockPatternWatcher);
+      (watch as jest.Mock).mockReturnValue(mockPatternWatcher);
     });
 
     it('should watch resolved absolute paths when filePatterns are provided', () => {
@@ -345,7 +345,7 @@ describe('watcher.ts unit tests', () => {
         3000,
       );
 
-      expect(chokidar.watch).toHaveBeenCalledWith(
+      expect(watch).toHaveBeenCalledWith(
         ['/mock/directory/a.md', '/mock/directory/sub/b.md'],
         { ignoreInitial: true },
       );
@@ -409,7 +409,7 @@ describe('watcher.ts unit tests', () => {
     });
 
     it('should handle chokidar watch exception for file patterns', () => {
-      (chokidar.watch as jest.Mock).mockImplementationOnce(() => {
+      (watch as jest.Mock).mockImplementationOnce(() => {
         throw new Error('File pattern watch error');
       });
 

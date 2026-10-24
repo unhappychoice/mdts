@@ -1,13 +1,9 @@
 import { EventEmitter } from 'events';
 
-class FSWatcher extends EventEmitter {
-  add() { return this; }
-  on() { return this; }
-  close() { }
+export class FSWatcher extends EventEmitter {
+  add(): this { return this; }
+  on(): this { return this; }
+  close(): void { }
 }
 
-const chokidar = {
-  watch: jest.fn(() => new FSWatcher()),
-};
-
-export default chokidar;
+export const watch = jest.fn(() => new FSWatcher());
