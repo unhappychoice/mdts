@@ -73,7 +73,8 @@ mounted_folder() {
 }
 
 if port_open "$PORT"; then
-  want=$(cd "$DIR" 2>/dev/null && pwd) || want=""
+  # -P: the server reports the physical path, so compare like for like.
+  want=$(cd "$DIR" 2>/dev/null && pwd -P) || want=""
   served=$(mounted_folder "$PORT")
   served=${served//\\//}
   if [ -n "$want" ] && [ "$served" = "$want" ]; then
@@ -178,7 +179,8 @@ case "$path" in
   *) exit 0 ;;
 esac
 
-dir=$(cd "$(dirname "$path")" && pwd)
+# -P: the server reports the physical path, so compare like for like.
+dir=$(cd "$(dirname "$path")" && pwd -P)
 PORT="${MDTS_PORT:-8521}"
 MDTS_CMD="${MDTS_CMD:-npx --yes mdts}"
 
@@ -279,7 +281,8 @@ mdts-preview() {
   local url="http://localhost:${port}"
   local want served
 
-  want=$(cd "$dir" 2>/dev/null && pwd) || { echo "Not a folder: $dir" >&2; return 1; }
+  # -P: the server reports the physical path, so compare like for like.
+  want=$(cd "$dir" 2>/dev/null && pwd -P) || { echo "Not a folder: $dir" >&2; return 1; }
 
   served=$(curl -fsS --max-time 1 "${url}/api/filetree" 2>/dev/null | node -e '
     let raw = "";
@@ -299,6 +302,13 @@ mdts-preview() {
     fi
     open "$url" 2>/dev/null || xdg-open "$url"
     return 0
+  fi
+
+  # A listener that answers but is not mdts still owns the port: starting mdts
+  # there would fail, and the readiness check would accept the other service.
+  if curl -s --max-time 1 -o /dev/null "${url}/" 2>/dev/null; then
+    echo "Port ${port} is in use by another service; set MDTS_PORT for ${dir}" >&2
+    return 1
   fi
 
   ( cd "$dir" && npx --yes mdts . --port "$port" --no-open --silent >/dev/null 2>&1 & )

@@ -38,7 +38,8 @@ mounted_folder() {
 }
 
 if port_open "$PORT"; then
-  want=$(cd "$DIR" 2>/dev/null && pwd) || want=""
+  # -P: the server reports the physical path, so compare like for like.
+  want=$(cd "$DIR" 2>/dev/null && pwd -P) || want=""
   served=$(mounted_folder "$PORT")
   served=${served//\\//}
   if [ -n "$want" ] && [ "$served" = "$want" ]; then
