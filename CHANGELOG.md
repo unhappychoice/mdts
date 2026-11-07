@@ -1,5 +1,46 @@
 # Changelog
 
+## v0.21.2
+
+### 📝 Documentation
+- update CHANGELOG.md for v0.21.1 ([e6e8bd4](https://github.com/unhappychoice/mdts/commit/e6e8bd4))
+
+### 🆙 Update Packages
+- Bump globals in /packages/frontend ([ecf8025](https://github.com/unhappychoice/mdts/commit/ecf8025)) ([#1057](https://github.com/unhappychoice/mdts/pull/1057))
+- Bump ws from 8.22.0 to 8.22.1 ([335af3d](https://github.com/unhappychoice/mdts/commit/335af3d)) ([#1055](https://github.com/unhappychoice/mdts/pull/1055))
+- Bump eslint in /packages/frontend ([adf6c73](https://github.com/unhappychoice/mdts/commit/adf6c73)) ([#1054](https://github.com/unhappychoice/mdts/pull/1054))
+- Bump webpack-cli in /packages/frontend ([5f2f8c4](https://github.com/unhappychoice/mdts/commit/5f2f8c4)) ([#1053](https://github.com/unhappychoice/mdts/pull/1053))
+- Bump eslint from 10.13.0 to 10.14.0 ([bde5d31](https://github.com/unhappychoice/mdts/commit/bde5d31)) ([#1052](https://github.com/unhappychoice/mdts/pull/1052))
+- Bump @mui/x-tree-view in /packages/frontend ([c694743](https://github.com/unhappychoice/mdts/commit/c694743)) ([#1051](https://github.com/unhappychoice/mdts/pull/1051))
+- Bump react-router-dom in /packages/frontend ([0399364](https://github.com/unhappychoice/mdts/commit/0399364)) ([#1048](https://github.com/unhappychoice/mdts/pull/1048))
+- Bump @babel/core in /packages/frontend ([61ae842](https://github.com/unhappychoice/mdts/commit/61ae842)) ([#1050](https://github.com/unhappychoice/mdts/pull/1050))
+- Bump react-redux from 9.3.0 to 9.3.1 in /packages/frontend ([dcfa33b](https://github.com/unhappychoice/mdts/commit/dcfa33b)) ([#1049](https://github.com/unhappychoice/mdts/pull/1049))
+- Bump glob from 13.0.6 to 14.0.3 ([809efa8](https://github.com/unhappychoice/mdts/commit/809efa8)) ([#1047](https://github.com/unhappychoice/mdts/pull/1047))
+- Bump typescript-eslint in /packages/frontend ([0cf1bee](https://github.com/unhappychoice/mdts/commit/0cf1bee)) ([#1046](https://github.com/unhappychoice/mdts/pull/1046))
+- Bump axios from 1.20.0 to 1.21.0 ([46b3a1c](https://github.com/unhappychoice/mdts/commit/46b3a1c)) ([#1045](https://github.com/unhappychoice/mdts/pull/1045))
+- Bump typescript-eslint from 8.72.0 to 8.72.1 ([916e27f](https://github.com/unhappychoice/mdts/commit/916e27f)) ([#1043](https://github.com/unhappychoice/mdts/pull/1043))
+- Bump @babel/core in /packages/frontend ([b93d376](https://github.com/unhappychoice/mdts/commit/b93d376)) ([#1039](https://github.com/unhappychoice/mdts/pull/1039))
+- Bump webpack in /packages/frontend ([4dd1b33](https://github.com/unhappychoice/mdts/commit/4dd1b33)) ([#1038](https://github.com/unhappychoice/mdts/pull/1038))
+- Bump @mui/x-tree-view in /packages/frontend ([d73a235](https://github.com/unhappychoice/mdts/commit/d73a235)) ([#1037](https://github.com/unhappychoice/mdts/pull/1037))
+- Bump webpack in /packages/frontend ([d2728e9](https://github.com/unhappychoice/mdts/commit/d2728e9)) ([#1036](https://github.com/unhappychoice/mdts/pull/1036))
+- bump chokidar from 4.0.3 to 6.0.0 ([1361708](https://github.com/unhappychoice/mdts/commit/1361708)) ([#1035](https://github.com/unhappychoice/mdts/pull/1035))
+- Bump typescript-eslint from 8.71.2 to 8.72.0 ([a656861](https://github.com/unhappychoice/mdts/commit/a656861)) ([#1033](https://github.com/unhappychoice/mdts/pull/1033))
+- Bump typescript-eslint in /packages/frontend ([0e06c28](https://github.com/unhappychoice/mdts/commit/0e06c28)) ([#1031](https://github.com/unhappychoice/mdts/pull/1031))
+- Bump @typescript-eslint/parser from 8.71.2 to 8.72.0 ([e3ae4d0](https://github.com/unhappychoice/mdts/commit/e3ae4d0)) ([#1030](https://github.com/unhappychoice/mdts/pull/1030))
+- Bump @typescript-eslint/parser in /packages/frontend ([06eb190](https://github.com/unhappychoice/mdts/commit/06eb190)) ([#1029](https://github.com/unhappychoice/mdts/pull/1029))
+- Bump eslint in /packages/frontend ([e2dfcb4](https://github.com/unhappychoice/mdts/commit/e2dfcb4)) ([#1026](https://github.com/unhappychoice/mdts/pull/1026))
+- Bump eslint from 10.12.0 to 10.13.0 ([4e38f64](https://github.com/unhappychoice/mdts/commit/4e38f64)) ([#1025](https://github.com/unhappychoice/mdts/pull/1025))
+- Bump webpack in /packages/frontend ([f8481ef](https://github.com/unhappychoice/mdts/commit/f8481ef)) ([#1023](https://github.com/unhappychoice/mdts/pull/1023))
+- Bump react-dom from 19.3.0 to 19.3.1 in /packages/frontend ([5fc0501](https://github.com/unhappychoice/mdts/commit/5fc0501)) ([#1022](https://github.com/unhappychoice/mdts/pull/1022))
+- Bump ts-jest from 29.4.14 to 29.4.15 ([a1cb330](https://github.com/unhappychoice/mdts/commit/a1cb330)) ([#1021](https://github.com/unhappychoice/mdts/pull/1021))
+- Bump mermaid from 12.1.0 to 12.2.0 in /packages/frontend ([180f008](https://github.com/unhappychoice/mdts/commit/180f008)) ([#1020](https://github.com/unhappychoice/mdts/pull/1020))
+- Bump markdown-it from 15.0.2 to 15.0.3 ([68050de](https://github.com/unhappychoice/mdts/commit/68050de)) ([#1019](https://github.com/unhappychoice/mdts/pull/1019))
+- Bump @mui/x-tree-view in /packages/frontend ([403c816](https://github.com/unhappychoice/mdts/commit/403c816)) ([#1003](https://github.com/unhappychoice/mdts/pull/1003))
+
+### 💚 CI/Test
+- update tree view snapshots for @mui/x-tree-view 9.15 ([0e1fdca](https://github.com/unhappychoice/mdts/commit/0e1fdca)) ([#1003](https://github.com/unhappychoice/mdts/pull/1003))
+
+
 ## v0.21.1
 
 ### 🐛 Bug Fixes
