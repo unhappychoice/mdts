@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.21.3
+
+### 📝 Documentation
+- update CHANGELOG.md for v0.21.2 ([75a25b2](https://github.com/unhappychoice/mdts/commit/75a25b2))
+
+### 🆙 Update Packages
+- Bump axios from 1.21.0 to 1.21.1 ([9b1a689](https://github.com/unhappychoice/mdts/commit/9b1a689)) ([#1069](https://github.com/unhappychoice/mdts/pull/1069))
+- Bump typescript-eslint in /packages/frontend ([fe15dcc](https://github.com/unhappychoice/mdts/commit/fe15dcc)) ([#1067](https://github.com/unhappychoice/mdts/pull/1067))
+- Bump typescript-eslint from 8.72.1 to 8.72.2 ([c10b852](https://github.com/unhappychoice/mdts/commit/c10b852)) ([#1068](https://github.com/unhappychoice/mdts/pull/1068))
+- Bump ws from 8.22.1 to 8.22.2 ([d2cb278](https://github.com/unhappychoice/mdts/commit/d2cb278)) ([#1065](https://github.com/unhappychoice/mdts/pull/1065))
+- Bump supertest from 7.3.1 to 7.3.2 ([dad2a04](https://github.com/unhappychoice/mdts/commit/dad2a04)) ([#1064](https://github.com/unhappychoice/mdts/pull/1064))
+- Bump commander from 15.0.0 to 15.1.0 ([c737268](https://github.com/unhappychoice/mdts/commit/c737268)) ([#1063](https://github.com/unhappychoice/mdts/pull/1063))
+- Bump @reduxjs/toolkit in /packages/frontend ([350341e](https://github.com/unhappychoice/mdts/commit/350341e)) ([#1062](https://github.com/unhappychoice/mdts/pull/1062))
+- Bump mermaid from 12.2.0 to 12.3.0 in /packages/frontend ([58219dc](https://github.com/unhappychoice/mdts/commit/58219dc)) ([#1061](https://github.com/unhappychoice/mdts/pull/1061))
+- Bump glob from 14.0.3 to 14.0.4 ([8042dd7](https://github.com/unhappychoice/mdts/commit/8042dd7)) ([#1060](https://github.com/unhappychoice/mdts/pull/1060))
+- Bump @babel/core in /packages/frontend (#1059) ([b2659f9](https://github.com/unhappychoice/mdts/commit/b2659f9))
+
+
 ## v0.21.2
 
 ### 📝 Documentation
